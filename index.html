@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fable 5 案例庫</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif; background:#f3f4f7; color:#1d2430; line-height:1.6; padding:28px 16px 60px; }
+  .wrap { max-width:1080px; margin:0 auto; }
+  header { background:linear-gradient(135deg,#21253b,#3d4470); color:#fff; border-radius:16px; padding:30px 30px 24px; margin-bottom:18px; }
+  header h1 { font-size:24px; margin-bottom:6px; }
+  header p { font-size:14px; opacity:.85; }
+  header .stats { margin-top:12px; font-size:13px; opacity:.75; }
+  .bar { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; align-items:center; }
+  .chip { border:1px solid #c9cedb; background:#fff; border-radius:999px; padding:5px 14px; font-size:13px; cursor:pointer; user-select:none; transition:all .15s; }
+  .chip:hover { border-color:#3d4470; }
+  .chip.on { background:#3d4470; color:#fff; border-color:#3d4470; }
+  #q { flex:1 1 200px; min-width:160px; border:1px solid #c9cedb; border-radius:999px; padding:6px 16px; font-size:13.5px; outline:none; }
+  #q:focus { border-color:#3d4470; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:14px; }
+  .card { background:#fff; border-radius:14px; box-shadow:0 1px 3px rgba(20,30,50,.08); overflow:hidden; display:flex; flex-direction:column; }
+  .stripe { height:5px; }
+  .shot { width:100%; height:160px; object-fit:cover; object-position:top; display:block; background:#e9ebf1; }
+  .body { padding:16px 18px 14px; flex:1; display:flex; flex-direction:column; }
+  .cat { font-size:11.5px; font-weight:700; letter-spacing:1px; margin-bottom:6px; }
+  .card h3 { font-size:16.5px; line-height:1.4; margin-bottom:6px; }
+  .desc { font-size:13px; color:#5b6678; margin-bottom:10px; flex:1; }
+  .meta { font-size:12px; color:#8a93a3; margin-bottom:10px; }
+  .meta a { color:#3d4470; text-decoration:none; }
+  .meta a:hover { text-decoration:underline; }
+  .badge { display:inline-block; border-radius:5px; padding:1px 8px; font-size:11px; font-weight:600; margin-left:6px; vertical-align:1px; }
+  .b-orig { background:#e2f3e9; color:#1a7a46; }
+  .b-recon { background:#fdf0dc; color:#a06a10; }
+  .ptoggle { font-size:12.5px; color:#3d4470; cursor:pointer; user-select:none; font-weight:600; }
+  .ptoggle:hover { text-decoration:underline; }
+  .prompt { display:none; margin-top:8px; background:#1c2030; color:#cdd6e8; border-radius:10px; padding:12px 14px; font-family:ui-monospace,Menlo,monospace; font-size:12px; line-height:1.6; white-space:pre-wrap; max-height:260px; overflow:auto; position:relative; }
+  .card.open .prompt { display:block; }
+  .copy { margin-top:8px; display:none; border:none; background:#3d4470; color:#fff; border-radius:8px; padding:6px 14px; font-size:12.5px; cursor:pointer; align-self:flex-start; }
+  .card.open .copy { display:inline-block; }
+  .copy:active { transform:scale(.97); }
+  .copy.done { background:#1a7a46; }
+  footer { margin-top:26px; background:#fff; border-radius:12px; padding:18px 22px; font-size:13px; color:#5b6678; box-shadow:0 1px 3px rgba(20,30,50,.08); }
+  footer code { background:#eef0f5; border-radius:4px; padding:1px 6px; font-size:12px; }
+  .empty { text-align:center; color:#8a93a3; padding:40px 0; font-size:14px; display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🧪 Fable 5 案例庫</h1>
+    <p>從 X 書籤整理的 Claude Fable 5 實測案例——看別人做了什麼，複製 prompt 自己重現。</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="bar" id="cats"></div>
+  <div class="bar">
+    <span class="chip on" data-p="all">全部 prompt</span>
+    <span class="chip" data-p="原文">只看原文 prompt</span>
+    <span class="chip" data-p="重建">只看重建 prompt</span>
+    <input id="q" type="search" placeholder="搜尋案例、作者、關鍵字…">
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty">沒有符合的案例</div>
+
+  <footer>
+    <b>怎麼新增案例？</b>兩種方式：① 打開本檔案，資料都在 <code>&lt;script&gt;</code> 開頭的 <code>CASES</code> 陣列，照格式加一筆即可；② 把推文連結丟給 Claude 說「<b>加進 Fable 5 案例庫</b>」，會自動抓內容、補 prompt、更新這個檔案。<br><br>
+    <b>Prompt 標籤說明：</b><span class="badge b-orig">原文</span> 推文或原文章直接給出的指令；<span class="badge b-recon">重建</span> 根據案例描述補寫的可執行版本，效果可能與原案例有落差。
+  </footer>
+</div>
+
+<script>
+// ====== 資料區：新增案例往這裡加 ======
+// cat: 遊戲 | 模擬視覺化 | 文件簡報 | 創意藝術 | 工程研究
+// ptype: "原文" | "重建"
+const CASES = [
+ {
+  cat:"模擬視覺化", title:"太陽系模擬（NASA 螢幕保護程式等級）",
+  desc:"一個 prompt 出單一 HTML：八大行星真實軌道力學、土星環、衛星、小行星帶、程序化貼圖。",
+  author:"@ydamitcodes", likes:265, url:"https://x.com/ydamitcodes/status/2064422516727435737",
+  ptype:"原文",
+  prompt:`build me a solar system simulation`
+ },
+ {
+  cat:"模擬視覺化", title:"等時圈旅行時間地圖（1881 復刻版）",
+  desc:"Mollick 的招牌測試：自主派子代理查 2,200+ 航班與鐵路時刻，邊研究邊寫碼邊驗證，數小時交付互動地圖。",
+  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos",
+  img:"media/mollick-isochrone.png",
+  ptype:"原文",
+  prompt:`i want you to build a fully researched and beautiful isochronic map that lets me pick various cities and see real isochronic lines based on real data. I want the design to be unique. You should take into account airports (and travel time to and from airports) trains, walking, driving. The data does not need to be live but should be real based on your research and data. You can start with a few cities but more general is better, this should be an entirely new project.`
+ },
+ {
+  cat:"模擬視覺化", title:"擬真 AI 村莊模擬（跨模型對比實測）",
+  desc:"SimWorld 用同一 prompt 測多個模型，Fable 5「視覺上最強」：村莊更密、地形與建築擺放更好、生活痕跡細節到位。作者誠實註記：特寫下仍有建築懸空等破綻。",
+  author:"@simworld_ai (SimWorld)", likes:179, url:"https://x.com/simworld_ai/status/2064463042369507608",
+  ptype:"重建",
+  prompt:`Build a realistic living village simulation in a single HTML file. Requirements: dense natural terrain, organic building placement (no grid), villagers with daily routines (work, market, rest), lived-in details (smoke, laundry, carts, animals). Procedural generation only — no external assets. Day/night cycle. Make it feel inhabited, not generated.`
+ },
+ {
+  cat:"遊戲", title:"AI Lab 版大富翁（多人連線）",
+  desc:"地產全換成 AI 實驗室/新創；完整規則、金錢系統、回合制，還有多人共享代碼。壟斷後可以蓋機架升級資料中心。",
+  author:"@venturetwins (Justine Moore)", likes:1591, url:"https://x.com/venturetwins/status/2064504760951304346",
+  ptype:"原文",
+  prompt:`Recreate Monopoly, but make each of the properties an AI lab or startup. Implement everything — game rules, money system, turns, and share codes for multiplayer games. Once you have a monopoly, you can build racks and eventually a data center.`
+ },
+ {
+  cat:"遊戲", title:"完整 Pokémon 一代複刻（一發 8,000 行）",
+  desc:"Claude 5 Fable (extra high) 推理 1 小時、8,000 行 one shot：151 隻寶可夢的真實 sprites、叫聲、能力值、招式表、進化鏈、捕捉率全齊。作者自註約 95% 完成度（文字偶有破綻）；留言區指出素材應是模型自己上網抓的現成資源。",
+  author:"@ChrissGPT", likes:2211, url:"https://x.com/ChrissGPT/status/2064460197423153379",
+  ptype:"原文",
+  prompt:`Make a Pokémon clone`
+ },
+ {
+  cat:"遊戲", title:"瀏覽器版 Minecraft（20 分鐘 one shot）",
+  desc:"Claude 5 Fable (high)、網頁版聊天介面、20 分鐘：多生態系、日夜循環、礦脈、洞穴全齊。留言有人質疑「訓練資料裡本來就有一堆 Minecraft clone」，作者反問：那為什麼 GPT-5.5 和 Gemini 做不到這個速度和規模。",
+  author:"@ChrissGPT", likes:3993, url:"https://x.com/ChrissGPT/status/2064441716908703780",
+  ptype:"原文",
+  prompt:`Make a Minecraft clone`
+ },
+ {
+  cat:"遊戲", title:"擲硬幣版 Balatro",
+  desc:"Mollick 實測的小遊戲之一，「相當好玩」。所有美術都是純數學生成（Claude 不能生圖）。",
+  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos",
+  ptype:"原文",
+  prompt:`Balatro, but for the game of coin flips`
+ },
+ {
+  cat:"遊戲", title:"有自我意識的貪吃蛇",
+  desc:"蛇知道自己在遊戲裡，會吐槽玩家、打破第四面牆，越玩越瘋。",
+  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos",
+  ptype:"重建",
+  prompt:`Build a snake game where the snake is self-aware. It comments on the gameplay, complains about my skills, breaks the fourth wall, and increasingly crazy things happen as the game progresses (UI glitches, rule changes, the snake negotiating with you). Single HTML file, escalate the weirdness with score.`
+ },
+ {
+  cat:"文件簡報", title:"McKinsey 等級報告複製",
+  desc:"上傳一份 McKinsey 報告 → 要求同等品質的新文件。Riley Brown 與 Vaibhav 都實測成功，是發布日最瘋傳的案例。",
+  author:"@rileybrown / @VaibhavSisinty", likes:1729, url:"https://x.com/rileybrown/status/2064407515752722521",
+  ptype:"原文",
+  prompt:`(附上一份 McKinsey 報告 PDF)\n\nCreate a brand-new document of the same quality on [你的主題]: same analytical depth, same chart quality, same layout polish and visual language. Research the topic properly before writing. Deliver as a polished HTML report I can print to PDF.`
+ },
+ {
+  cat:"文件簡報", title:"一發出設計級投影片",
+  desc:"搭配 UI skill 一次生成「不像 AI 做的」投影片，含 HTML、Design.md、PPTX 三種產出。",
+  author:"@taiyo_ai_gakuse", likes:1409, url:"https://x.com/taiyo_ai_gakuse/status/2064514216628011192",
+  ptype:"重建",
+  prompt:`用 [你安裝的 slides/UI skill] 幫我做一份投影片：主題「[主題]」、10-12 頁、目標聽眾 [對象]。要求：先寫 Design.md 定義視覺系統（配色、字體、版式網格），再產出 HTML 投影片與 PPTX。資訊密度高但每頁只講一件事，圖表用 SVG 畫，不要用通用模板感的排版。`
+ },
+ {
+  cat:"創意藝術", title:"作曲 + 鋼琴視覺化播放器",
+  desc:"Fable 5 自己作了一段原創旋律（作者：「我超愛這段」），再順手蓋了一個鋼琴視覺化工具來演奏它。",
+  author:"@scaling01 (Lisan al Gaib)", likes:4135, url:"https://x.com/scaling01/status/2064425972217106736",
+  ptype:"重建",
+  prompt:`Compose an original melody (write it as actual note data, not a description), then build an HTML piano visualizer that performs it: animated falling notes, highlighted keys, play/pause/tempo controls. All sound synthesized with the Web Audio API. Single file. Make the composition genuinely musical — verse, build-up, resolution.`
+ },
+ {
+  cat:"創意藝術", title:"SVG 鵜鶘騎腳踏車（版本對比基準）",
+  desc:"花叔用同一題對比 Opus 4.8 vs Fable 5：「Fable 5 的鵜鶘看起來是個合格的美團騎手了」。適合當你自己的模型測試題。",
+  author:"@AlchainHust（花叔）", likes:78, url:"https://x.com/AlchainHust/status/2064524297469653459",
+  ptype:"重建",
+  prompt:`Generate an SVG animation of a pelican riding a bicycle. Anatomically plausible pelican, correct bicycle geometry, smooth looping pedaling motion with leg articulation, slight body bounce, background parallax. Pure SVG + CSS animation, no JS, single file.`
+ },
+ {
+  cat:"創意藝術", title:"每個字都 S 開頭的 10 頁押韻史詩",
+  desc:"關於剪頭髮的史詩長詩，每一個單字都以字母 s 開頭——測試硬約束下的長篇創作。",
+  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos",
+  ptype:"原文",
+  prompt:`Write a 10-page epic rhyming poem about a haircut where every word starts with the letter s.`
+ },
+ {
+  cat:"創意藝術", title:"雙手手勢操控 3D 故障方塊（TouchDesigner）",
+  desc:"webcam + MediaPipe 手部追蹤 + TouchDesigner，Claude 寫橋接腳本。原推宣稱有人靠這套接活動表演。完整六步驟教學在原推。",
+  author:"@CoinSh0t", likes:682, url:"https://x.com/CoinSh0t/status/2064384972857737505",
+  ptype:"原文",
+  prompt:`Write me a TouchDesigner Python script that creates a 3D glitchy cube controlled by both hands using the MediaPipe plugin.\n\nControls:\n- Midpoint between both hands moves the cube around the screen\n- Angle between the hands rotates the cube on X and Y axes\n- Distance between both hands scales the cube up or down\n- Left-hand pinch increases the noise distortion\n- Right-hand pinch cycles through colors\n- Fast movement triggers a glitch flash\n- Both fists freeze the frame for a screenshot\n\nOutput one Python DAT script with comments so I can tune each value.`
+ },
+ {
+  cat:"工程研究", title:"從零設計人形機器人",
+  desc:"2 小時、140 萬 tokens：機構設計、致動器選型、運動學、SVG 圖面、BOM 表全套。",
+  author:"@earthtojake", likes:2252, url:"https://x.com/earthtojake/status/2064535702138990855",
+  ptype:"重建",
+  prompt:`Design a humanoid robot from scratch. Deliverables: full mechanical specification (DOF budget, joint torque estimates), actuator and sensor selection with real part numbers, kinematic model, SVG technical diagrams (front/side/joint detail), bill of materials with cost estimate, and the control software architecture. Work autonomously — iterate until the design is internally consistent, and document every engineering tradeoff you make.`
+ },
+ {
+  cat:"工程研究", title:"Concord：人類/AI 評分校準軟體（9.5 小時）",
+  desc:"Mollick 最大型的案例：先讓 Fable 自己寫 19 頁設計文件再執行，產出研究者「需要多年但沒人做」的工具。",
+  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos",
+  img:"media/mollick-concord.png",
+  ptype:"重建",
+  prompt:`I do research where humans produce messy answers that need proper categorization, and calibrating AI raters against human raters is difficult and expensive. Solve this problem: first write a thorough (~19 page) design document for a software tool that can ingest multiple datasets, calibrate human and AI responses against each other, and run the downstream statistical analysis. Then implement the full design. Work autonomously and verify your work with tests as you go.`
+ },
+ // ====== 2026-06-10 X 搜尋新增 ======
+ {
+  cat:"遊戲", title:"一句話複刻 Skyrim",
+  desc:"2011 年度遊戲《上古卷軸 V》one prompt 複刻——而且 prompt 真的只有兩個字。發布日最病毒式的案例之一。",
+  author:"@spoobsV1", likes:4916, url:"https://x.com/spoobsV1/status/2064497402363465850",
+  ptype:"原文",
+  prompt:`make skyrim`
+ },
+ {
+  cat:"模擬視覺化", title:"寶塚記念賽馬模擬（自動操作資料庫軟體）",
+  desc:"讓 Fable 5 自己操作日本賽馬資料庫軟體 TARGET 做數據分析，再產出比賽模擬。亮點：模型自己學會用陌生的專業軟體。",
+  author:"@nobita1964", likes:975, url:"https://x.com/nobita1964/status/2064595297230278665",
+  ptype:"原文",
+  prompt:`これはTARGETと言って競馬データベースソフトです。このソフトを操作して今週末に阪神競馬場で行われる宝塚記念の分析をしてください\n\n（中譯：這是名為 TARGET 的賽馬資料庫軟體。請操作這個軟體，分析本週末在阪神競馬場舉行的寶塚記念。）`
+ },
+ {
+  cat:"模擬視覺化", title:"瑞士槓桿擒縱機械錶模擬（視覺自我驗證迴圈）",
+  desc:"「製錶師基準測試」：真實齒輪比（18,000 bph）、運作中的擒縱機構、會呼吸的游絲，指針走真實時間。關鍵在 prompt：要求模型蓋一套相機系統、用視覺能力逐零件檢查、迴圈到 100% 滿意——Boris Cherny 本人在留言區回了「Wow, that's cool」。",
+  author:"@quanghuynt14", likes:4046, url:"https://x.com/quanghuynt14/status/2064509430650065278",
+  ptype:"原文",
+  prompt:`/goal Build the most realistic mechanical watch movement in Three.js — visible gears, escapement, balance wheel, all animated and mechanically coherent (gear ratios must actually make the hands tell real time). Build a camera system to inspect it from every angle and zoom level, use your vision capabilities to verify each part, and loop until you are 100% satisfied. Save a screenshot of every iteration to ./iterations/ so I can make a time-lapse.`
+ },
+ {
+  cat:"工程研究", title:"一個 prompt 做三個 App",
+  desc:"單一 prompt 同時要求：Jarvis 風格儀表板、Apple Fitness 複刻、像素級複製自己的飯店網站——三個一次交付。",
+  author:"@MarcinAI81", likes:672, url:"https://x.com/MarcinAI81/status/2064551188243316926",
+  ptype:"重建",
+  prompt:`Build me 3 separate apps in one go, each as its own single HTML file:\n1. A Jarvis-style AI dashboard (dark sci-fi HUD, animated widgets, voice-wave visualizer, system stats)\n2. A pixel-faithful clone of the Apple Fitness app (rings, workout cards, awards)\n3. A pixel-perfect clone of this hotel website: [貼上網址或截圖]\nMatch the original designs as closely as possible. Finish all three before stopping.`
+ },
+ {
+  cat:"工程研究", title:"LP 設計圖 → Next.js 95% 像素還原（/goal 迴圈）",
+  desc:"把 Image2 生成的 LP 設計圖餵給 Claude Code，用 /goal + Playwright 截圖比對迴圈自動逼近 95% 還原度。原文 prompt 是完整的 loop 設計範本。",
+  author:"@yoshio_nocode", likes:501, url:"https://x.com/yoshio_nocode/status/2064617130046452023",
+  ptype:"原文",
+  prompt:`/goal 添付画像のLPをNext.jsで実装。再現度95%以上になるまで。\n画像以外の手段だと再現が難しそうな箇所は適切に素材をimage_genで画像生成しながら作成して。\n\n- アイコンや画像はなるべく元の画像と一致させること。\n  元画像から該当部分をクロップして参考画像としてimage_genに渡しつつ生成する\n  （codex exec は -i で参照画像を渡し、プロンプトは標準入力で渡す）\n- レスポンシブ対応すること。375〜1440pxの各幅で検証し、\n  横スクロールがないだけでなく、要素の重なり・見切れもないこと\n  （固定幅カードは w-full max-w-[Npx]、絶対配置レイアウトは広い幅のみで発動）\n- Playwrightでスクショ→元画像と比較→修正のループを回し、\n  npm run build が通ったら完了`
+ },
+ {
+  cat:"工程研究", title:"One shot 生成完整 Web 版作業系統",
+  desc:"單一 HTML：macOS 選單列+Dock、可拖拉視窗、檔案總管、終端機、合成音效播放器，桌面裡還內嵌可玩的 Minecraft。同作者另有 Windows 版（含 Edge、接龍、Copilot）。",
+  author:"@intheworldofai", likes:405, url:"https://x.com/intheworldofai/status/2064421915347812672",
+  ptype:"重建",
+  prompt:`Build a complete macOS-style web operating system in ONE single HTML file (embedded CSS + JS, no external assets):\n- macOS menu bar and dock with magnification\n- Draggable, resizable, minimizable app windows\n- Functional file explorer with a fake filesystem\n- Working terminal (basic commands) and browser mockup\n- SVG desktop icons, notification center, settings app with themes, boot screen\n- A music player with REAL sound synthesis via Web Audio API (no audio files)\n- A playable Minecraft-style voxel game that opens inside a desktop window\nMake everything actually functional, not mockups.`
+ },
+ {
+  cat:"文件簡報", title:"論文解說投影片（vs ChatGPT-5.5 Pro 對比）",
+  desc:"神經科學研究者用同一篇論文讓 Fable 5 和 GPT-5.5 Pro 各做解說投影片，結論：兩者都已達「幾乎無可挑剔」水準。",
+  author:"@_daichikonno（紺野大地）", likes:338, url:"https://x.com/_daichikonno/status/2064568579518050447",
+  ptype:"重建",
+  prompt:`(附上論文 PDF)\n\n請把這篇論文做成解說投影片（10-12 頁，HTML）：目標聽眾是相鄰領域的研究者。要求：研究背景與 gap → 方法（圖解實驗設計）→ 主要結果（重繪關鍵圖表為 SVG，不要截圖）→ 限制與未來方向。每頁一個重點，學術但不枯燥，配色克制。`
+ },
+ {
+  cat:"遊戲", title:"Subway Surfers 複刻（Three.js one shot）",
+  desc:"「目前看過 one shot 最強的 3JS 遊戲」——跑酷、收集、障礙閃避一次到位。",
+  author:"@_MaxBlade", likes:301, url:"https://x.com/_MaxBlade/status/2064399407231967545",
+  ptype:"重建",
+  prompt:`Make Subway Surfers in Three.js, single HTML file: endless runner on 3 lanes, swipe/arrow controls (jump, roll, lane change), trains and barriers to dodge, coin trails, increasing speed, a chasing guard camera intro, score + coins HUD, game over and restart. Stylized low-poly look generated entirely in code.`
+ },
+ {
+  cat:"創意藝術", title:"32 頁推理漫畫（Fable 5 編劇 + Luma 作畫）",
+  desc:"Fable 5 一發完成故事、分鏡與對白，Luma Uni-1 一發作畫，組成完整 32 頁推理漫畫。作者評語：「有點阿西莫夫味」。",
+  author:"@yachimat_manga", likes:257, url:"https://x.com/yachimat_manga/status/2064543142884581588",
+  ptype:"重建",
+  prompt:`寫一部 32 頁的本格推理短篇漫畫的完整製作稿：\n1. 故事大綱（密室或敘述性詭計，伏筆公平、結尾翻轉）\n2. 逐頁分鏡腳本：每頁的格數、構圖描述、鏡頭角度\n3. 每格的對白與旁白（完稿文字）\n4. 每格一段給圖像模型的英文作畫 prompt（統一畫風描述、角色外觀一致性鎖定）\n輸出成可直接逐格餵給圖像生成模型的格式。`
+ },
+ {
+  cat:"遊戲", title:"GTA 6 風格開放世界（180 萬 tokens）",
+  desc:"Fable 5 High 燒 1.8M tokens 生成的開放世界遊戲——駕車、街區、NPC。對比其他模型「算是做得相當好」。",
+  author:"@karankendre", likes:241, url:"https://x.com/karankendre/status/2064501092642419023",
+  ptype:"原文",
+  prompt:`build me a "GTA 6 clone game"`
+ },
+ // ====== 2026-06-11 X 搜尋新增 ======
+ {
+  cat:"工程研究", title:"4 個月的 fine-tuning 工作 → 3 小時變成可販售的 pipeline",
+  desc:"用 /goal 跑 3 小時：TUI + HTML 儀表板 + 資料集檢視器 + 39 個 skills、8,700 行代碼、235 個測試，一發 98% 完成度。把「個人研究成果產品化」的代表案例。",
+  author:"@cjzafir", likes:477, url:"https://x.com/cjzafir/status/2064732056350073246",
+  ptype:"重建",
+  prompt:`/goal 把這個 repo 裡我現有的 fine-tuning 工作，改造成可以賣給別人用的端到端 pipeline。直到：7 個階段全部可獨立執行與串接、有 TUI 操作介面、有 HTML 儀表板與資料集檢視器、常用操作封裝成 skills、測試覆蓋核心流程且全部通過。過程中自己跑測試驗證，不要問我，做完再回報。`
+ },
+ {
+  cat:"遊戲", title:"Webcam 手勢切水果遊戲（Fruit Ninja 式）",
+  desc:"單一 prompt + Higgsfield MCP：鏡頭手部追蹤、揮砍軌跡、水果物理、連擊計分一次到位。",
+  author:"@higgsfield_ai", likes:341, url:"https://x.com/higgsfield_ai/status/2064872661365494180",
+  ptype:"重建",
+  prompt:`Build a webcam-controlled fruit slicing game (Fruit Ninja style) in a single HTML file: MediaPipe hand tracking turns my index finger into the blade, slash trail effect, fruits tossed with physics arcs, slice-in-half animations, combo scoring, bombs to avoid. Generate fruit art via [你的圖像 MCP]（或改用 SVG 程序化生成）. Playable immediately in the browser.`
+ },
+ {
+  cat:"創意藝術", title:"照設計指南量產低多邊形 3D 模型",
+  desc:"前一天先讓 AI 寫好遊戲美術設計指南，隔天依指南量產 low-poly 3D 模型——初稿可愛到「幾乎零修改」。風格一致性是亮點。",
+  author:"@fe_yukichi", likes:328, url:"https://x.com/fe_yukichi/status/2064909426394611922",
+  ptype:"重建",
+  prompt:`(附上你的美術設計指南，或先讓 AI 產一份：配色票、輪廓規則、比例、面數預算)\n\n依照這份設計指南，量產 8 個低多邊形 3D 模型（樹、岩石、小屋、箱子、燈柱、柵欄、水井、推車）：每個都是程序化生成的 Three.js BufferGeometry（不用外部模型檔），嚴格遵守指南的配色與面數預算，輸出單一 HTML 展示頁可旋轉預覽每個模型。風格必須整組一致。`
+ },
+ {
+  cat:"遊戲", title:"類 Hades 動作 Roguelike ARPG（從空資料夾）",
+  desc:"Three.js + Rapier 物理：俯視角、波次刷怪、三段連擊、翻滾無敵幀。最猛的是 AI 自己決定用 KayKit CC0 素材、寫下載腳本、建 asset pipeline、量測 tile 尺寸動態拼地城。",
+  author:"@akiraxtwo", likes:258, url:"https://x.com/akiraxtwo/status/2064780732082651402",
+  ptype:"重建",
+  prompt:`從空資料夾開始，用 Three.js + Rapier 開發一款瀏覽器動作 Roguelike ARPG：類 Hades 俯視角、房間制地城、波次刷怪、三段連擊、翻滾帶無敵幀、擊殺掉落強化選擇。美術素材我不提供——自己找合適的 CC0 資源（如 KayKit），寫下載腳本建立 asset pipeline，量測 tile 尺寸後動態拼接地城。要可以直接 npm run dev 跑起來玩。`
+ },
+ {
+  cat:"模擬視覺化", title:"一張照片 → 完整 3D 物理模擬（MIT 教授實測）",
+  desc:"給一張階層網格環面的 2D 照片，one shot 推斷出完整 3D 拓撲：1,400 節點、4,400 纖維的質點-彈簧物理，可抓取/壓縮/扭轉，還加了應變音效化讓你「聽」結構震動。",
+  author:"@ProfBuehlerMIT（MIT 教授）", likes:250, url:"https://x.com/ProfBuehlerMIT/status/2064754615468638351",
+  ptype:"重建",
+  prompt:`(附上一張複雜 3D 結構的照片，例如階層網格環面)\n\nInfer the complete 3D topology of this structure from the photo, then build a full interactive simulation: mass-spring physics for every node and fiber, mouse interactions to grab / compress / twist it, plus strain-based sonification so I can hear the structure vibrate under deformation. Single HTML file, Three.js.`
+ },
+ {
+  cat:"遊戲", title:"One shot 恐怖遊戲",
+  desc:"作者同時回報：一發修好 GPT-5.5 / Opus 4.7 / 4.8 卡了兩個月的 bug，並因此退訂 $200 的 ChatGPT Pro。",
+  author:"@bridgemindai", likes:217, url:"https://x.com/bridgemindai/status/2064702524146290741",
+  ptype:"重建",
+  prompt:`Build a full first-person horror game in the browser, single HTML file with Three.js: dark facility with flickering lights and fog, flashlight with limited battery, an entity that stalks the player using simple sound-based AI, hiding spots, key-and-door progression, ambient dread audio synthesized with the Web Audio API, jump-scare triggers, win/lose endings. Atmosphere over gore.`
+ },
+ {
+  cat:"創意藝術", title:"單一 prompt 產出完整航海家號紀錄片（MP4）",
+  desc:"自己上網找 NASA/JPL 公有領域素材、剪成 16:9、規劃 8 個視覺節拍、缺口用 AI 生成補（有標注）、寫旁白 + TTS 配音、輸出成品 MP4——全自動。",
+  author:"@higgsfield", likes:180, url:"https://x.com/higgsfield/status/2064858973216580002",
+  ptype:"重建",
+  prompt:`Make a complete short documentary (3-5 min, 16:9 MP4) about the Voyager missions:\n1. Source public-domain NASA/JPL footage and stills from the web, clip into 16:9 segments\n2. Plan 8 visual beats with a narrative arc (launch → grand tour → golden record → interstellar)\n3. Fill footage gaps with AI-generated shots, clearly labeled as such\n4. Write the narration script, synthesize with TTS\n5. Assemble and export the final MP4 with ffmpeg\nDo every step yourself, end to end.`
+ },
+ {
+  cat:"遊戲", title:"一句話複刻《GTA: Vice City》（可線上試玩）",
+  desc:"中文 prompt 一句話，瀏覽器版罪惡都市直接能玩。與 Skyrim 案例同款的「遊戲名即 prompt」流派。",
+  author:"@ezshine（大帥老猿）", likes:170, url:"https://x.com/ezshine/status/2064838956550918319",
+  ptype:"原文",
+  prompt:`制作浏览器可运行的《GTA：Vice City》`
+ },
+ {
+  cat:"工程研究", title:"在 Autodesk Fusion 裡設計一架波音 747",
+  desc:"一個 prompt 讓 Fable 5 直接操作工業 CAD 軟體完成整架 747 建模——「大模型生吞工業軟體」的代表案例（原案例來自 Adam Goodyer）。",
+  author:"@VedaAI00（轉述）", likes:137, url:"https://x.com/VedaAI00/status/2064861614713835629",
+  ptype:"重建",
+  prompt:`透過 Autodesk Fusion 的 MCP/API，從零設計一架波音 747：機身分段放樣、機翼（正確後掠角與上反角）、四具吊掛引擎、起落架、尾翼，尺寸依公開規格參數化。每個主要部件獨立 component，最後組裝成總成並輸出三視圖截圖讓我驗收。`
+ },
+ // ====== 2026-06-11 使用者提供 ======
+ {
+  cat:"創意藝術", title:"墨水流體交融的視覺演出（可線上玩）",
+  desc:"作者故意出難題測 Fable 5 的表現力極限：「墨水像流體一樣溶合」的互動演出——結果「就這樣成形了」。12.4k 讚，附可遊玩連結，設計表現力的代表案例。",
+  author:"@hayashimon1（ハヤシモン）", likes:12491, url:"https://x.com/hayashimon1/status/2064658158698782873",
+  ptype:"重建",
+  prompt:`Build an interactive web page where colored inks dissolve and blend into each other like real fluids: mouse drag injects ink, colors swirl and diffuse with fluid-dynamics-like motion (Navier-Stokes style or convincing approximation), elegant minimal UI, runs smoothly at 60fps in a single HTML file with WebGL. Aim for an art-installation level of polish.`
+ },
+ {
+  cat:"工程研究", title:"「Fable 5 解決了 CAD」：10 分鐘建出可動 V8 引擎",
+  desc:"要求做一個 V8 引擎模型，10 分鐘內回來一個完整可運作的模型——曲軸、活塞連動全套。與波音 747 案例同屬 CAD 流派，這則更病毒（2.7k 讚）。",
+  author:"@aaronli (Aaron Li)", likes:2719, url:"https://x.com/aaronli/status/2064876123109089742",
+  ptype:"原文",
+  prompt:`make a model of a V8 engine`
+ },
+ {
+  cat:"遊戲", title:"競選洛杉磯市長的開放世界 RPG",
+  desc:"「擬真開放世界 RPG，主題是競選 LA 市長」——作者評語：支線任務瘋得令人上癮。展示 Fable 5 對非典型遊戲題材的詮釋力。",
+  author:"@TBC_on_X", likes:1327, url:"https://x.com/TBC_on_X/status/2064787472731816411",
+  ptype:"原文",
+  prompt:`make a realistic open-world RPG about running for mayor of LA`
+ },
+ {
+  cat:"模擬視覺化", title:"黑洞誕生過程動畫頁（含字幕解說）",
+  desc:"小互的兩段式做法：先一句話出初版 → 效果不夠好，改用「目標式」描述（炫酷動畫過程 + 文字字幕解說 + 配音）重做。誠實註記：本地 TTS 配音效果不佳。",
+  author:"@xiaohu（小互）", likes:150, url:"https://x.com/xiaohu/status/2064908115469013360",
+  ptype:"重建",
+  prompt:`做一個黑洞誕生過程的動畫頁面。我的目標：炫酷的全程動畫（恆星塌縮 → 超新星 → 事件視界形成 → 吸積盤），每個階段配上文字字幕解說，單一 HTML 檔、WebGL 渲染。先給我分鏡規劃再實作，動畫要有電影感的運鏡。`
+ },
+ {
+  cat:"工程研究", title:"被裁量化交易員 48 小時重建整套算法（⚠️ 故事型）",
+  desc:"「Citadel 裁掉的頂級量化用 Fable 5 在 48 小時重建算法、反手做空獲利 43 萬美元」——典型變現故事文：無法驗證、無 demo、無原始 prompt，當敘事看就好。技術上「用 AI 重建腦中的交易邏輯」這件事本身是可行方向。",
+  author:"@FinanceYF5 (AI Will)", likes:497, url:"https://x.com/FinanceYF5/status/2064879823424725466",
+  ptype:"重建",
+  prompt:`/goal 把我描述的交易策略邏輯實作成完整的回測系統：資料載入（OHLCV）、訊號生成模組、部位管理、手續費與滑價模型、績效報表（Sharpe、最大回撤、勝率）。我口述邏輯、你寫碼，每個模組寫完先跑單元測試，最後用近三年資料跑完整回測並輸出 HTML 報告。（注意：這是工程重建範本，不構成任何投資建議）`
+ }
+];
+// ====== 資料區結束 ======
+
+const CAT_COLOR = {"遊戲":"#7a4a9e","模擬視覺化":"#1f5a64","文件簡報":"#33558c","創意藝術":"#b9504f","工程研究":"#2d6647"};
+let cat="all", pt="all", q="";
+
+const cats = ["all",...Object.keys(CAT_COLOR)];
+document.getElementById('cats').innerHTML = cats.map(c=>
+  `<span class="chip${c==='all'?' on':''}" data-c="${c}">${c==='all'?'全部分類':c}</span>`).join('');
+
+function render(){
+  const grid = document.getElementById('grid');
+  const list = CASES.filter(x=>
+    (cat==='all'||x.cat===cat) && (pt==='all'||x.ptype===pt) &&
+    (!q || (x.title+x.desc+x.author+x.prompt).toLowerCase().includes(q)));
+  grid.innerHTML = list.map((x,i)=>{
+    const tid = (x.url.match(/status\/(\d+)/)||[])[1];
+    const img = x.img || (tid ? `media/${tid}.jpg` : null);
+    return `
+    <div class="card" data-i="${i}">
+      <div class="stripe" style="background:${CAT_COLOR[x.cat]}"></div>
+      ${img?`<img class="shot" src="${img}" loading="lazy" alt="" onerror="this.remove()">`:''}
+      <div class="body">
+        <div class="cat" style="color:${CAT_COLOR[x.cat]}">${x.cat}<span class="badge ${x.ptype==='原文'?'b-orig':'b-recon'}">${x.ptype} prompt</span></div>
+        <h3>${x.title}</h3>
+        <div class="desc">${x.desc}</div>
+        <div class="meta">${x.author} · ❤️ ${x.likes.toLocaleString()} · <a href="${x.url}" target="_blank">原推 ↗</a></div>
+        <span class="ptoggle">▸ 看 prompt</span>
+        <div class="prompt">${x.prompt.replace(/</g,'&lt;')}</div>
+        <button class="copy">📋 複製 prompt</button>
+      </div>
+    </div>`;}).join('');
+  document.getElementById('empty').style.display = list.length?'none':'block';
+  document.getElementById('stats').textContent =
+    `${CASES.length} 個案例 · ${CASES.filter(x=>x.ptype==='原文').length} 個原文 prompt · ${CASES.filter(x=>x.ptype==='重建').length} 個重建 prompt · 目前顯示 ${list.length} 個`;
+
+  grid.querySelectorAll('.ptoggle').forEach(el=>el.onclick=e=>{
+    const card = e.target.closest('.card');
+    card.classList.toggle('open');
+    e.target.textContent = card.classList.contains('open')?'▾ 收起 prompt':'▸ 看 prompt';
+  });
+  grid.querySelectorAll('.copy').forEach((el,idx)=>el.onclick=e=>{
+    navigator.clipboard.writeText(list[idx].prompt);
+    e.target.textContent='✅ 已複製'; e.target.classList.add('done');
+    setTimeout(()=>{e.target.textContent='📋 複製 prompt'; e.target.classList.remove('done');},1500);
+  });
+}
+
+document.getElementById('cats').onclick=e=>{
+  if(!e.target.dataset.c) return;
+  cat=e.target.dataset.c;
+  document.querySelectorAll('#cats .chip').forEach(c=>c.classList.toggle('on',c===e.target));
+  render();
+};
+document.querySelectorAll('[data-p]').forEach(el=>el.onclick=e=>{
+  pt=e.target.dataset.p;
+  document.querySelectorAll('[data-p]').forEach(c=>c.classList.toggle('on',c===e.target));
+  render();
+});
+document.getElementById('q').oninput=e=>{q=e.target.value.toLowerCase();render();};
+render();
+</script>
+</body>
+</html>
