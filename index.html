@@ -13,6 +13,7 @@
   header p { font-size:14px; opacity:.85; }
   header .stats { margin-top:12px; font-size:13px; opacity:.75; }
   header .legend { margin-top:12px; font-size:12.5px; opacity:.95; line-height:2; }
+  header .updated { font-size:12.5px; opacity:.7; margin-bottom:8px; }
   .bar { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; align-items:center; }
   .chip { border:1px solid #c9cedb; background:#fff; border-radius:999px; padding:5px 14px; font-size:13px; cursor:pointer; user-select:none; transition:all .15s; }
   .chip:hover { border-color:#3d4470; }
@@ -48,6 +49,7 @@
 <div class="wrap">
   <header>
     <h1>🧪 Fable 5 案例庫</h1>
+    <div class="updated" id="updated"></div>
     <p>從 X 書籤整理的 Claude Fable 5 實測案例——看別人做了什麼，複製 prompt 自己重現。</p>
     <div class="stats" id="stats"></div>
     <div class="legend"><span class="badge b-orig">原文 prompt</span> 推文或原文章直接給出的指令　<span class="badge b-recon">重建 prompt</span> 根據案例描述補寫的可執行版本，效果可能與原案例有落差</div>
@@ -432,6 +434,20 @@ document.querySelectorAll('[data-p]').forEach(el=>el.onclick=e=>{
 });
 document.getElementById('q').oninput=e=>{q=e.target.value.toLowerCase();render();};
 render();
+
+(async()=>{
+  const el = document.getElementById('updated');
+  const fmt = d => d.toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Taipei'});
+  try{
+    const r = await fetch('https://api.github.com/repos/EugeneinTW/fable5-cases/commits?per_page=1');
+    if(!r.ok) throw 0;
+    const j = await r.json();
+    el.textContent = '最後更新：' + fmt(new Date(j[0].commit.committer.date));
+  }catch(e){
+    const d = new Date(document.lastModified);
+    el.textContent = isNaN(d) ? '' : '最後更新：' + fmt(d);
+  }
+})();
 </script>
 </body>
 </html>
