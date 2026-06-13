@@ -83,7 +83,7 @@ const CASES = [
  {
   cat:"模擬視覺化", title:"等時圈旅行時間地圖（1881 復刻版）",
   desc:"Mollick 的招牌測試：自主派子代理查 2,200+ 航班與鐵路時刻，邊研究邊寫碼邊驗證，數小時交付互動地圖。",
-  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos",
+  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos", date:"2026/06/09",
   img:"media/mollick-isochrone.png",
   ptype:"原文",
   prompt:`i want you to build a fully researched and beautiful isochronic map that lets me pick various cities and see real isochronic lines based on real data. I want the design to be unique. You should take into account airports (and travel time to and from airports) trains, walking, driving. The data does not need to be live but should be real based on your research and data. You can start with a few cities but more general is better, this should be an entirely new project.`
@@ -119,14 +119,14 @@ const CASES = [
  {
   cat:"遊戲", title:"擲硬幣版 Balatro",
   desc:"Mollick 實測的小遊戲之一，「相當好玩」。所有美術都是純數學生成（Claude 不能生圖）。",
-  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos",
+  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos", date:"2026/06/09",
   ptype:"原文",
   prompt:`Balatro, but for the game of coin flips`
  },
  {
   cat:"遊戲", title:"有自我意識的貪吃蛇",
   desc:"蛇知道自己在遊戲裡，會吐槽玩家、打破第四面牆，越玩越瘋。",
-  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos",
+  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos", date:"2026/06/09",
   ptype:"重建",
   prompt:`Build a snake game where the snake is self-aware. It comments on the gameplay, complains about my skills, breaks the fourth wall, and increasingly crazy things happen as the game progresses (UI glitches, rule changes, the snake negotiating with you). Single HTML file, escalate the weirdness with score.`
  },
@@ -161,7 +161,7 @@ const CASES = [
  {
   cat:"創意藝術", title:"每個字都 S 開頭的 10 頁押韻史詩",
   desc:"關於剪頭髮的史詩長詩，每一個單字都以字母 s 開頭——測試硬約束下的長篇創作。",
-  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos",
+  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos", date:"2026/06/09",
   ptype:"原文",
   prompt:`Write a 10-page epic rhyming poem about a haircut where every word starts with the letter s.`
  },
@@ -182,7 +182,7 @@ const CASES = [
  {
   cat:"工程研究", title:"Concord：人類/AI 評分校準軟體（9.5 小時）",
   desc:"Mollick 最大型的案例：先讓 Fable 自己寫 19 頁設計文件再執行，產出研究者「需要多年但沒人做」的工具。",
-  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos",
+  author:"@emollick（Substack 原文）", likes:3089, url:"https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos", date:"2026/06/09",
   img:"media/mollick-concord.png",
   ptype:"重建",
   prompt:`I do research where humans produce messy answers that need proper categorization, and calibrating AI raters against human raters is difficult and expensive. Solve this problem: first write a thorough (~19 page) design document for a software tool that can ingest multiple datasets, calibrate human and AI responses against each other, and run the downstream statistical analysis. Then implement the full design. Work autonomously and verify your work with tests as you go.`
@@ -434,6 +434,11 @@ function render(){
   grid.innerHTML = list.map((x,i)=>{
     const tid = (x.url.match(/status\/(\d+)/)||[])[1];
     const img = x.img || (tid ? `media/${tid}.jpg` : null);
+    let dateStr = x.date || '';
+    if(!dateStr && tid){
+      const d = new Date(Number((BigInt(tid) >> 22n) + 1288834974657n));
+      dateStr = d.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',timeZone:'Asia/Taipei'});
+    }
     return `
     <div class="card" data-i="${i}">
       <div class="stripe" style="background:${CAT_COLOR[x.cat]}"></div>
@@ -442,7 +447,7 @@ function render(){
         <div class="cat" style="color:${CAT_COLOR[x.cat]}">${x.cat}<span class="badge ${x.ptype==='原文'?'b-orig':'b-recon'}">${x.ptype} prompt</span></div>
         <h3>${x.title}</h3>
         <div class="desc">${x.desc}</div>
-        <div class="meta">${x.author} · ❤️ ${x.likes.toLocaleString()} · <a href="${x.url}" target="_blank">原推 ↗</a></div>
+        <div class="meta">${dateStr?'📅 '+dateStr+' · ':''}${x.author} · ❤️ ${x.likes.toLocaleString()} · <a href="${x.url}" target="_blank">原推 ↗</a></div>
         <span class="ptoggle">▸ 看 prompt</span>
         <div class="prompt">${x.prompt.replace(/</g,'&lt;')}</div>
         <button class="copy">📋 複製 prompt</button>
