@@ -360,18 +360,61 @@ const CASES = [
  },
  // ====== 2026-06-12 自動更新 ======
  {
-  cat:"模擬視覺化", title:"瑞士機械錶機芯模擬（Three.js 槓桿擒縱機構）",
-  desc:"一個 prompt 在 Three.js 裡生出機械結構正確的瑞士槓桿擒縱機芯模擬：擒縱輪、擺輪游絲、叉瓦依真實節律運作，全程序化生成、無手工建模。誠實保留：由 Polymarket、0xMarioNawfal 等新聞帳號轉述，原作者與原始 prompt 不明、無法直接驗證。",
-  author:"@Polymarket（新聞帳號轉述）", likes:5766, url:"https://x.com/Polymarket/status/2064724427313398265",
-  ptype:"重建",
-  prompt:`Build a single self-contained HTML file using Three.js that simulates a mechanically accurate Swiss lever escapement watch movement. Procedurally generate (no manual modeling) the mainspring barrel, gear train, balance wheel with hairspring, pallet fork and escape wheel. The escapement should tick at a realistic beat rate and visibly transfer impulse to the balance wheel each oscillation. Render in 3D with metallic materials and proper lighting, add OrbitControls so I can inspect the movement from any angle, and a slider to scrub the simulation speed.`
- },
- {
   cat:"遊戲", title:"3D Cuphead 復刻（開場過場＋教學＋兩關卡）",
   desc:"用一個兩行 prompt 生成 3D 版《Cuphead》：含開場過場動畫、教學關、島嶼場景與兩個關卡，3D 視覺亮眼且作者稱「實際好玩」。誠實保留：由 @pozitiv4ik 轉述展示，可能非原作者，未附原始 prompt 全文。",
   author:"@Gc_qube (pozitiv4ik，轉述)", likes:165, url:"https://x.com/Gc_qube/status/2065176695657628154",
   ptype:"重建",
   prompt:`Build a playable 3D clone of Cuphead in a single project. Include an opening cutscene, a tutorial level, an overworld island to navigate, and two playable platformer/boss levels. Use a hand-drawn 1930s rubber-hose cartoon art style. Run-and-gun controls: move, jump, dash and shoot. Procedurally lay out the levels and make it actually fun to play.`
+ },
+ // ====== 2026-06-13 自 awesome-claude-fable-5 溯源新增 ======
+ {
+  cat:"遊戲", title:"兩句話做出 Mario Kart 64 級賽車遊戲",
+  desc:"兩句 prompt、單發 15 分鐘：角色與裝飾模型、4 張地圖、音樂、三種遊戲模式、UI 全部到位，消耗 Max 5x 方案 40% 額度。作者反應：「What the fuck.」",
+  author:"@kieradev (Kiera)", likes:773, url:"https://x.com/kieradev/status/2064482704763085202",
+  ptype:"重建",
+  prompt:`Make a full Mario Kart 64 style racing game in the browser (Three.js, single page): 4 distinct tracks, 3 game modes (grand prix, time trial, battle), kart characters with simple 3D models, drift and item mechanics, lap/position UI, and synthesized background music. Generate all assets with code — no external files.`
+ },
+ {
+  cat:"工程研究", title:"放手讓它審一個 74 檔案的大型 PR",
+  desc:"74 檔案 / +3,705 / -1,246 行的 PR：跑了 34 分鐘（吃掉 5 小時 session 額度的 42%），產出 16 條 correctness 發現——其中 3 個真正的審計級 bug、2 個聽起來嚇人的誤報。誠實數據：能抓真 bug，但誤報和額度成本都存在。",
+  author:"@ryanrhughes (Ryan R. Hughes)", likes:534, url:"https://x.com/ryanrhughes/status/2064411147076534705",
+  ptype:"重建",
+  prompt:`Review this entire PR (all changed files) for correctness only — not style. For each finding: severity, the exact file/line, why it's wrong, a minimal fix, and your confidence level. Explicitly separate "certain bugs" from "needs human verification". Then summarize: which findings would you block the merge on?`
+ },
+ {
+  cat:"遊戲", title:"裝在終端機裡的 Rust 版 Minecraft",
+  desc:"用 Warp 的 harness 跑一小時：純 Rust 寫的 TUI 版 Minecraft，直接在終端機渲染 3D，而且發佈成套件——cargo install termcraft-3d 就能裝。從 demo 到「可安裝軟體」的距離只有一小時。",
+  author:"@vikvang1 (sathvik)", likes:312, url:"https://x.com/vikvang1/status/2064500731848319303",
+  ptype:"重建",
+  prompt:`Build a Minecraft-style voxel game that renders in 3D directly inside the terminal (TUI), written entirely in Rust: raycasting or ASCII/ANSI-block rendering, WASD movement, block breaking/placing, procedural terrain. Package it as a publishable crate with a proper CLI entry point so it can be installed via cargo install.`
+ },
+ {
+  cat:"工程研究", title:"1,687 個 prompt、102 個 session 蓋出 Spawn 5.0",
+  desc:"長戰役型案例：包含一個從零寫的物理引擎（mantle）。作者的角色轉變是金句：「我的工作從架構設計，變成了品味的裁判（judging taste）」——每件產出他估計用 Opus 時代都要一整個團隊做一個月。",
+  author:"@jsnnsa (jacob)", likes:253, url:"https://x.com/jsnnsa/status/2064420561078693941",
+  ptype:"重建",
+  prompt:`（這是長期工作模式而非單一 prompt——可複製的是方法）\n把大型專案拆成獨立 session：每個 session 一個明確子目標（模組/功能/重構），開場只給該子目標的最小上下文與驗收標準，產出先過測試再人工審「品味」（API 手感、命名、架構一致性）。人不寫碼、不畫架構圖，只做兩件事：定義驗收、裁判品質。`
+ },
+ {
+  cat:"遊戲", title:"手指追蹤小恐龍跑酷（11 分鐘 one shot）",
+  desc:"Chrome 小恐龍 + webcam 手指追蹤操控：11-12 分鐘、914K tokens、629 行代碼一發完成。與切水果案例同屬「鏡頭互動遊戲」流派，但這則有完整的時間/token/行數數據。",
+  author:"@ai_for_success (Ashutosh)", likes:190, url:"https://x.com/ai_for_success/status/2064413182396108932",
+  ptype:"重建",
+  prompt:`Build a Chrome dino runner game controlled by finger tracking: use MediaPipe hands via webcam — raise finger to jump, lower to duck. Single HTML file, canvas rendering, increasing speed, score counter, game over + restart. Show a small webcam preview with the tracked fingertip highlighted.`
+ },
+ {
+  cat:"模擬視覺化", title:"《六人行》Monica 公寓：平面圖 → 可走動 3D 場景",
+  desc:"餵一張平面圖，要求忠於原劇場景＋暖色燈光，產出第一人稱可走動的 Three.js 場景。作者：「這是我這個測試題看過最強的結果」。圖片轉空間的代表案例。",
+  author:"@scottstts (Scott)", likes:148, url:"https://x.com/scottstts/status/2064464351906673029",
+  ptype:"原文",
+  prompt:`in threejs, create a first person pov navigable 3d scene of the iconic Monica's apartment from tv show Friends correctly based on this floor plan, stay true to the original look and feel, use warm lighting\n\n（附上公寓平面圖一張）`
+ },
+ {
+  cat:"模擬視覺化", title:"從物理第一性原理推導太陽系（含日食預測）",
+  desc:"不是「畫一個太陽系」，而是要求從物理基本原理推導行星軌道運動、再用它預測日食——幾輪往返完成，附公開遊玩連結。跟另一張太陽系卡對照：同題材、不同層次的 prompt 設計。",
+  author:"@tetumemo（テツメモ）", likes:102, url:"https://x.com/tetumemo/status/2064477582930989357",
+  ptype:"原文",
+  prompt:`物理学の基本原理に基づいて惑星の軌道運動を導き出し、それを用いて日食を予測することで、太陽系のシミュレーションを構築して\n\n（中譯：基於物理學的基本原理推導出行星的軌道運動，並用它來預測日食，以此建構一個太陽系模擬。）`
  }
 ];
 // ====== 資料區結束 ======
