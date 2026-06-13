@@ -415,6 +415,35 @@ const CASES = [
   author:"@tetumemo（テツメモ）", likes:102, url:"https://x.com/tetumemo/status/2064477582930989357",
   ptype:"原文",
   prompt:`物理学の基本原理に基づいて惑星の軌道運動を導き出し、それを用いて日食を予測することで、太陽系のシミュレーションを構築して\n\n（中譯：基於物理學的基本原理推導出行星的軌道運動，並用它來預測日食，以此建構一個太陽系模擬。）`
+ },
+ // ====== 2026-06-13 awesome repo 後段（教學/評測區）溯源 ======
+ {
+  cat:"工程研究", title:"複製即用：整個 repo 的審計與改進計畫 prompt",
+  desc:"3.7k 讚的「拿到 Fable 5 第一件事」：對你重要的每個 repo 跑這段四階段審計 prompt（探索→分級審計→策略→里程碑任務清單），要求每條發現都附 file:line、不能驗證就明說。是這批裡最實用的可複用 prompt。",
+  author:"@meta_alchemist (Meta Alchemist)", likes:3703, url:"https://x.com/meta_alchemist/status/2064431279383433646",
+  ptype:"原文",
+  prompt:`You are a world-class principal-level software engineer and technical auditor. Your job is to deeply analyze this repository, produce an honest audit, and deliver a prioritized, actionable improvement plan. Work in the four phases below, in order. Do not skip ahead. Ground every claim in actual files: cite file paths and line numbers. If you can't verify something, say so explicitly rather than guessing.\n\nPhase 1 / Discovery & Mapping (read before judging): map the directory structure, identify project type/languages/frameworks/runtime; find entry points, core modules, main data/control flow; read manifests, lockfiles, build/CI config, docs; determine the project's purpose, users, maturity; note existing conventions so recommendations fit the culture. Output a concise "Repo Map".\n\nPhase 2 / Audit (evidence-based, severity-rated): for every finding record what / where (file:line) / why it matters / severity (Critical/High/Medium/Low). Cover architecture & design (boundaries, coupling, circular deps, leaky abstractions, god files, layering, scalability), code quality (duplication, dead code, complexity hotspots), plus correctness, security, performance, tests, docs.\n\nPhase 3 / Strategy: synthesize the audit into a prioritized improvement strategy (quick wins vs structural bets, with rough effort/impact).\n\nPhase 4 / Milestone task plan: turn the strategy into an ordered, actionable task list grouped into milestones, each task small enough to action.`
+ },
+ {
+  cat:"模擬視覺化", title:"Fable 5 vs Opus 4.8 物理模擬三題對決",
+  desc:"同三道題給兩個模型，要求純手寫物理、零函式庫的自包含 HTML5 模擬：① 混沌雙擺 ② 高爾頓釘板 ③ 旋轉桶中的水（WCSPH 流體）。結論 Fable 5 勝出。適合拿來自己對照測模型。",
+  author:"@atomic_chat_hq (atomic.chat)", likes:2863, url:"https://x.com/atomic_chat_hq/status/2064488894398161377",
+  ptype:"重建",
+  prompt:`Build three self-contained HTML5 physics simulations, each a single file with real physics and NO external libraries (write the integrator yourself):\n1. A chaotic double pendulum (correct Lagrangian / RK4 integration, trace the tip)\n2. A Galton board (balls bouncing off pegs into a binomial distribution histogram)\n3. Water in a spinning drum using WCSPH (weakly compressible SPH) fluid simulation\nReal-time canvas rendering, adjustable parameters, 60fps. Make the physics actually correct, not faked.`
+ },
+ {
+  cat:"文件簡報", title:"用「起草一份 S-1」測模型的法律與綜合能力",
+  desc:"創投人 Gabe Pereyra 的固定測題：每換新模型就丟「Draft an S-1」（IPO 招股書）——從產出的長度、格式、結構、文筆就能快速判斷模型在通用與法律任務上的躍升幅度。一個聰明的快速基準題。",
+  author:"@gabepereyra (Gabe Pereyra)", likes:239, url:"https://x.com/gabepereyra/status/2064436570720284879",
+  ptype:"原文",
+  prompt:`Draft an S-1`
+ },
+ {
+  cat:"工程研究", title:"全站設計審計 /goal prompt（開站→截圖→改 bug）",
+  desc:"用 /goal 讓 Fable 5 自己啟動網站、逐頁截圖、審 UX、寫報告、並順手修掉安全的小問題。把「設計審查」變成一條可執行迴圈的範本。",
+  author:"@Voxyz_ai (Vox)", likes:217, url:"https://x.com/Voxyz_ai/status/2064441201084825921",
+  ptype:"重建",
+  prompt:`/goal 啟動我的網站（npm run dev 或給定的 URL），用瀏覽器逐頁截圖，做一份完整的 UX/設計審計：資訊層級、對比與可讀性、間距一致性、RWD 斷點問題、互動回饋、無障礙。把發現按嚴重度寫成報告（附截圖與 file:line）。其中安全、明確、低風險的小修正（typo、對比、間距、alt 文字）直接幫我改掉；有設計取捨爭議的只提建議、不動手。改完跑一次 build 確認沒壞。`
  }
 ];
 // ====== 資料區結束 ======
