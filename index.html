@@ -43,6 +43,26 @@
   .copy:active { transform:scale(.97); }
   .copy.done { background:#1a7a46; }
   .empty { text-align:center; color:#8a93a3; padding:40px 0; font-size:14px; display:none; }
+  .tabs { display:flex; gap:8px; margin-bottom:14px; }
+  .tab { border:1px solid #c9cedb; background:#fff; border-radius:999px; padding:8px 20px; font-size:14.5px; font-weight:600; cursor:pointer; user-select:none; }
+  .tab.on { background:#21253b; color:#fff; border-color:#21253b; }
+  .gintro { background:#eef1f8; border:1px solid #ccd4e8; border-radius:14px; padding:18px 24px; margin-bottom:14px; font-size:14px; color:#33415e; }
+  .gintro a { color:#3d4470; }
+  .gcard { background:#fff; border-radius:14px; padding:20px 24px; margin-bottom:14px; box-shadow:0 1px 3px rgba(20,30,50,.08); }
+  .gcard h2 { font-size:17px; margin-bottom:10px; color:#21253b; }
+  .gcard p { font-size:14px; color:#3c4655; margin-bottom:8px; line-height:1.7; }
+  .gtag { display:inline-block; border-radius:5px; padding:1px 8px; font-size:11.5px; font-weight:700; margin-right:6px; }
+  .gt-w { background:#eef0f5; color:#3d4470; }
+  .gt-t { background:#e2f3e9; color:#1a7a46; }
+  .gprompt { background:#1c2030; color:#cdd6e8; border-radius:10px; padding:12px 14px; font-family:ui-monospace,Menlo,monospace; font-size:12px; line-height:1.6; white-space:pre-wrap; margin:10px 0 8px; }
+  .gcopy { border:none; background:#3d4470; color:#fff; border-radius:8px; padding:5px 12px; font-size:12px; cursor:pointer; }
+  .gcopy.done { background:#1a7a46; }
+  .gcase { font-size:13px; color:#5b6678; margin-top:8px; }
+  .gcase a { color:#3d4470; cursor:pointer; text-decoration:underline; }
+  .gnote { background:#fdf3e3; border:1px solid #ecd9b0; border-radius:10px; padding:12px 16px; font-size:13.5px; color:#6e5a2e; margin:10px 0 4px; }
+  .gtable { width:100%; border-collapse:collapse; font-size:13.5px; margin:10px 0 6px; }
+  .gtable th { background:#21253b; color:#fff; text-align:left; padding:8px 12px; }
+  .gtable td { padding:8px 12px; border-top:1px solid #eef0f4; }
 </style>
 </head>
 <body>
@@ -55,6 +75,12 @@
     <div class="legend"><span class="badge b-orig">原文 prompt</span> 推文或原文章直接給出的指令　<span class="badge b-recon">重建 prompt</span> 根據案例描述補寫的可執行版本，效果可能與原案例有落差</div>
   </header>
 
+  <div class="tabs">
+    <span class="tab on" data-t="cases">📚 案例庫</span>
+    <span class="tab" data-t="guide">🎓 官方 Prompting 指南（新手版）</span>
+  </div>
+
+  <div id="tab-cases">
   <div class="bar" id="cats"></div>
   <div class="bar">
     <span class="chip on" data-p="all">全部 prompt</span>
@@ -65,6 +91,115 @@
 
   <div class="grid" id="grid"></div>
   <div class="empty" id="empty">沒有符合的案例</div>
+  </div>
+
+  <div id="tab-guide" style="display:none">
+
+    <div class="gintro">
+      這是 <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5" target="_blank">Anthropic 官方《Prompting Claude Fable 5》指南</a>的新手解讀版：每一節先講「官方在說什麼」、再用白話解釋「為什麼」、附上可以直接複製貼上的英文指令（官方原文），最後連到案例庫裡的實際例子。<br><br>
+      <b>一句話總綱：把 Fable 5 當成「能獨立工作好幾小時的同事」，而不是「一問一答的聊天機器人」——你的工作從下指令，變成定義目標、給足背景、設好界線。</b>
+    </div>
+
+    <div class="gcard">
+      <h2>① 心理準備：它的「一回合」變得很長</h2>
+      <p><span class="gtag gt-w">官方說</span>難題在高 effort 下單次回應可能跑好幾分鐘，自主任務可以連跑數小時——這是團隊適應 Fable 5 時最大的衝擊。</p>
+      <p><span class="gtag gt-w">白話</span>以前的模型像即時通訊，Fable 5 像交辦工作給同事：交出去之後去做別的事，回來驗收。如果你的程式會呼叫它，記得調高 timeout、改用串流。如果它在簡單問題上想太久，貼這段：</p>
+      <div class="gprompt">When you have enough information to act, act. Do not re-derive facts already established in the conversation, re-litigate a decision the user has already made, or narrate options you will not pursue in user-facing messages. If you are weighing a choice, give a recommendation, not an exhaustive survey.</div>
+      <button class="gcopy">📋 複製指令</button>
+      <p class="gcase">實例：<a onclick="jumpToCase('Concord')">Mollick 的 Concord 案例</a>——一次跑 9.5 小時。</p>
+    </div>
+
+    <div class="gcard">
+      <h2>② Effort：最重要的一顆旋鈕</h2>
+      <p><span class="gtag gt-w">官方說</span>effort 是智力、速度、成本三者取捨的主控制。預設用 high；最難的任務用 xhigh；例行工作用 medium/low——而且 Fable 5 的低檔常常贏過舊模型的最高檔。</p>
+      <table class="gtable">
+        <tr><th>檔位</th><th>什麼時候用</th></tr>
+        <tr><td><b>xhigh</b></td><td>最難、最在乎品質的任務（複雜工程、深度分析）</td></tr>
+        <tr><td><b>high（預設）</b></td><td>大多數任務從這裡開始</td></tr>
+        <tr><td><b>medium / low</b></td><td>例行工作、想要快一點的互動節奏</td></tr>
+      </table>
+      <p><span class="gtag gt-w">白話</span>嫌它慢就降檔，嫌它淺就升檔。高檔位時它可能順手「大掃除」（重構你沒叫它動的代碼），用這段擋住：</p>
+      <div class="gprompt">Don't add features, refactor, or introduce abstractions beyond what the task requires. A bug fix doesn't need surrounding cleanup and a one-shot operation usually doesn't need a helper. Don't design for hypothetical future requirements: do the simplest thing that works well. Don't add error handling, fallbacks, or validation for scenarios that cannot happen. Trust internal code and framework guarantees. Only validate at system boundaries (user input, external APIs).</div>
+      <button class="gcopy">📋 複製指令</button>
+      <p class="gcase">實例：<a onclick="jumpToCase('Pokémon')">Pokémon 複刻</a>用 extra high 推理 1 小時；<a onclick="jumpToCase('Minecraft')">Minecraft</a> 用 high 20 分鐘。</p>
+    </div>
+
+    <div class="gcard">
+      <h2>③ 指令跟隨變強：一句話就夠，不用列清單</h2>
+      <p><span class="gtag gt-w">官方說</span>以前要逐條列舉的行為規範，現在一句簡短指令就能管住。例如嫌它話太多，不用列「不要 A、不要 B、不要 C」，一段就夠：</p>
+      <div class="gprompt">Lead with the outcome. Your first sentence after finishing should answer "what happened" or "what did you find": the thing the user would ask for if they said "just give me the TLDR." Supporting detail and reasoning come after. Being readable and being concise are different things, and readability matters more.</div>
+      <button class="gcopy">📋 複製指令</button>
+      <p><span class="gtag gt-w">白話</span>把它當聰明人對待：講原則，不用講 SOP。連「什麼時候該停下來問我」也只要一句：</p>
+      <div class="gprompt">Pause for the user only when the work genuinely requires them: a destructive or irreversible action, a real scope change, or input that only they can provide. If you hit one of these, ask and end the turn, rather than ending on a promise.</div>
+      <button class="gcopy">📋 複製指令</button>
+    </div>
+
+    <div class="gcard">
+      <h2>④ 長跑必加：報告要有證據</h2>
+      <p><span class="gtag gt-w">官方說</span>長時間自主任務時，要求它把每個進度宣稱對照實際的工具結果。Anthropic 內部測試中，這段指令幾乎消滅了「謊報進度」。</p>
+      <p><span class="gtag gt-w">白話</span>等於跟同事說「報告要附截圖」。任何超過半小時的自動化任務都建議加：</p>
+      <div class="gprompt">Before reporting progress, audit each claim against a tool result from this session. Only report work you can point to evidence for; if something is not yet verified, say so explicitly. Report outcomes faithfully: if tests fail, say so with the output; if a step was skipped, say that; when something is done and verified, state it plainly without hedging.</div>
+      <button class="gcopy">📋 複製指令</button>
+      <p class="gcase">實例：<a onclick="jumpToCase('機械錶')">機械錶視覺驗證迴圈</a>——「用視覺逐零件檢查到 100% 滿意」就是證據導向的設計。</p>
+    </div>
+
+    <div class="gcard">
+      <h2>⑤ 講清楚界線：它偶爾會「順手多做」</h2>
+      <p><span class="gtag gt-w">官方說</span>Fable 5 偶爾會做你沒要求的事（沒人叫它寫 email 它先擬好一封、自己開 git 備份分支）。要明確定義該做與不該做：</p>
+      <div class="gprompt">When the user is describing a problem, asking a question, or thinking out loud rather than requesting a change, the deliverable is your assessment. Report your findings and stop. Don't apply a fix until they ask for one. Before running a command that changes system state (restarts, deletes, config edits), check that the evidence actually supports that specific action.</div>
+      <button class="gcopy">📋 複製指令</button>
+      <p><span class="gtag gt-w">白話</span>「我在抱怨」≠「我要你修」。這段就是教它分辨這兩件事。</p>
+    </div>
+
+    <div class="gcard">
+      <h2>⑥ 給原因，不要只給請求</h2>
+      <p><span class="gtag gt-w">官方說</span>Fable 5 理解請求背後的意圖時表現更好——背景讓它把任務連到相關資訊，而不是自己猜。</p>
+      <p><span class="gtag gt-w">白話</span>新手最容易上手、效果最大的一招。背下這個句型：</p>
+      <div class="gprompt">I'm working on [the larger task] for [who it's for]. They need [what the output enables]. With that in mind: [request].</div>
+      <button class="gcopy">📋 複製指令</button>
+      <p>中文版：「我在為〔誰〕做〔什麼大事〕，他們需要〔這個產出拿來做什麼〕。基於這個背景：〔你的請求〕。」</p>
+    </div>
+
+    <div class="gcard">
+      <h2>⑦ 建一個記憶系統（一個 Markdown 檔就夠）</h2>
+      <p><span class="gtag gt-w">官方說</span>Fable 5 特別擅長記錄並引用過往教訓。給它一個寫筆記的地方，簡單到一個 .md 檔即可：</p>
+      <div class="gprompt">Store one lesson per file with a one-line summary at the top. Record corrections and confirmed approaches alike, including why they mattered. Don't save what the repo or chat history already records; update an existing note rather than creating a duplicate; delete notes that turn out to be wrong.</div>
+      <button class="gcopy">📋 複製指令</button>
+      <p><span class="gtag gt-w">白話</span>讓它越用越懂你。第一次啟用時可以叫它回顧歷史對話自己整理：</p>
+      <div class="gprompt">Reflect on the previous sessions we've had together. Use subagents to identify core themes and lessons, and store them in [X]. Make sure you know to reference [X] for future use.</div>
+      <button class="gcopy">📋 複製指令</button>
+    </div>
+
+    <div class="gcard">
+      <h2>⑧ 兩個偶發小毛病與解法</h2>
+      <p><span class="gtag gt-t">毛病一</span>長 session 深處，它偶爾說「我接下來會跑 X」然後就停了。回一句「continue」即可；自動化管線則預先貼這段：</p>
+      <div class="gprompt">You are operating autonomously. The user is not watching in real time and cannot answer questions mid-task. For reversible actions that follow from the original request, proceed without asking. Before ending your turn, check your last paragraph. If it is a plan, a question, a list of next steps, or a promise about work you have not done ("I'll…"), do that work now with tool calls. End your turn only when the task is complete or you are blocked on input only the user can provide.</div>
+      <button class="gcopy">📋 複製指令</button>
+      <p><span class="gtag gt-t">毛病二</span>超長 session 它偶爾會主動提議「開新對話吧」。如果你的工具會顯示剩餘 token 數給模型看，加一句安撫：</p>
+      <div class="gprompt">You have ample context remaining. Do not stop, summarize, or suggest a new session on account of context limits. Continue the work.</div>
+      <button class="gcopy">📋 複製指令</button>
+    </div>
+
+    <div class="gcard">
+      <h2>⑨ 進階：並行子代理與驗證</h2>
+      <p><span class="gtag gt-w">官方說</span>Fable 5 比以前更敢派出並行子代理。建議多用、明確說清楚何時該委派、並讓主代理「邊等邊做」而非乾等：</p>
+      <div class="gprompt">Delegate independent subtasks to subagents and keep working while they run. Intervene if a subagent goes off track or is missing relevant context.</div>
+      <button class="gcopy">📋 複製指令</button>
+      <p><span class="gtag gt-w">白話</span>驗證工作交給「獨立的檢查員」勝過讓它自己檢查自己——這正是案例庫裡 Lance Martin 實驗的結論（verifier 子代理 vs self-critique）。長跑任務加：</p>
+      <div class="gprompt">Establish a method for checking your own work at an interval of [X] as you build. Run this every [X interval], verifying your work with subagents against the specification.</div>
+      <button class="gcopy">📋 複製指令</button>
+      <p class="gcase">實例：<a onclick="jumpToCase('等時圈')">等時圈地圖</a>——自主派子代理查 2,200+ 航班、互相驗證。</p>
+    </div>
+
+    <div class="gcard">
+      <h2>⑩ 給老用戶的三個提醒</h2>
+      <p><b>1. 出更難的題。</b>官方原話：只拿簡單任務測它，會低估它的能力範圍。挑一個比你以前敢交給 AI 更難的任務，讓它自己釐清範圍、提問、執行。</p>
+      <p><b>2. 舊的 prompt 和 skill 要瘦身。</b>為舊模型寫的鉅細靡遺指令，對 Fable 5 反而可能「降低」輸出品質——先刪掉試試預設表現。</p>
+      <p><b>3. 別叫它「展示思考過程」。</b>要求它複述內部推理會觸發安全分類器（reasoning_extraction），導致回應被降級到 Opus 4.8。需要看推理就讀 API 的 thinking blocks，別用 prompt 要。</p>
+      <div class="gnote">⚠️ 另外注意：Fable 5 不做攻擊性資安和生物相關任務（會直接拒絕）；正當的資安防禦工作偶爾也會誤觸，官方建議設定自動 fallback 到 Opus 4.8。</div>
+    </div>
+
+  </div>
 
 </div>
 
@@ -511,6 +646,36 @@ document.querySelectorAll('[data-p]').forEach(el=>el.onclick=e=>{
 });
 document.getElementById('q').oninput=e=>{q=e.target.value.toLowerCase();render();};
 render();
+
+// ====== 頁籤切換 ======
+function showTab(t){
+  document.getElementById('tab-cases').style.display = t==='cases'?'':'none';
+  document.getElementById('tab-guide').style.display = t==='guide'?'':'none';
+  document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.toggle('on', el.dataset.t===t));
+  window.scrollTo({top:0});
+}
+document.querySelectorAll('.tabs .tab').forEach(el=>el.onclick=()=>showTab(el.dataset.t));
+
+// 指南 → 案例庫跳轉（切頁籤 + 帶入搜尋）
+function jumpToCase(query){
+  showTab('cases');
+  const qEl = document.getElementById('q');
+  qEl.value = query; q = query.toLowerCase();
+  cat = 'all'; pt = 'all';
+  document.querySelectorAll('#cats .chip').forEach(c=>c.classList.toggle('on', c.dataset.c==='all'));
+  document.querySelectorAll('[data-p]').forEach(c=>c.classList.toggle('on', c.dataset.p==='all'));
+  render();
+}
+
+// 指南的複製按鈕：複製前一個 .gprompt 的內容
+document.querySelectorAll('.gcopy').forEach(btn=>btn.onclick=()=>{
+  const pre = btn.previousElementSibling;
+  if(pre && pre.classList.contains('gprompt')){
+    navigator.clipboard.writeText(pre.textContent);
+    btn.textContent='✅ 已複製'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='📋 複製指令'; btn.classList.remove('done');},1500);
+  }
+});
 
 (async()=>{
   const el = document.getElementById('updated');
