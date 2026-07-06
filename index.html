@@ -624,6 +624,14 @@ const CASES = [
 const CAT_COLOR = {"遊戲":"#7a4a9e","模擬視覺化":"#1f5a64","文件簡報":"#33558c","創意藝術":"#b9504f","工程研究":"#2d6647"};
 let cat="all", pt="all", q="";
 
+// 每筆案例的時間（優先用 date 欄位，否則由推文 ID 的 Snowflake 時戳推導），用於「最新在前」排序
+function caseTime(x){
+  if(x.date){ const d=new Date(x.date); if(!isNaN(d)) return d.getTime(); }
+  const tid=(x.url.match(/status\/(\d+)/)||[])[1];
+  if(tid) return Number((BigInt(tid) >> 22n) + 1288834974657n);
+  return 0;
+}
+
 const cats = ["all",...Object.keys(CAT_COLOR)];
 document.getElementById('cats').innerHTML = cats.map(c=>
   `<span class="chip${c==='all'?' on':''}" data-c="${c}">${c==='all'?'全部分類':c}</span>`).join('');
@@ -633,6 +641,7 @@ function render(){
   const list = CASES.filter(x=>
     (cat==='all'||x.cat===cat) && (pt==='all'||x.ptype===pt) &&
     (!q || (x.title+x.desc+x.author+x.prompt).toLowerCase().includes(q)));
+  list.sort((a,b)=>caseTime(b)-caseTime(a)); // 時間最近的排前面
   grid.innerHTML = list.map((x,i)=>{
     const tid = (x.url.match(/status\/(\d+)/)||[])[1];
     const img = x.img || (tid ? `media/${tid}.jpg` : null);
