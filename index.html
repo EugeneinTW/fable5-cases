@@ -617,6 +617,70 @@ const CASES = [
   author:"@ai202601 (森｜AI勉強中の素人)", likes:329, url:"https://x.com/ai202601/status/2073936880102760696",
   ptype:"重建",
   prompt:`（以 Miyama 的網站主視覺 prompt 為基礎客製）幫我產生一張網站的主視覺（Hero Image）：給定服務名稱、產業與調性，輸出一個可直接使用的 Hero 區塊——高質感背景、主標題、副標與 CTA，版面與配色貼合品牌氛圍。用單一 HTML/CSS（必要時搭配 SVG）生成，不要用外部圖檔；並示範同一套做法能為不同產業（網路服務、不動產、加工製造）各生出合適的主視覺。`
+ },
+ // ====== 2026-07-06 書籤匯入 ======
+ {
+  cat:"遊戲", title:"《C&C：將軍 絕命時刻》移植到 iPhone／iPad",
+  desc:"把 2003 年的即時戰略《Command & Conquer: Generals Zero Hour》原生編譯到 iPhone／iPad（ARM64、非模擬器），戰役、遭遇戰、將軍挑戰都能用為 RTS 重新設計的觸控操作遊玩並開源。⚠️ @dotey 查 commit 記錄指出：repo 約 2,000 個 commit 絕大多數來自開源專案 GeneralsX（EA 已 GPL 釋出原始碼、社群自 2025 年 2 月起移植），作者本人近期 commit 僅約 19 個；Fable 5 實際負責的是最後一段 iOS 移植（DXVK 的 iOS 適配、MoltenVK 整合、觸控重設計）。",
+  author:"@ammaar (Ammaar Reshi)", likes:7571, url:"https://x.com/ammaar/status/2073501877753323772",
+  ptype:"重建",
+  prompt:`把開源的《Command & Conquer: Generals - Zero Hour》引擎（GeneralsX，EA 已以 GPL 釋出原始碼）原生移植到 iOS：以 ARM64 原生編譯、不用模擬器，處理 DXVK 的 iOS 適配與 MoltenVK（Vulkan→Metal）整合，並為即時戰略重新設計一套觸控操作，讓戰役、遭遇戰與將軍挑戰都能在 iPhone／iPad 上流暢遊玩。`
+ },
+ {
+  cat:"模擬視覺化", title:"東京地鐵 3D 立體路網圖",
+  desc:"用 Fable 5 做出東京地鐵的 3D 立體路網地圖，作者形容「能體感到東京的喧囂」，直呼品質高到讓他笑出來。",
+  author:"@halukik_0520 (コンドウハルキ)", likes:1662, url:"https://x.com/halukik_0520/status/2072518426812465158",
+  ptype:"重建",
+  prompt:`做一個東京地鐵的 3D 立體路網地圖（單一 HTML／WebGL）：真實路線與站點的空間佈局、可旋轉縮放的相機、列車沿線移動的動畫，讓人一眼感受到整個路網的密度與繁忙。`
+ },
+ {
+  cat:"模擬視覺化", title:"飛越霍格華茲（3D 場景巡航）",
+  desc:"一個 prompt 讓 Fable 5 生成可自由飛越的 3D 霍格華茲城堡場景。作者 Matt Shumer 為知名 AI 開發者。",
+  author:"@mattshumer_ (Matt Shumer)", likes:1437, url:"https://x.com/mattshumer_/status/2072511611705692298",
+  ptype:"重建",
+  prompt:`建一個可自由飛越的 3D 霍格華茲城堡場景（Three.js／WebGL）：主城堡、塔樓、庭院與周邊地景，第一人稱飛行控制，氛圍光照與天空。單一檔案、程序化生成，不用外部 3D 素材。`
+ },
+ {
+  cat:"創意藝術", title:"純程式碼手繪錦鯉池（每條魚逐點畫出）",
+  desc:"Fable 5 蓋出一整座錦鯉池，每條魚都是即時、逐點手繪，完全沒有用圖片或 SVG，全部由 HTML／CSS／JS 程式碼生成，還配了音樂。",
+  author:"@ann_nnng (Ann Nguyen)", likes:1383, url:"https://x.com/ann_nnng/status/2072648308846370897",
+  ptype:"重建",
+  prompt:`在單一 HTML 檔裡做一座會動的錦鯉池：每條魚都用程式即時逐點繪製（canvas 路徑），不使用任何圖片或 SVG；水面波紋、魚群自然游動與互動，並用 Web Audio API 合成背景音樂。`
+ },
+ {
+  cat:"工程研究", title:"KernelBench-Mega 史上最快 megakernel",
+  desc:"Fable 5 [max] 寫出 KernelBench-Mega 上第一個「真正的」單一融合 megakernel，也是最快的一個：在 RTX PRO 6000 Blackwell 上跑 Kimi-Linear W4A16、batch-1 decode，勝過 Opus 4.8（14.4x）、GLM-5.2（11.1x）、GPT-5.5（4.3x）。過去其他模型都是用會被「單一融合核心真實性」門檻擋掉的多核 Triton pipeline 取勝。",
+  author:"@elliotarledge (Elliot Arledge)", likes:1214, url:"https://x.com/elliotarledge/status/2072814573753975266",
+  ptype:"重建",
+  prompt:`為 KernelBench-Mega 撰寫一個「單一融合」的 megakernel（不得用多核 Triton pipeline），目標是通過單一融合核心的真實性門檻並取得最快速度。測試情境：在 RTX PRO 6000 Blackwell 上執行 Kimi-Linear W4A16、batch-1 的 decode。追求正確性與極致效能，並提供可重現的 benchmark。`
+ },
+ {
+  cat:"創意藝術", title:"捲動刷播「染料入水」影片背景的品牌互動網站",
+  desc:"一個沐浴／身體保養品牌的網站模板概念：整個背景是一段 36 秒「染料在水中擴散」的連續影片，靠捲動來刷播（scroll-scrub）；串接多種技巧做出捲動驅動的背景動畫與互動，除那段影片外不使用其他素材。",
+  author:"@VanhDesign (vanh)", likes:932, url:"https://x.com/VanhDesign/status/2072913652114481192",
+  ptype:"重建",
+  prompt:`做一個沐浴／身體保養品牌的網站模板：整個頁面背景是一段約 36 秒「染料在水中擴散」的連續影片，使用者靠捲動來刷播（scroll-scrub）這段影片；串接捲動驅動的動畫與互動，讓每個區塊隨捲動揭露。除了那段背景影片外不使用其他素材，追求高質感視覺與流暢互動。`
+ },
+ {
+  cat:"創意藝術", title:"3D 客製化鍵盤電商平台（程序化幾何即時生成）",
+  desc:"用 Three.js + GSAP 做的 3D 鍵盤電商平台，每顆鍵、每個軸、每種顏色都能在 3D 裡即時客製；作者強調整個鍵盤是用程序化幾何在執行時生成，而非預先建模。",
+  author:"@thebuggeddev (The Bugged Dev)", likes:836, url:"https://x.com/thebuggeddev/status/2073601034195513830",
+  ptype:"重建",
+  prompt:`用 Three.js + GSAP 做一個 3D 客製化鍵盤電商平台：鍵盤本體用程序化幾何在執行時生成（每顆鍵、每個軸），使用者可即時更換配色、軸體與鍵帽並在 3D 中旋轉預覽，搭配擬真材質與光照，加入購物車流程。單頁應用。`
+ },
+ {
+  cat:"工程研究", title:"復刻 Notion（大型工程已完成約 70%）",
+  desc:"作者的用法建議：不知道 Fable 5 能幹嘛，就直接叫它復刻你會付費訂閱的網站。他用 Fable 5 復刻 Notion，這麼大的工程已完成近 70%。",
+  author:"@Saccc_c (Sac)", likes:554, url:"https://x.com/Saccc_c/status/2073693616250532011",
+  ptype:"重建",
+  prompt:`復刻 Notion 的核心體驗：側邊欄頁面樹、可巢狀的區塊式編輯器（文字、標題、待辦、列表、程式碼、圖片）、slash 指令插入區塊、拖曳排序，以及資料庫視圖（表格／看板）。盡量貼近原版的版面、互動與鍵盤操作。`
+ },
+ {
+  cat:"遊戲", title:"一句話 one-shot 低解析度飛行模擬器（levelsio 風）",
+  desc:"一句話請 Fable 5 做一個 levelsio 去年爆紅那種風格的低解析度飛行模擬器，直接 one-shot 出來。",
+  author:"@georgemillo (George Millo)", likes:180, url:"https://x.com/georgemillo/status/2072782216350859360",
+  ptype:"原文",
+  prompt:`Fable, make a low-res flight simulator in the style of @levelsio's viral thing from last year.`
  }
 ];
 // ====== 資料區結束 ======
