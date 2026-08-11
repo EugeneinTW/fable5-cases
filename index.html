@@ -681,7 +681,30 @@ const CASES = [
   author:"@georgemillo (George Millo)", likes:180, url:"https://x.com/georgemillo/status/2072782216350859360",
   ptype:"原文",
   prompt:`Fable, make a low-res flight simulator in the style of @levelsio's viral thing from last year.`
- }
+ },
+ // ====== 2026-08-11 自動更新 ======
+ {
+  cat:"模擬視覺化", title:"把 3.5 年、108 份銀行對帳單變成「Google Maps 式」美食地圖",
+  desc:"把三年半共 108 份 PDF 銀行對帳單丟給 Fable 5，讓它解析每一筆餐飲消費、對應到店家與地點，最後產出一個可互動的 3D 地球網站，把「你吃過的每一個地方」標在地圖上。⚠️ 由工作流帳號 @agentnative_ 轉述他人成果（推文用第三人稱 his）；作者在討論串自述整趟花了約 32 美元 token，回文也有人質疑把銀行對帳單交給模型的隱私風險與洞察價值。原 prompt 貼在討論串但被推文字數截斷，此處前段為原文、後段補完。",
+  author:"@agentnative_ (Agent Native，轉述)", likes:417, url:"https://x.com/agentnative_/status/2086501673925505313",
+  ptype:"重建",
+  prompt:`Please can you look at all of the downloaded bank statements for my accounts for the past 3 years located in the folder in my downloads. (This will be 108 total PDFs)
+
+Plot this on a site - a 3D globe that looks like google maps. I should see every place i've eaten on the map, with a pin for each restaurant / cafe / bar.
+
+Steps: parse every PDF, extract each transaction (date, merchant, amount), keep only food & drink spend, group the transactions by merchant, and geocode each merchant to a lat/lng. Then build a single interactive web app: a 3D globe I can spin and zoom (Google-Maps-like), pins sized by how much I spent there, clicking a pin shows the venue name, number of visits, total spend, first and last visit. Add a timeline scrubber to replay the last 3 years, plus summary stats (total spend, top 10 venues, spend by city and by year). Handle messy merchant strings and duplicates, and tell me anything you could not match.`
+ },
+ {
+  cat:"工程研究", title:"長文寫作流水線：Fable 5 當最後一道「人味潤色」層",
+  desc:"針對「AI 寫長文會崩」設計的多模型流水線：先用一個 prompt 從研究資料裡只挑出這篇需要的證據（其餘藏起來），再分工——Kimi K3 發想與簡化、GPT-5.6 寫初稿、Fable 5 負責最後的風格與人味層；另外在 Obsidian 裡把好文章拆成「開場／論證順序／點出讀者痛點／收尾」的模板筆記，讓模型從既有零件組裝而非模仿整篇。⚠️ Fable 5 在此只擔任流程中的一環（收尾潤色）而非唯一產出者；作者自己也強調內容價值仍得由人提供。",
+  author:"@EXM7777 (Machina)", likes:231, url:"https://x.com/EXM7777/status/2086557637983027459",
+  ptype:"重建",
+  prompt:`You are the final pass in a multi-model long-form writing pipeline. Earlier stages have already done their jobs: one prompt selected only the few pieces of research this piece actually needs (everything else is hidden from you), another model brainstormed and simplified the idea, and a third wrote the first draft. Your only job is style and the humanized layer.
+
+Rewrite the draft so it reads like a person wrote it: keep every fact and the argument order intact, cut throat-clearing and filler, vary sentence length, replace generic phrasing with concrete language, and remove the tells of AI prose (over-hedging, tricolons, "it's not just X, it's Y", inflated transitions).
+
+Follow the structural templates I supply for each part — how to open, how to sequence the argument, how to name the reader's pains, how to close — and build from those proven parts instead of imitating a whole piece. Do not add new claims or research. Return the edited piece plus a short list of what you changed and why.`
+ },
 ];
 // ====== 資料區結束 ======
 
