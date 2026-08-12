@@ -705,6 +705,37 @@ Rewrite the draft so it reads like a person wrote it: keep every fact and the ar
 
 Follow the structural templates I supply for each part — how to open, how to sequence the argument, how to name the reader's pains, how to close — and build from those proven parts instead of imitating a whole piece. Do not add new claims or research. Return the edited piece plus a short list of what you changed and why.`
  },
+// ====== 2026-08-12 自動更新 ======
+ {
+  cat:"創意藝術", title:"仿廣告獎等級的品牌網站產線（Fable 5 + Seedance 2.5）",
+  desc:"作者示範用 Fable 5 搭配 Seedance 2.5 生成的影片素材，做出「代理商報價一萬美元等級」的品牌網站：捲動驅動的影片區塊、商品網格、完整微互動，並錄成逐步教學讓人照做；他自述靠這套流程已產出 300 多個網站、不碰任何設計工具。⚠️ 推文以「幹掉三萬五千美元的網頁代理商」為行銷框架，成果以影片展示為主、無公開線上連結可驗證；Fable 5 負責版面與互動實作，影片素材來自 Seedance。",
+  author:"@viktoroddy (Viktor Oddy)", likes:963, url:"https://x.com/viktoroddy/status/2086431931277959249",
+  ptype:"重建",
+  prompt:`Build a single-page brand website at the quality level of an award-winning agency site (the kind a studio would charge $10k for). Requirements:
+
+- A scroll-driven hero: a looping product video pinned to the viewport, scrubbed and masked by scroll position, with the headline revealing over it.
+- A product grid section: responsive cards with hover states, staggered reveal on scroll, and smooth filtering.
+- Full micro-interactions throughout — custom cursor, magnetic buttons, easing on every transition, page-load choreography.
+- Typographic scale and spacing driven by a design system (define tokens first, then build from them).
+- Single HTML file, no external UI libraries; only the video files I provide as assets.
+
+Before you write code, propose the art direction (type pairing, palette, motion language) and wait for my confirmation. Then build it section by section so I can review as we go.`
+ },
+ {
+  cat:"創意藝術", title:"JoJo × 帕海貝爾卡農 MV 系列（MADE IN HEAVEN 第 9 彈）",
+  desc:"把《JoJo 的奇妙冒險》第六部「天國製造」的加速世界概念，做成一系列以帕海貝爾卡農為骨幹、逐段加速的音樂影像：Fable 5 負責設計音樂與圖像的 prompt，音樂交給 Suno、畫面交給 ChatGPT Images 2.0 生成。⚠️ Fable 5 在此只擔任 prompt 設計者，實際音畫由其他模型產出；此為連載系列（同期第 8 彈 393 讚），本庫只收錄互動最高的一則作代表。",
+  author:"@eigoasobi (EIGOASOBI)", likes:421, url:"https://x.com/eigoasobi/status/2086361844089065806",
+  ptype:"重建",
+  prompt:`你是一個音樂影像企劃的 prompt 設計師。主題：以帕海貝爾《卡農》為骨幹，重新詮釋《JoJo 的奇妙冒險》第六部替身「天國製造」的「時間加速、宇宙一輪迴」概念。
+
+請產出兩組 prompt：
+
+1. 給 Suno 的音樂 prompt：以卡農的和聲進行（D–A–Bm–F#m–G–D–G–A）為基底，編曲從安靜的弦樂開始，每一段循環都提高速度與密度，最後衝到近乎失控的加速感再瞬間歸零重生。指定樂器、BPM 變化曲線、情緒轉折與長度。
+
+2. 給 ChatGPT Images 2.0 的畫面 prompt：一組同一世界觀、風格一致的靜幀，隨音樂段落推進呈現時間加速與宇宙輪迴的視覺（星體軌跡拉長、殘影堆疊、光的重複折返）。請維持角色不出現具體版權形象，只保留意象與構圖。
+
+兩組 prompt 都要能直接複製貼上使用，並說明每個段落如何與另一邊對齊。`
+ },
 ];
 // ====== 資料區結束 ======
 
