@@ -43,7 +43,9 @@
   .copy:active { transform:scale(.97); }
   .copy.done { background:#1a7a46; }
   .empty { text-align:center; color:#8a93a3; padding:40px 0; font-size:14px; display:none; }
-  .tabs { display:flex; gap:8px; margin-bottom:14px; }
+  .substats { font-size:12.5px; color:#6b7688; margin:-4px 0 12px 2px; }
+  .anote { background:#fff7e8; border:1px solid #f0dcb4; border-radius:12px; padding:12px 18px; margin-bottom:14px; font-size:13px; color:#7a5a1e; line-height:1.7; }
+  .tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
   .tab { border:1px solid #c9cedb; background:#fff; border-radius:999px; padding:8px 20px; font-size:14.5px; font-weight:600; cursor:pointer; user-select:none; }
   .tab.on { background:#21253b; color:#fff; border-color:#21253b; }
   .gintro { background:#eef1f8; border:1px solid #ccd4e8; border-radius:14px; padding:18px 24px; margin-bottom:14px; font-size:14px; color:#33415e; }
@@ -70,14 +72,15 @@
   <header>
     <h1>🧪 Fable 5 案例庫</h1>
     <div class="updated" id="updated"></div>
-    <p>從 X 書籤整理的 Claude Fable 5 實測案例——看別人做了什麼，複製 prompt 自己重現。</p>
+    <p>從 X 整理的 AI 模型實測案例——看別人做了什麼，複製 prompt 自己重現。目前分成 Claude Fable 5 與 GPT-6 Astra 兩個分頁。</p>
     <div class="stats" id="stats"></div>
     <div class="legend"><span class="badge b-orig">原文 prompt</span> 推文或原文章直接給出的指令　<span class="badge b-recon">重建 prompt</span> 根據案例描述補寫的可執行版本，效果可能與原案例有落差</div>
   </header>
 
   <div class="tabs">
-    <span class="tab on" data-t="cases">📚 案例庫</span>
-    <span class="tab" data-t="guide">🎓 官方 Prompting 指南（新手版）</span>
+    <span class="tab on" data-t="cases">📚 Fable 5 案例</span>
+    <span class="tab" data-t="astra">🛰️ GPT-6 Astra 案例</span>
+    <span class="tab" data-t="guide">🎓 Fable 5 官方 Prompting 指南（新手版）</span>
   </div>
 
   <div id="tab-cases">
@@ -89,8 +92,23 @@
     <input id="q" type="search" placeholder="搜尋案例、作者、關鍵字…">
   </div>
 
+  <div class="substats" id="stats-f5"></div>
   <div class="grid" id="grid"></div>
   <div class="empty" id="empty">沒有符合的案例</div>
+  </div>
+
+  <div id="tab-astra" style="display:none">
+  <div class="anote">GPT-6 Astra（OpenAI，2026 年 9 月初發布）的實測案例。因為模型剛上線、案例生態還很年輕，這個分頁的收錄門檻是 <b>40 讚</b>（Fable 5 分頁為 150 讚），數量會少一些，之後隨生態成熟再拉高。</div>
+  <div class="bar" id="acats"></div>
+  <div class="bar">
+    <span class="chip on" data-p="all">全部 prompt</span>
+    <span class="chip" data-p="原文">只看原文 prompt</span>
+    <span class="chip" data-p="重建">只看重建 prompt</span>
+    <input id="aq" type="search" placeholder="搜尋案例、作者、關鍵字…">
+  </div>
+  <div class="substats" id="stats-astra"></div>
+  <div class="grid" id="agrid"></div>
+  <div class="empty" id="aempty">沒有符合的案例</div>
   </div>
 
   <div id="tab-guide" style="display:none">
@@ -794,10 +812,110 @@ Before you write code, propose the art direction (type pairing, palette, motion 
  },
 ];
 
+// ====== GPT-6 Astra 案例（OpenAI，2026-09 發布）======
+const ASTRA_CASES = [
+// ====== 2026-09-05 建立 ======
+ {
+  cat:"模擬視覺化", title:"一張參考圖還原 Three.js 3D 地球儀儀表板",
+  desc:"作者長期拿同一題測每個新模型：一句 prompt ＋ 一張參考截圖，從零重建 Three.js 3D 地球儀儀表板。Astra 是第一個一次到位的，材質、光照、玻璃面板與版面幾乎像素級吻合；更關鍵的是它自己從截圖裡看出 prompt 沒寫的「日夜模式切換」與「2D/3D 視圖切換」並實作出來，這兩點是過去所有模型都漏掉的。⚠️ 這是作者自訂的個人測試題、非公開 benchmark，推文未附成品連結與 prompt 原文。",
+  author:"@hqmank (Kai)", likes:63, url:"https://x.com/hqmank/status/2096082432197837065",
+  ptype:"重建",
+  prompt:`我附上一張參考截圖。請照著這張圖，用 Three.js 從零重建一個 3D 地球儀儀表板，單一 HTML 檔、CDN 引入 Three.js，不要其他框架。
+
+首要原則：截圖就是規格。凡是圖裡看得到的元素、狀態與互動線索，即使我下面沒有寫到，你都要判讀出來並實作，不要只做我列的項目。做完請在檔頭註解列出「我從截圖判讀出、但使用者沒明講的功能」清單。
+
+明確要求：
+1. 中央是可拖曳旋轉、滾輪縮放的 3D 地球，帶大氣輝光與細緻的海陸材質，資料點以發光標記落在正確經緯度，並有弧線連線動畫。
+2. 四周是玻璃擬態（glassmorphism）的資訊面板，含即時數據卡、列表與小圖表，數據用假資料但要合理跳動。
+3. 版面比例、留白、字級層級、配色都以截圖為準。
+4. 光照與景深要重現截圖的氛圍，地球邊緣有輪廓光。
+
+效能：維持 60fps，資料點用 InstancedMesh。請直接輸出完整可執行的單檔。`
+ },
+ {
+  cat:"創意藝術", title:"3D 版《清明上河圖》（一句話 prompt）",
+  desc:"只用一句話 prompt 做出可漫遊的 3D《清明上河圖》——成品自命名「汴京夢華 A Dream of Bianjing」，分成汴河春曉、虹橋爭渡、沿河市集、城闕遠眺四個章節導覽，附環境音開關與時辰（申時 16:30）切換，畫面走低飽和水墨色調。⚠️ 推文未公開那句 prompt 的原文。",
+  author:"@riba2534 (riba2534)", likes:36, url:"https://x.com/riba2534/status/2095972385036079412",
+  ptype:"重建",
+  prompt:`做一個 3D 版的《清明上河圖》互動網頁，單一 HTML 檔、CDN 引入 Three.js，所有模型與貼圖都用程式生成，不要外部素材。
+
+以北宋汴京為舞台，沿著汴河兩岸鋪開一條長卷式的立體街景：虹橋橫跨河面、橋上人來人往，河中有漕船與扁舟，兩岸是層層疊疊的瓦頂民居、酒樓、市集攤棚與城牆城樓，遠處是漸隱的山巒。
+
+要求：
+1. 鏡頭以「展卷」的方式沿河緩緩橫移，模擬觀畫的視線移動；也允許滑鼠拖曳自由觀看。
+2. 分成四個章節，畫面下方是章節時間軸，可點擊跳轉，每章有標題與一句古意的小標語。
+3. 美術走低飽和的絹本水墨調：米黃底、墨綠屋瓦、暖褐木構，加上輕微的紙張紋理與邊緣暈染。
+4. 提供時辰切換（改變光線角度與色溫）與環境音開關（市集人聲、水聲、風聲）。
+5. 人物與船隻用簡化的剪影或低多邊形處理，重點是密度與生活感，數量要多。
+
+請直接輸出完整可執行的單檔。`
+ },
+ {
+  cat:"模擬視覺化", title:"澱粉分解教材網頁（13 分 35 秒一發生成）",
+  desc:"明治大學宮下芳明教授用一段 prompt 一次生成可實際操作的 Three.js 生物教材：畫面中央是澱粉長鏈，藍色澱粉酶滑過鏈上、在特定鍵結停下並切斷，斷片以麥芽糖／短糖形式離開，附播放／暫停與 0.25～2 倍速調整、拖曳轉視角。作者實測耗時 13 分 35 秒，並公開了 prompt 截圖與試玩連結。",
+  author:"@HomeiMiyashita (宮下芳明 明治大學教授)", likes:45, url:"https://x.com/HomeiMiyashita/status/2096059984610205797",
+  ptype:"原文",
+  prompt:`Three.jsで、ブラウザ1枚の教材を作って。
+画面中央にデンプンの長い鎖（黄の球がα-1,4で繋がる）。
+青いアミラーゼが鎖の上を滑って、特定の結合で止まって切る。
+切れた断片がマルトース／短い糖として離れる。
+カメラはゆっくり周回。再生・一時停止・速度スライダー付き。
+ラベルは日本語。化学式は出しすぎない。背景は暗いラボ風。`
+ },
+ {
+  cat:"模擬視覺化", title:"台北市 3D 立體模型（101＋中正紀念堂＋國父紀念館）",
+  desc:"透過 Codex 驅動 GPT-6 Astra 建出的台北 3D 立體模型：台北 101、中正紀念堂、國父紀念館與環抱市區的山系一次到位，街廓、行道樹與夜間窗光都有做，作者在台北一場大會的主題演講中展示。⚠️ 作者自註地理布局有「創作上的自由發揮」，不是精確地圖；推文未公開 prompt。",
+  author:"@derrickcchoi (Derrick Choi)", likes:61, url:"https://x.com/derrickcchoi/status/2095738872495788385",
+  ptype:"重建",
+  prompt:`做一個台北市中心的 3D 立體模型（diorama）網頁，單一 HTML 檔、CDN 引入 Three.js，所有幾何都用程式生成，不要外部模型檔。
+
+呈現方式：等角視角的一塊方形基座，像放在桌上的建築模型，深色背景加柔和的舞台打光，可用滑鼠緩慢環繞與縮放。
+
+內容要求：
+1. 地標必須可辨識：台北 101（分節竹造型、頂端尖塔）、中正紀念堂（藍色八角攢尖頂＋白色主體＋兩側橘黃屋頂的音樂廳與戲劇院）、國父紀念館（黃色飛簷大屋頂＋前方水池與草坪廣場）。
+2. 其餘市區用程序化生成的街廓填滿：格狀道路、深淺不一的中高層樓房、路口與行道樹，樓房夜間隨機亮起窗光。
+3. 基座外緣以低多邊形的綠色山系環抱，模擬台北盆地地形。
+4. 地標之間的相對位置合理即可，不需精確對應真實座標。
+
+請直接輸出完整可執行的單檔，並在檔頭註解列出可調參數（樓房密度、夜間亮燈比例、鏡頭角度）。`
+ },
+ {
+  cat:"模擬視覺化", title:"日經 225 選擇權手口資料 → 一發生成解說影片",
+  desc:"把日經 225 選擇權的法人手口（買賣進出）資料直接丟給 Astra，一次就產出一支資料視覺化解說影片。作者的感想是「大概人不要插手，它反而做得更好」。⚠️ 推文只有成品影片，未公開 prompt、資料格式與製作管線細節。",
+  author:"@_map_universe_ (Map)", likes:87, url:"https://x.com/_map_universe_/status/2096020997887664450",
+  ptype:"重建",
+  prompt:`我附上一份日經 225 選擇權的手口資料（各法人在不同履約價、買權／賣權上的建倉與平倉數量，含日期序列）。請把它變成一支資料視覺化解說影片。
+
+流程請你自己完成，不要問我要什麼圖：
+1. 先自己讀懂資料結構，判斷哪些欄位有敘事價值，並找出這段期間最值得講的 3 到 5 個發現（例如籌碼往哪個履約價集中、哪一方在加碼、到期前的部位變化）。
+2. 依這些發現安排一條敘事線，決定每一段用什麼圖表最合適（履約價分布的橫條、時間序列的堆疊面積、買賣權未平倉的對比等），不要一律用同一種圖。
+3. 用程式產生逐格畫面並輸出成影片檔，圖表要有進場動畫與數值轉場，每段配一句簡短的日文字幕說明這張圖在講什麼。
+4. 配色走深色金融終端風格，數字排版清楚，重點段落用高亮色強調。
+
+最後告訴我你選了哪些發現、為什麼，以及有哪些資料上的保留（樣本不足、口徑不一致之類）。`
+ },
+ {
+  cat:"工程研究", title:"用 computer use 調研競品介面 → 1:1 重建「導演台」",
+  desc:"團隊在做漫劇（條漫短劇）生成，卡在「導演台」這個介面上：市面產品看得到但結構不好拆、需求一直寫不清楚。Astra 一發布就讓它用 computer use 實際去操作競品介面做調研，看完自動整理成需求登進需求池再開工，作者說最後效果「基本 1:1」。⚠️ 團隊自述，推文未公開 prompt 與成品連結，也未說明重建耗時。",
+  author:"@nicknam92226032 (Rymostan)", likes:61, url:"https://x.com/nicknam92226032/status/2096018367937450343",
+  ptype:"重建",
+  prompt:`任務：我要做一個「導演台」介面（漫劇／短影音的分鏡與角色調度編輯器），但我自己寫不清楚需求。請你用 computer use 去實際操作以下競品，把需求幫我逼出來。
+
+第一階段——調研（不要寫任何程式碼）：
+1. 打開我指定的競品網站，實際點過一輪主要流程：新建專案、加分鏡、指定角色與鏡位、調整時間軸、預覽輸出。
+2. 邊操作邊記錄：每個畫面有哪些區塊、各區塊的職責、狀態如何流動、哪些操作會連動改變別處、有哪些隱藏在次選單裡的功能。
+3. 特別留意「為什麼這樣設計」——哪些是為了讓不會分鏡的人也能上手而做的簡化。
+
+第二階段——需求：把調研結果整理成一份可執行的需求清單，每條需求要寫出：使用者要達成什麼、對應哪個介面元素、以及驗收標準。先把清單給我確認，不要直接開工。
+
+第三階段——實作：我確認後，照清單實作出功能對等的版本，介面佈局與互動邏輯以調研到的結構為準，不要自己另外發明資訊架構。每完成一個區塊就截圖自我比對，把還沒對齊的地方列出來。`
+ },
+];
+
 // ====== 資料區結束 ======
 
 const CAT_COLOR = {"遊戲":"#7a4a9e","模擬視覺化":"#1f5a64","文件簡報":"#33558c","創意藝術":"#b9504f","工程研究":"#2d6647"};
-let cat="all", pt="all", q="";
+const MEDIA_DIR = "media/";
 
 // 每筆案例的時間（優先用 date 欄位，否則由推文 ID 的 Snowflake 時戳推導），用於「最新在前」排序
 function caseTime(x){
@@ -807,25 +925,30 @@ function caseTime(x){
   return 0;
 }
 
-const cats = ["all",...Object.keys(CAT_COLOR)];
-document.getElementById('cats').innerHTML = cats.map(c=>
-  `<span class="chip${c==='all'?' on':''}" data-c="${c}">${c==='all'?'全部分類':c}</span>`).join('');
+// ====== 案例面板：Fable 5 與 GPT-6 Astra 兩個分頁共用同一套渲染邏輯 ======
+function makePanel(data, ids){
+  let cat="all", pt="all", q="";
+  const $ = id => document.getElementById(id);
+  const catsEl=$(ids.cats), gridEl=$(ids.grid), emptyEl=$(ids.empty), statsEl=$(ids.stats), qEl=$(ids.q);
+  const ptEls = $(ids.panel).querySelectorAll('[data-p]');
 
-function render(){
-  const grid = document.getElementById('grid');
-  const list = CASES.filter(x=>
-    (cat==='all'||x.cat===cat) && (pt==='all'||x.ptype===pt) &&
-    (!q || (x.title+x.desc+x.author+x.prompt).toLowerCase().includes(q)));
-  list.sort((a,b)=>caseTime(b)-caseTime(a)); // 時間最近的排前面
-  grid.innerHTML = list.map((x,i)=>{
-    const tid = (x.url.match(/status\/(\d+)/)||[])[1];
-    const img = x.img || (tid ? `media/${tid}.jpg` : null);
-    let dateStr = x.date || '';
-    if(!dateStr && tid){
-      const d = new Date(Number((BigInt(tid) >> 22n) + 1288834974657n));
-      dateStr = d.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',timeZone:'Asia/Taipei'});
-    }
-    return `
+  catsEl.innerHTML = ["all",...Object.keys(CAT_COLOR)].map(c=>
+    `<span class="chip${c==='all'?' on':''}" data-c="${c}">${c==='all'?'全部分類':c}</span>`).join('');
+
+  function render(){
+    const list = data.filter(x=>
+      (cat==='all'||x.cat===cat) && (pt==='all'||x.ptype===pt) &&
+      (!q || (x.title+x.desc+x.author+x.prompt).toLowerCase().includes(q)));
+    list.sort((a,b)=>caseTime(b)-caseTime(a)); // 時間最近的排前面
+    gridEl.innerHTML = list.map((x,i)=>{
+      const tid = (x.url.match(/status\/(\d+)/)||[])[1];
+      const img = x.img || (tid ? MEDIA_DIR+tid+'.jpg' : null);
+      let dateStr = x.date || '';
+      if(!dateStr && tid){
+        const d = new Date(Number((BigInt(tid) >> 22n) + 1288834974657n));
+        dateStr = d.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',timeZone:'Asia/Taipei'});
+      }
+      return `
     <div class="card" data-i="${i}">
       <div class="stripe" style="background:${CAT_COLOR[x.cat]}"></div>
       ${img?`<img class="shot" src="${img}" loading="lazy" alt="" onerror="this.remove()">`:''}
@@ -839,40 +962,57 @@ function render(){
         <button class="copy">📋 複製 prompt</button>
       </div>
     </div>`;}).join('');
-  document.getElementById('empty').style.display = list.length?'none':'block';
-  document.getElementById('stats').textContent =
-    `${CASES.length} 個案例 · ${CASES.filter(x=>x.ptype==='原文').length} 個原文 prompt · ${CASES.filter(x=>x.ptype==='重建').length} 個重建 prompt · 目前顯示 ${list.length} 個`;
+    emptyEl.style.display = list.length?'none':'block';
+    statsEl.textContent =
+      `${data.length} 個案例 · ${data.filter(x=>x.ptype==='原文').length} 個原文 prompt · ${data.filter(x=>x.ptype==='重建').length} 個重建 prompt · 目前顯示 ${list.length} 個`;
 
-  grid.querySelectorAll('.ptoggle').forEach(el=>el.onclick=e=>{
-    const card = e.target.closest('.card');
-    card.classList.toggle('open');
-    e.target.textContent = card.classList.contains('open')?'▾ 收起 prompt':'▸ 看 prompt';
+    gridEl.querySelectorAll('.ptoggle').forEach(el=>el.onclick=e=>{
+      const card = e.target.closest('.card');
+      card.classList.toggle('open');
+      e.target.textContent = card.classList.contains('open')?'▾ 收起 prompt':'▸ 看 prompt';
+    });
+    gridEl.querySelectorAll('.copy').forEach((el,idx)=>el.onclick=e=>{
+      navigator.clipboard.writeText(list[idx].prompt);
+      e.target.textContent='✅ 已複製'; e.target.classList.add('done');
+      setTimeout(()=>{e.target.textContent='📋 複製 prompt'; e.target.classList.remove('done');},1500);
+    });
+  }
+
+  catsEl.onclick=e=>{
+    if(!e.target.dataset.c) return;
+    cat=e.target.dataset.c;
+    catsEl.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c===e.target));
+    render();
+  };
+  ptEls.forEach(el=>el.onclick=e=>{
+    pt=e.target.dataset.p;
+    ptEls.forEach(c=>c.classList.toggle('on',c===e.target));
+    render();
   });
-  grid.querySelectorAll('.copy').forEach((el,idx)=>el.onclick=e=>{
-    navigator.clipboard.writeText(list[idx].prompt);
-    e.target.textContent='✅ 已複製'; e.target.classList.add('done');
-    setTimeout(()=>{e.target.textContent='📋 複製 prompt'; e.target.classList.remove('done');},1500);
-  });
+  qEl.oninput=e=>{q=e.target.value.toLowerCase();render();};
+  render();
+
+  return {
+    render,
+    search(query){
+      qEl.value=query; q=query.toLowerCase(); cat='all'; pt='all';
+      catsEl.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on', c.dataset.c==='all'));
+      ptEls.forEach(c=>c.classList.toggle('on', c.dataset.p==='all'));
+      render();
+    }
+  };
 }
 
-document.getElementById('cats').onclick=e=>{
-  if(!e.target.dataset.c) return;
-  cat=e.target.dataset.c;
-  document.querySelectorAll('#cats .chip').forEach(c=>c.classList.toggle('on',c===e.target));
-  render();
-};
-document.querySelectorAll('[data-p]').forEach(el=>el.onclick=e=>{
-  pt=e.target.dataset.p;
-  document.querySelectorAll('[data-p]').forEach(c=>c.classList.toggle('on',c===e.target));
-  render();
-});
-document.getElementById('q').oninput=e=>{q=e.target.value.toLowerCase();render();};
-render();
+const panelF5    = makePanel(CASES,       {panel:'tab-cases', cats:'cats',  grid:'grid',  empty:'empty',  stats:'stats-f5',    q:'q'});
+const panelAstra = makePanel(ASTRA_CASES, {panel:'tab-astra', cats:'acats', grid:'agrid', empty:'aempty', stats:'stats-astra', q:'aq'});
+
+document.getElementById('stats').textContent =
+  `Claude Fable 5 ${CASES.length} 個案例 · GPT-6 Astra ${ASTRA_CASES.length} 個案例`;
 
 // ====== 頁籤切換 ======
+const TABS = ['cases','astra','guide'];
 function showTab(t){
-  document.getElementById('tab-cases').style.display = t==='cases'?'':'none';
-  document.getElementById('tab-guide').style.display = t==='guide'?'':'none';
+  TABS.forEach(name=>document.getElementById('tab-'+name).style.display = (name===t?'':'none'));
   document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.toggle('on', el.dataset.t===t));
   window.scrollTo({top:0});
 }
@@ -881,12 +1021,7 @@ document.querySelectorAll('.tabs .tab').forEach(el=>el.onclick=()=>showTab(el.da
 // 指南 → 案例庫跳轉（切頁籤 + 帶入搜尋）
 function jumpToCase(query){
   showTab('cases');
-  const qEl = document.getElementById('q');
-  qEl.value = query; q = query.toLowerCase();
-  cat = 'all'; pt = 'all';
-  document.querySelectorAll('#cats .chip').forEach(c=>c.classList.toggle('on', c.dataset.c==='all'));
-  document.querySelectorAll('[data-p]').forEach(c=>c.classList.toggle('on', c.dataset.p==='all'));
-  render();
+  panelF5.search(query);
 }
 
 // 指南的複製按鈕：複製前一個 .gprompt 的內容
