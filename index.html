@@ -912,6 +912,36 @@ Before you write code, propose the art direction (type pairing, palette, motion 
 
 先把射擊手感與波次節奏調到好玩，再加內容。`
  },
+// ====== 2026-09-06 自動更新 ======
+ {
+  cat:"創意藝術", title:"Synesthesia：看得見也聽得到的流體畫布（單一 HTML）",
+  desc:"一句「做出你想得到最美的 HTML」，Fable 5.1（high effort）交出單檔互動作品：滑鼠拖曳即作畫的流體模擬，配上模型自己生成的音樂與音效，還內建調色盤切換、爆發、清空、存檔、全螢幕等快捷鍵。⚠️ 留言區有人質疑這可能是把網路上常見的流體模擬開源實作改寫過來，模型真正的貢獻或許在「知道什麼看起來美」的選題品味，而非演算法原創。",
+  author:"@MiaAI_lab (Mia)", likes:335, url:"https://x.com/MiaAI_lab/status/2095849685332238753",
+  ptype:"原文",
+  prompt:`Create the most beautiful HTML file you could think of. Something that when people see it, all they can say is "WOW!!!" It must be visually impressive, beautiful, and just music to the eyes. Be thorough, but creative. Don't make mistakes.`
+ },
+ {
+  cat:"工程研究", title:"craftbot：讓 Fable 5 照施工手冊蓋出整棟多層建築",
+  desc:"開源的建築 agent harness，餵給模型三種資源：manuals/ 放 PDF 施工規範與可搜尋索引、tools/ 放 Python 程式碼片段、skills/ 放先前實驗蒸餾出的專用 agent skills。Fable 5 agent 跑完一輪產出 2,787 個構件、537 KB 的 CLT 多層集合住宅，附帶自動彙總的分層用料表（外覆、內襯、樓板、基礎等共約 1,371 噸），以及模型自己寫的設計理由文件——含推導過程、與手冊數字的比對、被否決的選項與已知簡化。程式碼開源在 GitHub lukapiskorec/craftbot。⚠️ 作者註明 Claude Code 的思考過程不會外顯，理由文件是模型事後補寫的自述。",
+  author:"@LukaPiskorec (protocell:labs)", likes:182, url:"https://x.com/LukaPiskorec/status/2095933019467165844",
+  ptype:"重建",
+  prompt:`你要在這個 repo 裡當一個建築設計 agent。可用資源如下，動手前先全部讀過：
+- manuals/：PDF 施工手冊與對應的 md 摘要，附可搜尋索引。所有結構尺寸、跨距、樓板厚度、防火與隔音構造都必須引用這裡的數字，不要自己憑印象編。
+- tools/：現成的 Python 幾何與匯出程式碼片段，能重用就重用，不要重寫。
+- skills/：先前實驗蒸餾出的專用技能文件，照裡面的流程走。
+
+任務：設計一棟 CLT（直交集成板）多層集合住宅，並輸出可在 Blender 中檢視的完整模型。
+
+要求：
+1. 依手冊規則推導樓層高度、柱網跨距、樓板與牆體厚度，逐項標明引用了手冊哪一節。
+2. 構件要分層建置並各自命名成獨立 collection：frame、cladding ext、cladding int、interior、roof、floors、foundations、fixtures。
+3. 每一層都要自動算出構件數量、線性公尺、體積與重量，最後彙總成一張用料表。
+4. 自己做驗證：跑重疊檢查與數量合理性檢查，找到問題就回頭修，不要把有穿模的版本交出來。
+5. 每次迭代存成一個版本，保留可回溯的檔名。
+6. 最後寫一份 design rationale 文件，內容包含：怎麼跑、輸入手冊的哪些規則變成了數字、設計決策與「被否決的選項」、核心建模演算法、詳細幾何推導、驗證做了什麼與抓不到什麼、以及本次省略或近似掉的部分。
+
+不要問我問題，自己判斷後做完再一次回報。`
+ },
 ];
 
 // ====== GPT-6 Astra 案例（OpenAI，2026-09 發布）======
@@ -1369,6 +1399,99 @@ const ASTRA_CASES = [
 6. 最後加一層整體色調調整，統一畫面氛圍。
 
 過程中如果某個工具找不到或操作失敗，自己想辦法（查選單、用快捷鍵），並在最後告訴我卡在哪些地方。完成後說明你的配色與光源決策理由。`
+ },
+// ====== 2026-09-06 自動更新 ======
+ {
+  cat:"工程研究", title:"免疫學教授自建流式細胞儀分析軟體，退掉所有商業訂閱",
+  desc:"實驗室每年要付數千美元授權費給商用流式細胞儀（flow cytometry）分析軟體，作者用 Astra 做出研究級替代品 aster：匯入 FCS 檔、族群樹狀分群（Lymphocytes → Singlets → Live cells → CD3+ T cells → CD4+/CD8+/CD69+）、密度散布圖與直方圖、補償矩陣、Population Inspector 統計、報告輸出。作者說 UI/UX 已勝過他用過的多數工具，訂閱全部取消了。他強調自己沒有軟體工程背景，先前用舊版 Codex 也做過陽春版但 bug 纏身，Astra 是第一次「幾乎一次就給你要的東西」。⚠️ 截圖是合成教學資料（Synthetic tutorial），非真實生物驗證；作者自陳目標是超越商業軟體、目前尚未達成。",
+  author:"@DeryaTR_ (Derya Unutmaz, MD)", likes:1516, url:"https://x.com/DeryaTR_/status/2095709095005126756",
+  ptype:"重建",
+  prompt:`幫我做一個研究級的流式細胞儀（flow cytometry）資料分析桌面應用，目標是取代 FlowJo／FCS Express 這類要年費的商用軟體。我是免疫學家，不是軟體工程師，所以介面要照實驗室實際的分析流程設計，不要做成通用資料工具。
+
+核心需求：
+1. 直接匯入標準 FCS 檔（含多檔批次），能處理數十萬到數百萬個細胞事件而不卡頓，全部本機處理、不要上傳雲端。
+2. 分群（gating）是核心：支援矩形、多邊形、套索、象限與布林邏輯 gate，gate 之間形成可展開的族群樹，每一層即時顯示事件數、佔母群百分比、佔全體百分比。
+3. 繪圖至少要有密度圖（含色階）、散布圖、直方圖，X/Y 軸可各自選任一通道並切換 linear／log／Arcsinh（Arcsinh 的 cofactor 要能調）。多張圖能並排比較同一樣本或跨樣本。
+4. 補償（compensation）：讀取檔案內建的補償矩陣，也允許手動編輯，並清楚標示目前統計值是套用哪一組補償算出來的。
+5. Gating 策略要能存成模板，一鍵套用到整批樣本；並提供報告輸出。
+6. 每個數字都要可追溯：點任一統計值，能看到它是從哪個 gate、哪個補償、哪些事件算出來的。
+
+介面請做成三欄：左邊樣本與族群樹、中間分析畫布、右邊選中族群的統計與繪圖設定。先把匯入到分群到出統計這條主線做到完全可用，再談進階功能。`
+ },
+ {
+  cat:"創意藝術", title:"直接操作 Aseprite 畫出真正的點陣圖（初音未來）",
+  desc:"作者指出這是困擾遊戲開發者多年的問題：影像生成 AI 只能做出「像素風插畫」，放大看根本不對齊格點、顏色數也失控，無法當遊戲素材用。Astra 改走另一條路——用 computer use 直接操作點陣圖專用軟體 Aseprite，一格一格畫，產出的初音未來是真正逐像素、可直接進遊戲的 dot art，還自己建了 01/02/03 分層與影格。留言區有人補充 GPT-5.6 Sol 連 Aseprite 都不會開，因此專門做了 pixel32bench 這個測試。⚠️ 也有人質疑「會畫」和「能連貫地動起來」是兩回事，動畫能力尚未驗證；本卡片用作者附的成品圖，推文主影片首幀是空白畫布。",
+  author:"@suemaruuuuuuX (すえまる)", likes:3309, url:"https://x.com/suemaruuuuuuX/status/2096212351502721361",
+  ptype:"重建",
+  prompt:`請你用 computer use 直接操作 Aseprite，畫一張初音未來的點陣圖。**不要用影像生成、不要輸出「像素風插畫」，我要的是真正逐格點下去的 dot art。**
+
+規格：
+- 畫布 64×64，透明背景，全身站姿。
+- 調色盤限制在 16 色以內，先把色票排好再開始畫，之後不要臨時加色。
+- 一律用 1px 鉛筆工具、開啟 Pixel Perfect 模式，禁止使用柔邊筆刷、模糊、漸層或任何會產生半透明邊緣的工具。
+- 圖層分開：01 線稿／輪廓、02 底色、03 陰影與高光，命名清楚。
+- 特徵要抓對：青綠色雙馬尾（要長到能垂到腳邊）、粉色髮飾、灰黑色無袖上衣、青綠色領帶與裙襬滾邊、過膝黑靴。輪廓線用比該區塊更深的同色系，不要一律用純黑。
+
+作法上請自己一步一步來：先開新檔並設好畫布與調色盤，再打輪廓，再填底色，最後上陰影與高光；每個階段都放大檢查有沒有孤立像素或沒對齊的邊。工具找不到就自己查選單或用快捷鍵，不要問我。完成後存成 .aseprite 與去背 PNG，並說明你的配色與明暗決策。`
+ },
+ {
+  cat:"模擬視覺化", title:"研究精實生產文獻後，蓋出一座會運轉的德州飛機工廠",
+  desc:"一條龍任務：先自己研究飛機製造流程、讀 Airsup 的精實生產（lean production）書籍，再據此設計一座德州噴射機工廠的產線佈局，用 Three.js 做成即時 3D 模擬、自我測試、最後部署上線（texas-jet-works.konstantinsaifo.chatgpt.site 可直接開）。畫面裡有完整的機具站點、輸送帶、跑道與拖車，V2 版本已經讓機台跑真實週期、拖車送完一架回頭接下一架。作者後續正把原料的即時交期與成本接進來做成端到端版本。",
+  author:"@konstantinsaifo (Konstantin Saifoulline)", likes:844, url:"https://x.com/konstantinsaifo/status/2096122429319852319",
+  ptype:"重建",
+  prompt:`任務：設計並模擬一座位於德州的噴射商務機製造廠。整條流程你自己跑完，不要問我。
+
+步驟：
+1. 先研究飛機製造的實際流程——機身段組裝、機翼對接、系統安裝、塗裝、總裝、地面測試——搞清楚每站在做什麼、大概要多久、需要哪些機具與人力。
+2. 讀 Airsup 的精實生產（lean production）資料，把節拍時間（takt time）、單件流、看板拉動、瓶頸與緩衝這些原則實際套用到佈局上，不要只是在文件裡提一下。
+3. 依上述設計廠房佈局：站點順序、輸送路徑、物料暫存區、跑道與交機區的相對位置。佈局的每個決定都要能講出精實生產上的理由。
+4. 用 Three.js 做成即時 3D 模擬：可自由旋轉縮放平移的等角視角、機具與工站有可辨識的量體、輸送帶與拖車會動、飛機沿著產線推進、有播放／暫停與視角重置控制。
+5. 自己測：讓模擬跑滿一個完整週期，檢查有沒有卡住的物件、穿模、或節拍對不上的地方，發現問題自己修完再交。
+6. 部署成可公開存取的網址，把連結給我。
+
+最後告訴我：你設計的節拍時間是多少、瓶頸站在哪、以及這座廠理論上的月產能。`
+ },
+ {
+  cat:"遊戲", title:"同一題跑 Max 與 Medium：Godot 3D 音速小子（附用量數據）",
+  desc:"同一個 prompt、同一套 Godot 環境，只換推理強度：Max 花 53 分鐘、吃掉 Pro x5 帳號每週額度的 4%，Medium 花 25 分鐘、只用 1%。兩邊都做出可玩的 3D 音速小子熱帶海岸關卡（衝刺、飄移、追蹤攻擊、迴圈、滑軌），Max 版在標題畫面編排、材質與場景層次上明顯更講究。作者被質疑用量數據後又重跑一次，46 分鐘、3% 額度，並公開完整 prompt。⚠️ 用量百分比取決於個人方案與當週已用量，不能當通用換算；產出物是同人 fan game，非商用素材。",
+  author:"@AiBattle_ (AiBattle)", likes:9464, url:"https://x.com/AiBattle_/status/2095994051354919049",
+  ptype:"原文",
+  prompt:`Create a visually spectacular, highly polished 3D Sonic the Hedgehog vertical slice in Godot. Do not use web search, external downloads, online assets, or internet resources. Build everything using only locally available tools, assets, and procedural/original content.
+
+Sonic must be immediately recognizable: cobalt-blue quills, connected eyes, tan muzzle/torso, white gloves, oversized red shoes with white straps, compact athletic proportions, swept-back quills, expressive animation, iconic running posture, and spin form. Prioritize a polished character model, strong materials, expressive animation, smooth blending, and excellent lighting.
+
+Focus the entire game on speed, momentum, responsive controls, and fluid traversal. Include high-speed running, acceleration, drifting, jumping, homing attacks, spin dash, rolling, boost-style acceleration, springs, dash pads, grind rails, loops, wall-running, ramps, launch sequences, enemies that can be chained with homing attacks, and rings placed along ideal racing lines. Preserve momentum and avoid sticky collisions or unnecessary stops.
+
+Create one exceptional tropical coastal level rather than several smaller ones. Include ocean vistas, waterfalls, green cliffs, palms, flowers, checker-patterned rock, ruins, caves, loops, rails, bridges, tunnels, beaches, and dramatic vertical terrain. The world should feel large and continuous, with multiple routes and higher-skill shortcuts.
+
+Structure the level around memorable moments:
+- Cliffside opening overlooking the level
+- Long downhill acceleration section
+- Giant loop and corkscrew
+- Rail grinding above the ocean
+- Airborne homing-attack chain
+- Cave or ancient-ruin section
+- Vertical wall run
+- Huge waterfall jump
+- Final high-speed sprint
+
+Make speed feel spectacular with restrained speed lines, wind trails, particles, grass/dust effects, camera banking, subtle FOV expansion, environmental reactions, and readable motion effects. Sonic's animation should evolve naturally from jogging into an iconic forward-leaning sprint while maintaining believable terrain contact on slopes, loops, rails, and walls.`
+ },
+ {
+  cat:"遊戲", title:"把手遊廣告變成真的可以玩（30 分鐘內）",
+  desc:"手遊廣告裡的畫面往往和實際遊戲天差地遠。作者把一支「魚群 × 造橋」的廣告丟給 Astra，要它照著廣告畫面做出真正能玩的版本：Blender 建模＋瀏覽器遊戲，30 分鐘內完成，等角視角、木樁圍欄、造橋與升級點位都還原得相當接近原廣告。留言區點出這其實是門生意——遊戲工作室正需要有人把廣告變成真遊戲；也有人追問「第一版之後還要手動修多少」才是真正的成本。⚠️ 推文未附 prompt 原文與可玩連結。",
+  author:"@buildingadlicio (daniel)", likes:1678, url:"https://x.com/buildingadlicio/status/2096111709496680842",
+  ptype:"重建",
+  prompt:`我附上一支手遊廣告的影片／截圖。請你把它做成一個真的能玩的瀏覽器小遊戲，畫面要盡量貼近廣告本身。
+
+流程：
+1. 先逐格看過素材，把你判讀到的東西寫給我：視角（等角？俯視？）、場景構成、玩家在做什麼、有哪些互動點位與 UI 元素、色調與材質風格。凡是廣告裡出現過的細節都要列進來，包括我沒提的。
+2. 用 Blender 把場景與資產建出來——地台、木樁圍欄、水域、可放置的橋樑與設施、角色——低多邊形、乾淨的 UV，材質走廣告那種明亮飽和的塑膠感。用腳本建模，不要靠外部素材庫。
+3. 匯出成 glTF，用 Three.js 組成可在瀏覽器直接玩的版本：等角相機、點擊／拖曳互動、資源計數、可花費資源解鎖的建造點位（廣告裡那些帶價格標籤的方框）、以及水面與魚群的動態。
+4. 玩法要真的成立：有明確目標、資源會增減、建造後場景會實際改變，不是只有動畫。
+5. 自己開起來玩過一輪再交，把跑不動或穿模的地方修掉。
+
+最後附上一張「廣告原圖 vs 你的成品」的並排對照，並老實告訴我哪些地方沒還原到、為什麼。`
  },
 ];
 
