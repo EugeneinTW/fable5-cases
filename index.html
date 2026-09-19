@@ -72,7 +72,7 @@
   <header>
     <h1>🧪 AI 模型案例庫</h1>
     <div class="updated" id="updated"></div>
-    <p>從 X 整理的 AI 模型實測案例——看別人做了什麼，複製 prompt 自己重現。目前分成 Claude Fable 5 與 GPT-6 Astra 兩個分頁。</p>
+    <p>從 X 整理的 AI 模型實測案例——看別人做了什麼，複製 prompt 自己重現。目前分成 Claude Fable 5、GPT-6 Astra 與 TypeSafe Jev 三個分頁。</p>
     <div class="stats" id="stats"></div>
     <div class="legend"><span class="badge b-orig">原文 prompt</span> 推文或原文章直接給出的指令　<span class="badge b-recon">重建 prompt</span> 根據案例描述補寫的可執行版本，效果可能與原案例有落差</div>
   </header>
@@ -80,6 +80,7 @@
   <div class="tabs">
     <span class="tab on" data-t="cases">📚 Fable 5 案例</span>
     <span class="tab" data-t="astra">🛰️ GPT-6 Astra 案例</span>
+    <span class="tab" data-t="jev">⚡ TypeSafe Jev 案例</span>
     <span class="tab" data-t="guide">🎓 Fable 5 官方 Prompting 指南（新手版）</span>
   </div>
 
@@ -109,6 +110,20 @@
   <div class="substats" id="stats-astra"></div>
   <div class="grid" id="agrid"></div>
   <div class="empty" id="aempty">沒有符合的案例</div>
+  </div>
+
+  <div id="tab-jev" style="display:none">
+  <div class="anote">TypeSafe AI 的 <b>Jev</b>（2026-09-15 發布）不是聊天模型，是「決策模型」：不生成文字，只回答 Choice（選一個）、Score（打等級）、Noul（是非機率）三種題型並附機率；延遲 70 到 500 毫秒，每百萬輸入 token 0.042 美元、輸出免費。因為它不是「一句 prompt 出成品」的玩法，多數卡片的 prompt 是<b>重建版</b>：給 coding agent 的建置指令，含題目設計與信心值門檻，先裝官方 skill（npx skills add typesafe-ai/skills --skill typesafe-ai）再貼。這個分頁收的是發布首週的實作案例，首批收錄門檻 <b>100 讚</b>。</div>
+  <div class="bar" id="jcats"></div>
+  <div class="bar">
+    <span class="chip on" data-p="all">全部 prompt</span>
+    <span class="chip" data-p="原文">只看原文 prompt</span>
+    <span class="chip" data-p="重建">只看重建 prompt</span>
+    <input id="jq" type="search" placeholder="搜尋案例、作者、關鍵字…">
+  </div>
+  <div class="substats" id="stats-jev"></div>
+  <div class="grid" id="jgrid"></div>
+  <div class="empty" id="jempty">沒有符合的案例</div>
   </div>
 
   <div id="tab-guide" style="display:none">
@@ -2757,6 +2772,472 @@ WASD／方向鍵移動，Shift 跑，Q/E 轉視角，Enter/Space 調查，Esc �
  },
 ];
 
+// ====== TypeSafe Jev 案例（決策模型，2026-09-15 發布）======
+const JEV_CASES = [
+// ====== 2026-09-19 建立（發布首週案例） ======
+ {
+  cat:"工程研究", title:"Claude Code 即時壓縮 plugin：Jev 給每個 tool call 打分，1 秒把 100 萬 token 壓到 8.6 萬",
+  desc:"開源 plugin fast-jev-compaction：不再叫 LLM 寫摘要，而是讓 Jev 對 session 裡每個工具輸出打「跟目前任務相關嗎」的分數，無關的整段丟掉、有關的原文保留。@altryne 實測 1 秒內把接近 100 萬 token 的 session 壓到 8.6 萬；TypeSafe 共同創辦人 Diogo Almeida 轉發認可。原推只有影片，安裝指令取自 @altryne 的實測貼文。",
+  author:"@tamarajtran (tamara)", likes:9829, url:"https://x.com/tamarajtran/status/2100694549362553153",
+  ptype:"原文",
+  prompt:`Install, and configure :
+https://github.com/tamaratran/fast-jev-compaction`
+ },
+ {
+  cat:"工程研究", title:"500 封 email 幾秒分類完，總費用 3.5 美分",
+  desc:"把 500 封 email 丟給 Jev 分類，幾秒跑完、費用 0.035 美元。推文只有影片與數字，未說明分類標籤與程式碼。",
+  author:"@rileybrown (Riley Brown)", likes:3835, url:"https://x.com/rileybrown/status/2100404532119269426",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）寫一支 Python 腳本，把 emails.csv 裡的 500 封信分類。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解正確的 API 用法，key 放在環境變數 TYPESAFE_API_KEY。
+
+每封信的 state 是 subject + body，同一次呼叫問三題：
+1. category（Choice）：支援問題 / 帳務 / 業務詢價 / 電子報 / 垃圾信 / 其他
+2. needs_reply（Noul）：這封信需要人回覆嗎？
+3. urgency（Score）：low / medium / high
+
+用 asyncio 並發送出，結果寫回 CSV，最後印出每類數量、總 token 數與費用。信心值低於 0.6 的另外列出來讓我人工看。`
+ },
+ {
+  cat:"工程研究", title:"語音控制 Mac：話還沒說完，Jev 已經把 app 打開",
+  desc:"語音轉文字後交給 Jev 決定要開哪個 app、做什麼動作，延遲低到指令講到一半就執行完。推文只有 demo 影片，未公開程式碼與 prompt。",
+  author:"@instantricecook (Andy Gao)", likes:3068, url:"https://x.com/instantricecook/status/2100814590300889426",
+  ptype:"重建",
+  prompt:`我要在 Mac 上做一個語音控制的電腦操作工具，決策用 TypeSafe Jev（model jev-latest）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API，key 在環境變數 TYPESAFE_API_KEY。
+
+架構：
+1. 用 macOS 的 SFSpeechRecognizer（或 whisper.cpp 串流）持續轉錄，每次 partial transcript 更新就觸發一次判斷，不要等使用者講完。
+2. 候選動作清單在程式裡先建好，不讓模型自己想：開啟某個 app（掃 /Applications 產生清單）、在 Notes 新增一則筆記、搜尋某個關鍵字、播放或暫停音樂、什麼都不做。
+3. 每次判斷一個 Jev 呼叫問兩題：action（Choice，從候選動作選一個）與 ready（Noul：使用者的意圖已經清楚到可以執行了嗎）。
+4. ready 高於 0.85 且 action 信心值高於 0.8 才執行，用 AppleScript 或 open -a 執行；同一句話執行過就不要重複執行。
+5. 畫面上顯示目前轉錄文字、Jev 回傳的機率與延遲。
+
+先用 Swift 或 Python 任一種做出可跑的版本，附啟動說明。`
+ },
+ {
+  cat:"遊戲", title:"Jev 玩超級瑪利歐：每幾幀一次 Choice 決定按哪個鍵",
+  desc:"把遊戲狀態餵給 Jev，用 Choice 題選下一步按鍵，推理夠快所以能即時操作，作者說結構化輸出加快速推理讓它意外適合即時場景。推文只有影片，未公開模擬器接法與程式碼。",
+  author:"@faadilhshaik (Faadil Shaik)", likes:2833, url:"https://x.com/faadilhshaik/status/2100086301894881578",
+  ptype:"重建",
+  prompt:`用 gym-super-mario-bros 與 nes-py 做一個讓 TypeSafe Jev（model jev-latest）玩超級瑪利歐的 agent。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API，key 在 TYPESAFE_API_KEY。
+
+每 4 幀決策一次：
+1. 從模擬器 RAM 讀出瑪利歐座標、前方 6 格內的敵人與坑洞、腳下是否有地面、是否在空中，整理成一段簡短文字當 state。
+2. 一次 Jev 呼叫問：action（Choice：right / right+jump / jump / left / noop）與 danger_ahead（Noul：3 格內有敵人或坑嗎）。
+3. 執行 action；若 danger_ahead 高於 0.7 且 action 不是跳，強制改成 right+jump。
+4. 右側面板即時顯示每個選項的機率、信心值與每次呼叫的延遲。
+
+用 asyncio 讓 API 呼叫不阻塞畫面，跑 World 1-1，記錄每回合走到的最遠 x 座標。`
+ },
+ {
+  cat:"工程研究", title:"PR 審查：一次呼叫回 14 個風險機率，每個 PR 0.00007 美元",
+  desc:"貼上 diff，一次 Jev 呼叫同時回 14 個 Noul 的機率：硬編碼密鑰、SQL injection、動到權限、刪測試、破壞 API、migration、debug 殘留、描述與 diff 是否相符、影響範圍等；程式碼再合成 BLOCK／安全審查／nits／可合併四種結論，關鍵題落在 0.35 到 0.65 就升級給人或大模型。作者算 1,000 個 PR 只要 7 美分，Opus 5 約 14.5 美元。影片示範 6 個真實 PR，程式碼未公開。",
+  author:"@redp314 (Paolo Rosson)", likes:2723, url:"https://x.com/redp314/status/2100585126652481915",
+  ptype:"重建",
+  prompt:`寫一個叫 jev-gate 的 CLI：輸入一個 git diff 與 PR 描述，用 TypeSafe Jev（model jev-latest）一次呼叫回傳 14 個 Noul 機率，再由程式碼決定審查結論。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+14 題（每題都是 Noul，instructions 用一句話問清楚）：hardcoded_secret、sql_injection、touches_auth、deletes_tests、breaks_public_api、has_migration、debug_leftovers、description_matches_diff、large_blast_radius、needs_senior_reviewer、changes_error_handling、adds_dependency、touches_payment、missing_tests_for_new_code。
+
+結論規則寫在程式裡：
+- 任一關鍵題（secret、sql_injection、touches_auth、touches_payment）高於 0.65 → BLOCK
+- 關鍵題落在 0.35 到 0.65 → 升級給人或大模型複審，不要自己猜
+- breaks_public_api 或 large_blast_radius 高於 0.6 → 需要安全或架構審查
+- 只有 debug_leftovers、missing_tests 之類高於 0.6 → nits
+- 其餘 → 可合併
+
+輸出一張表：每題機率、對應結論、這次呼叫的 token 數與費用。用 6 個真實 PR 的 diff 測試。`
+ },
+ {
+  cat:"工程研究", title:"預測式啟動器：邊打字邊猜你要開哪個檔案，每個按鍵約 100 毫秒",
+  desc:"一般啟動器靠別名、模糊比對與使用習慣排序，這個用 Jev 讀意圖：打「the pdf I just downloaded」，最新下載的 PDF 已經排第一，每個按鍵都附信心值、約 100 毫秒更新。推文只有影片，未公開程式碼。",
+  author:"@dabit3 (nader dabit)", likes:2164, url:"https://x.com/dabit3/status/2100756930054504776",
+  ptype:"重建",
+  prompt:`做一個 macOS 快速啟動器（Tauri 或 Electron 都可），靠 TypeSafe Jev（model jev-latest）讀意圖，而不是只靠別名與模糊比對。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 啟動時建立本機索引：/Applications 的 app、~/Downloads 與 ~/Documents 最近 500 個檔案（名稱、路徑、類型、修改時間）、常用系統設定。
+2. 使用者每打一個字就做一次判斷：先用模糊比對與使用習慣挑出 30 個候選，把「目前輸入文字 + 現在時間 + 每個候選的名稱、類型、修改時間」當 state，問 Jev 一題 Choice：使用者最可能想開哪一個。
+3. 依 Jev 的機率重排清單，每一列顯示信心值；輸入 the pdf I just downloaded 時最新下載的 PDF 要排第一。
+4. 目標是每次按鍵到重排完成約 100 毫秒，用防抖並取消上一個未完成的請求。
+5. Enter 開啟第一個。`
+ },
+ {
+  cat:"工程研究", title:"稅務文件分類器：每頁 0.001 美元，比原本 LLM 管線便宜 34 倍、快 6 倍",
+  desc:"把公司上個報稅季用 LLM 建的稅務文件分類管線換成 Jev，全部語料 100% 分類完成。作者說多篇文章宣稱 AI 做不到稅務文件分類，實測相反。已開源 kyotofin/tax-doc-classifier。",
+  author:"@nedwize (Nakshatra Saxena)", likes:2012, url:"https://x.com/nedwize/status/2100973868324417852",
+  ptype:"重建",
+  prompt:`建一個稅務文件分類管線，用 TypeSafe Jev（model jev-latest）取代原本的 LLM 分類。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 每個 PDF 逐頁抽文字（pdftotext，掃描件用 tesseract OCR），state = 檔名 + 該頁前 2,000 字。
+2. 同一次呼叫問兩題：doc_type（Choice：W-2 / 1099-NEC / 1099-INT / 1099-DIV / 1099-B / 1098 / K-1 / 1040 / 銀行對帳單 / 收據 / 其他）、continuation（Noul：這頁是上一頁同一份文件的延續嗎）。
+3. 用 asyncio 並發 20 路，結果寫進 SQLite：檔名、頁碼、類型、信心值。
+4. 信心值低於 0.6 的頁面另存一個待人工複核清單。
+5. 跑完印出每種類型的數量、總費用（依 usage 的 input_tokens 計）與每頁平均延遲。
+
+參考已開源的 kyotofin/tax-doc-classifier 的做法。`
+ },
+ {
+  cat:"工程研究", title:"1,018 篇 AI 論文分 24 個主題：分類費 0.08 美元，做成可瀏覽網站",
+  desc:"管線：DeepSeek V4 Flash 先寫每篇摘要（3.99 美元），再把標題＋摘要＋24 個主題丟給 Jev 分類（0.08 美元，每篇中位數 256 毫秒），成果做成 1kpapers.com。作者自註還在跑 evals 確認 Jev 的分類品質，之後才會換掉網站現有的分類。",
+  author:"@nutlope (Hassan)", likes:1952, url:"https://x.com/nutlope/status/2100426999546184123",
+  ptype:"重建",
+  prompt:`把 papers.json 裡約 1,000 篇 AI 論文分成 24 個主題並做成可瀏覽的網站。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 TypeSafe Jev（model jev-latest）的 API。
+
+管線：
+1. 每篇先用便宜的 LLM（例如 DeepSeek V4 Flash）寫 3 句摘要，存起來。
+2. 把「標題 + 摘要」當 state，問 Jev 一題 Choice，選項是這 24 個主題：reasoning、agents、RLHF 與對齊、評測、多模態、影片生成、程式碼模型、推理加速、資料合成、小模型、RAG 與檢索、安全、機器人、科學應用、醫療、長上下文、記憶、工具使用、蒸餾、擴散模型、語音、世界模型、可解釋性、其他。同時問一題 Score（1 到 5：這篇對從業者的實用程度）。
+3. 記錄每篇的機率分布、信心值、延遲與 token 數，最後印出總費用。
+4. 用 Next.js 做一個靜態站：主題磚牆、每個主題內依實用分數排序、點進去看摘要與原文連結。
+5. 抽 50 篇做人工 eval，比較 Jev 分類與原本分類的一致率，再決定要不要換掉。`
+ },
+ {
+  cat:"工程研究", title:"firstmate 任務派工改用 Jev：與 Fable 判斷完全一致，成本降 71%、時間降 90%",
+  desc:"firstmate 是作者的 agent orchestrator，原本由 LLM 讀派工規則與額度資料後決定把任務交給哪個 harness、模型與推理強度。換成 Jev 後 200 毫秒內做同樣決定，25 個測試任務答案跟 Fable 一模一樣；含觸發 Jev 的那次工具呼叫在內，整個派工流程成本 -71%、時間 -90%。已內建在 firstmate，設 TYPESAFE_API_KEY 即啟用。",
+  author:"@kunchenguid (Kun Chen)", likes:1947, url:"https://x.com/kunchenguid/status/2100468943853085061",
+  ptype:"重建",
+  prompt:`我的 agent orchestrator 目前由 LLM 決定每個任務要派給哪個 harness、哪個模型、什麼推理強度。把這個派工決策換成 TypeSafe Jev（model jev-latest）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 在程式裡由設定檔產生候選清單：harness × 模型 × effort 的所有合法組合（例如 claude-code/opus/high、claude-code/haiku/low、codex/gpt/medium），最多 30 個。
+2. state = 任務描述 + 使用者的派工偏好規則原文 + 目前各模型的剩餘額度。
+3. 一次 Jev 呼叫問：dispatch（Choice，從候選清單選）、long_running（Noul：這會是超過 30 分鐘的實作工作嗎）、needs_review（Noul：完成後需要人看嗎）。
+4. 信心值低於 0.6 才退回原本的 LLM 決策路徑。
+5. 用過去 25 個真實任務回放，比較 Jev 與原本 LLM 的派工結果一致率、每次決策的延遲與成本，輸出一張表。`
+ },
+ {
+  cat:"工程研究", title:"模型路由器：Jev 判斷請求該交給哪個模型再轉送",
+  desc:"請求先進 Jev，由它決定最適合的模型，再把請求轉給該模型處理。推文只有影片，未公開程式碼。",
+  author:"@ephraimduncan (Duncan)", likes:1855, url:"https://x.com/ephraimduncan/status/2100454070536351824",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）做一個模型路由器。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 候選模型在程式裡定義三檔：cheap（例如 Haiku）、mid（Sonnet）、frontier（Opus），每檔附一句適用描述。
+2. 每個使用者請求先送 Jev 問一題 Choice：這個請求最適合哪一檔，instructions 寫「選能完成任務的最便宜模型」。同時問一題 Noul：需要多步推理嗎。
+3. 依結果把原請求轉給該模型，回應串流回前端。
+4. 前端在每則回覆上方顯示 Jev 選了哪個模型、三檔的機率與這次決策花的毫秒數。
+5. 提供一個切換讓我強制指定模型，方便對照。`
+ },
+ {
+  cat:"工程研究", title:"不用截圖、不用 LLM 的 Mac 電腦操作：CoreML 切 UI 元件、OCR 讀文字，Jev 選要點哪個",
+  desc:"本機 CoreML 模型切出畫面上所有按鈕與 UI 元件，裝置端 OCR 讀出標籤，只把這些文字交給 Jev；它回傳每個元件的機率、選出該點的那個，點完重新偵測再決定，直到目標完成。每次決策約 90 毫秒，沒有任何像素離開電腦。推文只有影片，未公開程式碼。",
+  author:"@milindlabs (Milind S)", likes:1705, url:"https://x.com/milindlabs/status/2100631847155994852",
+  ptype:"重建",
+  prompt:`在 Mac 上做一個不把截圖交給模型、不用 LLM 的電腦操作 agent，決策全部交給 TypeSafe Jev（model jev-latest）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+迴圈：
+1. 擷取目前螢幕，用本機 CoreML 物件偵測模型（或先用 macOS Accessibility API 取得所有可點元件的框）切出畫面上的按鈕、輸入框、連結。
+2. 用 Vision 框架的裝置端 OCR 讀出每個元件的文字，組成候選清單：編號、文字、座標、類型。只把這份文字清單與使用者的目標送給 Jev，不送任何像素。
+3. 一次呼叫問：target（Choice，從候選元件選一個）、action（Choice：click / type / scroll / done）、done（Noul：目標已完成嗎）。
+4. 執行後重新偵測再決定，直到 done 高於 0.9 或超過 30 步。
+5. 記錄每步的延遲，目標是每次決策 100 毫秒以內。`
+ },
+ {
+  cat:"工程研究", title:"DuckDB 擴充：SQL 裡直接用 Jev 分類任何 CSV／Parquet 的列，1 千列約 10 秒",
+  desc:"寫了一個 DuckDB extension，在 SQL 查詢裡對任意表的每一列呼叫 Jev 做分類，1 千列約 10 秒。作者說比呼叫 LLM 好、比自己訓分類器順手。推文附的是 SQL 截圖，擴充套件本身未附連結。",
+  author:"@hamiltonulmer (Hamilton Ulmer)", likes:1385, url:"https://x.com/hamiltonulmer/status/2100370557405667768",
+  ptype:"重建",
+  prompt:`做一個 DuckDB 擴充（先用 Python UDF 版本，能跑再考慮 C++ 擴充），讓我在 SQL 裡直接用 TypeSafe Jev（model jev-latest）分類任何表的列。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+要提供三個函式：
+- jev_choice(text, options_list) 回傳選中的選項
+- jev_noul(text, question) 回傳 0 到 1 的機率
+- jev_score(text, levels_list) 回傳分數
+
+實作重點：把同一個查詢的列分批（每批 50 列）並發送出，不要一列一次；結果做快取避免重跑；也要能拿到信心值。
+
+示範用 complaints.csv：
+SELECT agency, jev_choice(description, ['water','plumbing','noise','sanitation','other']) AS type, jev_noul(description, 'Does this explicitly say the issue was resolved?') AS resolved FROM read_csv('complaints.csv')
+
+1,000 列要在 15 秒內跑完並印出費用。`
+ },
+ {
+  cat:"工程研究", title:"SEO 內部連結重建：586 頁 45 秒、0.21 美元，同題 Opus 5 只做完 21 頁",
+  desc:"內部連結不是寫作題，是 8,790 個 yes/no：這頁有沒有理由連到那頁、文案裡有沒有現成的錨點文字。Jev 讀完 586 頁重建連結圖，放了 584 條連結，139 頁因為找不到合適目標而拒絕硬連。作者自註影片是 Jev 與 Opus 5 同一佇列同步跑，Jev 跑完就停，所以 Opus 只做了 21 頁、花 1.43 美元。工具預告會上 distribb.io，程式碼未公開。",
+  author:"@borjafat (borja)", likes:1376, url:"https://x.com/borjafat/status/2101018783976722479",
+  ptype:"重建",
+  prompt:`幫我的網站做內部連結審計與重建，判斷用 TypeSafe Jev（model jev-latest），不用大模型。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 從 sitemap 抓全部頁面（約 600 頁），抽出標題、H2、正文純文字。
+2. 對每個來源頁 A，先用 embedding 相似度篩出前 15 個目標頁 B，再對每一對問 Jev 兩題 Noul：should_link（A 的讀者有真實理由需要 B 嗎）、anchor_exists（A 的正文裡已經有一段可以自然當錨點文字的句子嗎）。
+3. 兩題都高於 0.75 才放連結，並用第三題 Choice 從 A 正文的候選句子裡選錨點。找不到合適目標的頁面就留白，不要硬連。
+4. 輸出：新的內部連結表（來源、目標、錨點文字、機率）、每頁的入鏈數、總費用與耗時。
+5. 全站 600 頁目標一分鐘內跑完。`
+ },
+ {
+  cat:"工程研究", title:"Jev + AXe 操作 iOS 模擬器：用 LLM 成本的零頭跑 UI 自動化",
+  desc:"用 AXe（iOS 模擬器的 accessibility 操控 CLI）把畫面元件餵給 Jev 決定下一步點哪裡，速度極快、成本只有 LLM 的零頭。推文只有影片，未公開程式碼與 prompt。",
+  author:"@camsoft2000", likes:1232, url:"https://x.com/camsoft2000/status/2100648648434434298",
+  ptype:"重建",
+  prompt:`用 AXe（iOS 模擬器的 accessibility 操作 CLI）加 TypeSafe Jev（model jev-latest）做一個 iOS app 的 UI 自動化測試 agent。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+迴圈：
+1. 用 axe describe-ui 取得目前畫面的 accessibility tree，整理成候選元件清單：編號、label、type、frame。
+2. 把測試目標（例如「完成一次註冊流程」）加上這份清單送 Jev，一次問：target（Choice 選元件）、action（Choice：tap / type / swipe / done）、text_to_type（若是 type，從我預先給的測試資料清單裡 Choice 一筆）、done（Noul）。
+3. 用 axe tap / type / swipe 執行，截圖存檔，重新讀 tree 再決定。
+4. done 高於 0.9 停止，輸出每步的截圖、決策與延遲成一份 HTML 報告。`
+ },
+ {
+  cat:"工程研究", title:"程式碼庫分類器：用 Jev 找出 agent 寫出來的過度工程",
+  desc:"用 Jev 掃整個 codebase，對每個檔案或函式判斷是否過度設計，作者認為這可能是 agent 產生過度工程程式碼的解法。推文只有影片，未公開程式碼；影片縮圖是作者本人，所以卡片不放圖。",
+  author:"@ryanvogel (vogel)", likes:1176, url:"https://x.com/ryanvogel/status/2100068006592123055",
+  ptype:"重建",
+  prompt:`掃描這個 repo，用 TypeSafe Jev（model jev-latest）找出過度工程的程式碼。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 用 tree-sitter 把每個檔案切成函式或類別，每個單位的 state = 程式碼本體 + 檔案路徑 + 它被引用的次數。
+2. 每個單位一次呼叫問四題 Noul：unnecessary_abstraction（這層抽象只有一個實作或呼叫者嗎）、speculative_generality（為了不存在的需求預留彈性嗎）、could_be_inlined（併回呼叫端會更清楚嗎）、duplicated_logic（跟 repo 裡其他地方重複嗎），再問一題 Score（simple / ok / overengineered）。
+3. 依分數排序輸出前 30 個最可疑的單位，附機率與一句摘要，做成 Markdown 報告。
+4. 印出總費用；整個 repo 要在幾分鐘內跑完。`
+ },
+ {
+  cat:"工程研究", title:"預測式試算表：在欄首打「Urgency」，每一列 100 毫秒內自動評好等級",
+  desc:"試算表只會重算數字，這個會讀意圖：在欄首打 Urgency，打字同時 Jev 就理解你要把每列從「不需追蹤」到「緊急」分級並填好，約 100 毫秒。推文只有影片，未公開程式碼。",
+  author:"@dabit3 (nader dabit)", likes:1120, url:"https://x.com/dabit3/status/2100780008193020049",
+  ptype:"重建",
+  prompt:`做一個網頁試算表（可以用 Handsontable 或自己寫），欄首打字時用 TypeSafe Jev（model jev-latest）推斷你要的欄位並自動填滿。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 載入一份客服對話 CSV（每列一筆對話）。
+2. 使用者在空白欄的欄首輸入文字（例如 Urgency、情緒、要不要退款），每次按鍵後 300 毫秒防抖，先問 Jev 一題 Choice：這個欄名最像哪種題型（等級評分 / 是非 / 分類），再由程式產生對應的題目。
+3. 對每一列同時送出該題（Score 用 no follow-up needed / low / medium / urgent 四級；Noul 直接回機率；Choice 的選項由欄名旁的括號取得）。
+4. 儲存格即時填入結果並依機率上色，滑鼠移上去看信心值。目標是每列 100 毫秒內出現。`
+ },
+ {
+  cat:"工程研究", title:"用自然語言隱藏 X 貼文的瀏覽器擴充：快到無感的內容防火牆",
+  desc:"在 X 時間軸上對每則貼文即時呼叫 Jev，依你用自然語言寫的規則決定摺疊或隱藏，快到察覺不到、成本極低；作者認為這是廣告阻擋器與內容防火牆的未來。推文只有影片與截圖，未公開擴充套件。",
+  author:"@marcelpociot (Marcel Pociot)", likes:1071, url:"https://x.com/marcelpociot/status/2100520134481735729",
+  ptype:"重建",
+  prompt:`做一個 Chrome 擴充套件，用自然語言規則過濾 X 的時間軸，判斷交給 TypeSafe Jev（model jev-latest）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 選項頁讓我用自然語言寫規則，一行一條，例如「隱藏加密貨幣推銷」「摺疊互相吹捧的 AI 引戰文」「隱藏抽獎轉發」。
+2. content script 監看時間軸新載入的貼文，取出作者、文字、是否含連結或圖片，批次（每 10 則一次）送 Jev，對每條規則問一題 Noul。
+3. 任一規則高於 0.8 就把該貼文摺疊成一行「已依規則 X 隱藏，點此展開」，介於 0.5 到 0.8 只淡化。
+4. 結果依貼文 ID 快取，同一則不重複呼叫；統計頁顯示今天隱藏了幾則與花費。
+5. API key 存在擴充套件的設定裡，不要寫死。`
+ },
+ {
+  cat:"工程研究", title:"完全不用 LLM 的聊天機器人：Jev 決定呼叫哪個工具與參數，回答即時且附來源",
+  desc:"接了網頁搜尋、維基百科、天氣、Todoist 與 Home Assistant；每則訊息由 Jev 用 Choice 選工具、再決定參數，回答即時、不會幻覺，還能附引用來源。限制在於回覆只能是工具結果的模板組合。推文只有影片，未公開程式碼。",
+  author:"@CodingGarden (CJ)", likes:1044, url:"https://x.com/CodingGarden/status/2100665210419950031",
+  ptype:"重建",
+  prompt:`做一個完全不呼叫 LLM 的聊天機器人，所有決策交給 TypeSafe Jev（model jev-latest），回覆用工具結果套模板組成。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+工具：網頁搜尋、維基百科摘要、天氣、Todoist 新增待辦、Home Assistant 開關裝置。
+
+每則訊息：
+1. 一次 Jev 呼叫問 tool（Choice，從工具清單加「閒聊」選一個）與 needs_location（Noul）。
+2. 依選中的工具再問第二次以決定參數，參數也用 Choice 從程式產生的候選中選：天氣的城市從使用者設定過的城市清單選、Home Assistant 的裝置從 API 列出的裝置清單選、搜尋關鍵字用原句去掉停用詞。
+3. 執行工具，用固定模板回覆，並附上來源連結。
+4. 信心值低於 0.5 就回「我不確定你要哪一個」並列出前三個選項讓使用者點。
+5. 記錄每則訊息的總延遲，目標 500 毫秒內。`
+ },
+ {
+  cat:"工程研究", title:"直播留言即時分流：問題／感想／需求／其他，Jev 判定後各自流向不同看板",
+  desc:"日本開發者的 demo：直播留言逐則交給 Jev 判斷語意，依結果流向四個看板，畫面上看得到分流過程。作者說適合把 app 或工作流裡的小判斷交給 AI。推文只有影片，未公開程式碼。",
+  author:"@kgsi (こぎそ)", likes:1001, url:"https://x.com/kgsi/status/2100740717454954548",
+  ptype:"重建",
+  prompt:`做一個直播留言分流看板，用 TypeSafe Jev（model jev-latest）判斷每則留言的類型。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 從 YouTube Live Chat（或先用一個假的留言產生器）即時接收留言。
+2. 每則留言一次 Jev 呼叫，問 kind（Choice：問題 / 感想 / 需求 / 其他）與 needs_answer（Noul：主播需要回應嗎）。
+3. 畫面分四欄，留言依 kind 飛進對應欄位並附信心值；needs_answer 高於 0.8 的在問題欄置頂並標色。
+4. 顯示每欄累計數與平均延遲，要能處理每秒 10 則以上。`
+ },
+ {
+  cat:"遊戲", title:"Jev 玩俄羅斯方塊：決策快到方塊是被它主動壓下去的",
+  desc:"早期取用者的 demo：把盤面狀態文字化交給 Jev 選旋轉與落點，推理速度快到方塊是被它主動往下推的。推文只有影片，未公開程式碼。",
+  author:"@marcus_lowe (Marcus Lowe)", likes:969, url:"https://x.com/marcus_lowe/status/2100315518930661861",
+  ptype:"重建",
+  prompt:`做一個網頁版俄羅斯方塊，讓 TypeSafe Jev（model jev-latest）來玩。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 每次新方塊出現時，程式先枚舉所有合法落點（旋轉 × 橫向位置），對每個落點計算落下後的高度、洞數、消行數，整理成文字候選清單（最多 40 個）。
+2. 把盤面（每列用 0/1 字串）與候選清單當 state，問 Jev 一題 Choice：選最好的落點。另問一題 Noul：現在該用 hold 嗎。
+3. 執行選中的落點，每步顯示 Jev 的前三名機率與延遲。
+4. 標題寫 jev plays tetris，右側顯示分數、消行數、每秒決策次數。`
+ },
+ {
+  cat:"工程研究", title:"即時爆文分析器：停止打字 0.5 秒就評估這則貼文的爆紅潛力並即時分類",
+  desc:"打字停 0.5 秒即呼叫 Jev 給爆紅潛力分數與貼文類型。作者自註只是實驗，要真的準還得抓大量 X 資料校準；未公開程式碼。",
+  author:"@rileybrown (Riley Brown)", likes:913, url:"https://x.com/rileybrown/status/2100425868053008758",
+  ptype:"重建",
+  prompt:`做一個即時爆文分析器網頁，評分用 TypeSafe Jev（model jev-latest）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 一個大輸入框，使用者停止打字 0.5 秒就觸發一次分析。
+2. 一次 Jev 呼叫問：viral_potential（Score，五級：almost none / low / medium / high / very high）、category（Choice：觀點 / 教學 / 故事 / 迷因 / 新聞 / 推銷 / 其他）、hook_strength（Noul：第一句有沒有讓人想往下讀）、too_long（Noul）。
+3. 右側面板即時顯示分數、機率分布與一句建議（建議由程式依哪一題最弱套模板產生，不用 LLM）。
+4. 記錄每次分析的延遲與費用。頁面標明這只是實驗，準確度需要用真實 X 資料校準。`
+ },
+ {
+  cat:"工程研究", title:"一晚分類 2 萬封 email、Slack 與通話逐字稿：7 分鐘、1.45 美元",
+  desc:"非工程師的業主視角：把 2 萬筆訊息分成加購機會、客訴、漏追蹤等 8 類，7 分鐘跑完花 1.45 美元。作者經營客服中心，核心用法是「Claude 或 GPT 想該問什麼問題，Jev 對全部資料回答」，題目改了就整批重跑。推文是長文說明，無 demo 影片與程式碼。",
+  author:"@ZacGawn (Zac Gawn)", likes:890, url:"https://x.com/ZacGawn/status/2100704691869098295",
+  ptype:"重建",
+  prompt:`我有一批匯出的資料：兩萬筆 email、Slack 訊息與通話逐字稿（CSV，每列一筆，含來源、日期、內容）。用 TypeSafe Jev（model jev-latest）整批打標。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 每筆一次呼叫，同時問 8 題：kind（Choice：加購機會 / 客訴 / 漏追蹤 / 帳務問題 / 技術問題 / 推薦或好評 / 一般詢問 / 其他）、disappointed（Noul：對方對我們的服務失望嗎）、upsell（Noul：有加購機會嗎）、good_opening（Noul：我們的開場白得體嗎）、technical（Noul）、needs_followup（Noul）、churn_risk（Score：low / medium / high）、sentiment（Score：negative / neutral / positive）。
+2. 並發 30 路，結果寫進 SQLite，記錄每題機率。
+3. 跑完印出各類數量、總費用與總時間（目標：兩萬筆十分鐘內、兩美元內）。
+4. 題目寫在一個 questions.yaml 裡，我改題目後可以整批重跑。`
+ },
+ {
+  cat:"工程研究", title:"用分類器拼出一個「LLM」：每個字元問 29 個是非題，機率最高的接上去再問",
+  desc:"純實驗：每一步問 Jev 29 個 Noul（下一個字是 a 到 z、空格、逗號還是句點），取機率最高的接到文字後面再餵回去，做出一個由分類器組成的自迴歸迴圈。用來理解 Jev 的運作方式很直觀，實用性作者也沒有主張。推文只有影片。",
+  author:"@ryanvogel (vogel)", likes:882, url:"https://x.com/ryanvogel/status/2100218045549412499",
+  ptype:"重建",
+  prompt:`做一個純實驗：用 TypeSafe Jev（model jev-latest）當分類器，拼出一個逐字元生成文字的迴圈。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. state = 目前已生成的文字（從一個開頭句開始）。
+2. 每一步一次呼叫問 29 個 Noul：下一個字元應該是 a、b 一直到 z、空格、逗號、句點嗎。
+3. 取機率最高的字元接到文字後面，再把新文字餵回去，重複到句點出現或 200 字元。
+4. 網頁畫面顯示 29 個按鍵的機率熱圖與逐字打出的過程，附每步延遲。`
+ },
+ {
+  cat:"工程研究", title:"詐騙郵件偵測：Jev 1.42 秒初篩 100 封，信心低於 95% 的交給 Kimi K3，整體 96% 正確、0.07 美元",
+  desc:"50 封正常＋50 封詐騙信，Jev 1.42 秒全部分完；把信心值低於 95% 的 31 封轉給 Kimi K3 複判，整條管線 96/100 正確、16 秒、約 0.07 美元（Kimi 0.068、Jev 0.003）。作者推薦的模式：快模型做窄任務，不確定的才升級給大模型。程式碼未公開。",
+  author:"@nutlope (Hassan)", likes:845, url:"https://x.com/nutlope/status/2100614659690713543",
+  ptype:"重建",
+  prompt:`建一條詐騙郵件偵測管線：TypeSafe Jev（model jev-latest）先篩，不確定的交給大模型。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 測試集 emails.json：50 封正常、50 封詐騙，附標準答案。
+2. 第一階段：每封一次 Jev 呼叫問 is_fraud（Noul）與 fraud_type（Choice：釣魚 / 假發票 / 假客服 / 投資詐騙 / 不是詐騙）。全部並發，記錄耗時。
+3. 第二階段：is_fraud 的機率落在 0.05 到 0.95 之間的（信心不足 95%）送給一個大模型（例如 Kimi K3 或 Fable）複判，其餘直接採用 Jev 的答案。
+4. 輸出：整體正確率、兩階段各自的正確率、被升級的封數、兩階段各自的費用與總耗時。
+5. 印一行結論比較「全部用大模型」與「Jev 先篩」的成本差。`
+ },
+ {
+  cat:"工程研究", title:"Claude Code hook 用 Jev 派工：機械任務給 Haiku、需要思考的給 Opus 子代理、長工交外部 harness",
+  desc:"作者同時用 Claude Code、Codex、Opencode，過去靠 system prompt 規則硬派工；改成一個 deterministic hook，在委派前呼叫 Jev 依任務強度決定交給哪個 harness 或模型，作者說準確度不錯。推文只有影片，未公開 hook 程式碼。",
+  author:"@mdlahfir (Lahfir)", likes:824, url:"https://x.com/mdlahfir/status/2100314182201802811",
+  ptype:"重建",
+  prompt:`幫我寫一個 Claude Code 的 PreToolUse hook（針對 Task 子代理委派），在委派前用 TypeSafe Jev（model jev-latest）決定這個任務該派給誰。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. hook 收到任務描述後，一次 Jev 呼叫問：route（Choice：haiku-subagent / opus-subagent / codex-external / opencode-external）、intensity（Score：mechanical / moderate / deep）、long_running（Noul：會超過 20 分鐘嗎）。
+2. 規則寫在程式裡：mechanical 且不長 → Haiku 子代理；deep → Opus 子代理；long_running 高於 0.7 → 交給外部 harness（用 codex 或 opencode 的 CLI 啟動並回傳結果）。
+3. 信心值低於 0.6 就不干預，讓 Claude Code 照原本流程走。
+4. 每次決策 append 一行到 ~/.claude/route.log：任務摘要、選擇、機率、延遲。`
+ },
+ {
+  cat:"工程研究", title:"Foreman：用 Jev 盯著 coding agent 的軟體工廠領班",
+  desc:"開源專案 thruwire/foreman：coding agents 在產線上工作，Foreman 持續用 Jev 評估進度、完整度、測試、偏離與驗證狀態，需要時介入。推文只有文字與 GitHub 連結，沒有 demo 畫面。",
+  author:"@JoshARosen (Josh Rosen)", likes:746, url:"https://x.com/JoshARosen/status/2100573432089866717",
+  ptype:"重建",
+  prompt:`參考開源專案 thruwire/foreman，做一個用 TypeSafe Jev（model jev-latest）監督 coding agent 的「領班」程序。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 領班每 30 秒讀取 agent 的最新輸出（最近 200 行 log、git diff 摘要、測試結果）。
+2. 一次 Jev 呼叫問：progress（Score：stalled / slow / steady / fast）、complete（Noul：任務已完成嗎）、tests_passing（Noul）、drifting（Noul：agent 偏離原始任務了嗎）、verified（Noul：它有實際驗證過自己的改動嗎）、needs_intervention（Noul）。
+3. needs_intervention 高於 0.8 或 drifting 高於 0.7 就把預先寫好的糾正訊息送進 agent 的對話；complete 高於 0.9 且 tests_passing 高於 0.9 就標記完成並通知我。
+4. 儀表板顯示每個 agent 的六項指標時間序列。`
+ },
+ {
+  cat:"工程研究", title:"新聞分揀台：428 則即時新聞配對 15 個品牌的公關借勢熱點，28 秒跑完",
+  desc:"從當天新聞流裡替 15 個品牌判斷有沒有可借勢的公關熱點並打結構化意圖標籤，Jev 28 秒跑完 428 則；作者自註同一任務 DeepSeek V4.1-flash 同時間只做完 6 則。demo 來自 @elvisun 的開源專案 newsjack。",
+  author:"@SUOHA_AI (梭哈.AI)", likes:635, url:"https://x.com/SUOHA_AI/status/2101000339948282090",
+  ptype:"重建",
+  prompt:`參考開源專案 elvisun/newsjack，做一個新聞分揀台：從即時新聞流裡替 15 個品牌找可借勢的公關熱點，判斷全用 TypeSafe Jev（model jev-latest）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 品牌設定檔：每個品牌一段描述（產業、受眾、禁忌話題）。
+2. 抓當天的新聞 RSS（約 400 則），每則新聞對每個品牌一次呼叫，問：relevant（Noul：這則新聞跟品牌有借勢空間嗎）、intent（Choice：節慶借勢 / 產業新聞 / 競品動態 / 社會議題 / 娛樂話題 / 不適合）、risk（Score：safe / careful / avoid）。
+3. 並發送出，目標 400 則 × 15 品牌在 30 秒內跑完。
+4. 看板依品牌分欄，只顯示 relevant 高於 0.7 且 risk 不是 avoid 的新聞，附機率。
+5. 側邊列出總費用與耗時。`
+ },
+ {
+  cat:"工程研究", title:"Opencode 意圖式權限 plugin：用自然語言寫規則，Jev 判斷每個指令的意圖再放行",
+  desc:"不用預測 agent 可能執行的每條 shell 指令，改用自然語言寫權限規則（例如只准連 Google），每次工具呼叫前由 Jev 判斷意圖是否違規；作者測試 agent 嘗試的每條繞路都被攔下。推文只有影片與截圖，未公開程式碼。",
+  author:"@OpeOginni", likes:417, url:"https://x.com/OpeOginni/status/2100702649834188855",
+  ptype:"重建",
+  prompt:`幫 Opencode 寫一個意圖式權限 plugin，用自然語言寫規則，由 TypeSafe Jev（model jev-latest）判斷每次工具呼叫是否違規。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 規則檔 permissions.md，用自然語言一行一條，例如「只允許連到 google.com，其他網域一律不准」「不准刪除 git 歷史」「不准讀 .env」。
+2. 每次 bash、fetch 或檔案工具呼叫前，把指令內容與規則一起送 Jev，對每條規則問一題 Noul：這個呼叫違反這條規則嗎；再問一題 Choice：這個指令的實際意圖是哪一類（網路存取 / 檔案讀取 / 檔案寫入 / 版本控制 / 其他）。
+3. 任一規則高於 0.7 就阻擋並回覆 agent 一句說明；0.4 到 0.7 之間跳出確認。
+4. 測試：讓 agent 用 curl、wget、python requests、DNS 等不同方式試著連 google 以外的網域，全部要被攔下；同時連 google 要放行。`
+ },
+ {
+  cat:"工程研究", title:"競品廣告庫分析：1,891 則廣告 19 秒分類完、0.12 美元，標出客戶旅程階段與廣告風格",
+  desc:"把競品 Resilia 的 Meta 廣告庫整批餵給 Jev，每則標上客戶旅程階段、廣告風格等維度，19 秒、0.12 美元，做成一份帳號 X 光報告。功能預告會進 maxfusion MCP，程式碼未公開。",
+  author:"@OriSilver (Ori Silver)", likes:381, url:"https://x.com/OriSilver/status/2100941251478458871",
+  ptype:"重建",
+  prompt:`把某個競品在 Meta 廣告檔案庫（Ad Library）的全部廣告整批分析，判斷用 TypeSafe Jev（model jev-latest）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 用 Meta Ad Library API 抓該粉專的全部進行中與歷史廣告（文案、標題、CTA、開始日期、投放平台），約 2,000 則。
+2. 每則一次呼叫問：journey_stage（Choice：認知 / 考慮 / 轉換 / 再行銷）、style（Choice：見證 / 促銷折扣 / 教育 / 比較 / UGC / 品牌形象 / 其他）、offer（Noul：有明確優惠嗎）、urgency（Noul：有限時或限量嗎）、hook_quality（Score：weak / ok / strong）。
+3. 並發送出，目標 2,000 則 20 秒內、費用低於 0.2 美元。
+4. 輸出一頁報告：各階段與風格的占比、最常用的 CTA、每月投放量趨勢、hook 最強的 20 則文案。`
+ },
+ {
+  cat:"模擬視覺化", title:"無人機模擬控制：15 分鐘做完、跑完只花 10 美分",
+  desc:"在模擬器裡把無人機狀態（位置、姿態、目標）餵給 Jev 決定下一個控制動作，15 分鐘做出來、整趟只花 10 美分。已開源 RomanSlack/jev-drone。",
+  author:"@RomanSlack1 (Roman Slack)", likes:352, url:"https://x.com/RomanSlack1/status/2100335978229690683",
+  ptype:"重建",
+  prompt:`參考開源專案 RomanSlack/jev-drone，在模擬器（PyBullet 或 gym-pybullet-drones）裡做一台由 TypeSafe Jev（model jev-latest）控制的四軸無人機。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 每 200 毫秒把狀態（位置、速度、姿態、目標航點的相對方向與距離、最近障礙物）整理成一段文字。
+2. 一次呼叫問：move（Choice：forward / back / left / right / up / down / hover）、throttle（Score：low / medium / high）、abort（Noul：有撞上的風險該懸停嗎）。
+3. 把離散指令轉成速度目標交給底層 PID 控制器，Jev 只做高階決策。
+4. 任務：依序飛過 5 個航點再降落，記錄總呼叫次數與費用。`
+ },
+ {
+  cat:"創意藝術", title:"3D 角色即時表演：每則訊息 10 個決策，嘴、眉、眼、臉頰、視線、身體現場合成",
+  desc:"不用預設表情，每收到一則訊息就讓 Jev 同時決定 10 個面部與身體參數，即時合成一個連貫的反應。作者正在做 mutuals_inc 的產品，推文只有影片，未公開程式碼。",
+  author:"@john_bortotti (Joao Bortotti)", likes:318, url:"https://x.com/john_bortotti/status/2101019513676345555",
+  ptype:"重建",
+  prompt:`用 Three.js 載入一個帶 blendshape 的 3D 角色（VRM 格式即可），每收到一則對話訊息就用 TypeSafe Jev（model jev-latest）決定整套表情與身體反應。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. state = 對方剛說的話 + 前三句對話 + 角色設定。
+2. 一次呼叫問 10 題：mouth（Choice：closed / smile / open / smirk / pout）、brows（Choice：neutral / raised / furrowed / one-raised）、eyes（Choice：normal / wide / narrow / closed / roll）、cheeks（Noul：臉紅嗎）、gaze（Choice：at-user / away / down / up）、head（Choice：still / nod / shake / tilt）、body（Choice：lean-in / lean-back / neutral / shrug）、intensity（Score：subtle / medium / strong）、surprised（Noul）、amused（Noul）。
+3. 把十個結果一起插值成一段 0.6 秒的動畫，不用任何預設表情組合。
+4. 畫面下方顯示這次十個決策與延遲。`
+ },
+ {
+  cat:"工程研究", title:"OCR + Jev 做圖片分類器：900 張圖 40 秒歸類完",
+  desc:"Jev 目前只吃文字，所以先用 OCR 把圖片裡的文字抽出來再交給 Jev 分類，約 900 張圖 40 秒完成。截圖類圖片適用，純圖像沒有文字就分不了。推文只有影片，未公開程式碼。",
+  author:"@fayazara (Fayaz Ahmed)", likes:312, url:"https://x.com/fayazara/status/2100953838891192789",
+  ptype:"重建",
+  prompt:`做一個本機圖片分類小工具：先 OCR 再交給 TypeSafe Jev（model jev-latest）分類。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. 掃描指定資料夾的圖片（約 900 張，截圖為主），用 macOS Vision 或 tesseract 抽出每張的文字，沒有文字的先歸到「無文字」不送 Jev。
+2. state = 檔名 + OCR 文字前 1,500 字，問一題 Choice：截圖類型（收據 / 聊天對話 / 程式碼 / 文件 / 社群貼文 / 地圖或行程 / 迷因 / 其他），加一題 Noul：含個資嗎。
+3. 並發送出，把圖片依類型搬進子資料夾，含個資的加上前綴標記。
+4. 目標 900 張一分鐘內完成，印出各類數量與費用。`
+ },
+ {
+  cat:"工程研究", title:"一段 prompt 做出帶 Jev 模型路由的 agent（eve + Vercel AI Gateway）",
+  desc:"用 Vercel 的 eve 框架建一個能搜尋網頁、建檔案的 agent，並讓 Jev 當模型路由器：簡單問題用便宜模型、複雜的用旗艦、中間有階梯，介面要即時顯示 Jev 選了哪個模型與理由。推文附完整 prompt，成果畫面見 @rileybrown 的示範影片；沒有推文自己的截圖。",
+  author:"@agentnative_ (Agent Native)", likes:207, url:"https://x.com/agentnative_/status/2100624941326500122",
+  ptype:"原文",
+  prompt:`I want you to build a new app that uses eve. I want to make an agent that can search the web, create files and anything else an agent might be able to do. use eve you should have vercel key. 
+
+I want you to use jev by typesafe as a model router, make a model router for this. i want you to use it to select the best model for the job to save tokens and clearly show, as it's happening when jev chooses which model to use. read the docs for jev, and make it very effective, and test it and make refinements until it's fully ready. For simple queries it should use cheap models. For more complex queries it should use frontier models and have a scale in between for medium questions.
+
+make this then run it locally so i can test it. Make the wrapper beautiful and the main focus should be the inline jev selection, and how that selection was made.`
+ },
+ {
+  cat:"工程研究", title:"YouTuber 最近 100 支影片的「推銷意圖」評分：12 秒、0.02 美元",
+  desc:"把某 YouTuber 100 支影片餵給 Jev 打推銷意圖分數，12 秒跑完、約 0.02 美元。作者自註還沒仔細驗證分數準確度，只是初看很有潛力。程式碼未公開。",
+  author:"@eptwts (EP)", likes:197, url:"https://x.com/eptwts/status/2100724278400332061",
+  ptype:"重建",
+  prompt:`抓某個 YouTube 頻道最近 100 支影片的逐字稿（yt-dlp 抓自動字幕），用 TypeSafe Jev（model jev-latest）替每支影片打「推銷意圖」分數。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+1. state = 影片標題 + 逐字稿前 3,000 字 + 說明欄。
+2. 一次呼叫問：sales_intent（Score：none / soft mention / clear pitch / hard sell）、has_sponsor（Noul：有業配或贊助段落嗎）、product_type（Choice：課程 / 軟體 / 實體商品 / 社群或會員 / 無）。
+3. 並發送出，輸出一張依分數排序的表，附機率與影片連結。
+4. 目標 100 支 15 秒內、費用低於 0.05 美元。抽 10 支人工看一下分數準不準，把結果寫在報告最後。`
+ },
+ {
+  cat:"模擬視覺化", title:"把獵鷹 9 級火箭完全交給 Jev：MuJoCo 模擬從發射到回收著陸，245 次呼叫、0.04 美元",
+  desc:"42 公尺、425 噸、9 引擎，含真實大氣、隨馬赫數變化的阻力、風與燃料消耗；沒有自動駕駛、沒有腳本軌跡、程式裡沒有安全否決，每個決策（發射或等待、每次點火用幾顆引擎、何時點火、上升截止、滑行、再入、放腳、觸地）都由 Jev 以約 1Hz 做出，12 次實驗後成功著陸。作者自註會開源，目前只有影片。",
+  author:"@uttkarsh_42 (Utkarsh Agrawal)", likes:113, url:"https://x.com/uttkarsh_42/status/2100690568947159309",
+  ptype:"重建",
+  prompt:`在 MuJoCo 裡做一個獵鷹 9 級火箭的發射到回收模擬，所有決策交給 TypeSafe Jev（model jev-latest），程式裡不寫自動駕駛、不寫腳本軌跡、不寫安全否決。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+模型參數：42 公尺、425 噸、9 顆引擎、真實大氣密度、隨馬赫數變化的阻力、風、燃料消耗造成的質量變化。
+
+每秒一次（約 1Hz）把狀態整理成文字：高度、垂直與水平速度、姿態角、角速度、剩餘燃料、距落點的水平距離、目前階段。一次呼叫問：
+- phase_action（Choice：launch / hold / ascent-cutoff / coast / entry-burn / deploy-legs / landing-burn / touchdown）
+- engines（Choice：1 / 3 / 5 / 9 顆引擎）
+- ignite_now（Noul：現在該點火嗎）
+- gimbal（Choice：left / center / right）
+
+執行後推進模擬到下一秒再問。記錄每次決策，畫面底部跑馬燈顯示。目標：多跑幾輪調整 state 的描述方式，直到能在著陸區以低於 5 m/s 的速度立著落地；印出總呼叫次數與費用。`
+ },
+];
+
 // ====== 資料區結束 ======
 
 const CAT_COLOR = {"遊戲":"#7a4a9e","模擬視覺化":"#1f5a64","文件簡報":"#33558c","創意藝術":"#b9504f","工程研究":"#2d6647"};
@@ -2850,12 +3331,13 @@ function makePanel(data, ids){
 
 const panelF5    = makePanel(CASES,       {panel:'tab-cases', cats:'cats',  grid:'grid',  empty:'empty',  stats:'stats-f5',    q:'q'});
 const panelAstra = makePanel(ASTRA_CASES, {panel:'tab-astra', cats:'acats', grid:'agrid', empty:'aempty', stats:'stats-astra', q:'aq'});
+const panelJev   = makePanel(JEV_CASES,   {panel:'tab-jev',   cats:'jcats', grid:'jgrid', empty:'jempty', stats:'stats-jev',   q:'jq'});
 
 document.getElementById('stats').textContent =
-  `Claude Fable 5 ${CASES.length} 個案例 · GPT-6 Astra ${ASTRA_CASES.length} 個案例`;
+  `Claude Fable 5 ${CASES.length} 個案例 · GPT-6 Astra ${ASTRA_CASES.length} 個案例 · TypeSafe Jev ${JEV_CASES.length} 個案例`;
 
 // ====== 頁籤切換 ======
-const TABS = ['cases','astra','guide'];
+const TABS = ['cases','astra','jev','guide'];
 function showTab(t){
   TABS.forEach(name=>document.getElementById('tab-'+name).style.display = (name===t?'':'none'));
   document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.toggle('on', el.dataset.t===t));

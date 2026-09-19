@@ -1,6 +1,6 @@
 # HANDOFF — AI 模型案例庫
 
-> 最後更新：2026-09-05（新增 GPT-6 Astra 分頁、搜尋改走 cookie 路徑、排程改每日）
+> 最後更新：2026-09-19（新增 TypeSafe Jev 分頁；前一版 2026-09-05 新增 GPT-6 Astra 分頁、搜尋改走 cookie 路徑、排程改每日）
 
 ## 你是誰、要做什麼
 
@@ -24,15 +24,16 @@ fable5-cases/           ← 這個 repo（GitHub Pages 版）
 
 **兩份 HTML 必須同步更新。** 兩者唯一的差異是 `const MEDIA_DIR` 這一行（本地版是 `Fable5案例庫_media/`，repo 版是 `media/`）。檔名之所以沒跟著改名，是為了不動既有排程與捷徑的路徑。
 
-### index.html 裡的三個區塊
+### index.html 裡的四個區塊
 
 | 區塊 | 說明 |
 |---|---|
 | `const CASES = [...]` | Fable 5 分頁的資料（`id="tab-cases"`） |
 | `const ASTRA_CASES = [...]` | GPT-6 Astra 分頁的資料（`id="tab-astra"`） |
-| `makePanel(data, ids)` | 兩個分頁共用的渲染邏輯 |
+| `const JEV_CASES = [...]` | TypeSafe Jev 分頁的資料（`id="tab-jev"`；Jev 是決策模型不是 LLM，案例多為「用 Jev 建的工具」，prompt 多是給 coding agent 的重建版建置指令） |
+| `makePanel(data, ids)` | 三個分頁共用的渲染邏輯 |
 
-兩個陣列的物件格式完全相同。**加案例只需要把物件 append 到對的陣列尾端，不要動 UI 邏輯。**
+三個陣列的物件格式完全相同。**加案例只需要把物件 append 到對的陣列尾端，不要動 UI 邏輯。** 要再加一個模型分頁時，照 Jev 分頁的做法：tabs 加一個 `data-t`、複製一份 `tab-*` 區塊（ids 換前綴）、加一個資料陣列、加一行 `makePanel(...)`、把 `TABS` 陣列與 `#stats` 那行補上即可。
 
 卡片會依 `caseTime()` 自動排序（優先用 `date` 欄位，否則從推文 ID 的 Snowflake 時戳推導），最新在前，所以不用在意插入位置。圖片也會自動用 `MEDIA_DIR + 推文ID + '.jpg'` 對應，不用寫 `img` 欄位（找不到檔案時 `onerror` 會把 img 移除，版面不會破）。
 
@@ -61,8 +62,8 @@ fable5-cases/           ← 這個 repo（GitHub Pages 版）
 
 ### 三層去重（每層都要做）
 
-1. **讚數門檻**：Fable 5 ≥ 150、GPT-6 Astra ≥ 40。門檻不同是因為 Astra 於 2026-09 初才發布、生態還年輕；等 Astra 一輪的合格案例穩定超過 8 筆就該調高。
-2. **ID 去重**：跟**兩個陣列**都比對（從 `url` 抽 status ID）。同一則推文不可同時出現在兩個分頁。
+1. **讚數門檻**：Fable 5 ≥ 150、GPT-6 Astra ≥ 150（2026-09-06 由 40 上調）、TypeSafe Jev 首批 ≥ 100（2026-09-19 建立分頁時的門檻，之後可上調）。
+2. **ID 去重**：跟**三個陣列**都比對（從 `url` 抽 status ID）。同一則推文不可同時出現在不同分頁。
 3. **主題去重**：同一個案例常被多個帳號發（原作者、搬運號、新聞號），ID 不同但講的是同一個產出物。加入前要比對目標陣列裡既有卡片的 `title` 與 `desc`。
    - 唯一例外：新來源是「原作者」而庫內收的是「轉述」時，替換成原作者版
    - **不同模型做同類題目不算重複**——Fable 5 和 Astra 各自做的 3D 場景，是兩個分頁各自的案例
@@ -132,9 +133,9 @@ fable5-cases/           ← 這個 repo（GitHub Pages 版）
 
 ## 改完一定要驗證
 
-1. **語法與資料**：把 `const CASES = [` 到 `];`、`const ASTRA_CASES = [` 到 `];` 兩段抽出來丟 `new Function` 跑，檢查：兩個陣列都能 parse、各自無重複推文 ID、**兩陣列之間也無重複**、`cat` 值合法、`ptype` 只有「原文/重建」、每筆對應的 `媒體資料夾/推文ID.jpg` 確實存在。
+1. **語法與資料**：把 `const CASES = [` 到 `// ====== 資料區結束 ======` 整段抽出來丟 `new Function` 跑（一次拿到 `CASES`、`ASTRA_CASES`、`JEV_CASES` 三個陣列），檢查：三個陣列都能 parse、各自無重複推文 ID、**陣列之間也無重複**、`cat` 值合法、`ptype` 只有「原文/重建」、每筆對應的 `媒體資料夾/推文ID.jpg` 確實存在。
 2. **插入前先確認陣列原本最後一筆的結尾 `}` 有逗號變成 `},`**，否則語法會壞。
-3. **瀏覽器**：開檔案確認無 console error、三個分頁都能切、兩個面板的篩選互不干擾。
+3. **瀏覽器**：開檔案確認無 console error、四個分頁都能切、三個案例面板的篩選互不干擾。
 4. **線上**：`curl -s '<pages-url>/index.html?cb=$(date +%s)' | grep -c 'title:"'` 數卡片數，另外抽查新圖片是否回 200。Pages 重建通常要 1-3 分鐘。
 
 ### Pages 部署卡住的救命招
@@ -157,3 +158,4 @@ build_type 是 legacy（Deploy from a branch）。曾遇到已 push 但網站不
 - **2026-09-05** 新增 GPT-6 Astra 分頁；渲染邏輯抽成 `makePanel()` 兩邊共用
 - **2026-09-05** 站名由「Fable 5 案例庫」改為「AI 模型案例庫」（repo 名、Pages URL、本地檔名維持舊名，避免斷連結）
 - **2026-09-05** 搜尋全面改走 cookie 路徑，排程由每四天改為每天
+- **2026-09-19** 新增 TypeSafe Jev 分頁（`JEV_CASES`，首批 35 筆、門檻 100 讚，來自發布首週 2026-09-15 至 09-19 的 X 搜尋）。Jev 是「決策模型」而非 LLM，案例型態是「用 Jev 建的工具或管線」，卡片 prompt 多為重建版的 coding agent 建置指令。**每日排程 `fable5-cases-daily-update` 目前只搜 Fable 5 與 Astra，Jev 分頁需手動加（`fable5-case-add` skill）或另外擴充排程。**
