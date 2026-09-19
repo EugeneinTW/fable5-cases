@@ -72,19 +72,33 @@
   <header>
     <h1>🧪 AI 模型案例庫</h1>
     <div class="updated" id="updated"></div>
-    <p>從 X 整理的 AI 模型實測案例——看別人做了什麼，複製 prompt 自己重現。目前分成 Claude Fable 5、GPT-6 Astra 與 TypeSafe Jev 三個分頁。</p>
+    <p>從 X 整理的 AI 模型實測案例——看別人做了什麼，複製 prompt 自己重現。目前分成 TypeSafe Jev、GPT-6 Astra 與 Claude Fable 5 三個分頁。</p>
     <div class="stats" id="stats"></div>
     <div class="legend"><span class="badge b-orig">原文 prompt</span> 推文或原文章直接給出的指令　<span class="badge b-recon">重建 prompt</span> 根據案例描述補寫的可執行版本，效果可能與原案例有落差</div>
   </header>
 
   <div class="tabs">
-    <span class="tab on" data-t="cases">📚 Fable 5 案例</span>
+    <span class="tab on" data-t="jev">⚡ TypeSafe Jev 案例</span>
     <span class="tab" data-t="astra">🛰️ GPT-6 Astra 案例</span>
-    <span class="tab" data-t="jev">⚡ TypeSafe Jev 案例</span>
+    <span class="tab" data-t="cases">📚 Fable 5 案例</span>
     <span class="tab" data-t="guide">🎓 Fable 5 官方 Prompting 指南（新手版）</span>
   </div>
 
-  <div id="tab-cases">
+  <div id="tab-jev">
+  <div class="anote">TypeSafe AI 的 <b>Jev</b>（2026-09-15 發布）不是聊天模型，是「決策模型」：不生成文字，只回答 Choice（選一個）、Score（打等級）、Noul（是非機率）三種題型並附機率；延遲 70 到 500 毫秒，每百萬輸入 token 0.042 美元、輸出免費。因為它不是「一句 prompt 出成品」的玩法，多數卡片的 prompt 是<b>重建版</b>：給 coding agent 的建置指令，含題目設計與信心值門檻，先裝官方 skill（npx skills add typesafe-ai/skills --skill typesafe-ai）再貼。這個分頁收的是發布首週的實作案例，首批收錄門檻 <b>100 讚</b>。</div>
+  <div class="bar" id="jcats"></div>
+  <div class="bar">
+    <span class="chip on" data-p="all">全部 prompt</span>
+    <span class="chip" data-p="原文">只看原文 prompt</span>
+    <span class="chip" data-p="重建">只看重建 prompt</span>
+    <input id="jq" type="search" placeholder="搜尋案例、作者、關鍵字…">
+  </div>
+  <div class="substats" id="stats-jev"></div>
+  <div class="grid" id="jgrid"></div>
+  <div class="empty" id="jempty">沒有符合的案例</div>
+  </div>
+
+  <div id="tab-cases" style="display:none">
   <div class="bar" id="cats"></div>
   <div class="bar">
     <span class="chip on" data-p="all">全部 prompt</span>
@@ -110,20 +124,6 @@
   <div class="substats" id="stats-astra"></div>
   <div class="grid" id="agrid"></div>
   <div class="empty" id="aempty">沒有符合的案例</div>
-  </div>
-
-  <div id="tab-jev" style="display:none">
-  <div class="anote">TypeSafe AI 的 <b>Jev</b>（2026-09-15 發布）不是聊天模型，是「決策模型」：不生成文字，只回答 Choice（選一個）、Score（打等級）、Noul（是非機率）三種題型並附機率；延遲 70 到 500 毫秒，每百萬輸入 token 0.042 美元、輸出免費。因為它不是「一句 prompt 出成品」的玩法，多數卡片的 prompt 是<b>重建版</b>：給 coding agent 的建置指令，含題目設計與信心值門檻，先裝官方 skill（npx skills add typesafe-ai/skills --skill typesafe-ai）再貼。這個分頁收的是發布首週的實作案例，首批收錄門檻 <b>100 讚</b>。</div>
-  <div class="bar" id="jcats"></div>
-  <div class="bar">
-    <span class="chip on" data-p="all">全部 prompt</span>
-    <span class="chip" data-p="原文">只看原文 prompt</span>
-    <span class="chip" data-p="重建">只看重建 prompt</span>
-    <input id="jq" type="search" placeholder="搜尋案例、作者、關鍵字…">
-  </div>
-  <div class="substats" id="stats-jev"></div>
-  <div class="grid" id="jgrid"></div>
-  <div class="empty" id="jempty">沒有符合的案例</div>
   </div>
 
   <div id="tab-guide" style="display:none">
@@ -3334,10 +3334,10 @@ const panelAstra = makePanel(ASTRA_CASES, {panel:'tab-astra', cats:'acats', grid
 const panelJev   = makePanel(JEV_CASES,   {panel:'tab-jev',   cats:'jcats', grid:'jgrid', empty:'jempty', stats:'stats-jev',   q:'jq'});
 
 document.getElementById('stats').textContent =
-  `Claude Fable 5 ${CASES.length} 個案例 · GPT-6 Astra ${ASTRA_CASES.length} 個案例 · TypeSafe Jev ${JEV_CASES.length} 個案例`;
+  `TypeSafe Jev ${JEV_CASES.length} 個案例 · GPT-6 Astra ${ASTRA_CASES.length} 個案例 · Claude Fable 5 ${CASES.length} 個案例`;
 
 // ====== 頁籤切換 ======
-const TABS = ['cases','astra','jev','guide'];
+const TABS = ['jev','astra','cases','guide'];
 function showTab(t){
   TABS.forEach(name=>document.getElementById('tab-'+name).style.display = (name===t?'':'none'));
   document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.toggle('on', el.dataset.t===t));

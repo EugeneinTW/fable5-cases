@@ -158,4 +158,4 @@ build_type 是 legacy（Deploy from a branch）。曾遇到已 push 但網站不
 - **2026-09-05** 新增 GPT-6 Astra 分頁；渲染邏輯抽成 `makePanel()` 兩邊共用
 - **2026-09-05** 站名由「Fable 5 案例庫」改為「AI 模型案例庫」（repo 名、Pages URL、本地檔名維持舊名，避免斷連結）
 - **2026-09-05** 搜尋全面改走 cookie 路徑，排程由每四天改為每天
-- **2026-09-19** 新增 TypeSafe Jev 分頁（`JEV_CASES`，首批 35 筆、門檻 100 讚，來自發布首週 2026-09-15 至 09-19 的 X 搜尋）。Jev 是「決策模型」而非 LLM，案例型態是「用 Jev 建的工具或管線」，卡片 prompt 多為重建版的 coding agent 建置指令。**每日排程 `fable5-cases-daily-update` 目前只搜 Fable 5 與 Astra，Jev 分頁需手動加（`fable5-case-add` skill）或另外擴充排程。**
+- **2026-09-19** 新增 TypeSafe Jev 分頁（`JEV_CASES`，首批 35 筆、門檻 100 讚，來自發布首週 2026-09-15 至 09-19 的 X 搜尋）。同日把分頁順序改成 Jev、Astra、Fable 5，**預設打開 Jev**（tabs 的 `on` class 與 `tab-jev` 不帶 `display:none`；panel 的 DOM 順序是 jev、cases、astra、guide，只影響原始碼閱讀不影響顯示）。Jev 是「決策模型」而非 LLM，案例型態是「用 Jev 建的工具或管線」，卡片 prompt 多為重建版的 coding agent 建置指令。每日排程 `fable5-cases-daily-update` 自 2026-09-19 起三個模型各跑一次查詢（Jev 門檻 100），`fable5-case-add` skill 也已改成依模型選陣列。
