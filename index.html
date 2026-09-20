@@ -2770,6 +2770,111 @@ WASD／方向鍵移動，Shift 跑，Q/E 轉視角，Enter/Space 調查，Esc �
 
 美術：低飽和的藍與米色城市剪影當背景，遠景視差捲動，整體是乾淨的低多邊形風格。3D 素材我會另外提供，你負責把它們接進來並寫完整個遊戲邏輯。`
  },
+// ====== 2026-09-20 自動更新 ======
+ {
+  cat:"創意藝術", title:"沒有影像模型：Astra 用程式一筆一筆畫出約 6.8 萬筆觸的畫",
+  desc:"不呼叫任何影像生成、不給參考圖、底下也沒有預先生成的圖，作者要 Astra 在 max effort 下純用程式決定每一筆畫在哪裡、用什麼顏色，累積約 68,000 筆刷痕組成一幅複雜畫作。作者自己形容這是「程序化生成影像，但由 AI 一筆一筆畫」。推文只有縮時影片，未公開程式碼與 prompt 原文。",
+  author:"@pradeepXkapoor (Pradeep Kapoor)", likes:592, url:"https://x.com/pradeepXkapoor/status/2101321351470719180",
+  ptype:"重建",
+  prompt:`用 GPT-6 Astra（reasoning/effort 開到最高）寫一支單檔 HTML，完全不呼叫任何影像生成 API、不載入任何外部圖片，只用 Canvas 2D 一筆一筆把一幅畫「畫」出來。
+
+一、題材：自己選一個構圖清楚的題材（例如黃昏的海岸、雨後的街景），先在程式裡用資料結構描述這幅畫的分層：天空、遠景、中景、主體、前景。
+
+二、筆觸系統：每一筆是一個物件（起點、方向、長度、寬度、彎曲度、顏色、透明度、疊加模式）。筆觸總數目標 60,000～70,000 筆，依分層由遠到近依序畫，遠景用寬而透明的筆、主體用細而不透明的筆。
+
+三、上色邏輯：顏色不要隨機取，要從該分層的色票中依光源方向與距離推出來；相鄰筆觸之間做小幅色相偏移，避免整片死板。
+
+四、呈現：畫面上即時顯示目前畫到第幾筆、目前在畫哪一層，畫完可匯出 PNG。另外提供一個 4 倍速的重播模式。
+
+先畫 5,000 筆確認質感對了再放大到全部筆數。`
+ },
+ {
+  cat:"創意藝術", title:"Leica M6 藍圖動畫：整支影片是程式渲染出來的，不是影像模型生成",
+  desc:"作者押注「超過一半的 AI 影片最後會改成用程式渲染」——迭代便宜、每次算出來都一樣、每個細節都能改。這支 Leica M6 相機的藍圖拆解動畫就是用 Astra 在 Diffusion Studio 裡寫程式做出來的實例。推文只有影片，未公開程式碼與 prompt 原文。",
+  author:"@konstipaulus (konstantinpaulus)", likes:475, url:"https://x.com/konstipaulus/status/2101268216903270777",
+  ptype:"重建",
+  prompt:`用 GPT-6 Astra 寫一支用程式渲染的產品藍圖動畫（不要用任何影像或影片生成模型），輸出可逐格重現的影片。
+
+主題：一台底片相機（Leica M6 那種造型）的技術藍圖拆解。
+
+一、視覺語言：深藍底 + 細白線稿 + 少量青色標註，像工程藍圖。所有線條都由程式畫，不載入任何點陣圖。
+
+二、鏡頭腳本（共約 30 秒）：
+1. 相機正視圖從線條逐段「畫」出來（描邊動畫）。
+2. 旋轉到 3/4 視角。
+3. 機身分件爆炸圖：鏡頭、快門簾、捲片軸、觀景窗、底片室依序拉開，每個零件浮出標註線與名稱。
+4. 零件收回，最後停在一張帶尺寸標註的正視圖。
+
+三、實作要求：用可決定性的時間軸（同樣的輸入必定算出同樣的每一幀），每個零件與標註都是可單獨修改的資料，不是寫死的畫面。輸出 60fps 的幀序列並合成成影片。`
+ },
+ {
+  cat:"工程研究", title:"小一到小七的自學網站：Astra 串 Rodin MCP 直接生出書架上的 3D 擺飾",
+  desc:"做給自己小孩用的數學、英文、自然學習網站。書架上的紀念品、蠟燭、燈具、徽章都是 Astra 透過 Hyper3D Rodin MCP 生出來的 3D 素材；作者說最有感的是速度與品質，燭台與提燈的金屬細節可以直接上線用。推文只有影片，網站未公開連結。",
+  author:"@MengTo (Meng To)", likes:279, url:"https://x.com/MengTo/status/2100927517108404632",
+  ptype:"重建",
+  prompt:`用 GPT-6 Astra 做一個給小學一年級到七年級的自學網站，主題涵蓋數學、英文、自然，並接上 Hyper3D Rodin MCP 生成 3D 素材。
+
+一、介面主結構：一面可捲動的 3D 書架。每一層代表一個年級，書本代表單元；書架上擺紀念品、蠟燭、提燈、徽章等擺飾，做為完成單元後的獎勵。
+
+二、素材：擺飾全部用 Rodin MCP 生成（呼叫前先把風格描述寫清楚：溫暖的黃銅與木質、細節足以近看），生出來的模型直接載進場景，不要用現成素材庫。
+
+三、內容：每個單元包含 5～10 題互動練習，答錯給提示不給答案；完成後解鎖一個擺飾並放上書架。
+
+四、進度：用 localStorage 記錄每個孩子的進度與已解鎖擺飾，家長頁可看各科完成率。
+
+五、效能：3D 場景要能在中階筆電順跑，模型載入採漸進式。`
+ },
+ {
+  cat:"模擬視覺化", title:"只給一段螢幕錄影當參考，兩輪迭代做出 Three.js 火焰噴射器",
+  desc:"靈感來自 Dan Greenheck 的作品，作者只丟一段螢幕錄影當視覺參考，Astra 用 Three.js 重現火焰噴射器的火焰、粒子與材質，兩次迭代就到位。作者自註影片中的選單操作有 2～4 倍加速，是為了縮短片長。推文未公開程式碼與 prompt 原文。",
+  author:"@techartist_ (Techartist)", likes:257, url:"https://x.com/techartist_/status/2101003536444359043",
+  ptype:"重建",
+  prompt:`用 GPT-6 Astra 以 Three.js 做一個可即時互動的火焰噴射器展示頁（單檔 HTML，不載入外部素材）。
+
+一、火焰：用 GPU 粒子 + 自訂 shader，火焰要有三層——噴口的藍焰核心、中段的橘黃主體、末端被氣流撕散的黑煙。粒子生命週期內顏色沿著溫度曲線變化，不要用固定漸層貼圖。
+
+二、物理感：噴口有初速與擴散角，粒子受浮力與側風影響；側風方向與強度可調。
+
+三、噴嘴模型：用程式生成的金屬噴嘴（PBR 材質，金屬度高、粗糙度中），火焰會把噴口照亮。
+
+四、控制面板：噴射強度、擴散角、側風、粒子數、慢動作，全部即時生效；右下角顯示 FPS 與目前粒子數。
+
+五、相機：可繞著噴嘴旋轉與縮放。
+
+先把單層火焰做穩再疊上煙與藍焰核心，每一輪都截圖自己檢查形狀是否像真實火焰。`
+ },
+ {
+  cat:"遊戲", title:"整場 Boss 戰跑在瀏覽器裡：Astra 寫程式，素材、動作與配樂各自交給專用模型",
+  desc:"完整走一遍自製遊戲的 Boss 戰，全部在瀏覽器裡跑。分工很清楚：素材生成用 fal、渲染用 Three.js、綁骨與動作用 Blender + Mixamo、音樂與音效用 Suno，程式開發由 GPT-6 Astra 負責。推文只有影片，未公開試玩連結與程式碼。",
+  author:"@BlendiByl (Blendi)", likes:253, url:"https://x.com/BlendiByl/status/2100893670086185042",
+  ptype:"重建",
+  prompt:`用 GPT-6 Astra 寫一場跑在瀏覽器裡的 3D Boss 戰（Three.js），3D 素材與動作我另外提供（來自生成工具與 Blender/Mixamo），你負責把它們接進來並寫完整個戰鬥系統。
+
+一、場地：一座環形競技場，中央是 Boss，邊緣有可利用的掩體；相機採第三人稱越肩。
+
+二、Boss 行為：三階段血量（100%→60%→30% 各換一套招式），每階段至少四招，包含近身橫掃、範圍落地衝擊、遠程投射物、召喚小怪。招式有明顯的預備動作與地面預警範圍，玩家有閃避窗口。
+
+三、玩家：移動、翻滾（有無敵幀）、輕重攻擊、格擋；連段要能取消成翻滾。
+
+四、回饋：受擊頓幀、鏡頭震動、傷害數字、Boss 血條分段顯示。
+
+五、音效：每個招式與受擊都有對應音效插槽，音檔我提供，你定義好觸發時機。
+
+六、效能：目標中階筆電 60fps，粒子與後製效果可在設定裡降級。
+
+先做出「可以打完一整場」的最小版本，再逐階段加招式。`
+ },
+ {
+  cat:"模擬視覺化", title:"一句話、一夜、一台筆電：32 萬顆星的銀河模擬（含飛行鏡頭）",
+  desc:"作者睡前在 Codex 裡丟一句話給 Astra（reasoning high），隔天早上拿到成品：Astra 自己推導每個半徑的恆星軌道速度、螺旋臂不被剪切抹平的條件、超新星震波在盤面打出空腔並把氣體堆到邊緣，接著寫渲染器、點亮 32 萬顆星、疊上 Foundation 風格的星圖終端介面，還自己檢查畫面；同種子每次算出來完全一致，筆電 GPU 跑出 1,800 幀（60fps）。作者拿日本去年 3,000 億顆粒子、763 萬核心的銀河模擬當對照，主張這類模擬的成本結構正在改變。⚠️ 兩者精度差距極大，不是同級比較；作者也在推銷這個做法，數字請當個案看。",
+  author:"@Argona0x (Argona)", likes:169, url:"https://x.com/Argona0x/status/2101055500599054437",
+  ptype:"原文",
+  prompt:`（作者公開的完整做法：在 ChatGPT app 裡開 Codex、模型選 GPT-6 Astra、reasoning 設 high，然後只給下面這一句）
+
+a galaxy from real orbital physics, 320,000 stars, one flight through it, 30 seconds
+
+作者說接下來不用碰任何 3D 軟體：Astra 自己寫物理、寫渲染器、寫鏡頭路徑，在筆電 GPU 上算出 1,800 幀（60fps）並交出成品檔；改一行參數就是另一個銀河、另一次塌縮、另一片星空。`
+ },
 ];
 
 // ====== TypeSafe Jev 案例（決策模型，2026-09-15 發布）======
@@ -3124,11 +3229,11 @@ SELECT agency, jev_choice(description, ['water','plumbing','noise','sanitation',
 4. 儀表板顯示每個 agent 的六項指標時間序列。`
  },
  {
-  cat:"工程研究", title:"新聞分揀台：428 則即時新聞配對 15 個品牌的公關借勢熱點，28 秒跑完",
-  desc:"從當天新聞流裡替 15 個品牌判斷有沒有可借勢的公關熱點並打結構化意圖標籤，Jev 28 秒跑完 428 則；作者自註同一任務 DeepSeek V4.1-flash 同時間只做完 6 則。demo 來自 @elvisun 的開源專案 newsjack。",
-  author:"@SUOHA_AI (梭哈.AI)", likes:635, url:"https://x.com/SUOHA_AI/status/2101000339948282090",
+  cat:"工程研究", title:"新聞分揀台：24.9 秒讀完 384 則新聞，替 15 個品牌挑出今天該借勢的故事、共 0.19 美元",
+  desc:"從當天新聞流裡替 15 個品牌判斷有沒有可借勢的公關熱點並打結構化意圖標籤。作者實測 24.9 秒跑完 384 則、總共 0.19 美元；同一份新聞流同時交給 Claude Opus 5，同樣時間只處理完 4 則、花了 0.77 美元，換算每則約便宜 390 倍。影片裡的東西全部開源（demo/ 資料夾，另附 30 多個把 agent 變成公關團隊的 skill）。（2026-09-20 以原作者版本替換原本收錄的 @SUOHA_AI 轉述版，數字改用原作者實測值。）",
+  author:"@elvissun (Elvis)", likes:3720, url:"https://x.com/elvissun/status/2100951347080421409",
   ptype:"重建",
-  prompt:`參考開源專案 elvisun/newsjack，做一個新聞分揀台：從即時新聞流裡替 15 個品牌找可借勢的公關熱點，判斷全用 TypeSafe Jev（model jev-latest）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+  prompt:`參考開源專案 elvissun/newsjack，做一個新聞分揀台：從即時新聞流裡替 15 個品牌找可借勢的公關熱點，判斷全用 TypeSafe Jev（model jev-latest）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
 
 1. 品牌設定檔：每個品牌一段描述（產業、受眾、禁忌話題）。
 2. 抓當天的新聞 RSS（約 400 則），每則新聞對每個品牌一次呼叫，問：relevant（Noul：這則新聞跟品牌有借勢空間嗎）、intent（Choice：節慶借勢 / 產業新聞 / 競品動態 / 社會議題 / 娛樂話題 / 不適合）、risk（Score：safe / careful / avoid）。
@@ -3235,6 +3340,188 @@ make this then run it locally so i can test it. Make the wrapper beautiful and t
 - gimbal（Choice：left / center / right）
 
 執行後推進模擬到下一秒再問。記錄每次決策，畫面底部跑馬燈顯示。目標：多跑幾輪調整 state 的描述方式，直到能在著陸區以低於 5 m/s 的速度立著落地；印出總呼叫次數與費用。`
+ },
+// ====== 2026-09-20 自動更新 ======
+ {
+  cat:"工程研究", title:"邊滑邊標：即時 slop 偵測器直接在 X 時間軸上打分",
+  desc:"在 X 上捲動時，每則貼文上方即時跳出一個「Not slop｜40%」之類的標籤，由 Jev 當場判定這則內容是不是 AI 灌水文並給出機率，捲多快都跟得上。推文只有一句話與影片，未公開擴充套件與程式碼。",
+  author:"@RBilgil (Robin Bilgil)", likes:11628, url:"https://x.com/RBilgil/status/2100976648552169805",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）做一個瀏覽器擴充，在 X 時間軸上捲動時即時替每則貼文標出「是不是 AI 灌水文（slop）」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+一、觸發：用 IntersectionObserver 偵測貼文進入視窗，才送出判斷；同一則只判斷一次並快取（貼文 id → 結果）。
+
+二、state 放：貼文純文字（去掉網址與 emoji）、有無附圖／影片、作者是否認證、貼文長度。
+
+三、一次呼叫問三題：
+- is_slop（Noul：這則貼文是不是沒有實質資訊的 AI 生成灌水內容）
+- genre（Choice：個人經驗 / 技術實作 / 新聞轉述 / 行銷推廣 / 雞湯語錄 / 純互動誘導）
+- effort（Score：low / medium / high，作者投入的程度）
+
+四、呈現：在貼文頂端插一條小標籤，顯示「Slop 63%」或「Not slop 40%」，顏色隨機率變化；點標籤展開 genre 與 effort。信心低於 0.55 時標籤顯示灰色的「不確定」，不要硬下判斷。
+
+五、設定頁：可切換「只標示」或「自動摺疊高於 X% 的貼文」，並顯示今日判斷則數與累計花費。`
+ },
+ {
+  cat:"工程研究", title:"一晚做出全自動交易 bot：Jev 吃鏈上＋鏈下資料即時決策（作者已虧 31,680 美元）",
+  desc:"一個晚上加一個早上做出來的全自動交易 bot，同時吃鏈上與鏈下資料，由 Jev 做買賣的即時判斷，完全無人介入。作者誠實公布戰績：到發文為止已經賠掉 31,680 美元。這則的價值剛好在反面——決策夠快、夠便宜，不等於策略會賺錢。推文只有影片，未公開程式碼。",
+  author:"@MoonGotchi (Moon)", likes:4064, url:"https://x.com/MoonGotchi/status/2101320141065609294",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）做一個全自動交易 bot 的決策層（請先用紙上交易／測試網跑，不要直接接實盤資金）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+一、資料來源：鏈上（大額轉帳、交易所流入流出、新池子流動性、gas）與鏈下（幾個指定帳號的貼文情緒、資金費率、未平倉量、現價與 1/5/15 分鐘變化）。每 5 秒整理成一段文字 state。
+
+二、一次呼叫問：
+- action（Choice：買進 / 加碼 / 減碼 / 出清 / 不動）
+- size（Choice：倉位的 5% / 10% / 25%）
+- urgency（Score：low / medium / high，是否要用市價單吃掉價差）
+- regime（Choice：趨勢向上 / 趨勢向下 / 震盪 / 資訊不足）
+
+三、風控寫在程式裡、不要交給模型：單筆上限、單日最大回撤、連虧三次自動停手一小時、regime 判為「資訊不足」或 action 信心低於 0.7 時一律不動。
+
+四、紀錄：每次決策存下 state、各選項機率、實際成交與後續 5 分鐘損益，累積成可回測的資料集，用來檢驗 Jev 的判斷是否真的有 edge。
+
+五、面板：即時顯示持倉、當日損益、決策次數與總花費。`
+ },
+ {
+  cat:"工程研究", title:"JevRouter for Hono：HTTP 請求按「意思」路由，不看 method 與 path",
+  desc:"把 Web 框架 Hono 的路由層換成語意判斷：請求進來由 Jev 決定該交給哪個處理器，而不是靠 method 與 URL 比對。作者已發成 npm 套件 hono-jev-router，並附一個可以線上試的 playground。",
+  author:"@yusukebe (Yusuke Wada)", likes:1232, url:"https://x.com/yusukebe/status/2100871075743859182",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）替 Hono 寫一個「語意路由」中介層並發成 npm 套件。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+一、API 設計：開發者註冊處理器時附一句自然語言描述，例如
+  jevRouter.on('查詢訂單狀態', handlerA)
+  jevRouter.on('申請退款', handlerB)
+  jevRouter.on('其他問題', fallback)
+
+二、判斷：請求進來時把 method、path、query 與 body 摘要成 state，用一次 Choice 呼叫在所有已註冊描述中選一個，回傳機率。
+
+三、門檻與退路：最高機率低於可設定的門檻（預設 0.6）就走 fallback；提供 onUncertain 回呼讓開發者自行接大模型或回 400。
+
+四、效能：判斷結果依 (method + path + body 雜湊) 快取，相同請求不重複呼叫；提供 dryRun 模式只回判斷結果不執行處理器，方便測試。
+
+五、附一個 playground：左邊輸入任意請求，右邊顯示各處理器的機率與最後走哪一條。`
+ },
+ {
+  cat:"工程研究", title:"意思版 grep：搜「顧客在生氣」，連沒有「怒」也沒有 angry 的行都抓得到",
+  desc:"用 Jev 取代正規表示式：一行一行問「這行符合這個意思嗎」拿 yes/no 機率，30 行併成一次請求，200 行的 log 不到 1 秒回來，零依賴、Node 單檔。選項比照 grep（-e 做 OR、-a 做 AND、-v 做 AND NOT、-r 遞迴、-l 只列檔名、-A/-B/-C 前後文、--color，機率門檻用 --level loose/strict 調）。作者強調跟向量搜尋的差別在於它判斷的是「命題成不成立」而非「話題像不像」——『想退款』與『退款已完成』在 embedding 幾乎等距，改用「顧客要求退款」去查卻分成 0.98 與 0.10，所以 AND／NOT 能當真正的布林運算用。以日英法俄德西中韓混排文件驗證，取哪種語言寫查詢都不漏抓也不誤抓。npx @uehaj/semgrep 可直接跑，已開源。",
+  author:"@uehaj (uehaj)", likes:1136, url:"https://x.com/uehaj/status/2101198713834381716",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）做一個 CLI：把 grep 的正規表示式換成「意思」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+一、基本用法：semgrep -e "顧客が怒っている" app.log ——逐行判斷這一行是否成立這個命題，成立就印出來。
+
+二、批次：一次請求塞 30 行（每行一題 Noul），200 行的檔案要能在 1 秒內回完；請求並發送出。
+
+三、選項比照 grep：-e 可重複（OR）、-a（AND）、-v（AND NOT）、-r 遞迴目錄、-l 只列檔名、-A/-B/-C 印前後文、--color 標出命中行。
+
+四、門檻：--level loose / strict 對應不同機率門檻（例如 0.5 / 0.85），預設取中間；--score 額外印出每行的機率。
+
+五、重點設計：問法要寫成「這一行是否成立以下命題」，而不是「這一行跟以下句子像不像」——前者才能讓 AND／NOT 當布林運算用，也才能區分「要求退款」與「退款已完成」。
+
+六、零執行時依賴，Node 單檔，可用 npx 直接跑。`
+ },
+ {
+  cat:"工程研究", title:"下載資料夾自動歸檔：Jev 判斷這份檔案是不是發票，直接改名歸位",
+  desc:"macOS 常駐 app 監看下載資料夾，搭配一組可自訂的規則：判定是發票就移到指定資料夾並改成正確檔名。作者強調全程只呼叫 Jev，沒有任何其他 LLM 參與。推文只有影片，app 未公開。",
+  author:"@marcelpociot (Marcel Pociot)", likes:1114, url:"https://x.com/marcelpociot/status/2100906882365788167",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）做一個 macOS 常駐小工具，監看下載資料夾並依規則自動歸檔。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+一、觸發：用 FSEvents 監看 ~/Downloads，檔案寫入完成後才處理。
+
+二、state 放：檔名、副檔名、大小、來源網域（可從擴充屬性讀）、PDF 前兩頁或文字檔前 2,000 字的文字（本機抽取，不要送整份檔案）。
+
+三、一次呼叫問：
+- category（Choice：發票／收據 / 合約 / 對帳單 / 簡報 / 圖片素材 / 安裝檔 / 其他）
+- is_invoice（Noul：這份文件是不是一張發票或收據）
+- confidence 由模型回機率。
+
+四、動作：category 命中使用者規則且機率高於 0.8 才移動；發票另外要求抽出日期、廠商、金額，組成「YYYY-MM-DD_廠商_金額.pdf」的新檔名。機率介於 0.5～0.8 丟進「待確認」資料夾，低於 0.5 不動。
+
+五、設定介面：使用者用自然語言寫規則（例如「所有電子發票放到 會計/2026」），規則本身就是 Choice 的選項描述。
+
+六、一律可復原：每次搬移都寫一筆 log，提供一鍵還原。`
+ },
+ {
+  cat:"工程研究", title:"YouTube 業配段落即時跳過：一支影片約 0.005 美元",
+  desc:"Chrome 擴充：聽 YouTube 的音訊（可自行關閉），即時判斷是否進入業配段落並自動跳過，一支影片成本約 0.005 美元。作者說是原型專案，自備金鑰（BYOK），已開源。",
+  author:"@tdinh_me (Tony Dinh)", likes:1084, url:"https://x.com/tdinh_me/status/2100793777103466615",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）做一個 Chrome 擴充，自動跳過 YouTube 影片裡的業配段落。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+一、文字來源：優先抓影片本身的字幕軌；沒有字幕時才選用分頁音訊 + 本機語音辨識（這條路徑預設關閉，由使用者開啟）。
+
+二、判斷：以 15 秒為一個窗格、每 5 秒滑動一次，state 放這段的逐字稿、影片標題與目前時間點。一次呼叫問：
+- is_sponsor（Noul：這段是不是付費業配或商品推銷）
+- kind（Choice：業配 / 自家商品推廣 / 頻道贊助感謝 / 正片內容）
+
+三、動作：連續兩個窗格 is_sponsor 高於 0.8 才動作，往前回推找到段落起點，直接把播放頭跳到判定結束處，畫面上顯示「已跳過 42 秒業配」並提供「跳回去」按鈕。
+
+四、成本控制：判斷結果以影片 id + 時間區段快取，同一支影片第二次看直接套用；設定頁顯示每支影片花費，目標一支約 0.005 美元。
+
+五、BYOK：使用者自己填 API key，key 只存在本機。`
+ },
+ {
+  cat:"創意藝術", title:"Jevinci：把決策模型當成圖像模型，每個像素的顏色都用「問」的",
+  desc:"完全沒有影像生成模型，畫面是純 JS 畫出來的：Jev 平行預測每一個像素該是什麼顏色，對該點愈有把握、筆刷就畫得愈寬。屬於把分類器推到極限的實驗性玩法（與庫內「用分類器拼出一個 LLM」同一路數，這次換成影像）。影片為 4 倍速。",
+  author:"@anshuc (Anshu)", likes:854, url:"https://x.com/anshuc/status/2101040309522121072",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）做一個「用決策模型畫圖」的實驗頁（純 JS + Canvas，禁止呼叫任何影像生成 API）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+一、流程：使用者輸入一句畫面描述（例如「黃昏海邊的燈塔」）。把畫布切成網格（先 32×32，再逐層細分到 256×256）。
+
+二、每個格點一題 Choice：state 放整體描述、這個格點的相對座標、已決定的鄰近格點顏色；選項是一組 24 色的色票（命名要語意化：深海藍、夕陽橘、沙灘米…）。所有格點的問題平行送出，一批一批收。
+
+三、畫法：取機率最高的顏色下筆，筆刷寬度與該題的最高機率成正比——愈有把握畫得愈寬、愈猶豫畫得愈細，讓不確定的地方自然形成細節與筆觸感。
+
+四、逐層細分：下一層只細分「最高機率低於 0.6」的格點，把已定的鄰近顏色一併餵進 state。
+
+五、介面：即時顯示目前層數、已下筆數、總呼叫次數與費用，可 4 倍速重播整個繪製過程，並匯出 PNG。`
+ },
+ {
+  cat:"工程研究", title:"雙臂機器人的第二層大腦交給 Jev：回應 500 毫秒、每次嘗試 0.5 日圓",
+  desc:"三層控制架構裡把第二層的「意思決定」交給 Jev，IK 與物理計算留在程式端，職責切得很乾淨。實測回應約 500 毫秒、每次嘗試約 0.5 日圓，作者結論是又快又便宜。附影片與多張架構圖。",
+  author:"@Raptor_zip (ラプター｜学ロボ DCON優勝)", likes:386, url:"https://x.com/Raptor_zip/status/2101091398447505567",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）當雙臂機器人的決策層，做成三層控制架構。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+一、分層：
+- 第一層（感知，程式端）：相機辨識物件位置與姿態，輸出物件清單（名稱、座標、朝向、是否可抓）。
+- 第二層（決策，Jev）：只決定「下一步做什麼」，不碰任何數值運算。
+- 第三層（執行，程式端）：逆運動學、軌跡規劃、碰撞檢查、夾爪力道控制。
+
+二、第二層的 state：任務目標、目前兩隻手臂各自握著什麼、桌面上剩下哪些物件、上一步成功或失敗。
+
+三、一次呼叫問：
+- next_action（Choice：左臂抓取 / 右臂抓取 / 交接 / 放置 / 重新對位 / 退開重試 / 任務完成）
+- target（Choice：目前物件清單中的哪一個）
+- grip（Choice：輕 / 中 / 重）
+
+四、安全：任何選項機率低於 0.6 就退回「重新對位」；連續三次失敗就停下來求助，不要讓它一直硬試。
+
+五、量測：記錄每次決策的往返時間與費用，目標單次 500 毫秒以內、每次嘗試成本在 1 日圓以下。`
+ },
+ {
+  cat:"遊戲", title:"鯨魚背上的城市：Astra 造世界、Jev 做每回合決策、H3 Max 生影片",
+  desc:"三個模型分工做出來的決策遊戲——GPT-6 Astra 設計世界觀與規則，Jev 負責每回合選要採取哪個行動，fal 上的 H3 Max Turbo 把每回合的其中一個決策轉成影片。Jev 的全部決策加上影片生成，264 段片段只花 5 分鐘。推文只有影片，未公開程式碼。",
+  author:"@gokayfem (gokaygokay)", likes:249, url:"https://x.com/gokayfem/status/2101022590722810271",
+  ptype:"重建",
+  prompt:`做一個「鯨魚背上的城市」決策遊戲：世界觀與規則請 GPT-6 Astra 設計，每回合的決策交給 TypeSafe Jev（model jev-latest），畫面用影片生成模型補。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 Jev 的 API。
+
+一、世界：一座建在巨鯨背上的城市，要在鯨魚下潛、風暴、糧食短缺、居民衝突之間活下去。四個資源：食物、淡水、士氣、鯨魚健康。
+
+二、每回合：系統丟出一個事件（Astra 生成文字），Jev 負責決策：
+- action（Choice：配給糧食 / 派人下海捕撈 / 安撫居民 / 治療鯨魚 / 加固建築 / 什麼都不做）
+- risk（Score：low / medium / high，這個決定的風險）
+- mood（Choice：居民接下來會變得 團結 / 不安 / 憤怒）
+
+三、結算：程式端依 action 與 risk 調整四項資源，不由模型算數字。
+
+四、影片：每回合挑一個決策，把該回合的情境敘述丟給影片模型生成一段短片，串成整場的回顧影片。
+
+五、面板：顯示回合數、四項資源、Jev 每次決策的機率分布，以及總決策數、總耗時與費用。`
  },
 ];
 
