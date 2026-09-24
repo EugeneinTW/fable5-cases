@@ -3362,7 +3362,7 @@ SELECT agency, jev_choice(description, ['water','plumbing','noise','sanitation',
  },
  {
   cat:"工程研究", title:"程式碼庫分類器：用 Jev 找出 agent 寫出來的過度工程",
-  desc:"用 Jev 掃整個 codebase，對每個檔案或函式判斷是否過度設計，作者認為這可能是 agent 產生過度工程程式碼的解法。推文只有影片，未公開程式碼；影片縮圖是作者本人，所以卡片不放圖。",
+  desc:"用 Jev 掃整個 codebase，對每個檔案或函式判斷是否過度設計，作者認為這可能是 agent 產生過度工程程式碼的解法。推文只有影片，未公開程式碼；卡片圖取自影片中段的 Codebase Lens 畫面（原始縮圖是作者本人）。",
   author:"@ryanvogel (vogel)", likes:1176, url:"https://x.com/ryanvogel/status/2100068006592123055",
   ptype:"重建",
   prompt:`掃描這個 repo，用 TypeSafe Jev（model jev-latest）找出過度工程的程式碼。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
@@ -3585,7 +3585,7 @@ SELECT agency, jev_choice(description, ['water','plumbing','noise','sanitation',
  },
  {
   cat:"工程研究", title:"一段 prompt 做出帶 Jev 模型路由的 agent（eve + Vercel AI Gateway）",
-  desc:"用 Vercel 的 eve 框架建一個能搜尋網頁、建檔案的 agent，並讓 Jev 當模型路由器：簡單問題用便宜模型、複雜的用旗艦、中間有階梯，介面要即時顯示 Jev 選了哪個模型與理由。推文附完整 prompt，成果畫面見 @rileybrown 的示範影片；沒有推文自己的截圖。",
+  desc:"用 Vercel 的 eve 框架建一個能搜尋網頁、建檔案的 agent，並讓 Jev 當模型路由器：簡單問題用便宜模型、複雜的用旗艦、中間有階梯，介面要即時顯示 Jev 選了哪個模型與理由。推文附完整 prompt，本身沒有附圖；卡片圖取自推文引用的 @rileybrown 示範影片。",
   author:"@agentnative_ (Agent Native)", likes:207, url:"https://x.com/agentnative_/status/2100624941326500122",
   ptype:"原文",
   prompt:`I want you to build a new app that uses eve. I want to make an agent that can search the web, create files and anything else an agent might be able to do. use eve you should have vercel key. 
@@ -3829,7 +3829,7 @@ make this then run it locally so i can test it. Make the wrapper beautiful and t
  },
  {
   cat:"工程研究", title:"Codex 裡最快的電腦操作：裝上 skill 加一把 Jev API Key 就不卡了",
-  desc:"作者把自己在 Codex 裡操作各種 App 的電腦操作方案直接開源：裝上 repo 裡的 skill、設好 Jev 的 API Key，就能在 Codex 中流暢操作應用程式。他自己實測的結論是——越需要頻繁判斷與呼叫工具的任務，接上 Jev 後提速越明顯。推文只有 repo 連結，沒有附 demo 影片或延遲數字。",
+  desc:"作者把自己在 Codex 裡操作各種 App 的電腦操作方案直接開源：裝上 repo 裡的 skill、設好 Jev 的 API Key，就能在 Codex 中流暢操作應用程式。他自己實測的結論是——越需要頻繁判斷與呼叫工具的任務，接上 Jev 後提速越明顯。本則推文只有 repo 連結、沒有延遲數字；卡片圖取自作者引用的前一則推文，那支是與內建 computer use 的 1 倍速對照影片。",
   author:"@Saccc_c (Sac)", likes:2219,
   url:"https://x.com/Saccc_c/status/2101152089598791845",
   ptype:"重建",
