@@ -72,13 +72,14 @@
   <header>
     <h1>🧪 AI 模型案例庫</h1>
     <div class="updated" id="updated"></div>
-    <p>從 X 整理的 AI 模型實測案例——看別人做了什麼，複製 prompt 自己重現。目前分成 TypeSafe Jev、GPT-6 Astra 與 Claude Fable 5 三個分頁。</p>
+    <p>從 X 整理的 AI 模型實測案例——看別人做了什麼，複製 prompt 自己重現。目前分成 TypeSafe Jev、Claude Opus 5.5、GPT-6 Astra 與 Claude Fable 5 四個分頁。</p>
     <div class="stats" id="stats"></div>
     <div class="legend"><span class="badge b-orig">原文 prompt</span> 推文或原文章直接給出的指令　<span class="badge b-recon">重建 prompt</span> 根據案例描述補寫的可執行版本，效果可能與原案例有落差</div>
   </header>
 
   <div class="tabs">
     <span class="tab on" data-t="jev">⚡ TypeSafe Jev 案例</span>
+    <span class="tab" data-t="opus">🎨 Claude Opus 5.5 案例</span>
     <span class="tab" data-t="astra">🛰️ GPT-6 Astra 案例</span>
     <span class="tab" data-t="cases">📚 Fable 5 案例</span>
     <span class="tab" data-t="guide">🎓 Fable 5 官方 Prompting 指南（新手版）</span>
@@ -96,6 +97,20 @@
   <div class="substats" id="stats-jev"></div>
   <div class="grid" id="jgrid"></div>
   <div class="empty" id="jempty">沒有符合的案例</div>
+  </div>
+
+  <div id="tab-opus" style="display:none">
+  <div class="anote">Anthropic 的 <b>Claude Opus 5.5</b>（2026-09-22 發布）實測案例。發布第一週案例量爆發（96 小時內超過 600 則 150 讚以上），這個分頁的收錄門檻是 <b>500 讚</b>，並跳過大量「同 prompt 模型互比」的貼文。同為 Claude 家族的 Fable 5／5.1 案例在「Fable 5 案例」分頁。</div>
+  <div class="bar" id="ocats"></div>
+  <div class="bar">
+    <span class="chip on" data-p="all">全部 prompt</span>
+    <span class="chip" data-p="原文">只看原文 prompt</span>
+    <span class="chip" data-p="重建">只看重建 prompt</span>
+    <input id="oq" type="search" placeholder="搜尋案例、作者、關鍵字…">
+  </div>
+  <div class="substats" id="stats-opus"></div>
+  <div class="grid" id="ogrid"></div>
+  <div class="empty" id="oempty">沒有符合的案例</div>
   </div>
 
   <div id="tab-cases" style="display:none">
@@ -4251,6 +4266,151 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
 }
 ];
 
+// ====== Claude Opus 5.5 案例（Anthropic，2026-09-22 發布）======
+const OPUS_CASES = [
+// ====== 2026-09-26 初始收錄 ======
+{
+  cat:"模擬視覺化",
+  title:"互動鏡頭實驗室：轉對焦環，看鏡片組移動、清晰平面在場景裡前後推移",
+  desc:"作者請 Opus 5.5「用一個互動鏡頭實驗室解釋相機對焦」，一次 one shot 跑了 1 小時 26 分、API 花費 25.66 美元。轉動對焦環時，鏡頭內的玻璃鏡片會跟著移動，畫面裡清晰的那個平面也同步在場景中前後推移，把光學原理變成可以直接摸的教材。本輪 Opus 5.5 分頁讚數最高的案例（1.2 萬讚）。",
+  author:"@RyanSael (Ryan Sael)",
+  likes:12871,
+  url:"https://x.com/RyanSael/status/2102591147927654847",
+  ptype:"重建",
+  prompt:"做一個互動式「鏡頭實驗室」網頁，用來解釋相機對焦原理。要求：1) 左側是相機鏡頭的剖面圖，畫出多片玻璃鏡片、光圈與感光元件，光線用光線追跡（ray tracing）畫出折射路徑；2) 使用者拖動對焦環時，對焦鏡片組沿光軸移動，光線匯聚點隨之改變；3) 右側是一個有前中後景物件的 3D 場景，即時顯示「清晰平面」的位置，離清晰平面越遠的物件越模糊（依景深公式計算模糊半徑）；4) 可調光圈（f 值）與焦距，景深範圍跟著變寬或變窄；5) 每個控制項旁有一句白話解說；6) 單一 HTML 檔，不用外部素材。做完後自己檢查物理關係是否正確（薄透鏡公式、景深公式）。"
+},
+{
+  cat:"創意藝術",
+  title:"整支 UI 動態設計影片全是程式碼：開源 motion design prompt 模板",
+  desc:"作者展示一支完全用程式碼做出的 UI 動態影片（沒用 After Effects）：同一個形狀從按鈕、載入中、打勾、動態島、音樂播放器一路變形到圖表、⌘K 與 toast，再回到按鈕無縫循環，每一拍都有動作。他把整份 prompt 模板公開，含輸入、風格禁令、120 BPM 分鏡、用 seek(t) 純函式算每一格、Playwright 逐格渲染加 ffmpeg 動態模糊等實作細節。",
+  author:"@twoclipping (zero)",
+  likes:9613,
+  url:"https://x.com/twoclipping/status/2103273003555402193",
+  ptype:"原文",
+  prompt:"<inputs>\nAsk me for: 8 to 12 UI states I want the shape to become (e.g. button, loader, player, slider, toggle, tabs, chart, command palette, toast), pure black and white or one accent color, and a royalty-free song around 120 BPM (e.g. Mixkit, free for commercial use).\n</inputs>\n\n<direction>\nDribbble-level UI motion. One shape, never cut: every state is the same element morphing its size, radius and color while its content swaps with a short blur. A cursor drives every change with real clicks and drags. Light warm-gray canvas, black and white components, one clean UI font (Geist). Springs everywhere, a tiny overshoot at most. The camera zooms so each state fills the frame. The last frame is the first frame, so it loops.\nBanned: bouncy easing, particle bursts, glows, gradients on UI chrome, mismatched icon strokes, dead time, anything that looks like a template.\n</direction>\n\n<structure>\n120 BPM, 7 bars, something happens on every beat.\nButton → loader → check → dynamic island → music player with a play/pause morph → scrub the progress bar → it becomes a volume slider that stretches when dragged past max → a toggle flips on the beat → the knob becomes a liquid tab indicator → the tabs open into a chart that draws itself, with a tooltip on hover → it collapses into ⌘K → type to filter → enter → toast → back to the button.\n</structure>\n\n<build>\n1. One HTML file, square 1440x1440. Every style is computed from time inside seek(t): no CSS transitions, no timers, no state carried between frames.\n2. Springs are closed-form step responses. A value that changes target many times is the sum of one spring per change, so it stays a pure function of time.\n3. The tab indicator's two edges ride different springs, so the leading edge stretches ahead of the trailing one. Same trick for the toggle knob.\n4. Drags are direct manipulation: while the cursor is held, the value is computed from its position. On release it springs back from wherever it was.\n5. Analyze the song with numpy for the beat grid and start on a downbeat. Place every UI sound by its measured peak.\n6. Render with Playwright: 4 subframes per frame, blended with ffmpeg tmix for motion blur at 60fps.\n7. Render one frame per beat before the full render. Fix anything off the grid, cramped or hard to read.\n</build>\n\n<gotchas>\nNever put will-change on anything the camera scales or the text renders blurry. Text that swaps inside a morphing container needs its own enter and exit timing or it overlaps. Make the last frame identical to the first, cursor position and speed included, or the loop stutters.\n</gotchas>\n\n<start>\nAsk me for the inputs, then show me the state list on the beat grid before you write any code.\n</start>"
+},
+{
+  cat:"工程研究",
+  title:"設計能用真實 LEGO 拼出來的 Microduck：1,113 個零件、141 頁說明書、還幫你在 BrickLink 下好單",
+  desc:"作者請 Opus 5.5 設計一隻能用真實 LEGO 零件拼出來的 Microduck。它做出等身大小、使用 1,113 個真實零件的設計，並驗證了 3,204 個接點零碰撞、每一步都拼得出來、重心落在腳掌範圍內；接著產出 141 頁、237 個步驟的 LEGO 風格說明書，最後在瀏覽器裡查好每個零件的價格，把訂單在 BrickLink 上準備好。",
+  author:"@victormustar (Victor M)",
+  likes:8321,
+  url:"https://x.com/victormustar/status/2103110908444631120",
+  ptype:"重建",
+  prompt:"幫我設計一個可以用真實 LEGO 零件拼出來的模型：一隻 Microduck（等身大小）。步驟：1) 只使用 LEGO 現行真實存在的零件編號與顏色（以 BrickLink／Rebrickable 目錄為準），輸出 LDraw 格式模型；2) 寫程式驗證：所有接點都是合法連接、零件之間沒有碰撞、每一個搭建步驟在物理上都拼得出來、整體重心落在腳掌支撐範圍內，列出驗證報告（接點數、碰撞數）；3) 產生 LEGO 官方風格的分步說明書 PDF，每頁標出這一步要用的零件與數量；4) 產出完整零件清單，用瀏覽器查 BrickLink 上每個零件的價格與賣家，準備好購物車但不要結帳，最後告訴我總價。"
+},
+{
+  cat:"遊戲",
+  title:"駕船穿越日本風景：動態天氣、日夜光照、3D 角色的 Three.js 可玩場景",
+  desc:"Meng To 用 Opus 5.5 生成一個可以操控的小船場景，沿途是日本風格的地景與建築，有動態天氣、日夜光照循環、寫實材質和 3D 角色，並放上線上網址可以直接玩。他特別點名水面反射、物理、景色與建築細節。",
+  author:"@MengTo (Meng To)",
+  likes:6383,
+  url:"https://x.com/MengTo/status/2102760783344189761",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個可以在瀏覽器裡玩的駕船遊戲：玩家用 WASD 操控一艘小木船，沿著河道穿越日本風景（鳥居、木造町屋、竹林、石燈籠、遠山）。要求：1) 水面要有反射、折射與船行水波，船隻有簡單浮力物理；2) 動態天氣（晴、雨、霧）與日夜循環，光照、天空和燈籠亮度跟著變化；3) 岸上有幾個會動的 3D 角色；4) 材質要寫實（PBR），效能在筆電上維持 60fps；5) 所有模型用程式或 Blender 生成，最後部署成一個網址讓我試玩。"
+},
+{
+  cat:"創意藝術",
+  title:"不用任何圖像模型，7,500 行 Python 逐像素「畫」出不同畫家的風格",
+  desc:"作者（Anthropic 員工，文中稱「我們的模型」）這幾個月一直請模型畫畫。這組作品每一張都是一支 Python 程式逐像素算出來的：沒有圖像模型、沒有現成繪圖軟體，而是約 7,500 行只用標準函式庫的程式碼模擬各種筆觸；agent 也沒有看任何參考圖，只憑它對每位畫家的了解作畫。作者認為 Opus 5.5 特別擅長模仿不同風格。",
+  author:"@jkeatn (Jake Eaton)",
+  likes:4965,
+  url:"https://x.com/jkeatn/status/2102441348075057539",
+  ptype:"重建",
+  prompt:"寫一支 Python 程式，只用標準函式庫加 numpy 與 Pillow（不准用任何圖像生成模型、不准讀取參考圖片），逐像素畫出一幅「梵谷風格」的星空小鎮。做法：1) 先實作一套筆刷引擎：每一筆有方向場、厚塗顏料的明暗起伏、筆刷毛的細紋與顏料混色；2) 用向量場控制筆觸流向（漩渦、放射）；3) 分層作畫：底色、大色塊、中筆觸、細節高光；4) 輸出 2048×2048 PNG。完成後再做三種不同畫家風格（例如莫內、葛飾北齋、克林姆），每種都要有專屬的筆刷行為，而不是只換調色盤。"
+},
+{
+  cat:"遊戲",
+  title:"多人線上除草模擬器（還有啤酒和雪茄），直接開在伺服器讓聊天室一起玩",
+  desc:"作者讓 Opus 5.5 做了一個多人線上除草模擬器，場景裡還有啤酒和雪茄這類惡搞道具。他把遊戲架到自己的伺服器上，直播聊天室的觀眾直接加入一起推草坪。",
+  author:"@_MaxBlade (Max Blade)",
+  likes:3945,
+  url:"https://x.com/_MaxBlade/status/2102513817855094922",
+  ptype:"重建",
+  prompt:"做一個多人線上的 3D 除草模擬器，用 Three.js 做前端、Node.js + WebSocket 做伺服器。玩家加入後各自操控一台割草機，割過的草會留下紋路，整片草坪割完會結算每個人的面積排行。加入惡搞元素：場上有啤酒和雪茄可以撿，喝了啤酒操控會變飄、抽雪茄會冒煙。要求：伺服器同步所有玩家位置與草坪狀態，支援 20 人同時在線；附一個部署到 VPS 的步驟，讓我可以把網址丟給直播聊天室。"
+},
+{
+  cat:"遊戲",
+  title:"以安提基特拉機械為靈感的遊戲：畫面與聲音全部即時程序生成，單一 3MB HTML",
+  desc:"作者請 Opus 5.5 以史上第一台「計算機」安提基特拉機械（Antikythera mechanism）的發現為靈感做一款遊戲。畫面上看到、聽到的一切都由 Opus 5.5 寫的程式即時程序生成，整個遊戲是一個 3MB 的 HTML 檔，並以 Claude artifact 形式開放試玩。",
+  author:"@edwinarbus (edwin)",
+  likes:3535,
+  url:"https://x.com/edwinarbus/status/2102463453176979794",
+  ptype:"重建",
+  prompt:"以「安提基特拉機械（Antikythera mechanism）被潛水夫從沉船中發現」為靈感，做一款瀏覽器遊戲：玩家先潛入愛琴海海底沉船撈起鏽蝕的青銅碎片，再回到工作台把齒輪一片片組回去，每裝對一組齒輪，機械就能預測出一種天象（日月位置、月相、日月食、奧林匹克賽會週期）。要求：所有畫面（海底、光線、青銅材質、齒輪）與聲音（海浪、金屬碰撞、配樂）都用程式即時程序生成，不用任何外部素材；單一 HTML 檔。"
+},
+{
+  cat:"文件簡報",
+  title:"一分鐘、約 2 美元：一句 prompt 做出推論新創的產品發表影片",
+  desc:"作者用一句 prompt 請 Opus 5.5 替一家做推論（inference）的新創做發表影片，花 1 分鐘、約 2 美元。他認為這類以程式碼做出的說明型影片，比寫實的影片生成模型（如 Seedance）更適合傳達技術概念，會改變行銷、業務與內部溝通的方式。",
+  author:"@deedydas (Deedy)",
+  likes:3222,
+  url:"https://x.com/deedydas/status/2102787937482252537",
+  ptype:"原文",
+  prompt:"make a modern slick and punchy video for a modern startup that works on inference"
+},
+{
+  cat:"遊戲",
+  title:"放著跑一整晚：孟買西線火車與班加羅爾紫線地鐵，各自住在一顆小星球上",
+  desc:"作者睡前只給 Opus 5.5 一句指令「幫我做兩座可以走進去逛的印度城市」，醒來看到兩顆迷你星球：一顆是孟買的西線鐵路、一顆是班加羅爾的紫線地鐵，都有 NPC，還能搭火車和嘟嘟車（auto），並附線上試玩網址。",
+  author:"@pracosm (Shardul)",
+  likes:2247,
+  url:"https://x.com/pracosm/status/2103387804281745459",
+  ptype:"原文",
+  prompt:"build me two Indian cities I can walk around"
+},
+{
+  cat:"工程研究",
+  title:"把 Omarchy 螢幕保護程式引擎從 Rust 一次翻成 x86-64 組合語言，最快 17 倍",
+  desc:"Rails 作者 DHH 把 Omarchy 的螢幕保護程式引擎 ttfx 從 Rust 移植到 x86-64 組合語言，由 Opus 5.5 一次翻譯完成，速度最高快 17 倍，並附上 repo 連結。",
+  author:"@dhh (DHH)",
+  likes:2143,
+  url:"https://x.com/dhh/status/2103595410921279635",
+  ptype:"重建",
+  prompt:"把這個 repo 裡用 Rust 寫的終端機螢幕保護程式引擎（ttfx）完整移植成 x86-64 組合語言（NASM 語法、Linux syscall，不依賴 libc）。要求：1) 行為與原版一致，所有特效都要移植；2) 熱迴圈用 SIMD（SSE/AVX2）最佳化；3) 寫一支基準測試腳本，對每個特效比較 Rust 版與組合語言版的每秒幀數；4) 附 Makefile 與說明。先讀完 Rust 原始碼列出模組與資料結構的對應計畫，再開始寫。"
+},
+{
+  cat:"創意藝術",
+  title:"零指示、跑 5 小時燒 6.97 億 tokens：Opus 5.5 替自己做的 280KB demoscene 開場",
+  desc:"作者請 Opus 5.5「做一個最能展示你自己的 demo」，完全不給其他方向。約 5 小時、6.97 億 tokens 後，它交出一段 demoscene 開場：每個像素、每個聲音都來自一個 280KB 的 HTML 檔，沒有圖片、音檔、3D 模型或函式庫。作者說連這則推文都是它寫的。",
+  author:"@JustinPerea (Justin.md)",
+  likes:1539,
+  url:"https://x.com/JustinPerea/status/2102893186330841502",
+  ptype:"重建",
+  prompt:"Make the most impressive demo of yourself. 我不會給你任何其他方向，由你決定題材與形式。限制：最後交付單一 HTML 檔，所有畫面與聲音都必須在執行時由程式碼生成（Canvas/WebGL + Web Audio），不准使用任何圖片、音檔、3D 模型或外部函式庫，檔案越小越好。你可以花很長時間迭代，每一版都自己錄影檢查節奏與畫面，直到你認為這是你能做出最好的作品。"
+},
+{
+  cat:"文件簡報",
+  title:"高中地理「大氣環流」講解動畫：26 分鐘生出近 5 分鐘的雙語字幕＋TTS 配音影片",
+  desc:"老師用一段簡單的 prompt，讓 Opus 5.5 花 26 分鐘做出近 5 分鐘、講解高中地理「大氣環流」的線稿風動畫，有中英雙語字幕、TTS 配音與配樂，token 消耗很低。作者附了完整教學：把任一家 TTS 廠商的文件存成 TTS.md、API Key 放 .env，並提醒在 .claude/settings.json 加 deny Read(./.env) 讓 Claude 讀不到金鑰。",
+  author:"@akokoi1 (WY)",
+  likes:683,
+  url:"https://x.com/akokoi1/status/2102606609574941028",
+  ptype:"原文",
+  prompt:"做一个动画，讲解高中地理知识点“大气环流”。风格轻松有趣，动画格式为线稿，添加合适的音乐，请务必做到引人入胜，字幕用中英双语，解说用TTS，如果 TTS 接口有关闭水印的参数就关掉，文档在TTS.md，API KEY 和音色分别是 .env 里的 APIKEY 和 VOICE，最终视频要能直接导出。"
+},
+{
+  cat:"工程研究",
+  title:"一句 prompt、6 個子代理、約 4 小時：做出一套完整 CRM",
+  desc:"作者在 Claude Code 用一個 prompt 讓 Opus 5.5 做出整套 CRM：主代理先寫產品簡報、假資料與設計系統，1 個子代理打地基、另外 5 個分兩波平行完成其餘頁面；過程中透過 Mobbin MCP 搜尋 57 次真實 App 版型、套用 11 個設計 skill，每一頁都跑深淺色截圖審查迴圈。作者只審過一次，agent 再把他標出的問題修好，全程約 4 小時。",
+  author:"@adomicael (Adonias)",
+  likes:722,
+  url:"https://x.com/adomicael/status/2103188137220427958",
+  ptype:"重建",
+  prompt:"做一套完整的 CRM Web App（聯絡人、公司、交易 pipeline、任務、活動紀錄、儀表板）。流程：1) 你是主代理，先寫一份產品簡報：目標使用者、功能清單、頁面地圖、一套逼真的假資料，以及設計系統（色彩、字體、間距、元件）；2) 派 1 個子代理建立專案地基（框架、路由、資料層、元件庫），完成後再分兩波平行派 5 個子代理實作其餘頁面；3) 每個子代理動工前先用 Mobbin MCP 搜尋真實 App 的對應版型，並套用 frontend-design 等設計 skill；4) 每完成一頁就在深色與淺色模式各截圖，自我審查間距、對齊與層級，修到滿意為止；5) 全部完成後停下來讓我審一次，再修正我標出的問題。"
+},
+{
+  cat:"遊戲",
+  title:"從零用 Three.js + Blender 做的蜘蛛人開放城市，迭代出共生體戰衣與新機制",
+  desc:"作者持續用 Opus 5.5（medium 強度）從零打造的蜘蛛人遊戲，全部用 Three.js 與 Blender 製作。這一版經過幾輪迭代，加入共生體（黑色）戰衣、更好的動畫與模型，以及新的玩法機制；作者自註城市改版還在進行中。",
+  author:"@xikhar (Shikhar)",
+  likes:3543,
+  url:"https://x.com/xikhar/status/2102932763750084797",
+  ptype:"重建",
+  prompt:"繼續開發我們的 Three.js 蜘蛛人開放世界遊戲（模型與動畫都用 Blender 產生後匯出 glTF）。這一輪的目標：1) 新增共生體黑色戰衣，可在選單切換，換裝時有過場特效；2) 改善擺盪、爬牆、落地與戰鬥的動畫銜接，減少滑步；3) 加入新機制：蛛絲拉扯敵人、空中連段、隨機街頭犯罪事件；4) 開始重做城市：更多樣的大樓、街道細節與交通。每完成一項就錄一段遊戲畫面自我檢查，再進下一項。"
+}
+];
+
 // ====== 資料區結束 ======
 
 const CAT_COLOR = {"遊戲":"#7a4a9e","模擬視覺化":"#1f5a64","文件簡報":"#33558c","創意藝術":"#b9504f","工程研究":"#2d6647"};
@@ -4345,12 +4505,13 @@ function makePanel(data, ids){
 const panelF5    = makePanel(CASES,       {panel:'tab-cases', cats:'cats',  grid:'grid',  empty:'empty',  stats:'stats-f5',    q:'q'});
 const panelAstra = makePanel(ASTRA_CASES, {panel:'tab-astra', cats:'acats', grid:'agrid', empty:'aempty', stats:'stats-astra', q:'aq'});
 const panelJev   = makePanel(JEV_CASES,   {panel:'tab-jev',   cats:'jcats', grid:'jgrid', empty:'jempty', stats:'stats-jev',   q:'jq'});
+const panelOpus  = makePanel(OPUS_CASES,  {panel:'tab-opus',  cats:'ocats', grid:'ogrid', empty:'oempty', stats:'stats-opus',  q:'oq'});
 
 document.getElementById('stats').textContent =
-  `TypeSafe Jev ${JEV_CASES.length} 個案例 · GPT-6 Astra ${ASTRA_CASES.length} 個案例 · Claude Fable 5 ${CASES.length} 個案例`;
+  `TypeSafe Jev ${JEV_CASES.length} 個案例 · Claude Opus 5.5 ${OPUS_CASES.length} 個案例 · GPT-6 Astra ${ASTRA_CASES.length} 個案例 · Claude Fable 5 ${CASES.length} 個案例`;
 
 // ====== 頁籤切換 ======
-const TABS = ['jev','astra','cases','guide'];
+const TABS = ['jev','opus','astra','cases','guide'];
 function showTab(t){
   TABS.forEach(name=>document.getElementById('tab-'+name).style.display = (name===t?'':'none'));
   document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.toggle('on', el.dataset.t===t));
