@@ -3177,6 +3177,27 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
   url:"https://x.com/NVIDIARobotics/status/2102873641797009709",
   ptype:"重建",
   prompt:"用 Codex 驅動 GPT-6 Astra，在物理模擬器（Isaac Sim／Isaac Lab 或 MuJoCo）裡做一個「機器人奧運」專案：讓同一台人形機器人學會多種運動，每個動作都必須在物理上成立，不能只是播放動畫。\n\n一、項目：100 公尺短跑、110 公尺跨欄、跳遠、鉛球、標槍、足球射門、棒球打擊、花式滑冰旋轉、踢拳打沙包。\n\n二、每個項目自己建場地（跑道、沙坑、投擲圈、球場、冰面、擂台）與器材（標槍、鉛球、球、沙包）的碰撞與質量參數。\n\n三、方法自選：參考人類動作資料做 motion retargeting 再用強化學習追蹤，或直接設計獎勵函數訓練；在畫面角落顯示成績（秒數、距離、轉圈數）。\n\n四、最後輸出一支 3×3 的總覽影片，每格是一個項目的模擬畫面，標題「Robo Olympics – How robots learn to compete」。\n\n過程中我只會用自然語言描述想要的動作，其餘環境建置、訓練與除錯由你完成，並回報每個項目目前的完成度。"
+},
+// ====== 2026-09-26 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"Three.js 做出概念 X-16 引擎：四組汽缸排共用一根曲軸，機構全部外露",
+  desc:"作者用 GPT-6 Astra 以 Three.js 打造一具概念 X-16 引擎，靈感來自實驗性的多汽缸排架構：四組汽缸排、一根曲軸，活塞、連桿與曲軸的連動全部外露可看，並附開源程式碼。誠實保留：這是概念機構的視覺化，不是可驗證的工程模擬。",
+  author:"@techartist_ (Techartist)",
+  likes:371,
+  url:"https://x.com/techartist_/status/2103229334467346878",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個可互動的概念 X-16 引擎 3D 模型：四組汽缸排（每組 4 缸）呈 X 形排列，共用同一根曲軸。要求：1) 活塞、連桿、曲軸依正確的點火順序連動旋轉，轉速可用滑桿調整；2) 外殼半透明或可切換剖面，讓內部機構完全外露；3) 金屬材質用 PBR（MeshStandardMaterial），加上環境光與方向光陰影；4) OrbitControls 可旋轉縮放；5) 單一 HTML 檔、從 CDN 載入 Three.js，不依賴外部模型檔，所有零件用程式建模。"
+},
+{
+  cat:"遊戲",
+  title:"一天半做完會用樹根爬行的樹精 Dryad：動畫、吸血根與落葉護盾一次到位",
+  desc:"作者「用 AI 做 15 年夢想遊戲」系列第 16 天：用 Opus 5.5 搭 GPT-6 Astra，一天半從頭做完一隻樹精——用樹根在地上爬行、伸根吸取敵人、被圍攻時升起一道葉牆保護自己，身上的葉子會動、移動時還會掉落。作者的關鍵是小步推進、每階段都驗收：先規劃特效行為，再做動畫，動畫沒問題才圍著它做 VFX。誠實保留：本作是 Opus 5.5 與 Astra 合作，推文未拆分各自負責哪部分；同系列前幾天的案例已收在本分頁。",
+  author:"@Stefan_3D_AI (Stefan 3D AI)",
+  likes:362,
+  url:"https://x.com/Stefan_3D_AI/status/2103467172995690835",
+  ptype:"重建",
+  prompt:"在我的 Unity 專案裡做一個敵方／友方單位「樹精 Dryad」，分三階段進行、每階段做完先停下來讓我驗收：\n一、規劃：先寫出特效與行為規格——用樹根在地面爬行移動；攻擊時從地面伸出多條樹根纏住並吸取敵人生命；當周圍敵人超過 N 個時，升起一圈葉牆護盾；身上葉片持續擺動，移動時會掉落葉子。\n二、動畫：依現有骨架做 idle、爬行、攻擊、施放護盾四組動畫，接上 Animator 狀態機，確認切換自然。\n三、VFX：動畫確認後，圍繞動畫事件做粒子與 shader 特效（樹根生長、吸血光流、葉牆展開、落葉拖尾），並把參數曝露在 Inspector 讓我微調。"
 }
 ];
 
@@ -4186,6 +4207,47 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/_brylee10/status/2102861447294587246",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）做一個 RL 訓練軌跡的失敗模式分群與標註系統。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n一、抽樣：從一次訓練的軌跡（例如 1 萬條 Tau3-bench agent 軌跡）隨機抽 200 條，先用 LLM 把每條摘要成「目標、做了哪些工具呼叫、結果、哪裡出錯」。\n\n二、建分類（map-reduce）：把摘要分批交給 LLM 各自歸納失敗模式，再合併、去重，得到這次訓練專屬的失敗模式清單（例如 reward hacking、捏造工具結果、未完成就宣稱完成、參數錯誤、無限重試），每類附定義與正反例。\n\n三、大量標註：對全部軌跡，每一個失敗模式問 Jev 一題 Noul「這條軌跡是否出現此失敗模式」，state 放軌跡摘要與該失敗模式的定義。門檻刻意設低（例如 0.3）以求高召回。\n\n四、複核：被 Jev 標為陽性的軌跡，再交給較強的模型做高精確度判定；比對兩階段結果，計算召回率與精確度。\n\n五、評估：用人工標好的小樣本比較 Jev、GLM 5.3 Flash、GPT-6 Luna 等分類器的成本、F1、Brier score 與 ECE，畫出成本／效能散佈圖。\n\n六、輸出：每種失敗模式的比例隨訓練步數的變化圖，以及每類的代表軌跡，方便研究者直接點進去看。"
+},
+// ====== 2026-09-26 自動更新 ======
+{
+  cat:"工程研究",
+  title:"開源加密貨幣交易 bot Cabbage：Astra 寫程式、Jev 下單，信心低於 0.80 就不動",
+  desc:"作者開源的現貨交易 bot，回測、模擬交易、實盤各一行指令。分工是 GPT-6 Astra 負責寫程式與解釋決策，實際運轉時由 Jev 在毫秒內回一個字加機率：BUY、HOLD 或 SELL，信心低於 0.80 就等待。訊號用 RSI 14 + EMA 12/26 共振且只讀已收盤 K 棒，固定部位與百分比停損寫死在規則裡，回測產出 HTML 報告，狀態存 SQLite，建在 Investing Algorithm Framework 上、Apache-2.0。誠實保留：推文未附任何績效數字；另有 RoundtableSpace 的轉述版，本卡收原作者。",
+  author:"@sopersone (sopersone)",
+  likes:416,
+  url:"https://x.com/sopersone/status/2103242299690135662",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）當決策層，做一個開源的現貨加密貨幣交易 bot。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n一、訊號引擎：用 CCXT 抓 K 線，只用已收盤的 K 棒計算 RSI 14、EMA 12 與 EMA 26。\n二、決策：每根 K 棒收盤時問 Jev 一題 Choice「現在該 BUY、HOLD 還是 SELL」，state 放交易對、最近 50 根 K 棒摘要、RSI／EMA 數值與交叉狀態、目前持倉與未實現損益。最高選項機率低於 0.80 一律視為 HOLD。\n三、硬性風控（程式碼決定，Jev 不能改）：每筆固定下單金額、每筆進場都掛百分比停損、不加碼。\n四、三種模式各一行指令：backtest（事件驅動逐根重播，結束輸出 HTML 報告）、paper（真實行情、本地撮合）、live（CCXT 下真單，金鑰只放 .env）。\n五、doctor 指令：檢查設定與交易所連線，不下任何單。\n六、狀態依市場與交易對存進 SQLite，重啟不遺失持倉。"
+},
+{
+  cat:"工程研究",
+  title:"這題該用哪個模型、開多高 effort？輸入 prompt 就由 Jev 當場建議",
+  desc:"土耳其開發者的第一個 Jev 實驗：一個浮動輸入框，打下要交代的任務（例如「設計跟圖片一樣」「章節標題改大寫」），Jev 當場判斷該交給哪個模型與推理強度——截圖中前者被派給 Opus 5.5 high、後者給 Sonnet 5 low，並附上幾條改善 prompt 的提示。作者說這讓他發現以前常常「用火箭打蒼蠅、用彈弓打飛機」，省額度也更快。誠實保留：推文未給具體省下多少的數字。",
+  author:"@melih_cat (Melih Çat)",
+  likes:470,
+  url:"https://x.com/melih_cat/status/2103205024260055534",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個「模型與推理強度建議器」小工具（macOS 浮動輸入框或瀏覽器擴充皆可）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n一、使用者打下要交給 AI 的任務文字，停止輸入 0.5 秒後觸發判斷。\n二、問 Jev 兩題：Choice「最適合的模型」，選項為 Opus 5.5／Sonnet 5／Haiku 4.5（可自訂清單，每個選項附一句能力與價格描述）；Score「需要的推理強度」，等級為 low／medium／high／xhigh／max。state 放任務文字與是否附圖、是否提到檔案。\n三、畫面顯示建議的模型名稱、effort 點數條與一句用途說明；若最高機率低於 0.6，改顯示前兩名讓使用者自己選。\n四、再用數題 Noul 檢查 prompt 是否缺少目標、缺少上下文、缺少輸出格式，缺哪項就列一條提示。\n五、按 Enter 直接把任務連同選好的模型與 effort 送出。"
+},
+{
+  cat:"工程研究",
+  title:"Playwright CLI + Jev 操作網頁：比 Playwright MCP 便宜 98%、快一倍",
+  desc:"作者拿自己的 Trello 練習站測一個模糊指令「建立新看板、清單和卡片」：Playwright MCP 版照例截快照後把決策丟給 LLM（他用 Astra）再呼叫工具；Jev 版則把 Playwright CLI 的頁面快照交給 Jev，讓它直接決定要點哪個元素。結果 Jev 版便宜 98%、速度快兩倍。誠實保留：作者自註流程還沒優化，只測了單一任務。",
+  author:"@filip_hric (Filip Hric)",
+  likes:223,
+  url:"https://x.com/filip_hric/status/2103450014143947164",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）搭配 Playwright CLI 做一個瀏覽器操作 agent，並和 Playwright MCP + LLM 的流程做對照。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n一、任務：對 Trello 類的練習站下模糊指令「建立新看板、清單和卡片」。\n二、每一步用 Playwright CLI 取得頁面的無障礙快照，抽出可互動元素清單（role、名稱、ref）。\n三、問 Jev 一題 Choice「為了完成任務，下一步要操作哪個元素」，選項是元素清單加上「任務已完成」；再用一題 Choice 決定動作（click／fill／press Enter）。需要輸入文字時才用小型 LLM 產生內容。\n四、最高機率低於 0.6 時，把這一步交給大模型決定。\n五、同一任務也用 Playwright MCP + GPT-6 Astra 跑一次，記錄兩邊的總耗時、呼叫次數與費用，輸出比較表。"
+},
+{
+  cat:"創意藝術",
+  title:"觀眾留言決定劇情的直播電影：Jev 把每則留言分類、塞進下一場戲的 prompt",
+  desc:"作者做了一個觀眾共同導演的「選擇你自己的冒險」直播電影平台：觀眾留言想看的下一幕，Jev 把每則留言分類、挑出最相關的類別插進下一段影片的生成 prompt，影片由 Hedra 上的 MiniMax H3 Max 生成。App 本身是用 GPT-6 與 Opus 5.5 一次生成。誠實保留：Jev 只負責留言分類這層決策，影片與 App 程式分別由其他模型產生。",
+  author:"@henloitsjoyce (joyce)",
+  likes:154,
+  url:"https://x.com/henloitsjoyce/status/2103261956375466225",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個觀眾共同導演的直播電影平台。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n一、畫面：左邊播放目前這一幕的影片，右邊是即時留言區，觀眾留言「接下來想看什麼」。\n二、每則留言進來就問 Jev 一題 Choice「這則留言屬於哪個劇情走向」，選項例如：追逐、反轉、浪漫、戰鬥、揭露秘密、角色退場、無關／灌水；state 放目前劇情摘要與留言內容。機率低於 0.5 或判為無關的留言不計票。\n三、每一幕播完前 30 秒結算：票數最高的類別，連同該類別中 Jev 機率最高的幾則留言原文，組進下一幕的影片生成 prompt（附上固定的角色與畫風描述以維持一致性）。\n四、呼叫影片生成 API（例如 Hedra 上的 MiniMax H3 Max）產生下一幕，生成中顯示「觀眾選擇了：XX」。\n五、保存每一幕的選擇紀錄，直播結束後可回放整條劇情分支。"
 }
 ];
 
