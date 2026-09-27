@@ -4263,6 +4263,37 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/henloitsjoyce/status/2103261956375466225",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）做一個觀眾共同導演的直播電影平台。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n一、畫面：左邊播放目前這一幕的影片，右邊是即時留言區，觀眾留言「接下來想看什麼」。\n二、每則留言進來就問 Jev 一題 Choice「這則留言屬於哪個劇情走向」，選項例如：追逐、反轉、浪漫、戰鬥、揭露秘密、角色退場、無關／灌水；state 放目前劇情摘要與留言內容。機率低於 0.5 或判為無關的留言不計票。\n三、每一幕播完前 30 秒結算：票數最高的類別，連同該類別中 Jev 機率最高的幾則留言原文，組進下一幕的影片生成 prompt（附上固定的角色與畫風描述以維持一致性）。\n四、呼叫影片生成 API（例如 Hedra 上的 MiniMax H3 Max）產生下一幕，生成中顯示「觀眾選擇了：XX」。\n五、保存每一幕的選擇紀錄，直播結束後可回放整條劇情分支。"
+},
+// ====== 2026-09-27 自動更新 ======
+{
+  cat:"工程研究",
+  title:"讓 Jev 當 NAND 閘跑 4 位元 ALU：算 7+5=12 要 116 個閘、7.6 秒、0.0018 美元",
+  desc:"作者故意拿 Jev 做「更蠢的事」：每一次呼叫只扮演一個 NAND 閘，用它們拼出 4 位元加法器。算 7 + 5 = 12 需要 116 個閘、7.6 秒、0.0018 美元，整條鏈的複合正確機率 84%。說明影片則是另外請 Opus 5.5 做的「諾蘭風」短片。誠實保留：這是好玩的概念驗證，不是實用算術；附圖為影片開頭黑幕。",
+  author:"@mustafaakin (Mustafa Akın)",
+  likes:1076,
+  url:"https://x.com/mustafaakin/status/2103574428475154635",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）把決策模型當成邏輯閘，組出一個 4 位元 ALU。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n一、NAND 閘：每次呼叫問 Jev 一題 Choice「兩個輸入 A、B 做 NAND 的輸出是什麼」，選項是 0／1，state 只放 A、B 兩個位元。回傳的機率記下來。\n二、用 NAND 組出 NOT、AND、OR、XOR，再組出半加器、全加器，串成 4 位元漣波進位加法器（可再加減法與 AND／OR 運算）。\n三、執行 7 + 5：依相依順序逐一呼叫閘，同一層沒有相依的閘平行送出；記錄總閘數、總耗時、總費用，以及所有閘輸出機率相乘的複合信心值。\n四、任何一個閘的機率低於 0.9 就標紅並重問一次。\n五、做一個視覺化頁面：電路圖上每個閘在被呼叫時亮起，顯示它的輸出與機率，最後印出結果與統計。"
+},
+{
+  cat:"工程研究",
+  title:"jevgrep：用「問的」找程式碼，讓 coding agent 成本降 40%（SWE-bench 驗證）",
+  desc:"作者推出開源 CLI jevgrep（指令 jg）：輸入「連線池在哪裡設定？」這類白話問題，由 Jev 當研究 agent 的決策層逐步挑檔案、判斷片段是實作還是線索，回傳檔名、行號與摘錄。內建 skill 讓 coding agent 改用 jg 收集脈絡，作者稱在 SWE-bench 上讓 coding agent 成本降低 40%。誠實保留：40% 是作者自測數字。",
+  author:"@dzhng (David)",
+  likes:869,
+  url:"https://x.com/dzhng/status/2103920741481848861",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個替 coding agent 收集脈絡的 CLI「jg」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n一、輸入：jg \"where is connection pooling configured?\"。\n二、第一輪用 ripgrep 與檔名索引撈出候選檔案（最多 50 個），問 Jev 一題 Choice「哪個檔案最可能回答這個問題」，選項是候選檔名，取機率前 5 名。\n三、對每個入選檔案切成函式／區塊，每塊問 Jev 一題 Score（0-5）「這段和問題的相關度」，再問一題 Choice 標記角色：impl（實作）／lead（線索，需要再追）／test／無關。\n四、lead 的片段抽出其中引用的符號，回到第二步再追一輪，最多三輪；最高機率低於 0.6 時停止並標示「不確定」。\n五、輸出：摘要行（幾個檔、幾個線索、幾段摘錄）＋每筆 檔名、角色、行號範圍與程式碼摘錄。\n六、附一個 skill 檔，教 Claude Code／Codex 在讀檔前先呼叫 jg，並在 SWE-bench 子集上比較有無 jg 的 token 用量。"
+},
+{
+  cat:"模擬視覺化",
+  title:"200 個 AI 村民的謠言實驗：一則「麵包快沒了」的假消息，18 小時讓 156 人相信",
+  desc:"作者做了像素風小鎮 Brindlewick，200 個村民的每個選擇都由 Jev 決定。放出「麵包要賣完了」的假謠言後，18 小時內 156 人相信、連續三天把麵包店搬空；第 3 天出現反證（麵粉車與看過磨坊的村民），到第 5 天 172 人知道是假的，但真相花了兩天多才傳到謠言 18 小時就傳到的人數，而且澄清後麵包店仍持續賣光。村民台詞依每次決策寫出，畫面上標示其心中機率。",
+  author:"@developedbyed (Dev Ed)",
+  likes:369,
+  url:"https://x.com/developedbyed/status/2103844250358071699",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個村民由 Jev 決策的謠言傳播模擬。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n一、場景：像素風小鎮（麵包店、磨坊、廣場、住家），200 個村民各有個性、日程、朋友名單與目前信念。以遊戲內時間推進，每個時段每個村民做一次決策。\n二、每個村民遇到別人時問 Jev 一題 Choice「你對『麵包快賣完了』這件事的看法」，選項：覺得會賣完／懷疑／知道是假的；state 放他聽到的說法、誰說的、自己看過什麼（例如麵包架、麵粉車）。再問一題 Choice 決定行動：去買麵包（買幾條）／告訴朋友／照常作息。\n三、第 0 天在一個村民身上植入假謠言；第 3 天加入反證：麵粉車抵達麵包店、一個村民看過磨坊存貨。\n四、村民的台詞由模板依決策結果產生，頭上顯示信念圖示與機率。\n五、右上角顯示貨架麵包數與排隊人數，下方畫出每日銷量曲線；輸出信念人數隨時間變化的圖，比較謠言與真相的傳播速度。"
 }
 ];
 
@@ -4408,6 +4439,57 @@ const OPUS_CASES = [
   url:"https://x.com/xikhar/status/2102932763750084797",
   ptype:"重建",
   prompt:"繼續開發我們的 Three.js 蜘蛛人開放世界遊戲（模型與動畫都用 Blender 產生後匯出 glTF）。這一輪的目標：1) 新增共生體黑色戰衣，可在選單切換，換裝時有過場特效；2) 改善擺盪、爬牆、落地與戰鬥的動畫銜接，減少滑步；3) 加入新機制：蛛絲拉扯敵人、空中連段、隨機街頭犯罪事件；4) 開始重做城市：更多樣的大樓、街道細節與交通。每完成一項就錄一段遊戲畫面自我檢查，再進下一項。"
+},
+// ====== 2026-09-27 自動更新 ======
+{
+  cat:"遊戲",
+  title:"Opus 5.5 做的《斯普拉遁》式塗地射擊遊戲：瀏覽器直接玩",
+  desc:"作者用 Opus 5.5 從零做出致敬《斯普拉遁》的網頁遊戲，有塗地對戰（Turf War）、隊伍與 bot 對手、墨水游泳、跳躍、炸彈與特殊武器、計時與塗地面積統計，發布後可在瀏覽器直接遊玩。作者另一則貼文強調是「from scratch」完成；推文未附 prompt。",
+  author:"@JaydenDavisNC (Jayden Davis)",
+  likes:5121,
+  url:"https://x.com/JaydenDavisNC/status/2103357848961036304",
+  ptype:"重建",
+  prompt:"用 Three.js 從零做一款可在瀏覽器遊玩的《斯普拉遁》式第三人稱塗地射擊遊戲。要求：1) 模式：3 分鐘 Turf War，玩家與 3 個 bot 隊友對 4 個 bot 對手，時間到比較雙方塗地面積；2) 地圖：一座有高低差、斜坡與掩體的廣場，地面與牆面都能被墨水上色（用 render texture 記錄塗色）；3) 操作：WASD 移動、滑鼠射擊、Shift 在己方墨水中變身游泳加速與補墨、空白鍵跳躍、E 丟炸彈、F／Q 施放特殊武器；4) bot AI 會搶塗空地、追擊敵人；5) UI：暫停選單（繼續、設定、玩法、退出）、隊伍名單與狀態、剩餘時間、小地圖與結算畫面；6) 程序生成音效，鮮豔卡通風格。"
+},
+{
+  cat:"創意藝術",
+  title:"一句話 prompt 的 15 秒動態設計履歷影片（引爆 Opus 5.5 動態設計熱潮的原句）",
+  desc:"作者只給 Opus 5.5 一句話，要它做一支 15 秒、展現自己動態設計功力的「履歷 showreel」，產出含字體動畫、形狀變形與鏡頭運動的完整影片。這句 prompt 隨後被大量轉貼、各國使用者拿去重跑，成為 Opus 5.5 發布週最常見的測試題。誠實保留：推文未說明是否搭配 HyperFrames 等工具或經過修改。",
+  author:"@ajith_io (Ajith)",
+  likes:3643,
+  url:"https://x.com/ajith_io/status/2103449416325890146",
+  ptype:"原文",
+  prompt:"make a dynamic 15-second motion graphics video that shows what an incredible motion designer you are, like it's your showreel for a résumé. go all out."
+},
+{
+  cat:"模擬視覺化",
+  title:"東京終電圖：76 條路線、940 站的末班車地圖，拖時間軸看路網一條條熄燈",
+  desc:"作者請 Opus 5.5 做東京末班車地圖，一次就生出這個版本，之後做成可公開使用的網站。收錄 76 條路線、940 個車站，可切換平日／假日、依業者或末班時刻上色，拖動下方時間軸（23:30 到 1:30）就能看路線依序停駛，左側列出各線末班時刻與剩餘時間，也能搜尋站名。",
+  author:"@MatoToushi (まと｜AI×デザイン)",
+  likes:3500,
+  url:"https://x.com/MatoToushi/status/2103643548163928183",
+  ptype:"重建",
+  prompt:"做一個互動網頁「東京終電図 Tokyo Last Train Atlas」：1) 用公開的鐵道路線與時刻資料，收錄東京圈 JR、地鐵、私鐵與都電共約 76 條路線、900 多個車站，畫成可縮放的路網地圖（依地理位置）；2) 每條線標出末班車時刻，可切換平日／土休日；3) 底部時間軸從 23:00 到 1:30，可拖動或按播放，已經停駛的路線逐漸變灰，當下仍在跑的最後一班車以動畫點表示；4) 左側面板列出各路線末班時刻與「還有幾分鐘」，可依業者分組、依最早／最晚結束排序，並提供站名搜尋；5) 右上可切換著色方式（路線色／末班時刻熱度／業者）與平面／立體檢視；6) 乾淨的資訊設計風格，支援深色模式與手機。"
+},
+{
+  cat:"工程研究",
+  title:"一個 prompt 做出 3D 虛擬辦公室：走來走去指揮 agent 處理 GitHub issue 與合併衝突",
+  desc:"作者用一個 Opus 5.5 prompt 做出「agent-office」：一間可以用角色走動的 3D 卡通辦公室，每個 coding agent 是坐在座位上的同事，右側面板顯示辦公室成員與 worker 狀態（例如正在執行 git checkout），可以走到座位旁派工，讓它們處理 GitHub issue 與合併衝突，另有語音、分享螢幕、Issues 與 PR 按鈕。",
+  author:"@webdevcody (WebDevCody)",
+  likes:3049,
+  url:"https://x.com/webdevcody/status/2103653857377292720",
+  ptype:"重建",
+  prompt:"做一個叫 agent-office 的桌面／網頁 App：一間 Three.js 卡通風 3D 辦公室，我用 WASD 操作自己的角色走動。1) 每個 coding agent（背後跑 Claude Code 的子程序，工作目錄是指定的 git repo）是一個有名字的同事角色，坐在自己的桌前，頭上顯示目前狀態；2) 走到某個 agent 旁按 T 可以聊天派工，例如「處理 issue #42」「解掉 main 的合併衝突」；3) 右上面板列出辦公室成員與 workers，顯示每個 worker 正在執行的指令（例如 git checkout -b …）與完成狀態；4) 頂部按鈕：Issues（從 GitHub 拉 issue 清單，可直接指派給某個 agent）、PRs（列出 agent 開的 PR 與狀態）、Join voice、Share screen；5) agent 完成時角色會起身報告，並在畫面顯示摘要。"
+},
+{
+  cat:"工程研究",
+  title:"卡了 4 個月的 TypeScript → Rust 移植：Opus 5.5 十小時跑通，再花 24 小時磨效能",
+  desc:"作者斷斷續續做了 4 個月的 ts-rust 移植，用 GPT-5.6 Sol 只到約 35% 測試通過、GPT-6 Astra 到約 85% 後都卡住打轉；丟給 Opus 5.5 一句「/goal finish the port and make it faster」後 10 小時就跑通，之後持續優化效能。附圖是實測：Zod 專案 Rust 版比 TS-Go 快 20%、Hono 幾乎持平、Query Core 仍慢 28%，峰值記憶體三者都較低。誠實保留：尚未全面勝過 TS-Go。",
+  author:"@theo (Theo - t3.gg)",
+  likes:2493,
+  url:"https://x.com/theo/status/2103558185487577476",
+  ptype:"原文",
+  prompt:"/goal finish the port and make it faster"
 }
 ];
 
