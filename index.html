@@ -3213,6 +3213,47 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
   url:"https://x.com/Stefan_3D_AI/status/2103467172995690835",
   ptype:"重建",
   prompt:"在我的 Unity 專案裡做一個敵方／友方單位「樹精 Dryad」，分三階段進行、每階段做完先停下來讓我驗收：\n一、規劃：先寫出特效與行為規格——用樹根在地面爬行移動；攻擊時從地面伸出多條樹根纏住並吸取敵人生命；當周圍敵人超過 N 個時，升起一圈葉牆護盾；身上葉片持續擺動，移動時會掉落葉子。\n二、動畫：依現有骨架做 idle、爬行、攻擊、施放護盾四組動畫，接上 Animator 狀態機，確認切換自然。\n三、VFX：動畫確認後，圍繞動畫事件做粒子與 shader 特效（樹根生長、吸血光流、葉牆展開、落葉拖尾），並把參數曝露在 Inspector 讓我微調。"
+},
+// ====== 2026-09-29 自動更新 ======
+{
+  cat:"遊戲",
+  title:"Sidewinder：自己重做童年街機《Off-Road》，連街機方向盤控制都接上",
+  desc:"作者把童年最愛的街機越野賽車《Off-Road》重做成 Sidewinder，還支援實體街機旋轉方向盤操控。作者註明主要由 GPT-6 Astra 透過 Codex 寫成，搭配 Blender 做模型、WASM 與 Cloudflare 部署、Suno 配樂，並強調「加上大量人工修整」；完整遊戲網址尚未公開。",
+  author:"@joshclemm (Josh Clemm)",
+  likes:3235,
+  url:"https://x.com/joshclemm/status/2104415561623257501",
+  ptype:"重建",
+  prompt:"用 Codex 做一款致敬 1989 年街機《Ironman Ivan Stewart's Super Off-Road》的俯視角越野賽車遊戲 Sidewinder：1) 核心用 Rust/C++ 編成 WASM，前端 Canvas/WebGL 渲染；2) 4 台卡車同場，泥地、跳台、水坑與坡道影響抓地與速度，對手 AI 會卡位；3) 每場結束可用獎金升級輪胎、引擎、避震與氮氣；4) 賽道與卡車模型用 Blender 腳本產生並匯出；5) 支援鍵盤、手把，以及 USB 街機旋轉方向盤（把旋轉編碼器的滑鼠 X 軸映射成轉向）；6) 預留背景音樂與音效掛點，部署到 Cloudflare Pages。"
+},
+{
+  cat:"模擬視覺化",
+  title:"房間影片 → 可互動的物理模擬：把 3D 視覺模型當工具交給 Astra",
+  desc:"研究團隊不讓 Astra 直接憑影片「猜」出 Blender 場景，而是把 3D 視覺模型當工具接進它的 agent 流程：Pi3X 重建幾何、SAM3 切物件、GVHMR／Kimodo 抓人體動作，最後在 Blender 做物理模擬，讓一段房間影片變成更準確、物理上合理且可互動的場景。共同作者 @CongrongX 另有一則同專案貼文（343 讚，只寫 GPT-6）。屬研究展示，細節見論文連結。",
+  author:"@siyuan_bian (Siyuan Bian)",
+  likes:258,
+  url:"https://x.com/siyuan_bian/status/2104359501394485262",
+  ptype:"重建",
+  prompt:"你是一個 3D 場景重建 agent，輸入是一段手機拍的房間影片。可用工具：Pi3X（多視角幾何與相機姿態）、SAM3（物件分割）、GVHMR／Kimodo（人體姿態與動作）、Blender Python（建模與物理模擬）。流程：1) 抽關鍵幀，用 Pi3X 重建點雲與相機軌跡、估計地板與牆面；2) 用 SAM3 分割家具與物品，逐一擬合 mesh 或以參數化模型替代，推估尺寸、材質與質量；3) 若影片中有人，用 GVHMR 取得動作並以 Kimodo 重定向到角色骨架；4) 在 Blender 組裝場景、設定剛體與碰撞，讓物品可以被推倒、抽屜可開；5) 每一步把重建結果投影回原影片比對誤差，誤差過大就重做該物件；6) 輸出可互動的 .blend 與網頁預覽。"
+},
+{
+  cat:"模擬視覺化",
+  title:"夕陽下漂過港灣：Astra 用 Three.js 做的療癒水面場景",
+  desc:"作者用 GPT-6 Astra 在 Three.js 裡做出一段在港灣上隨波漂流、迎著夕陽前進的場景，水面質感沿用自己先前爆紅的沼澤作品經驗。作者直言已從 GPT-6 Sol 轉向 Astra。推文未附 prompt，僅展示影片。",
+  author:"@chetanankola (Chetan Ankola)",
+  likes:234,
+  url:"https://x.com/chetanankola/status/2104502828475801807",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個可在瀏覽器執行的療癒場景：第一人稱坐在小船上，緩緩漂過一座傍晚的港灣，朝著低垂的夕陽前進。要求：1) 水面用自訂 shader，有多層波浪、菲涅耳反射、夕陽的長條倒影與細碎閃光，小船隨波起伏；2) 港灣兩側有停泊的船隻、木棧道、燈塔與遠山剪影，暖色大氣散射與薄霧；3) 海鷗偶爾飛過，燈火隨天色漸暗逐一亮起；4) 鏡頭自動緩慢前進，也能用滑鼠環顧；5) 環境音：水聲、遠處鐘聲，整體氛圍平靜。"
+},
+{
+  cat:"遊戲",
+  title:"讓 Astra 以 35 fps 玩 VizDoom：不直接操控，而是自己訓練一個 12k 參數的小 CNN",
+  desc:"大模型太慢、無法即時操控遊戲，作者改讓 GPT-6 Astra 寫程式訓練一個只有 12k 參數的小型 CNN 加控制程式，觀察失敗、反覆迭代，直到能打贏這一關，最後以 35 fps 即時遊玩。展示的是單一關卡。",
+  author:"@paraschopra (Paras Chopra)",
+  likes:206,
+  url:"https://x.com/paraschopra/status/2104414175049269633",
+  ptype:"重建",
+  prompt:"目標：讓一個程式以即時速度（30 fps 以上）通過 VizDoom 的指定關卡。你不要自己逐幀操控，而是：1) 安裝 vizdoom，讀懂關卡的觀測（縮小的灰階畫面）、動作空間與獎勵；2) 設計並訓練一個極小的 CNN 策略網路（約 1 萬多個參數，可在 CPU 即時推論），方法自選（模仿學習、PPO 等）；3) 每輪訓練後實際跑數十局，錄影並統計勝率、死亡原因；4) 自己看失敗案例，調整獎勵設計、輸入前處理、網路或動作集合，再重新訓練；5) 重複直到穩定通關，最後輸出權重、推論程式與通關影片。"
 }
 ];
 
@@ -4294,6 +4335,47 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/developedbyed/status/2103844250358071699",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）做一個村民由 Jev 決策的謠言傳播模擬。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n一、場景：像素風小鎮（麵包店、磨坊、廣場、住家），200 個村民各有個性、日程、朋友名單與目前信念。以遊戲內時間推進，每個時段每個村民做一次決策。\n二、每個村民遇到別人時問 Jev 一題 Choice「你對『麵包快賣完了』這件事的看法」，選項：覺得會賣完／懷疑／知道是假的；state 放他聽到的說法、誰說的、自己看過什麼（例如麵包架、麵粉車）。再問一題 Choice 決定行動：去買麵包（買幾條）／告訴朋友／照常作息。\n三、第 0 天在一個村民身上植入假謠言；第 3 天加入反證：麵粉車抵達麵包店、一個村民看過磨坊存貨。\n四、村民的台詞由模板依決策結果產生，頭上顯示信念圖示與機率。\n五、右上角顯示貨架麵包數與排隊人數，下方畫出每日銷量曲線；輸出信念人數隨時間變化的圖，比較謠言與真相的傳播速度。"
+},
+// ====== 2026-09-29 自動更新 ======
+{
+  cat:"遊戲",
+  title:"AI ずんだもん自己玩 Minecraft 還自己實況：OpenAI API + Jev，加上強化學習慢慢變強",
+  desc:"作者讓 AI 版ずんだもん完全自主地玩 Minecraft：自己思考、自己操作、自己實況，人類不操作；架構是 OpenAI API 加 Jev，並導入強化學習讓它從失敗中逐步成長，成長過程在 YouTube 頻道直播。誠實保留：推文沒說明 Jev 與 LLM 的具體分工，推測 Jev 負責每一步的行動選擇、LLM 負責實況台詞。",
+  author:"@Kiratchi0328 (きらっち)",
+  likes:2157,
+  url:"https://x.com/Kiratchi0328/status/2104242683539833314",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）當決策層，做一個自主玩 Minecraft 並實況的 AI ずんだもん。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。架構：1) 用 Mineflayer 連線遊戲，每 0.5 秒整理 state（血量、飢餓、手持物、背包摘要、周圍 16 格的方塊與生物、時間、目前目標）；2) Choice 題「下一個行動」，選項：探索、砍樹、挖礦、合成、進食、戰鬥、逃跑、蓋避難所、睡覺；信心低於 0.6 時交給 OpenAI 模型重新規劃目標；3) Score 題「目前危險程度」1-5，≥4 強制切換戰鬥或逃跑；4) Noul 題「這一刻值得實況嗎」，是的話把事件交給 OpenAI 模型以ずんだもん口吻寫一句台詞，再用 VOICEVOX 念出；5) 把每次行動與結果（死亡、取得物品）存成經驗，定期用強化學習調整各行動的先驗權重，讓它越玩越好；6) OBS 畫面疊上字幕與目前目標。"
+},
+{
+  cat:"工程研究",
+  title:"Emoji Samurai：輸入一句話，Jev 挑字體與風格做出 Slack 自訂絵文字",
+  desc:"作者用 Jev 做了一個產生「自訂絵文字」的網頁 App：在「AIで作る」輸入「ありがとう」「ごめん」這類短句，就生成適合放進 Slack／Discord 的文字絵文字，另有預設集與編輯器。作者自評「還挺方便的」；推文未細說 Jev 在其中負責哪些判斷。",
+  author:"@penpen_dev (penpen@ソフトウェアエンジニア)",
+  likes:766,
+  url:"https://x.com/penpen_dev/status/2104372688559198502",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個產生聊天用自訂文字絵文字的網頁 App「Emoji Samurai」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。流程：使用者輸入一句短語（例如「ありがとう」「デプロイ完了」），state 放短語本身與使用情境。一次問 Jev 四題：1) Choice「字體」選項：極太ゴシック、明朝、手書き、ポップ、筆文字；2) Choice「配色」選項：赤系、青系、緑系、金、モノクロ、虹；3) Choice「效果」選項：なし、縁取り、影、グラデーション、キラキラ；4) Score「情緒強度」1-5，決定字重與傾斜。任一題信心低於 0.6 就同時產出前兩名候選讓使用者選。用 Canvas 依結果把文字排進 128×128（自動換行與縮放），可下載 PNG；另提供預設集與手動編輯器。"
+},
+{
+  cat:"遊戲",
+  title:"像小霞一樣喊出招式：語音指揮寶可夢對戰，Whisper 聽、Jev 選招，各約 250 ms",
+  desc:"作者用 Opus 5.5 建置：拿 @germanburgardt 的 Pokemon Emerald Arena 當對戰環境，裝置端 Whisper 把語音轉文字（約 250 ms），再由 TypeSafe Jev 判斷要出哪一招（約 250 ms），實現即時語音下指令對戰。動機是想讓三個月大的女兒長大後能像小霞一樣喊招。",
+  author:"@didier_lopes (Didier Lopes)",
+  likes:449,
+  url:"https://x.com/didier_lopes/status/2104203064257228820",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做寶可夢語音指揮對戰。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。環境：Pokemon Emerald Arena（網頁版對戰），麥克風輸入用裝置端 Whisper（small 或 turbo）即時轉文字。每次玩家說完一句話：state 放轉出的文字、目前出場寶可夢、它的 4 招（名稱、屬性、剩餘 PP）、可替換的隊伍成員與對手寶可夢。1) Choice「玩家要做什麼」，選項＝4 招＋換上每一隻隊友＋「沒聽懂」；2) 口語可以很模糊（「用那個電的」「換水的上去」「打它弱點」），由 Jev 對應到正確選項；3) 信心 ≥0.7 直接送出指令，0.4-0.7 在畫面顯示前兩名讓玩家用一個字確認，低於 0.4 播放「再說一次？」；4) 畫面角落顯示 Whisper 與 Jev 各自延遲。"
+},
+{
+  cat:"工程研究",
+  title:"DOPA English：Jev 替每個單字挑動作與絵文字，Gemini TTS 帶情緒念出來",
+  desc:"作者做了節奏明快的背單字 App：Gemini 3.8 Flash（含 TTS）負責生成與發音，Jev 依單字意思挑出最搭的「多巴胺」動態效果與絵文字，讓學習節奏更有爽感。作者最驚訝的是 TTS 會帶出符合單字的情緒。",
+  author:"@ukkaripon (Yu Ukai)",
+  likes:296,
+  url:"https://x.com/ukkaripon/status/2104193462979719366",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個節奏明快的英文單字學習 App「DOPA English」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。每個單字卡的 state 放英文單字、詞性、中文／日文意思與例句。一次問 Jev 三題：1) Choice「動態效果」選項：彈跳、爆炸、震動、漂浮、旋轉、心跳、下墜、閃光；2) Choice「絵文字」從預先準備的 60 個 emoji 候選中選一個；3) Choice「情緒」選項：開心、興奮、悲傷、生氣、害怕、平靜、驚訝，作為 TTS 的語氣指示。信心低於 0.6 時動態效果退回預設的淡入、情緒退回平靜。發音與例句用 Gemini 3.8 Flash（含 TTS），把情緒放進 TTS 的風格指示。卡片自動每 2 秒切換，答對有連擊音效與分數。"
 }
 ];
 
@@ -4490,6 +4572,57 @@ const OPUS_CASES = [
   url:"https://x.com/theo/status/2103558185487577476",
   ptype:"原文",
   prompt:"/goal finish the port and make it faster"
+},
+// ====== 2026-09-29 自動更新 ======
+{
+  cat:"工程研究",
+  title:"NAND-16：從 277,248 個 NAND 閘開始蓋一台能跑的電腦，上面還有 OS 與遊戲",
+  desc:"作者要 Opus 5.5 從零打造一台能運作的電腦：用 JavaScript 模擬 277,248 個 NAND 邏輯閘組成的硬體，上面再跑作業系統，OS 裡還有遊戲，並附公開網址可直接執行。作者強調「不是模擬畫面，是真的電腦」。推文未附 prompt 與耗時。",
+  author:"@mattshumer_ (Matt Shumer)",
+  likes:1771,
+  url:"https://x.com/mattshumer_/status/2104301990985498783",
+  ptype:"重建",
+  prompt:"從最底層開始打造一台能在瀏覽器裡執行的電腦，唯一允許的基本元件是 NAND 閘。1) 用 JavaScript 寫閘級模擬器，所有 NOT/AND/OR/XOR、加法器、多工器、暫存器、RAM、ALU、程式計數器與控制單元都由 NAND 組成；2) 設計一套 16 位元指令集與 CPU，並寫組譯器；3) 加上記憶體映射的螢幕與鍵盤；4) 在這台機器上寫一個簡單作業系統（開機畫面、指令列、程式載入）；5) 在 OS 上寫幾個小遊戲；6) 做一個網頁介面顯示總閘數、時脈與畫面，讓人直接開機遊玩。模擬要最佳化到可以即時互動。"
+},
+{
+  cat:"遊戲",
+  title:"跟兩個兒子一起 vibe code：揮舞大畫筆的《薩爾達 曠野之息》風開放世界",
+  desc:"作者整個週六讓兒子們口述想要什麼、自己轉成 prompt 給 Opus 5.5 實作，做出以巨型畫筆為武器的薩爾達風遊戲：紅藍黃綠四色分別是火、冰、彈跳、藤蔓攻擊，有 2 個生態區（島嶼與浮空島）、3 座解謎地城、地下洞窟、30 多種敵人與菁英、1 隻巨型 Boss，集滿 4 顆水晶可解鎖騎畫筆飛行。作者自承「不是最精緻的遊戲」；僅支援桌機遊玩。",
+  author:"@DannyLimanseta (Danny Limanseta)",
+  likes:4337,
+  url:"https://x.com/DannyLimanseta/status/2104215873120764032",
+  ptype:"重建",
+  prompt:"用 Three.js 做一款桌機瀏覽器可玩的《薩爾達 曠野之息》風第三人稱開放世界遊戲，主角的武器是一支巨大的畫筆。1) 世界：一座主島加一群浮空島，另有地下洞窟；2) 戰鬥：按 1-4 切換顏色——紅=火焰傷害、藍=冰凍減速、黃=彈跳擊飛、綠=藤蔓纏繞，每色有不同特效；3) 3 座解謎地城，各有小 Boss，謎題要善用四種顏色；4) 30 種以上敵人與菁英怪，最後一隻巨型 Boss；5) 啟動島上 4 顆水晶後解鎖「騎畫筆飛行」；6) 卡通明亮畫風、程序生成音效、存檔與小地圖。之後我會依孩子們的點子一輪輪要求你追加內容。"
+},
+{
+  cat:"模擬視覺化",
+  title:"電磁場互動視覺化：看得見的電場線、磁場與感應",
+  desc:"作者用 Claude Opus 5.5 做出電磁場的互動視覺化，把電荷、電流與場線的關係即時畫出來，作者自述「從沒這麼懂過這個主題」。推文只附展示影片，未附 prompt 與連結。",
+  author:"@thebuggeddev (The Bugged Dev)",
+  likes:2363,
+  url:"https://x.com/thebuggeddev/status/2104402407358919124",
+  ptype:"重建",
+  prompt:"做一個單一 HTML 的電磁學互動教學視覺化（Three.js／WebGL）：1) 可以拖曳放置正負點電荷，即時畫出 3D 電場線與等位面，場強用顏色與粒子流速表示；2) 可放置直導線、線圈與磁棒，畫出磁力線，電流大小與方向可調；3) 示範法拉第感應：移動磁鐵穿過線圈時，線圈上的感應電流與電壓表即時變化；4) 一個帶電粒子可射入場中，畫出受勞侖茲力的軌跡；5) 側邊欄有簡短說明與公式，所有參數可用滑桿調整；6) 深色背景、發光場線，畫面精緻。"
+},
+{
+  cat:"模擬視覺化",
+  title:"即時海岸模擬：鏡頭會沾上水滴、海裡有魚、天上有鳥",
+  desc:"作者在 Claude Code 對 Opus 5.5 只說一句「做一個即時海岸模擬」，搭配 Ultracode 與 Max 模式、使用 Three.js，產出的場景有鏡頭沾上水滴、海中游魚與飛鳥等細節。推文沒有更多說明，原句為日文口語要求。",
+  author:"@hajimetwi3 (ついはじめ | Hajime Tsui)",
+  likes:1377,
+  url:"https://x.com/hajimetwi3/status/2104381179151753464",
+  ptype:"原文",
+  prompt:"リアルタイム海岸シミュレーションを作って！！"
+},
+{
+  cat:"創意藝術",
+  title:"用 JS 畫 Canvas 設計 App Icon：一句話出四個方向，再當甲方迭代",
+  desc:"作者發現 Opus 5.5 能用 JavaScript + Canvas 逐幀畫影片，就改讓它用同樣方式畫 App Icon，一句話就產出四個方向（切片播放、場記板助手、AI 播放頭、包子播放），附 128／64／32／16 px 與 Dock 預覽，之後挑方案 3 再迭代幾版定稿。作者強調重點是「用 js 繪製 canvas」而非 SVG，效果較好；並提到先前 Fable 做不好這題。",
+  author:"@dotey (寶玉)",
+  likes:681,
+  url:"https://x.com/dotey/status/2104107699583463686",
+  ptype:"原文",
+  prompt:"帮我为 https://t.co/L0sZizDFrd 重新设计一个 App Icon，简单一点，彩色的，体现视频编辑、AI Agent\n可以直接用 js 绘制 canvas"
 }
 ];
 
