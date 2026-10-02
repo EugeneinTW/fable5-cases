@@ -3254,6 +3254,17 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
   url:"https://x.com/paraschopra/status/2104414175049269633",
   ptype:"重建",
   prompt:"目標：讓一個程式以即時速度（30 fps 以上）通過 VizDoom 的指定關卡。你不要自己逐幀操控，而是：1) 安裝 vizdoom，讀懂關卡的觀測（縮小的灰階畫面）、動作空間與獎勵；2) 設計並訓練一個極小的 CNN 策略網路（約 1 萬多個參數，可在 CPU 即時推論），方法自選（模仿學習、PPO 等）；3) 每輪訓練後實際跑數十局，錄影並統計勝率、死亡原因；4) 自己看失敗案例，調整獎勵設計、輸入前處理、網路或動作集合，再重新訓練；5) 重複直到穩定通關，最後輸出權重、推論程式與通關影片。"
+},
+// ====== 2026-10-02 自動更新 ======
+{
+  cat:"工程研究",
+  title:"217 年前的拿破崙時代密信：從一張圖、一個 prompt 開始，Astra 六小時破譯",
+  desc:"（轉述，新聞號 @coinbureau 整理，原作者未標註）1809 年奧地利入侵前的一封密信，一直未被破解。據報 GPT-6 Astra 從單張手稿圖片出發：轉錄約 1,300 個手寫符號、找出部分密鑰，再自己寫解碼器破解其餘部分，並交叉比對周邊信件修正了公開的日期。歷史密碼研究者 Satoshi Tomokiyo 確認解答、標記為已破解。⚠️ 為轉述報導，過程細節未經原作者公開。",
+  author:"@coinbureau (Coin Bureau)（轉述）",
+  likes:578,
+  url:"https://x.com/coinbureau/status/2105540715396960472",
+  ptype:"重建",
+  prompt:"附圖是一封 1809 年的法文加密手稿（拿破崙戰爭時期），目前沒有已知解答。請：1) 先完整轉錄所有密碼符號，替每種符號編號，列出無法辨識的位置；2) 統計符號頻率、重複片段與可能的字詞分隔，判斷是單表替換、同音替換還是命名表（nomenclator）混合；3) 利用信頭與信末的明文片段（稱謂、日期、地名）當已知明文，推出部分密鑰；4) 寫一個解碼器（爬山法或模擬退火，配法文 n-gram 語言模型）補完其餘對應；5) 輸出完整明文、密鑰表與信心標註；6) 交叉比對同時期相關信件，檢查信件日期是否需要修正。"
 }
 ];
 
@@ -4376,6 +4387,57 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/ukkaripon/status/2104193462979719366",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）做一個節奏明快的英文單字學習 App「DOPA English」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。每個單字卡的 state 放英文單字、詞性、中文／日文意思與例句。一次問 Jev 三題：1) Choice「動態效果」選項：彈跳、爆炸、震動、漂浮、旋轉、心跳、下墜、閃光；2) Choice「絵文字」從預先準備的 60 個 emoji 候選中選一個；3) Choice「情緒」選項：開心、興奮、悲傷、生氣、害怕、平靜、驚訝，作為 TTS 的語氣指示。信心低於 0.6 時動態效果退回預設的淡入、情緒退回平靜。發音與例句用 Gemini 3.8 Flash（含 TTS），把情緒放進 TTS 的風格指示。卡片自動每 2 秒切換，答對有連擊音效與分數。"
+},
+// ====== 2026-10-02 自動更新 ======
+{
+  cat:"工程研究",
+  title:"2,029 通真實電話、一個字都沒聽：Jev 只看通話結構，預測會不會成功預約",
+  desc:"作者把 AI 接待員的通話只留結構（輪次、工具呼叫、流程階段與時間），交給 Jev 零樣本預測：通話進行中做了 38,012 次逐輪預測（中位延遲 118 ms），結束後每通用 5 個型別化問題審查，26 秒、256 個並行請求產出 10,145 個答案，總共約 3 美元。對照 EHR 實際結果，通話過半時 AUC 0.78，接近結束時排序正確率 94%。作者自註：Jev 會過度在意代理人通常能自己救回的明顯錯誤。",
+  author:"@muratcan (Muratcan Koylan)",
+  likes:2139,
+  url:"https://x.com/muratcan/status/2104959648482701686",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）分析 AI 電話接待員的通話成效，不使用逐字稿或音訊。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。資料：每通電話轉成結構化事件序列（每一輪的發話方、時間戳、工具呼叫與結果、流程階段如身分確認／查空檔／預約／結束）。1) 即時預測：每一輪結束後，state 放截至目前的事件序列，問 Score「這通電話最後會成功預約的機率」1-5，記錄延遲；2) 事後審查：每通電話問五題——Noul「是否發生工具錯誤」、Noul「代理人是否有從錯誤中恢復」、Choice「失敗主因」（無空檔、身分驗證失敗、病人放棄、轉真人、其他）、Score「流程順暢度」1-5、Noul「需要人工複查」；3) 用高並行（約 256 個請求）批次跑完；4) 與 EHR 中實際是否預約比對，畫出各通話進度百分比下的 AUC 曲線；5) 信心低於 0.6 的審查結果標記為人工複查。"
+},
+{
+  cat:"工程研究",
+  title:"讓 LinkedIn 講重點：Jev 把廢話句子劃掉，貼文平均砍掉 95%",
+  desc:"作者做了一個 LinkedIn 瀏覽擴充：Jev 逐句判斷貼文裡哪些是客套、自我吹捧或填充，直接劃線刪除，只留下真正的資訊，並標示「刪了幾個字、縮短多少」，可一鍵看原文。示範中一則貼文刪 70 字、縮短 95%。",
+  author:"@ogme01 (Owen Greenhalgh)",
+  likes:564,
+  url:"https://x.com/ogme01/status/2104934219327914041",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個 Chrome 擴充「LinkedIn, get to the point」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。在 LinkedIn 動態牆上偵測每則貼文，把內文切成句子。state 放整則貼文與句子清單，對每一句問 Choice「這句的作用」，選項：核心資訊、具體數據、行動呼籲、客套開場、自我吹捧、情緒渲染、填充廢話。只保留核心資訊與具體數據（行動呼籲可選），其他句子用紅色刪除線劃掉並淡化；信心低於 0.6 的句子保留不動。貼文下方顯示「刪了 N 字、縮短 X%」與「Show original」按鈕。整則貼文一次請求批次送出，捲動時才處理可見貼文。"
+},
+{
+  cat:"遊戲",
+  title:"《晨風》NPC 會怕了：Jev 每秒重新決策，看到同夥被殺就逃，記得你殺過強盜所以不敢報官",
+  desc:"作者把 Jev 接進《上古卷軸 III：晨風》的 NPC。場景一：原本會戰到死的強盜，改由 Jev 每秒更新決策與士氣，看到同夥倒下會逃跑；場景二：偷東西時原本 NPC 會當場檢舉開打，加上記憶層後，NPC 記得你剛殺了一群強盜，出於恐懼選擇不舉報。附示範影片。",
+  author:"@sidahuj (siddharth ahuja)",
+  likes:297,
+  url:"https://x.com/sidahuj/status/2104934230145094118",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）替《Morrowind》（OpenMW）的 NPC 做決策層。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。透過 OpenMW Lua 腳本每秒把 NPC 狀態送到本機服務：自身血量、同陣營存活數與剛死亡數、敵我距離、玩家等級與裝備、記憶層內的事件（例如玩家剛殺了 3 名強盜、玩家幫過我）。問 Jev：1) Choice「戰鬥行動」：進攻、防守、呼叫同伴、撤退、投降、逃跑；2) Score「士氣」1-5；3) 目擊玩家犯罪時 Choice「反應」：當場攻擊、通報守衛、勒索、假裝沒看到。信心低於 0.6 時沿用遊戲原本 AI。決策結果回寫給 Lua 執行，並把重要事件寫入每個 NPC 的記憶層。"
+},
+{
+  cat:"模擬視覺化",
+  title:"Jev 黑客松冠軍 Jevolution：不用碰動物，就能研究瀕危物種的多代理生態模擬",
+  desc:"TypeSafe 第一屆 Jev 黑客松第一名作品：多代理生態系模擬器，每隻動物由 Jev 依環境狀態決定覓食、遷徙、躲避掠食者或繁殖，讓研究者在不干擾真實動物的情況下觀察族群變化。有線上 demo 與開源 repo，三人團隊作品（@_nikhilhooda、@utkarshg20_、@xrhuang10）。",
+  author:"@_nikhilhooda (Nikhil Hooda)",
+  likes:467,
+  url:"https://x.com/_nikhilhooda/status/2104984178190328046",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做多代理生態系模擬器「Jevolution」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。網頁上有一張 2D／3D 棲地地圖（植被、水源、地形、人類干擾區），放入瀕危物種與其獵物、掠食者，每隻動物是一個 agent。每個時間步，把同物種的 agent 批次送給 Jev，state 放該個體的飢餓、口渴、體力、年齡、附近資源與威脅距離、季節。問：1) Choice「行動」：覓食、喝水、休息、遷徙、躲藏、逃跑、求偶、育幼；2) Choice「移動方向」八方位＋原地；3) Score「壓力程度」1-5。信心低於 0.5 時用規則式預設行為。介面可調整棲地破碎化、氣候、盜獵強度等參數，即時畫出族群數量曲線，並可匯出 CSV 供研究使用。"
+},
+{
+  cat:"創意藝術",
+  title:"用說的生成漸層：約 400 ms、每次約 0.0001 美元",
+  desc:"作者用 Jev 做漸層產生器：輸入一句描述（例如「黃昏的海」），Jev 從預先定義的選項中挑色彩、方向與風格，幾乎即時產出漸層，每次約 400 ms、約 0.0001 美元。有線上版可玩。",
+  author:"@Nomandsign (Noman)",
+  likes:292,
+  url:"https://x.com/Nomandsign/status/2105364430792073380",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個「用描述生成漸層」的網頁工具。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。使用者輸入一句描述，state 放這句話。一次問 Jev：1) Choice「主色」從 48 個命名色票中選；2) Choice「輔色」同一組色票；3) Choice「第三色」色票＋「無」；4) Choice「漸層類型」：線性、放射、圓錐、網格（mesh）；5) Choice「方向」八方位；6) Score「顆粒雜訊」1-5；7) Score「飽和度」1-5。任一色彩題信心低於 0.5 時改用前兩名候選做出兩張讓使用者挑。前端用 CSS／Canvas 即時渲染大張預覽，顯示延遲與成本，可複製 CSS 程式碼與下載 PNG。"
 }
 ];
 
@@ -4623,6 +4685,67 @@ const OPUS_CASES = [
   url:"https://x.com/dotey/status/2104107699583463686",
   ptype:"原文",
   prompt:"帮我为 https://t.co/L0sZizDFrd 重新设计一个 App Icon，简单一点，彩色的，体现视频编辑、AI Agent\n可以直接用 js 绘制 canvas"
+},
+// ====== 2026-10-02 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"三個 prompt 做出服飾品牌作品集網站：T 恤掛在衣桿上可滑動挑選",
+  desc:"作者替服飾品牌 @batchmerch 做作品集網站，只用 3 個 prompt 讓 Opus 5.5 完成：一排 T 恤吊在金屬衣桿上、可滑動瀏覽，底部有跑馬燈與「See availability」按鈕。推文未附 prompt，僅展示錄影。",
+  author:"@cambreedesigns (Cambree Bernkopf)",
+  likes:6380,
+  url:"https://x.com/cambreedesigns/status/2104999693113766152",
+  ptype:"重建",
+  prompt:"替一個街頭服飾品牌做單頁作品集網站（HTML/CSS/JS，可用 GSAP 或 Three.js）：1) 主視覺是一根橫向金屬衣桿，上面用衣架掛著 10 件 T 恤（用品牌提供的去背照片），衣服會隨滑鼠移動輕微擺動、互相碰撞；2) 可左右拖曳或捲動整排衣服，hover 時該件微微放大並顯示名稱；3) 點擊衣服打開細節視圖，展示正反面與印花特寫；4) 頁面米白點陣背景、置中手寫風 logo、左右上角 About／Contact；5) 底部一條藍色跑馬燈循環「Subscribe to our newsletter • New designs daily」，中間一顆「See availability」按鈕；6) 動態要細緻、有物理感，手機版也能用。"
+},
+{
+  cat:"創意藝術",
+  title:"從作曲到動畫全由 Opus 5.5 寫 Python：鋼琴曲 + 3D 動畫，最後交給 Blender 渲染",
+  desc:"作者讓 Claude Opus 5.5 用 Python 寫出鋼琴配樂、用 Python 腳本做 3D 動畫，再在 Blender 渲染成片，沒有使用影像或音樂生成模型。推文未附 prompt 與製作細節。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:2674,
+  url:"https://x.com/kevin_t_ngo/status/2105304249060274631",
+  ptype:"重建",
+  prompt:"做一支約 30 秒的 3D 音樂動畫短片，全部由程式產生：1) 用 Python（例如 mido／pretty_midi 加取樣鋼琴音源或 FluidSynth）作一段溫柔的鋼琴曲，輸出 MIDI 與 WAV；2) 用 Blender Python API 建立場景：一架鋼琴與琴鍵，琴鍵依 MIDI 音符逐一按下，周圍有隨音符出現的光點或粒子；3) 設定攝影機緩慢環繞、景深與柔和燈光；4) 讓動畫與音樂逐拍同步；5) 用 Cycles 或 Eevee 渲染成 1080p MP4 並把音軌合成進去。不要用任何影像或音樂生成模型。"
+},
+{
+  cat:"遊戲",
+  title:"瀏覽器裡的《火箭聯盟》：作者說是看過最像的物理與操作手感",
+  desc:"作者用 Opus 5.5 做出可在瀏覽器免費遊玩的 Rocket League 仿作，車子能跳躍、空中翻滾、加速推球進門，作者認為物理與操作機制是所有重製版裡最有說服力的。註明為非官方粉絲作品。",
+  author:"@BlendiByl (Blendi)",
+  likes:2105,
+  url:"https://x.com/BlendiByl/status/2104800823620632641",
+  ptype:"重建",
+  prompt:"用 Three.js + 物理引擎（cannon-es 或 Rapier）做一個可在瀏覽器玩的 Rocket League 風格車球遊戲：1) 封閉球場含曲面牆與天花板，車可以開上牆面；2) 車輛操作：油門、轉向、甩尾、跳躍、二段跳、空中翻滾與空中旋轉、加速（boost 能量條，場上有補給點）；3) 大顆足球的物理要有份量感，車頭撞擊的力道與角度決定球的飛向；4) 進球有爆炸特效、慢動作重播與比分；5) 鏡頭可切換球鎖定／自由視角；6) 加一個簡單 AI 對手，5 分鐘一局。手感調校優先於畫面。"
+},
+{
+  cat:"文件簡報",
+  title:"3DCG 水面表現 45 年演進：一份回顧論文加解說影片，畫面用 numpy＋Pillow 硬算",
+  desc:"作者想知道 3DCG 的水是怎麼演進的，請 Opus 5.5 寫一份回顧論文並做解說影片。影片畫面不是 AI 生成，而是用 numpy 與 Pillow 逐格算出來，附日文字幕。作者自註不熟這領域，內容正確性未驗證。",
+  author:"@bamboo_vrc (ばんぶぶ)",
+  likes:1283,
+  url:"https://x.com/bamboo_vrc/status/2104896810976522688",
+  ptype:"重建",
+  prompt:"3DCGにおける水の表現が過去45年でどう進化してきたかをテーマに、1) レビュー論文（Markdown／PDF、主要な手法・論文・年代を整理した年表、参考文献付き）と、2) その内容を説明する解説動画（3〜5分、日本語字幕・ナレーション原稿付き）を作って。動画の映像はAI生成モデルを使わず、numpyとPillowで各時代の手法（ハイトマップ波、Gerstner波、FFT海洋、SPH・FLIP流体、リアルタイムの反射屈折など）を実際に計算して描画し、ffmpegで書き出すこと。"
+},
+{
+  cat:"遊戲",
+  title:"零程式背景、下班後 12 小時：天氣與日夜循環俱全的 Three.js 開放世界",
+  desc:"作者自稱沒有寫程式背景，下班後花約 12 小時、用掉 20 美元方案 93% 的週額度做出這個瀏覽器 3D 世界。分工交代清楚：遊戲機制、水、草、地形、天空、動態天氣與日夜循環由 Opus 5.5 建置；車和營火是 Sonnet 5.5 用程式寫的；槍、船、床、刀、手等模型來自 Meshy 免費方案。除錯與整合全由 Opus 5.5 負責。",
+  author:"@maxt3chno (Max)",
+  likes:1263,
+  url:"https://x.com/maxt3chno/status/2105216139647127750",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個可在瀏覽器執行的第一人稱開放世界求生場景：1) 程序生成起伏地形、大片可隨風擺動的草、湖泊與有反射的水面；2) 物理天空與動態天氣（晴、陰、雨、霧），完整日夜循環，夜晚有星空與營火光源；3) 玩家可走、跑、跳、游泳，能上車駕駛、上船划行；4) 可撿拾與裝備物品（刀、槍），有簡單的背包；5) 匯入外部 GLB 模型（船、床、武器、手部）並正確縮放與碰撞；6) 效能要能在一般筆電順跑，附 FPS 顯示。"
+},
+{
+  cat:"遊戲",
+  title:"瀏覽器版《無人深空》續作：從地面拆巨型步行機，一路飛上太空打艦隊",
+  desc:"作者先前一個 prompt 做的《No Man's Sky》式遊戲爆紅（70 萬瀏覽、7,000 多名玩家），又用 2 個 prompt 加上一場銀河戰爭：地面戰用繩索絆倒巨型 Behemoth 步行機、直接從地表飛進太空對抗 Juggernaut 母艦與戰機中隊、再逃往新星球降落，全程無讀取畫面。以 Opus 5.5 + Three.js 在 Tesana 平台建置。",
+  author:"@Rubzem (S)",
+  likes:1873,
+  url:"https://x.com/Rubzem/status/2105425742100341240",
+  ptype:"重建",
+  prompt:"延續現有的瀏覽器版 No Man's Sky 式探索遊戲（Three.js），加入「銀河戰爭」章節：1) 地面戰：數台巨型四足 Behemoth 步行機進攻，玩家駕駛飛船用拖曳纜索繞住它們的腿，繞滿幾圈就會倒地，任務目標 Walker Assault 0/3；2) 不切場景，直接從地表拉升穿過大氣層進入太空；3) 太空戰：Juggernaut 主力艦與戰機中隊，有鎖定、飛彈、護盾與船體值 HUD；4) 擊退後啟動曲速逃離，降落到一顆全新的程序生成星球繼續探索；5) 全程無讀取畫面，畫面有大氣散射、行星環與光暈。"
 }
 ];
 
