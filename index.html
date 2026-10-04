@@ -1199,6 +1199,27 @@ Godot 階段：
 
 先把布料渲染和單一針法做到滿意，再往下加其餘針法。`
  },
+// ====== 2026-10-04 自動更新 ======
+{
+  cat:"創意藝術", title:"一句 prompt 的 3 分鐘動畫短片：人類文明的全部進展，再往後推 30 年（Fable 5.5）",
+  desc:"作者只給 Claude Fable 5.5 一句話：做一支「人類所有進步、接著往未來推 30 年」的影片，回來的是一支 3 分鐘的動畫短片，還附原創配樂，沒用任何實拍素材或罐頭音樂。作者稱 Fable 5.5 目前是網頁版從 Fable 5.1 路由過去的新版本（尚未正式發表）。推文沒交代製作管線（例如是否以程式渲染、配樂如何生成）與迭代次數，只能從影片判斷成品。",
+  author:"@imjustnewatai", likes:5454, url:"https://x.com/imjustnewatai/status/2106081142143168580",
+  ptype:"重建",
+  prompt:`做一支約 3 分鐘的動畫短片：從人類最早的工具與火開始，一路講完農業、文字、城市、航海、印刷、工業革命、電力、飛行、電腦、網路與 AI 的所有重大進展，最後再往未來推 30 年，想像接下來會發生什麼。
+
+要求：
+1. 不使用任何實拍素材、圖庫影片或現成音樂，畫面全部用程式生成（例如 HTML Canvas／Three.js 或 Python 渲染），最後輸出成 MP4。
+2. 每個時代有自己的視覺語言與色調，轉場要流暢，有時間軸或年代標示。
+3. 自己作一首原創配樂並和畫面節奏同步，節奏隨時代推進逐漸加快，未來段落換成新的音色。
+4. 先給我分鏡表（每段秒數、畫面、文字），確認後再渲染。`
+ },
+{
+  cat:"模擬視覺化", title:"超複雜 3D 魯布·戈德堡機械：一句 prompt 出物理模擬，再要一支 1 分鐘影片（Fable 5.5）",
+  desc:"作者給 Claude Fable 5.5 的原句只有一行：「極度複雜的 3D 魯布·戈德堡機械、物理要準確、AAA 畫質加特效」，接著再要求輸出成一分鐘影片，成品是一連串骨牌、滾球、槓桿與機關接力觸發的連鎖裝置。作者稱 Fable 5.5 是網頁版從 Fable 5.1 路由過去的新版本（尚未正式發表）；推文沒說明用什麼引擎、物理是否真的逐格模擬，以及做了幾輪修正。",
+  author:"@imjustnewatai", likes:718, url:"https://x.com/imjustnewatai/status/2105889407056109991",
+  ptype:"原文",
+  prompt:`Extremely complicated 3d rube goldberg machine, accurate physics, aaa gfx, vfx`
+ }
 ];
 
 // ====== GPT-6 Astra 案例（OpenAI，2026-09 發布）======
@@ -3265,7 +3286,25 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
   url:"https://x.com/coinbureau/status/2105540715396960472",
   ptype:"重建",
   prompt:"附圖是一封 1809 年的法文加密手稿（拿破崙戰爭時期），目前沒有已知解答。請：1) 先完整轉錄所有密碼符號，替每種符號編號，列出無法辨識的位置；2) 統計符號頻率、重複片段與可能的字詞分隔，判斷是單表替換、同音替換還是命名表（nomenclator）混合；3) 利用信頭與信末的明文片段（稱謂、日期、地名）當已知明文，推出部分密鑰；4) 寫一個解碼器（爬山法或模擬退火，配法文 n-gram 語言模型）補完其餘對應；5) 輸出完整明文、密鑰表與信心標註；6) 交叉比對同時期相關信件，檢查信件日期是否需要修正。"
-}
+},
+// ====== 2026-10-04 自動更新 ======
+{
+  cat:"工程研究", title:"六個 agent 組隊、Astra 當總指揮：設計出能用木條實際搭起來的桁架結構",
+  desc:"protocell:labs 的作者（先前在 Fable 5 分頁收過他讓模型照施工手冊蓋建築的 craftbot）這次讓 GPT-6 Astra 當 orchestrator，帶 6 個 agent 一起設計一座結構，附 4 張實體木構模型照片：兩側是交叉斜撐的桁架柱、頂部是拱形屋頂桁架，內層包木板、正面開一道門洞。推文只有一句話，6 個 agent 各自負責什麼、實體模型是否由作者手工照圖組裝，都沒有交代。",
+  author:"@LukaPiskorec (protocell:labs)", likes:242, url:"https://x.com/LukaPiskorec/status/2106081530548204031",
+  ptype:"重建",
+  prompt:`你是 orchestrator（GPT-6 Astra），帶 6 個子 agent 設計一座可以用 3×3 mm 松木條與 2 mm 木板實際搭出來的小型建築結構模型（約 30×30×50 cm）。
+
+分工：
+1. 概念 agent：提出 3 個結構方案（外露桁架、拱形屋頂、內層木板殼），由你選定一個。
+2. 結構 agent：計算各桿件受力，決定斜撐方向與節點位置，確保自立不倒。
+3. 幾何 agent：輸出所有桿件與板材的精確長度、角度與數量清單。
+4. 接合 agent：設計每個節點的接合方式（搭接、夾板），只用白膠與木條，不用金屬件。
+5. 施工 agent：寫出逐步組裝順序與治具建議。
+6. 審查 agent：檢查前面所有輸出是否互相矛盾、能否真的被一個人在桌上組起來，有問題退回重做。
+
+最後交付：3D 模型（可匯出 STL／OBJ）、下料表、組裝說明書。`
+ }
 ];
 
 // ====== TypeSafe Jev 案例（決策模型，2026-09-15 發布）======
@@ -4438,6 +4477,57 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/Nomandsign/status/2105364430792073380",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）做一個「用描述生成漸層」的網頁工具。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。使用者輸入一句描述，state 放這句話。一次問 Jev：1) Choice「主色」從 48 個命名色票中選；2) Choice「輔色」同一組色票；3) Choice「第三色」色票＋「無」；4) Choice「漸層類型」：線性、放射、圓錐、網格（mesh）；5) Choice「方向」八方位；6) Score「顆粒雜訊」1-5；7) Score「飽和度」1-5。任一色彩題信心低於 0.5 時改用前兩名候選做出兩張讓使用者挑。前端用 CSS／Canvas 即時渲染大張預覽，顯示延遲與成本，可複製 CSS 程式碼與下載 PNG。"
+},
+// ====== 2026-10-04 自動更新 ======
+{
+  cat:"工程研究",
+  title:"Jevbox：會自己整理資料夾、回答問題並逐條附出處的開源文件硬碟",
+  desc:"上傳任何文件，Jev 自動分類並歸檔到資料夾樹；搜尋是階層式的——Jev 先挑資料夾、再挑文件、再挑段落，完全不用 embedding 與向量資料庫；每個回答都附上出自哪一頁哪一節。權限在檢索時強制套用：失去某份來源的權限，連帶也看不到用它生成的答案。另附 MCP server，讓 agent 拿到同樣受權限控管的上下文。由 Extend 團隊（作者與 @andrewlu0）以 Extend Parse + Jev 打造，完全開源，可自架或一鍵部署到 Render。",
+  author:"@kushalbyatnal (Kushal Byatnal)",
+  likes:1790,
+  url:"https://x.com/kushalbyatnal/status/2106134932795822464",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個開源的自我整理文件硬碟「Jevbox」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 上傳：文件先用解析器（如 Extend Parse）轉成帶頁碼與章節的結構，state 放標題、前幾段與目錄；問 Jev Choice「應放入哪個資料夾」（選項為現有資料夾樹的節點＋「新建子資料夾」），信心低於 0.6 時放進「待整理」讓人工確認。2) 搜尋：階層式檢索，問題當 state，先 Choice 挑資料夾、再 Choice 挑文件、再 Choice 挑段落，每層保留前 2 名做 beam search，全程不用 embedding。3) 回答：把選中段落交給 LLM 生成答案，每句標註頁碼與章節。4) 權限：檢索前先依使用者 ACL 過濾候選，答案快取也綁定來源權限。5) 提供 MCP server 讓外部 agent 用同樣的權限查詢。"
+},
+{
+  cat:"工程研究",
+  title:"pg-jev：Postgres 擴充，在 WHERE 裡直接問 Jev「這篇是不是在講軟體工程？」",
+  desc:"開源 Postgres 擴充，把 Jev 包成 SQL 函式：jev() 可直接放在 WHERE、jev_prob() 回傳機率、jev_choice() 選標籤、jev_score() 依等級排序，不需要向量欄位或 embedding 索引。底層會把多列批次送給 Jev，回傳有型別的答案，讓 SQL 可以照常篩選、排序、分組並和精確條件混用。示範影片對 Postgres 裡的真實 Hacker News 文章做三件事：挑出軟體工程類、依主題分類、依技術深度排名，最後列出這個 session 的請求數、token、成本與快取命中。有 GitHub repo。發文者是 AI 教學帳號，以「又一個 Jev 用例」介紹，未明說是否為本人作品。概念與既有的 DuckDB 擴充卡片相近，但這是不同資料庫、不同專案。",
+  author:"@_avichawla (Avi Chawla)",
+  likes:1883,
+  url:"https://x.com/_avichawla/status/2106328920211800165",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）寫一個 Postgres 擴充 pg-jev。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。提供四個 SQL 函式：1) jev(text, question) 回傳 boolean，可直接用在 WHERE（內部是 Choice 是／否，機率 ≥ 0.5 為真，門檻可用 GUC 參數調整）；2) jev_prob(text, question) 回傳 0-1 的機率；3) jev_choice(text, question, labels text[]) 回傳選中的標籤；4) jev_score(text, question, levels text[]) 回傳有序等級的分數供 ORDER BY。實作上要把同一查詢的多列批次送出、相同輸入做快取，並提供 jev_stats() 回報本 session 的請求數、token、成本與快取命中率。附一個示範：匯入 Hacker News 文章，找出軟體工程類、依主題分類、依技術深度排名。"
+},
+{
+  cat:"工程研究",
+  title:"只靠 ASCII 字元畫讓純文字的 Jev「看見」棋盤：機械手臂下西洋棋的精細對位",
+  desc:"作者想知道能不能不微調、只靠 harness 讓只吃文字的 Jev 處理視覺：用 Python 做簡單的色彩閾值（刻意不用 OpenCV），把相機畫面轉成 100×100 的字元陣列餵給 Jev，再在 MuJoCo 搭訓練場調參數，跑了幾百萬個測試案例（例如白城堡站在白格上、四周被八顆棋子包圍）。Jev 只負責機械手臂開迴路粗定位之後的精細對位與漏抓偵測；整體還有 Opus 5.5 做高層調度、Stockfish 下棋、傳統運動學軌跡規劃。目前已完整下過約 10 盤，每晚讓 Opus 5.5 對 Astra 6 對弈。作者自己說這「顯然是最爛的解法」，重點是好玩。附 60 秒影片。",
+  author:"@andrewmccalip (Andrew McCalip)",
+  likes:302,
+  url:"https://x.com/andrewmccalip/status/2106078589825474962",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）替會下西洋棋的機械手臂做視覺閉迴路對位層。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 視覺前處理：相機畫面只用色彩閾值（不用 OpenCV）轉成 100×100 的 ASCII 字元陣列，不同字元代表白子、黑子、夾爪、空格與棋盤格。2) 手臂先由運動學規劃開迴路移到目標格上方，再把字元陣列與目標格座標當 state 問 Jev：Choice「夾爪相對棋子偏移方向」八方位＋「已對準」；Score「偏移量」1-5；抓取後 Choice「是否抓到棋子」是／否。信心低於 0.7 時重新拍照再問，連續三次仍低就退回人工。3) 在 MuJoCo 建模擬訓練場，自動產生各種棘手組合（同色棋子在同色格、周圍擠滿棋子、棋子偏離格心）批量測試並調整閾值與偏移係數。4) 高層由 LLM 調度、Stockfish 或兩個 LLM 對弈決定走法。"
+},
+{
+  cat:"遊戲",
+  title:"《魔獸世界》版自走棋：組一支 AI 隊伍丟進經典副本，LLM 定目標、Jev 負責動手",
+  desc:"作者用 Benilla 做出類似自走棋的玩法：玩家只負責組隊，接著讓 AI 隊員自己打經典副本（畫面為血色修道院大教堂，右上有 Autopilot 開關）。分工是 LLM 設定目標、Jev 負責把目標化成實際的行動決策，作者說隊員彼此配合得比他自己玩還好。推文沒有交代 Benilla 是什麼樣的環境（看起來是自架的經典版伺服器）以及每秒決策頻率與成本。",
+  author:"@vandenbog_art (Eric)",
+  likes:660,
+  url:"https://x.com/vandenbog_art/status/2106183870689218755",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個「魔獸世界自走棋」：玩家只組隊，AI 隊員自己打經典副本。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。兩層架構：1) 戰略層由 LLM 每隔一段時間（例如進新區域、打完一波）讀取副本進度與隊伍狀態，用自然語言設定目標（清哪群怪、誰當坦、何時休息）；2) 戰術層每 0.5 秒為每名隊員問 Jev，state 放自身血量／法力、目標、仇恨表、隊友血量、附近敵人與 LLM 給的目標。題目：Choice「下一個動作」從該職業可用技能＋移動＋待命中選；Choice「目標」從可見單位中選；Score「危險程度」1-5，≥4 時優先保命技能。信心低於 0.5 時沿用上一個動作。介面顯示每名隊員的當前決策與信心值，玩家可隨時接管。"
+},
+{
+  cat:"工程研究",
+  title:"PageIndex + Jev 的長文件搜尋：不用向量資料庫，沿著目錄樹一層層挑",
+  desc:"PageIndex 團隊受 @EGafni 一則推文啟發，示範把 PageIndex（把長文件轉成階層式目錄樹的工具）接上 Jev：搜尋時由 Jev 依問題在樹上一層層判斷要往哪個章節走，最後定位到相關段落，全程不用向量資料庫與 embedding。有開源範例。屬工具廠商的整合示範，不是 TypeSafe 官方。",
+  author:"@PageIndexAI (PageIndex)",
+  likes:169,
+  url:"https://x.com/PageIndexAI/status/2105896667446940134",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）加 PageIndex 做長文件搜尋。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 用 PageIndex 把 PDF（例如百頁財報或法規）轉成階層目錄樹，每個節點有標題與摘要。2) 搜尋時從根節點開始，把使用者問題與子節點標題／摘要當 state，問 Jev Choice「答案最可能在哪個子節點」（選項為各子節點＋「都不在」），保留機率前 2 名做 beam search 往下走，直到葉節點。3) 在葉節點用 Score「與問題的相關度」1-5 排序段落，取前 3 段交給 LLM 生成答案並附頁碼。4) 若所有分支信心都低於 0.4，回報「文件中可能沒有答案」。不使用任何 embedding 或向量資料庫。"
 }
 ];
 
@@ -4746,6 +4836,67 @@ const OPUS_CASES = [
   url:"https://x.com/Rubzem/status/2105425742100341240",
   ptype:"重建",
   prompt:"延續現有的瀏覽器版 No Man's Sky 式探索遊戲（Three.js），加入「銀河戰爭」章節：1) 地面戰：數台巨型四足 Behemoth 步行機進攻，玩家駕駛飛船用拖曳纜索繞住它們的腿，繞滿幾圈就會倒地，任務目標 Walker Assault 0/3；2) 不切場景，直接從地表拉升穿過大氣層進入太空；3) 太空戰：Juggernaut 主力艦與戰機中隊，有鎖定、飛彈、護盾與船體值 HUD；4) 擊退後啟動曲速逃離，降落到一顆全新的程序生成星球繼續探索；5) 全程無讀取畫面，畫面有大氣散射、行星環與光暈。"
+},
+// ====== 2026-10-04 自動更新 ======
+{
+  cat:"工程研究",
+  title:"WareTrack：把倉儲管理系統做成策略遊戲的等角 3D 介面",
+  desc:"「工業軟體不一定要長得像工業軟體」：作者用 Opus 5.5 做出一套倉儲管理介面，主畫面是等角視角的 3D 物流園區——倉庫、堆高機、棧板、進出貨卡車都在場景裡動，點地圖上的據點會跳出庫存、碼頭與堆高機狀態；四周是策略遊戲式 HUD：在庫量、在場卡車、準時率、庫存清單（低庫存標黃）、碼頭／堆高機／卡車分頁與出貨追蹤時間軸。作者是前一陣子做 Sunrise Isle NPC 小島的同一人。屬概念介面展示，資料為示範用，非接上真實 WMS。",
+  author:"@DilumSanjaya (Dilum Sanjaya)",
+  likes:9382,
+  url:"https://x.com/DilumSanjaya/status/2106426962738880879",
+  ptype:"重建",
+  prompt:"做一個像策略遊戲的倉儲管理系統前端「WareTrack」（Three.js + React）：1) 主畫面是等角視角、低多邊形風格的 3D 物流園區，有藍色倉庫、碼頭、堆高機、棧板、進出卡車與樹木，卡車會進出、堆高機會搬貨，可縮放旋轉；2) 地圖上的據點標記可點擊，右側面板顯示該倉的在庫量／容量、碼頭使用、今日出貨數、上架數、庫存清單（低庫存標黃）與堆高機進度；3) 頂部 KPI 卡：在庫量、在場卡車、30 天準時率，含變化箭頭；4) 底部出貨追蹤時間軸（下單、揀貨、裝車、運送、送達）與碼頭／堆高機／卡車分頁；5) 用假資料模擬即時更新，整體質感要像精緻的 SaaS，不像傳統 ERP。"
+},
+{
+  cat:"遊戲",
+  title:"逆向《英雄聯盟》與《七龍珠 FighterZ》再合體：一款新遊戲",
+  desc:"作者要 Opus 5.5「逆向工程」英雄聯盟與七龍珠 FighterZ，把兩者合成一款遊戲：FighterZ 的角色與格鬥招式放進 MOBA 式俯視地圖與兵線玩法。同一作者前一則推文說明先用 Opus 5.5 把 FighterZ 移植到 Three.js，再以此為基礎做出 MMO 版與這個 LoL 式玩法。⚠️ 角色與素材牽涉原作版權，推文未說明素材來源（自行重建或擷取原遊戲資源）。",
+  author:"@GamefxAI (Aymane)",
+  likes:3628,
+  url:"https://x.com/GamefxAI/status/2106387548486738010",
+  ptype:"重建",
+  prompt:"用 Three.js 做一款把《七龍珠 FighterZ》格鬥手感放進《英雄聯盟》式玩法的瀏覽器遊戲：1) 先分析兩款遊戲的核心機制——FighterZ 的連段、氣力條、瞬移與必殺技；LoL 的俯視角三路地圖、兵線、防禦塔、等級與技能升級；2) 玩家從 4 名 3D 角色中選一，用 QWER 施放對應的格鬥招式（氣功波、衝刺連打、瞬間移動、終極必殺），有命中特效與鏡頭震動；3) 地圖有兩方主堡、塔與定時出生的小兵，敵方英雄由 AI 控制；4) 擊殺得經驗升級；5) 角色與特效用原創造型，不要直接使用原作素材。"
+},
+{
+  cat:"模擬視覺化",
+  title:"「連老師都不需要了」：一看就懂的塞車成因互動解說",
+  desc:"作者請 Opus 5.5 做一個說明「為什麼會塞車」的互動視覺化：模擬一條道路上的車流，展示一台車輕微減速後，後車反應延遲讓煞車一路往後放大、形成沒有事故也會出現的幽靈塞車（交通波往後傳遞）。作者評價清楚到「不需要老師」。推文只有一句話與影片，沒附 prompt 與可操作參數的細節。",
+  author:"@Lattice_Node (Lattice)",
+  likes:1937,
+  url:"https://x.com/Lattice_Node/status/2105946058417389840",
+  ptype:"重建",
+  prompt:"渋滞が起きる仕組みを、誰が見ても一目で分かるインタラクティブな解説ページにして（単一HTML、Canvas）。1) 一車線の道路（環状コースも可）に車を並べ、各車は前の車との車間距離に応じて加減速する（反応遅れあり）；2) ボタン1つで先頭付近の1台が少しだけブレーキを踏み、その減速が後ろへ増幅しながら伝わって、事故がなくても渋滞の波が後方へ移動していく様子を見せる；3) 車の色を速度で色分けし、時空間図（横軸=位置、縦軸=時間）を横に並べて渋滞波が後ろ向きに進むことを可視化；4) 車間距離・反応時間・車の台数をスライダーで変えられるようにし、「車間を空けると渋滞が消える」ことを体験できるように；5) 各段階に短い日本語の説明文を付ける。"
+},
+{
+  cat:"模擬視覺化",
+  title:"從進氣口到尾管：可互動拆解的 3D 噴射引擎",
+  desc:"「工程不必從平面圖學起」：作者用 Claude Opus 5.5 + Three.js 做出互動式噴射引擎，從進氣風扇、壓縮機、燃燒室、渦輪到尾噴管一路展示，可旋轉觀看內部結構。同一作者先前在 Astra 分頁有火焰噴射器與 X-16 引擎兩件作品，這件換成 Opus 5.5 做，屬不同模型的同類題材。推文未說明是否 one shot 與迭代次數。",
+  author:"@techartist_ (Techartist)",
+  likes:1542,
+  url:"https://x.com/techartist_/status/2106064200535859685",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個可互動的渦輪扇噴射引擎教學模型：1) 依序建出進氣風扇、低壓／高壓壓縮機（多級葉片）、燃燒室、高壓／低壓渦輪、尾噴管與外涵道，葉片要實際旋轉，轉速可調；2) 可切換半剖面檢視，看到內部氣流；3) 用粒子表現空氣從進氣口被壓縮、在燃燒室點火、經渦輪膨脹後從尾管噴出，顏色隨溫度與壓力變化；4) 點選任一部件會高亮並顯示名稱與功能說明；5) 提供「爆炸視圖」把各段沿軸向拉開；6) 金屬材質用 PBR，搭配環境光與陰影。"
+},
+{
+  cat:"遊戲",
+  title:"one shot 出《決勝時刻：戰區》式多人大逃殺，再用 Ultracode 打磨",
+  desc:"作者說 Opus 5.5 先 one shot 做出完整的多人大逃殺，接著用 Opus 5.5 搭配 Ultracode 打磨：有跳傘降落、縮 8 圈的毒圈、有命名城鎮的完整地圖，而且是真的讓世界各地的玩家連線進來一起跳。作者是 BridgeMind（與做模型比較的 BridgeBench 有關聯），這則是單一模型作品不是對比文。「one shot」只指初版，打磨輪數未交代。",
+  author:"@bridgemindai (BridgeMind)",
+  likes:1517,
+  url:"https://x.com/bridgemindai/status/2106071883137392798",
+  ptype:"重建",
+  prompt:"做一款瀏覽器多人連線大逃殺遊戲，風格像《決勝時刻：戰區》：1) Three.js 第三人稱／第一人稱射擊，WebSocket 權威伺服器同步玩家位置、射擊與傷害；2) 開局從運輸機跳傘，可控制降落方向與開傘時機；3) 一張大地圖，有多個命名城鎮、建築可進入、地上隨機刷武器與護甲；4) 毒圈共 8 階段逐步縮小，圈外持續扣血，小地圖顯示安全區與下一圈；5) 擊殺紀錄、存活人數、勝利畫面；6) 有大廳與配對，可直接分享網址讓其他人加入。"
+},
+{
+  cat:"文件簡報",
+  title:"「今天星期幾？」用 30 秒帥氣動態設計＋BGM 回答（一句 prompt，medium effort）",
+  desc:"作者對 Opus 5.5（medium effort）只丟一句話：「今天星期幾？用附 BGM 的 30 秒帥氣動態設計告訴我（請全力以赴）」，就一次產出一支附配樂的 30 秒 motion graphics 影片。作者驚呼「真的一個 prompt 就做到」。用的是 medium 而非 high effort，算是低成本實測。",
+  author:"@nokonoko_1203 (のこのこ / Satoru Nishio)",
+  likes:1253,
+  url:"https://x.com/nokonoko_1203/status/2105922366190784915",
+  ptype:"原文",
+  prompt:"今日何曜日だっけ？BGM付きの30秒のかっこいいモーショングラフィックスで教えて（全力を出してください）"
 }
 ];
 
