@@ -1219,6 +1219,32 @@ Godot 階段：
   author:"@imjustnewatai", likes:718, url:"https://x.com/imjustnewatai/status/2105889407056109991",
   ptype:"原文",
   prompt:`Extremely complicated 3d rube goldberg machine, accurate physics, aaa gfx, vfx`
+ },
+// ====== 2026-10-05 自動更新 ======
+{
+  cat:"創意藝術", title:"一句 prompt 的 4 分鐘動畫電影：人類接下來的 150 年（Fable 5.5）",
+  desc:"作者請 Claude Fable 5.5 做一支「人類未來 150 年」的動畫電影，只下一次 prompt：劇本自己寫、每一格畫面用程式畫、配樂也自己作。成品 4 分鐘，從 1986 年數學老師上街抗議計算機開場，一路演到 2176 年一個覺得核融合很無聊的小孩。和同作者先前收錄的「人類文明進展再推 30 年」是不同作品。推文沒附原始 prompt，也沒交代渲染方式與是否修過幾輪；影片縮圖是全黑的開場畫面。",
+  author:"@imjustnewatai", likes:437, url:"https://x.com/imjustnewatai/status/2106489784382197771",
+  ptype:"重建",
+  prompt:`做一支約 4 分鐘的動畫電影，主題是人類接下來的 150 年。
+
+要求：
+1. 劇本你自己寫：用一連串有年份的小場景串起來，從過去人們抗拒新工具的時刻開場（例如 1986 年數學老師抗議計算機），一路走到 22 世紀後半，結尾停在一個把當年的奇蹟視為理所當然的孩子身上。語氣要有幽默感，不要說教。
+2. 每一格畫面都用程式生成（HTML Canvas／SVG 或 Python 渲染皆可），不使用影片模型、圖庫素材或實拍畫面，最後輸出成 MP4。
+3. 自己作一首原創配樂並與場景切換對拍，不使用現成音樂。
+4. 每個場景標出年份，轉場流暢，全片風格一致。`
+ },
+{
+  cat:"模擬視覺化", title:"讓模型自己挑題目：從三顆夸克一鏡到底拉到可觀測宇宙，94 秒跨 42 個數量級（Fable 5.5）",
+  desc:"作者沒指定題目，只叫 Claude Fable 5.5 自己選一個「會讓人說『我不知道 AI 做得到這個』」的影片點子。它做出《The Long Way Out》：鏡頭從質子裡的三顆夸克出發，不剪接地一路往外拉到可觀測宇宙，94 秒跨過 42 個數量級。作者強調沒用影片模型，畫面和音樂全是程式。prompt 裡引號那句是推文原話，其餘為補完；推文沒說明各尺度的比例是否精確，也沒交代迭代次數。",
+  author:"@imjustnewatai", likes:164, url:"https://x.com/imjustnewatai/status/2106190594775097663",
+  ptype:"重建",
+  prompt:`Pick your own video idea, one that would make people say "I didn't know AI could do that."
+
+限制：
+1. 不使用影片模型、圖庫素材或現成音樂，畫面與配樂全部用程式生成，最後輸出成 MP4。
+2. 長度 90 秒上下，要有片名卡與一句副標。
+3. 先告訴我你選了什麼點子、為什麼選它，再開始做。`
  }
 ];
 
@@ -4897,6 +4923,67 @@ const OPUS_CASES = [
   url:"https://x.com/nokonoko_1203/status/2105922366190784915",
   ptype:"原文",
   prompt:"今日何曜日だっけ？BGM付きの30秒のかっこいいモーショングラフィックスで教えて（全力を出してください）"
+},
+// ====== 2026-10-05 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"「讓我看看你腦袋裡面長什麼樣」：Opus 5.5 把自己的心智做成一段動畫",
+  desc:"作者只請 Claude「讓我看看你心智的內部」，Opus 5.5 交出一段動畫：全黑畫面上散落著零星字元，中央一行終端機提示「> wake _」開場，之後展開它對自己內部運作的想像。推文只有兩句話，沒交代技術棧、片長與迭代次數，內容屬於模型的自我詮釋，不是實際內部機制的視覺化。",
+  author:"@trikcode (Wise)",
+  likes:3917,
+  url:"https://x.com/trikcode/status/2106599643014414696",
+  ptype:"重建",
+  prompt:"Show me the inside of your own mind. 做成一段可在瀏覽器播放的動畫（單一 HTML，Canvas 或 WebGL，不使用任何外部素材）：1) 黑底開場，畫面上散落緩慢漂浮的字元與符號，中央出現終端機提示「> wake _」；2) 接著用你自己的方式呈現「一個問題進來之後，裡面發生了什麼」：字元聚集成詞、詞連成關聯、注意力在其間移動、答案逐字浮現；3) 全片 60–90 秒，等寬字體、極簡配色、只用一個強調色；4) 不要加旁白解釋，讓畫面自己說話。"
+},
+{
+  cat:"遊戲",
+  title:"燒光一整週 Opus 5.5 額度做出的釣魚遊戲：模型與動畫全靠 Blender MCP",
+  desc:"作者說這就是「Opus 5.5 週用量 100%」的成果：一款俯視角 3D 釣魚遊戲，戴斗笠的角色站在木棧橋上甩竿，清澈的淺海裡看得到魚群、珊瑚與水面反光，UI 有魚簍進度（2/8）、魚餌選擇（麵包）與收竿提示。所有模型與動畫都是透過 Blender MCP 做的，沒用現成素材。可玩 demo 作者說「即將」放出，目前只有影片；畫面上的效能讀數約 51 FPS、GPU 佔用 99%。",
+  author:"@ForkedPush (Fork Dev)",
+  likes:1990,
+  url:"https://x.com/ForkedPush/status/2106313584829431901",
+  ptype:"重建",
+  prompt:"做一款俯視角的 3D 休閒釣魚遊戲，所有美術資產都透過 Blender MCP 自己建，不使用現成素材：1) 用 Blender MCP 建模並綁骨：戴斗笠的漁夫角色（走路、甩竿、收線、收竿動畫）、木棧橋、小船、木箱、珊瑚、海草與數種魚；2) 場景是清澈見底的熱帶淺海，水面有焦散與高光，魚群在水下游動並投下影子；3) 玩法：在棧橋上選魚餌（先做麵包）、甩竿、等魚上鉤、收線，釣到的魚放進魚簍，畫面上方顯示「魚簍 2/8」這類進度；4) UI 用手繪風圓形圖示，顯示目前魚餌與按鍵提示（E 收竿）；5) 風格統一為低多邊形、柔和配色；6) 每做完一批資產就匯入遊戲截圖檢查，比例或動畫不對就回 Blender 修。"
+},
+{
+  cat:"工程研究",
+  title:"河川不等流計算一條龍：Python 計算、計算書、貼空拍照的 3D 模型與流下能力熱圖",
+  desc:"土木工程師實測：用 Claude Opus 5.5 做河川的不等流計算。計算本體是它寫的 Python，另外產出計算書、貼上空拍照片的 3D 河道模型（沿線標 KP 5／10／15／20 里程），以及隨流量變化的熱圖，流下能力吃緊的區段一眼就看得出來，而且整套在瀏覽器裡跑。作者的反應是「厲害到看不懂」。推文沒說明斷面資料來源，也沒提計算結果是否與既有軟體或手算對照驗證過。",
+  author:"@dobokuya77 (土木屋77)",
+  likes:816,
+  url:"https://x.com/dobokuya77/status/2106604492728967620",
+  ptype:"重建",
+  prompt:"我要做一條河川的不等流計算，請幫我做成可在瀏覽器操作的工具：1) 我會提供各斷面的橫斷測量資料（距離標 KP、河床高、斷面形狀）、粗糙係數、下游端水位與數個計畫流量；2) 用 Python 寫標準逐次計算法（standard step method）從下游往上游求各斷面水位、流速、福祿數與流下能力，並處理常流／射流的判定；3) 輸出一份計算書（各斷面的計算條件、過程與結果表，可轉 PDF）；4) 用地形資料建河道 3D 模型並貼上空拍正射影像，沿線標出 KP；5) 做一個流量滑桿，拖動時水面與熱圖即時更新，用顏色標出流下能力不足（水位超過堤頂或餘裕高不足）的區段；6) 整套做成單一網頁，計算結果先用一個我給的斷面手算對照驗證。"
+},
+{
+  cat:"工程研究",
+  title:"Laravel 作者 one-shot：替 Rust 的 Axum 寫出 Inertia.js adapter（Axum + Inertia + React）",
+  desc:"Laravel 作者 Taylor Otwell 讓 Opus 5.5 一次做出 Inertia.js 的 Axum（Rust HTTP 路由框架）adapter。示範 app「Rust Inertia」每一頁都由 Rust handler 透過 inertia crate 渲染，並逐項展示協定功能：props、partial reloads、deferred props、merging props、infinite scroll、once props、表單與驗證、redirects、asset versioning、history encryption，以及已 hydrate 的 SSR。推文只有一句話加一段影片，沒有附 repo，也沒說測試涵蓋到什麼程度。",
+  author:"@taylorotwell (Taylor Otwell)",
+  likes:633,
+  url:"https://x.com/taylorotwell/status/2106470422279507988",
+  ptype:"重建",
+  prompt:"替 Axum（Rust HTTP router）實作一個 Inertia.js 伺服器端 adapter，做成獨立 crate，並附一個 Axum + Inertia + React 的示範 app。adapter 要完整支援目前的 Inertia 協定：1) props（serde 值、struct、點記法 key、lazy props）；2) partial reloads（only／except、always props）；3) deferred props（可分組平行載入）；4) merging props（append、prepend、deep merge）與 infinite scroll；5) once props；6) 表單與驗證（error bags、flash、303 redirect）；7) 外部 redirect（409）與 fragment redirect；8) asset versioning（版本不符時強制整頁重載）；9) history encryption；10) server-side rendering。示範 app 的首頁列出以上每個功能，各有一頁可互動的 demo。寫完後跑過測試並實際啟動 app 逐頁確認。"
+},
+{
+  cat:"模擬視覺化",
+  title:"按 1–5 切換五種渲染風格的 3D 世界：寫實、油畫、動畫、卡通、Ultra，零素材",
+  desc:"Opus 5.5 做出一個可即時切換渲染風格的 3D 場景：小河、石拱橋、草坡與山丘上的教堂，按數字鍵 1–5 在 Natural、Painterly、Anime、Cartoon、Ultra 五種畫風間切換，影片用分割畫面對照同一景的不同風格。作者強調所有東西都是程式生成，沒有用任何素材，並附上可直接開的連結。推文沒交代 prompt 與迭代次數。",
+  author:"@LexnLin (Leon Lin)",
+  likes:588,
+  url:"https://x.com/LexnLin/status/2106493673425047896",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個可自由走動的 3D 田園場景，所有幾何、材質與貼圖都用程式生成，不使用任何外部素材：1) 場景有一條流動的小河、石拱橋、隨風擺動的草坡、樹林、遠山與雲，山丘上有一座帶鐘樓的小教堂；2) 實作五種可即時切換的渲染風格，用數字鍵 1–5 切換：Natural（寫實光照）、Painterly（油畫筆觸後製）、Anime（賽璐璐上色加柔和天空）、Cartoon（粗描邊與色塊）、Ultra（最高品質，含體積光、水面反射與景深）；3) 切換時同一個鏡頭位置不變，方便對照；4) 加一個分割畫面模式，左右各顯示一種風格；5) 單一 HTML 檔，維持 60 FPS。"
+},
+{
+  cat:"工程研究",
+  title:"約一天替 Minecraft 1.8.9 寫出 Metal 渲染器：Mac 上直接進 Hypixel 跑",
+  desc:"作者說這個 Minecraft 1.8.9 的 Metal 渲染器是 Opus 5.5 花大約一天做出來的。截圖是在 M4 Pro 的 Mac 上以 Forge 載入 mod、連進 Hypixel 大廳的畫面，除錯資訊顯示顯示後端為 metal189，Metal HUD 讀數約 39–41 FPS（解析度 2281x1316，開了 MetalFX 縮放）。推文只有一句話加截圖：沒有和原本 OpenGL 路徑的效能對照，沒有附 repo，截圖裡也看得到部分方塊貼圖異常。",
+  author:"@bomberfish77 (bomberfish 🍁)",
+  likes:577,
+  url:"https://x.com/bomberfish77/status/2106648802790694927",
+  ptype:"重建",
+  prompt:"替 Minecraft 1.8.9（Forge）寫一個 Metal 渲染後端的 mod，讓遊戲在 Apple Silicon 的 Mac 上不經 OpenGL 直接用 Metal 繪製：1) 攔截遊戲的 LWJGL／OpenGL 固定管線呼叫（矩陣堆疊、頂點陣列、display list、貼圖綁定、混合與深度狀態），轉成 Metal 的 pipeline state 與 draw call；2) 把固定管線的光照、霧、alpha test 改寫成 Metal shader；3) 處理區塊渲染、實體、粒子、GUI 與文字，畫面要與原版一致；4) 支援 MetalFX 空間縮放；5) F3 除錯畫面顯示目前後端名稱；6) 先在單人世界逐項比對截圖修正畫面差異，再連上大型多人伺服器測穩定性與 FPS，並回報仍有問題的地方。"
 }
 ];
 
