@@ -1245,6 +1245,35 @@ Godot 階段：
 1. 不使用影片模型、圖庫素材或現成音樂，畫面與配樂全部用程式生成，最後輸出成 MP4。
 2. 長度 90 秒上下，要有片名卡與一句副標。
 3. 先告訴我你選了什麼點子、為什麼選它，再開始做。`
+ },
+// ====== 2026-10-07 自動更新 ======
+{
+  cat:"遊戲", title:"一發做出像素動作遊戲：扮演 Clawd 打 bug 和 Boss（Fable 5.5）",
+  desc:"作者說這款像素遊戲是 Claude Fable 5.5 一發做出來的：玩家扮演 Anthropic 的吉祥物 Clawd，一路擊退 bug 與 Boss，標題畫面寫著「CLAWD EXIT CODE」，成品以 Claude artifact 形式公開可玩。作者形容品質接近人類獨立遊戲開發者。誠實保留：Fable 5.5 尚未正式發布，作者屬搶先使用；推文沒有附 prompt，也沒說明關卡數或遊戲長度，下方 prompt 依描述重建。",
+  author:"@blueemi99 (bluedev)", likes:939, url:"https://x.com/blueemi99/status/2107108802440900621",
+  ptype:"重建",
+  prompt:`做一款可在瀏覽器直接玩的像素風 2D 動作遊戲，主角是 Claude 的吉祥物 Clawd（橘色像素小螃蟹造型），任務是在程式碼世界裡擊退各種 bug。
+
+要求：
+1. 標題畫面、關卡選單、遊戲結束與通關畫面都要有，全部像素美術用程式繪製，不用外部素材。
+2. 至少 3 個關卡，每關有不同外型與行為的 bug 小怪，關底各有一隻 Boss，Boss 有多階段攻擊模式與血條。
+3. Clawd 可以移動、跳躍、攻擊，有受傷無敵時間、血量與分數；加入打擊感（畫面震動、閃白、粒子）。
+4. 用 Web Audio 自己合成 8-bit 音效與背景音樂。
+5. 單一 HTML 檔，鍵盤操作，畫面要有獨立遊戲的完成度。`
+ },
+{
+  cat:"模擬視覺化", title:"從零寫出黑洞光線追蹤渲染器：每個像素都照史瓦西度規彎曲（Fable 5.5）",
+  desc:"作者請 Claude Fable 5.5 做「它能做到最難的一支影片」，結果它從零寫了一個黑洞渲染器：每個像素都是一道依非旋轉黑洞（史瓦西度規）真實方程式彎曲的光線，畫面角落標著距離與仰角讀數。不用遊戲引擎、圖庫影片或下載的貼圖，純 Python、2 顆 CPU 核心、約一小時算完。誠實保留：推文沒有附原始 prompt，也沒說明吸積盤的物理模型與輸出解析度，下方 prompt 依描述重建；與庫內「黑洞誕生過程動畫頁」是不同作品。",
+  author:"@imjustnewatai", likes:520, url:"https://x.com/imjustnewatai/status/2106925762582323550",
+  ptype:"重建",
+  prompt:`Make the hardest edit you can make.
+
+（作者原句只有上面一句，以下為依成品補完的可執行版本）
+用 Python 從零寫一個非旋轉黑洞（史瓦西度規）的光線追蹤渲染器，輸出一支影片：
+1. 每個像素對應一道光線，沿史瓦西測地線方程逐步積分，算出它最後是掉進事件視界、打到吸積盤，還是逃到背景星空。
+2. 吸積盤要有溫度隨半徑變化的顏色與都卜勒增亮，背景星空也要被重力透鏡扭曲，看得到愛因斯坦環與盤的上下兩個像。
+3. 鏡頭沿軌道緩慢移動並改變仰角，畫面角落顯示距離（以 M 為單位）、仰角與「Schwarzschild metric」標籤。
+4. 不用遊戲引擎、圖庫素材或外部貼圖；要能在 2 顆 CPU 核心上一小時左右渲染完（可用 numpy 向量化或多行程）。`
  }
 ];
 
@@ -3330,6 +3359,19 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
 6. 審查 agent：檢查前面所有輸出是否互相矛盾、能否真的被一個人在桌上組起來，有問題退回重做。
 
 最後交付：3D 模型（可匯出 STL／OBJ）、下料表、組裝說明書。`
+ },
+// ====== 2026-10-07 自動更新 ======
+{
+  cat:"工程研究", title:"讓 GPT-6 Astra（MAX）在 CAD 裡蓋一台輪式機器人：機身與內部底盤持續成形中",
+  desc:"作者這幾天持續讓 GPT-6 Astra（MAX）在 CAD 裡做一台機器人，影片展示目前進度：白色方形機身、兩側大型越野輪與懸吊臂，最後一段剖開看得到內部底盤結構。作者說這是要給 @OpenAIDevs 的機器人作品，目前仍在進行中。誠實保留：推文沒有交代用的是哪套 CAD 軟體、Astra 是寫腳本建模還是直接操作介面，也沒有附 prompt，下方 prompt 依描述重建。",
+  author:"@Alpha10six (alpha_rover)", likes:312, url:"https://x.com/Alpha10six/status/2107470850865979428",
+  ptype:"重建",
+  prompt:`你要在 CAD 裡設計一台可實際製造的小型輪式機器人（約 40×30×35 cm），用參數化建模（例如 CadQuery 或 Onshape FeatureScript）完成，每一步都輸出可檢查的模型。
+
+1. 先做整體配置：方形主機身、前後兩組大直徑越野輪、獨立懸吊臂，給我尺寸草圖確認。
+2. 內部底盤：電池艙、馬達座、主控板與感測器的安裝位，零件之間保留走線空間與螺絲孔位。
+3. 外殼：可拆式上蓋與側板，邊角倒圓，標出分件線。
+4. 每完成一個子系統就算一次干涉檢查並截圖給我看，最後輸出 STEP 檔、零件清單與爆炸圖。`
  }
 ];
 
@@ -4554,6 +4596,36 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/PageIndexAI/status/2105896667446940134",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）加 PageIndex 做長文件搜尋。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 用 PageIndex 把 PDF（例如百頁財報或法規）轉成階層目錄樹，每個節點有標題與摘要。2) 搜尋時從根節點開始，把使用者問題與子節點標題／摘要當 state，問 Jev Choice「答案最可能在哪個子節點」（選項為各子節點＋「都不在」），保留機率前 2 名做 beam search 往下走，直到葉節點。3) 在葉節點用 Score「與問題的相關度」1-5 排序段落，取前 3 段交給 LLM 生成答案並附頁碼。4) 若所有分支信心都低於 0.4，回報「文件中可能沒有答案」。不使用任何 embedding 或向量資料庫。"
+},
+// ====== 2026-10-07 自動更新 ======
+{
+  cat:"工程研究", title:"爬蟲 + Jev + GPT 找接案藍海：讀 5,137 筆 Freelancer 案件，挑出 3 個低競爭利基",
+  desc:"作者讓爬蟲讀完 Freelancer 上 5,137 筆開放案件（預算、技能、已投標數），由 Jev 逐筆判斷是否為真案件、能否一人線上完成（刷掉 684 筆），再把剩下 4,453 筆分進 GPT 命名的 30 個利基，只把 12 個數字漂亮的利基交給 GPT 上網查其他平台的價格與擁擠度，最後剩 3 個：Chrome 擴充功能、TikTok Shop 架設、Notion 設定。Jev 共呼叫 9,617 次花 0.13 美元，整輪 6.53 美元（全交給 GPT 估約 58.66 美元）。誠實保留：月收估算是作者自訂公式（預算 ÷（投標數＋1），每週最多 2 件），並非實際接案收入；作者也坦承 Excel 儀表板在 Freelancer 看似藍海，到其他平台卻很擁擠。",
+  author:"@paonx_eth (Paone)",
+  likes:606,
+  url:"https://x.com/paonx_eth/status/2107101851590041631",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）加爬蟲與 GPT 做一個「接案利基掃描器」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 爬蟲抓 Freelancer 本週所有開放案件，存標題、描述、預算、技能標籤與目前投標數。2) 每筆案件問 Jev 兩題 Noul：「這是真實可接的案件嗎（非廣告、非徵才）」「一個人能完全線上完成嗎」，state 放標題、描述與預算；任一題信心值低於 0.6 就標記待人工看，否則依答案淘汰。3) 抽 600 筆通過的案件給 GPT，請它命名 30 個利基類別；再用 Jev Choice（選項 = 30 個利基）把其餘案件逐筆分類。4) 每個利基算件數、預算中位數、平均投標數，問 Jev Score（1–5）「值不值得深入研究」，只有 4 分以上的交給 GPT 上網查其他平台的行情與競爭程度。5) 最後輸出排行：每個利基的本週件數、預算中位數、平均投標數、潛在月收（預算 ÷（投標數＋1），每週最多 2 件）與 GPT 的外部查證結論，並統計 Jev 與 GPT 的呼叫次數與花費。"
+},
+{
+  cat:"工程研究",
+  title:"Pi 終端機的「你該知道」觀察員：Jev 先判斷要不要提醒，過門檻才叫 Luna 寫警告",
+  desc:"Anthropic 替 Claude Code 推出「You should Know」外掛（掃描 Claude 輸出、提醒使用者可能漏看的重要資訊）後，Nate Berkopec 在自己的 Pi coding agent 裡做了一個幾乎免費的版本：每個檢查點把對話送一次 Jev，批次判斷該不該打斷與屬於哪類問題，只有 P(warn) 高於門檻（預設 0.85）才呼叫 GPT-6 Luna 寫一句提醒，顯示在編輯區上方，並在頁尾顯示兩邊的累計花費。PR 內附的實測：模擬資料遺失情境 P(warn)=0.99 跳出警告，單純算術對話 P(warn)=0 直接略過 Luna。誠實保留：這是作者 dotfiles 的 PR，PR 註明程式由 GPT-6.1 Sol 協助撰寫，決策層才是 Jev。",
+  author:"@nateberkopec (Nate Berkopec)",
+  likes:218,
+  url:"https://x.com/nateberkopec/status/2106996184900604319",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）替你的 coding agent（例如 Pi 或 Claude Code）做一個「你該知道（YSK）」背景觀察員。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 每到檢查點（一輪結束，或進行中每 30 秒最多一次），把最近約 24,000 字的對話文字（不含 thinking 與圖片）當 state 送 Jev。2) 同一次請求批次問兩題：Noul「這段內容裡有沒有使用者必須知道、但可能會漏看的事（資料遺失、靜默失敗、改到不該改的檔案、未經同意的取捨）」，以及 Choice「屬於哪一類」（資料風險／安全／範圍偏離／測試未過／其他）。3) 只有 P(warn) ≥ 0.85（門檻可用 /ysk-demo 0.0–1.0 調整）才呼叫一個不帶工具的小模型（例如 GPT-6 Luna），請它用一句話寫出提醒；低於門檻就不顯示任何東西。4) 提醒顯示在輸入框上方，以粗體「YSK:」開頭；頁尾用淡色顯示 Jev 與小模型的累計花費與呼叫次數，未知花費顯示「?」而不是 0。5) 觀察員不得把任何內容注入主 agent 的 context；主任務取消或關閉功能時，進行中的判斷要一併取消。"
+},
+{
+  cat:"工程研究",
+  title:"Jevline：從一個已知惡意程序出發，21 秒、0.11 美元從 100 萬筆日誌重建攻擊鏈",
+  desc:"資安從業者 Kostas 把 Jev 用在事件調查，做成開源 PoC「Jevline」：給它一個已確認惡意的起點（程序、IP、網域、帳號或主機），它沿著遙測資料往外追，只把「跟這起事件有連結」的項目丟給 Jev 判斷是否屬於本事件，而不是叫模型掃完幾百萬筆事件。在一次真實的實驗室入侵中，只從 2.8.exe 一個程序出發：Elastic Defend 70.5 萬筆找回 33/41 個程序（10 秒、0.03 美元）、Windows 事件日誌 31 萬筆找回 37/41（0 個錯判、6 秒）、兩者合併 2.3 GB／101 萬筆找回 40/41（1 個錯判、21 秒、0.11 美元）。有線上 demo 與 GitHub repo。誠實保留：作者強調 Jev 判斷的是「是否屬於這起事件」而非「是否惡意」，結果仍需分析師複核；41 個程序的攻擊鏈是分析師自己標的基準。",
+  author:"@Kostastsale (Kostas)",
+  likes:160,
+  url:"https://x.com/Kostastsale/status/2107525482686407006",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個資安事件時間軸重建工具。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 匯入 EDR（例如 Elastic Defend）與 Windows 事件日誌，正規化成程序、網路連線、檔案、登錄檔、帳號登入等事件，建立以程序 ID、父子關係、主機、IP、網域串起來的關聯圖。2) 使用者輸入一個已確認惡意的種子（程序名、IP、網域、帳號或主機）。3) 從種子做廣度優先展開：每一輪只取與目前事件集合直接相連的候選，對每個候選問 Jev Noul「這個項目是否屬於同一起事件」，state 放候選本身、與已確認節點的連結方式、時間差與命令列；信心值 ≥ 0.7 納入並繼續往外展開，0.4–0.7 標為待分析師確認，低於 0.4 捨棄。4) 不問 Jev「是否惡意」，只問「是否屬於此事件」。5) 輸出互動式時間軸與程序樹，標出每個節點的納入理由與信心值，並統計處理筆數、Jev 呼叫次數、耗時與花費；若有分析師標好的基準攻擊鏈，一併算出召回率與錯判數。"
 }
 ];
 
@@ -4984,6 +5056,67 @@ const OPUS_CASES = [
   url:"https://x.com/bomberfish77/status/2106648802790694927",
   ptype:"重建",
   prompt:"替 Minecraft 1.8.9（Forge）寫一個 Metal 渲染後端的 mod，讓遊戲在 Apple Silicon 的 Mac 上不經 OpenGL 直接用 Metal 繪製：1) 攔截遊戲的 LWJGL／OpenGL 固定管線呼叫（矩陣堆疊、頂點陣列、display list、貼圖綁定、混合與深度狀態），轉成 Metal 的 pipeline state 與 draw call；2) 把固定管線的光照、霧、alpha test 改寫成 Metal shader；3) 處理區塊渲染、實體、粒子、GUI 與文字，畫面要與原版一致；4) 支援 MetalFX 空間縮放；5) F3 除錯畫面顯示目前後端名稱；6) 先在單人世界逐項比對截圖修正畫面差異，再連上大型多人伺服器測穩定性與 FPS，並回報仍有問題的地方。"
+},
+// ====== 2026-10-07 自動更新 ======
+{
+  cat:"遊戲",
+  title:"截了 9 萬張自己遊戲的畫面、修兩天：程式生成的海景划船小遊戲",
+  desc:"作者讓 Opus 5.5 花兩天做一款海邊小遊戲：夕陽下的木棧橋、海面與坐在小船上的角色。做法是兩個 agent 互相把關——一個寫程式，另一個從沒看過程式碼，只看截圖挑毛病再退回去改，過程累計約 9 萬張截圖，光是海面就退回重做五次；作者本人只負責說哪裡看起來不對。成品可直接遊玩、程式碼公開（bay-ride）。誠實保留：作者坦言過程不順，第一天早上海面整片全黑，遊戲還用到他上一款遊戲的角色。",
+  author:"@prasenx (Prasenjit)",
+  likes:2477,
+  url:"https://x.com/prasenx/status/2107451914954911838",
+  ptype:"重建",
+  prompt:"做一款可在瀏覽器玩的 3D 海景小遊戲：黃昏時分，玩家坐在小木船上，從木棧橋出發在海上划行。畫面用 Three.js，所有模型與材質用程式生成：1) 海面要有真實的波浪起伏、夕陽倒影與泡沫；2) 天空有漸層、低垂的太陽與雲；3) 木棧橋、木船與角色是低多邊形但有細節；4) WASD 划船、船會隨浪起伏。工作方式：你負責寫程式，另開一個從沒看過程式碼的審查 agent，每次改完就截圖給它，它只根據畫面列出哪裡看起來不對、退回給你修，直到它挑不出問題為止，海面要特別嚴格。"
+},
+{
+  cat:"遊戲",
+  title:"15 分鐘做出 Roblox 劍技特效：揮劍光軌與衝擊效果",
+  desc:"作者說這段 Roblox 劍技 VFX 是 Opus 5.5 只花 15 分鐘做出來的，影片中角色在 Roblox Studio 的測試場揮出一道帶殘影的光刃與衝擊特效。誠實保留：推文只有一句話加影片，沒有說明是生成 Luau 腳本與粒子設定，還是透過 Roblox Studio 的 MCP 直接操作，也沒有附 prompt，下方 prompt 依畫面重建。",
+  author:"@ZDoranto (doranto)",
+  likes:2120,
+  url:"https://x.com/ZDoranto/status/2107262186687180967",
+  ptype:"重建",
+  prompt:"在 Roblox Studio 裡做一招劍技特效（用 Luau 腳本加 ParticleEmitter／Beam／Trail）：按下技能鍵時，角色揮劍劃出一道帶殘影的發光刃（Trail 隨劍尖移動、顏色由白漸變為青），刃光往前飛出一小段距離，命中點爆出衝擊波圓環、火花粒子與短暫的鏡頭震動。所有特效要在 0.6 秒內完成並自動清除，不留下殘餘物件。做完附上放置位置說明，讓我能直接在 StarterPack 的工具上測試。"
+},
+{
+  cat:"創意藝術",
+  title:"敦煌洞窟壁畫新媒體互動作品：鏡面、生滅與空色，3D 網頁加中英雙語宣傳片",
+  desc:"作者請 Opus 5.5 做一件以敦煌佛窟壁畫為主題的新媒體互動藝術：在 3D 空間貼上真實壁畫素材，進「洞」參觀時藉鏡面反射照見諸佛世界，融合時間、鏡子、生滅、空色的哲思，產出網頁，再加一支中英雙語字幕、中文配音的動態圖形宣傳影片。作者稱品質達到頂級博物館沉浸式項目的交付水準。誠實保留：貼文同時在替一個可呼叫 Opus 5.5 與 Claude Code 的平台導流，原 prompt 裡要求在作品與影片結尾放入該平台的導流入口；prompt 中的連結以〔平台網址〕、〔參考連結〕代替。",
+  author:"@KeWai386772 (MSB)",
+  likes:1339,
+  url:"https://x.com/KeWai386772/status/2107253459624046855",
+  ptype:"原文",
+  prompt:"创作敦煌佛洞窟教壁画新媒体交互艺术作品，中英双语。在有禅机妙趣的哲思理念下，融合时间、镜子、生灭、空色的表达。贴图需要找到资源，在3D空间中贴上真实的壁画素材。入“洞”参观时，照见大千诸佛世界。镜面反射你可以借鉴 〔参考连结〕 中的思路，但要服务作品哲思与艺术效果的表现任务。产出 web 。巧妙放入 〔平台网址〕 的导流入口。\n\n并制作一部高超的，新媒体艺术世界大师级的动态图形交互动效视频，结尾附带 〔平台网址〕 的丝滑自然不刻意绝妙的宣传。中英双语字幕。语音为中文。"
+},
+{
+  cat:"模擬視覺化",
+  title:"把礦場管理軟體做成策略遊戲：等角 3D 礦坑、即時告警與限時應變",
+  desc:"作者用 Opus 5.5 把礦場營運軟體做成像策略遊戲的單檔互動頁：淡紫色地面上的等角 3D 礦坑，卡車循環、輸送帶運礦、火車裝載，左上是告警面板（含攝影機畫面與倒數），右上顯示點選設備的狀態，左下是各段產量的流程條；系統每隔幾秒偵測一個危害，要在時限內選對應變，答對省成本、答錯或太慢就停機，班次結束給分數。作者事後在留言貼出從 Claude 萃取的模板 prompt，並要求同時產出 16:9 與 9:16 的 30 秒 demo 影片。誠實保留：prompt 是作者事後整理的通用模板（方括號為待填欄位），不一定是當初逐字下的指令。",
+  author:"@tradphi (Rish Dodhia)",
+  likes:842,
+  url:"https://x.com/tradphi/status/2107022944916709886",
+  ptype:"原文",
+  prompt:"Build a single-file HTML interactive that makes [INDUSTRY] software feel like a strategy game.\n\nStyle: light isometric 3D scene (Three.js), soft lavender ground, white buildings with blue roofs, yellow machines, floating white glass panels. Clean, playful, premium.\n\nScene: a full [SITE TYPE] with [KEY ASSETS — e.g. open pit, haul trucks, crusher, conveyors, stockpile, rail load-out]. Everything moves: [WHAT FLOWS — e.g. ore on belts, trucks cycling, trains loading].\n\nUI:\n- Top bar: [BRAND] logo, site name, live clock\n- Top left: alert panel (live camera feed, detection box, countdown, 2–3 response buttons)\n- Top right: status of whatever I click\n- Bottom left: live flow strip showing each stage and its throughput\n- No panel overlaps another\n\nGame loop: every few seconds the system detects a hazard ([HAZARD TYPES]). Pick the right response before the timer runs out. Right call = cost saved, wrong call or too slow = downtime. Shift ends with a score.\n\nThen make a 30s demo video of it (16:9 and 9:16), with a scripted camera tour, big short captions, a cursor clicking through alerts, background music, and a hook in the first second. End on: [TAGLINE]."
+},
+{
+  cat:"遊戲",
+  title:"把波巴·費特塞進《碧血狂殺 2》：搬模型、綁骨架、做噴射背包，還自己逆向寫匯出器",
+  desc:"繼把亞瑟·摩根放進《星際大戰：戰場前線 II》之後，作者團隊反過來讓 Opus 5.5 把波巴·費特放進《碧血狂殺 2》的瓦倫丁鎮：Claude 把戰場前線 II 的原版模型搬進 RDR2、套到亞瑟的骨架上，做出能用的噴射背包、爆能槍、火箭與火焰噴射器，還接上原版語音。因為團隊規定「不註冊帳號、不付費」，現成匯出工具都不能用，它就自己逆向檔案格式寫了匯出器。飛行畫面由 Claude 寫控制腳本、對照截圖重拍 14 次，最後剪成波巴盤旋在瓦倫丁上空、往街上發射火箭救下亞瑟的短片。與 @Angaisb_ 合作。誠實保留：屬單機遊戲 mod，涉及跨遊戲搬運素材，僅供個人展示；推文沒有附 prompt，下方依描述重建。",
+  author:"@ChrisGPT (Chris)",
+  likes:655,
+  url:"https://x.com/ChrisGPT/status/2106925689190354989",
+  ptype:"重建",
+  prompt:"幫我做一個《碧血狂殺 2》（PC 單機）的 mod，把《星際大戰：戰場前線 II》裡的波巴·費特放進瓦倫丁鎮。限制：不註冊任何帳號、不使用付費工具，現成工具不能用就自己寫。步驟：1) 從我自己安裝的戰場前線 II 抽出波巴·費特的模型、貼圖與語音；需要的話逆向檔案格式自己寫匯出器。2) 轉成 RDR2 能載入的格式，重新綁到亞瑟的骨架上，檢查關節與權重。3) 做出可用的噴射背包飛行、爆能槍、肩部火箭與火焰噴射器，各自有特效與音效，並接上原版語音台詞。4) 寫一段腳本控制飛行鏡頭，拍一段波巴從空中救下被 Micah 毆打的亞瑟的畫面；每拍一次就截圖檢查構圖與動作，不滿意就重拍。最後告訴我所有修改過的檔案與還原方式。"
+},
+{
+  cat:"遊戲",
+  title:"Claude 直接在執行中的 Unreal 編輯器裡蓋遊戲：撿 3 顆寶珠、開城門的第三人稱小關卡",
+  desc:"作者用 Unreal Engine 5.8 的 Unreal MCP 加 Epic 官方的 Claude Code 外掛，讓 Opus 5.5 直接在執行中的編輯器裡做出一個可玩的第三人稱小遊戲，全程沒有手拉藍圖：先蓋灰盒關卡（小路、有城牆的村莊、一開始就看得到的高塔），再加規則（收集 3 顆寶珠、上鎖的城門、「You made it」、按 R 重來），接著一次一個功能加敵人、血量與攻擊，最後才換角色、素材與打光。作者給每個 prompt 的四條規則：講清楚怎樣算完成、講清楚什麼不能改、要它列出動過的所有東西、不准偷偷繞路（做不到就停下來說）。完整教學在作者的長文。",
+  author:"@rewind02 (rewind)",
+  likes:651,
+  url:"https://x.com/rewind02/status/2107086047985258639",
+  ptype:"重建",
+  prompt:"你現在透過 Unreal MCP 連到我正在執行的 Unreal Engine 5.8 編輯器（Third Person 專案，已納入版本控制）。我們一次只做一件事，每個步驟都遵守四條規則：講清楚怎樣算完成；不能改動我指定的東西；做完列出你動過的所有資產與設定；做不到就停下來告訴我，不准偷偷用替代方案。第一步：只用灰盒蓋關卡——一條小路通往有城牆的村莊，村裡有一座從起點就看得到的高塔。完成條件：我按 Play 能從起點走到塔底。確認後依序做：1) 規則：場上 3 顆寶珠，收齊後城門解鎖，進門顯示「You made it」，按 R 重來；2) 一個會巡邏與追擊的敵人；3) 玩家血量；4) 玩家攻擊；5) 最後才替換角色模型、真實素材與打光。"
 }
 ];
 
