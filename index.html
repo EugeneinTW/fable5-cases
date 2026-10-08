@@ -1274,7 +1274,18 @@ Godot 階段：
 2. 吸積盤要有溫度隨半徑變化的顏色與都卜勒增亮，背景星空也要被重力透鏡扭曲，看得到愛因斯坦環與盤的上下兩個像。
 3. 鏡頭沿軌道緩慢移動並改變仰角，畫面角落顯示距離（以 M 為單位）、仰角與「Schwarzschild metric」標籤。
 4. 不用遊戲引擎、圖庫素材或外部貼圖；要能在 2 顆 CPU 核心上一小時左右渲染完（可用 numpy 向量化或多行程）。`
- }
+ },
+// ====== 2026-10-08 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"OpenAI 的 Navier–Stokes 證明在講什麼？一部 5 分鐘、分 8 步的 3D 解說影片（Fable 5.5）",
+  desc:"OpenAI 那份 160 多頁的 Navier–Stokes 證明公布一個月後數學家還在消化，作者請 Claude Fable 5.5 解釋它，模型直接做出一支 5 分鐘的 3D 動畫，把證明拆成 8 個步驟講。作者自己加註保留：該證明經 Lean 檢查、但尚未完全通過人類審核，且影片內容是否忠實於原證明需自行判斷。",
+  author:"@imjustnewatai",
+  likes:484,
+  url:"https://x.com/imjustnewatai/status/2107590323128193174",
+  ptype:"重建",
+  prompt:"請讀 OpenAI 公布的 Navier–Stokes 正則性證明（160 多頁），替一般理工背景觀眾做一支約 5 分鐘的 3D 解說影片。要求：1) 把證明拆成 8 個依序推進的步驟，每步一個段落，畫面上標出步驟編號與一句話重點；2) 用 3D 流場、渦管、能量級聯等視覺化說明每個關鍵估計在控制什麼；3) 開頭交代問題本身（光滑初值的三維不可壓縮流是否會在有限時間爆掉），結尾誠實說明驗證狀態（Lean 已檢查、人類審核未完成）與限制；4) 用程式（例如 Three.js 或 Python + Blender）產生所有畫面並輸出 1080p 影片，旁白字幕同步。"
+}
 ];
 
 // ====== GPT-6 Astra 案例（OpenAI，2026-09 發布）======
@@ -3372,7 +3383,18 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
 2. 內部底盤：電池艙、馬達座、主控板與感測器的安裝位，零件之間保留走線空間與螺絲孔位。
 3. 外殼：可拆式上蓋與側板，邊角倒圓，標出分件線。
 4. 每完成一個子系統就算一次干涉檢查並截圖給我看，最後輸出 STEP 檔、零件清單與爆炸圖。`
- }
+ },
+// ====== 2026-10-08 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"復刻一段手繪墨水字動畫：純 JavaScript + Canvas + WebGL，燒掉約 1.5 週額度、20 小時",
+  desc:"有人貼出一段手繪墨水筆觸的字體動畫（「How」等字被反覆描繪、帶紙張質感），喊話想看 AI 能不能做出來；作者用 GPT-6 Astra 以 JavaScript、Canvas 與 WebGL 重做，花了約 1.5 份每週額度、20 小時工作。作者自註不是 100% 完美復刻，對照與細節放在串文裡。",
+  author:"@LexnLin (Leon Lin)",
+  likes:394,
+  url:"https://x.com/LexnLin/status/2107922902423417199",
+  ptype:"重建",
+  prompt:"這是一段參考影片（附上）：白色紙張背景上，黑褐色墨水筆以潦草、反覆描繪的筆觸寫出字詞（例如「How」），筆畫有乾筆、飛白與細微抖動，最後帶一條細線劃過。請只用 JavaScript、Canvas 2D 與 WebGL（不用影片素材或現成動畫庫）在瀏覽器裡重現它：1) 紙張紋理用 shader 產生；2) 每個字母用多條帶隨機偏移的筆劃路徑逐筆畫出，墨水濃度隨速度變化；3) 時間軸與參考影片逐段對齊；4) 做一個左右並排的對照模式，方便我逐幀比較差異，持續迭代直到接近原片。"
+}
 ];
 
 // ====== TypeSafe Jev 案例（決策模型，2026-09-15 發布）======
@@ -4626,6 +4648,17 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/Kostastsale/status/2107525482686407006",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）做一個資安事件時間軸重建工具。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 匯入 EDR（例如 Elastic Defend）與 Windows 事件日誌，正規化成程序、網路連線、檔案、登錄檔、帳號登入等事件，建立以程序 ID、父子關係、主機、IP、網域串起來的關聯圖。2) 使用者輸入一個已確認惡意的種子（程序名、IP、網域、帳號或主機）。3) 從種子做廣度優先展開：每一輪只取與目前事件集合直接相連的候選，對每個候選問 Jev Noul「這個項目是否屬於同一起事件」，state 放候選本身、與已確認節點的連結方式、時間差與命令列；信心值 ≥ 0.7 納入並繼續往外展開，0.4–0.7 標為待分析師確認，低於 0.4 捨棄。4) 不問 Jev「是否惡意」，只問「是否屬於此事件」。5) 輸出互動式時間軸與程序樹，標出每個節點的納入理由與信心值，並統計處理筆數、Jev 呼叫次數、耗時與花費；若有分析師標好的基準攻擊鏈，一併算出召回率與錯判數。"
+},
+// ====== 2026-10-08 自動更新 ======
+{
+  cat:"工程研究",
+  title:"Jev 當審查層的資料分析 agent：Qwen 寫 SQL、Jev 在三個關卡把關，「最好的客戶」會被打回去問清楚",
+  desc:"作者用 Vercel eve 跑 agent 迴圈，Qwen（qwen3.8-omni-flash）負責看 schema、寫 SQL、解釋結果，Jev 只在需要語意判斷的地方出手：開跑前判斷問題夠不夠明確、SQL 產生後判斷是否真的對應使用者意圖、查詢後判斷解釋是否有被回傳列支撐。實測問「誰是我們最好的客戶？」時，Jev 判定「最好」有營收、次數、客單價等多種解讀而要求澄清。能用程式確定的部分（只允許單一唯讀 SELECT、SQLite 唯讀模式、列數上限、人工核准）一律不交給模型；附完整建置長文。",
+  author:"@Sumanth_077 (Sumanth)",
+  likes:158,
+  url:"https://x.com/Sumanth_077/status/2107800513681182737",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）當審查層，做一個資料分析 agent。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。架構：Vercel eve 負責 agent 迴圈、工具執行與人工核准；Qwen（透過 Vercel AI Gateway）負責讀 schema、寫 SQL、解釋結果；資料是一個 SQLite 銷售資料庫（customers / products / orders）。Jev 在三個關卡判斷，state 放使用者問題、schema 摘要、SQL 與回傳列：1) 開跑前 Noul「這個問題能否只靠現有資料明確回答？」，低於 0.6 就停下來請使用者澄清（例如「最好的客戶」要指定營收、次數或客單價）；2) SQL 產生後 Noul「這段 SQL 是否表達了使用者的原意？」，不通過就把理由回給 Qwen 重寫；3) 回答前 Score（1–5）「解釋內容是否完全由回傳列支撐」，低於 4 分退回。確定性規則用程式強制：工具只接受單一唯讀 SELECT、SQLite 以唯讀模式開啟、限制回傳列數、執行前需人工核准。"
 }
 ];
 
@@ -5117,6 +5150,57 @@ const OPUS_CASES = [
   url:"https://x.com/rewind02/status/2107086047985258639",
   ptype:"重建",
   prompt:"你現在透過 Unreal MCP 連到我正在執行的 Unreal Engine 5.8 編輯器（Third Person 專案，已納入版本控制）。我們一次只做一件事，每個步驟都遵守四條規則：講清楚怎樣算完成；不能改動我指定的東西；做完列出你動過的所有資產與設定；做不到就停下來告訴我，不准偷偷用替代方案。第一步：只用灰盒蓋關卡——一條小路通往有城牆的村莊，村裡有一座從起點就看得到的高塔。完成條件：我按 Play 能從起點走到塔底。確認後依序做：1) 規則：場上 3 顆寶珠，收齊後城門解鎖，進門顯示「You made it」，按 R 重來；2) 一個會巡邏與追擊的敵人；3) 玩家血量；4) 玩家攻擊；5) 最後才替換角色模型、真實素材與打光。"
+},
+// ====== 2026-10-08 自動更新 ======
+{
+  cat:"遊戲",
+  title:"8 天、34.6 萬行 C#：自研引擎的 3D 版《泰拉瑞亞》，3,369 種物品、313 種敵人與 Boss",
+  desc:"轉述，原作者 Anipixels（日文圈轉述同樣指向此人）。據稱創作者全程沒寫一行程式，用 Claude Opus 5.5 在 8 天內以自研 C# 引擎（不用 Unity、Godot）把《泰拉瑞亞》重做成 3D：浮空島、方塊地形、3,369 種物品、313 種敵人與 Boss，模型、音樂與音效也是 AI 生成。保留：搬運號貼文、沒有公開可玩版本或原始碼，留言不少人質疑像 Minecraft 模組包、且 34.6 萬行難以維護。",
+  author:"@SahilExec (Edgex)（轉述，原作者 Anipixels）",
+  likes:5592,
+  url:"https://x.com/SahilExec/status/2107444680732668320",
+  ptype:"重建",
+  prompt:"用 C# 從零寫一個自研 3D 體素遊戲引擎（不使用 Unity、Godot 或其他現成引擎），在上面做出 3D 版的《泰拉瑞亞》式沙盒生存遊戲：程序生成的方塊地形與生態系（沙漠、森林、雪地、海洋、浮空島）、挖掘與建造、合成系統、日夜循環、敵人與 Boss 戰。先定好引擎架構（渲染、區塊串流、物理、ECS、存檔），再用資料驅動的方式大量擴充內容：物品、配方、敵人與 Boss 都定義在資料表裡，目標是數千種物品、數百種敵人。每完成一個系統就寫測試並截圖給我驗收。"
+},
+{
+  cat:"模擬視覺化",
+  title:"走進不開放的 Apple Park：用 OSM、USGS 光達和 2013 年規劃圖重建的 3D 導覽",
+  desc:"Apple Park 的環形主樓一般人進不去，作者請 Opus 5.5 做一個 3D 探索器加虛擬導覽：模型做了 66 次網路搜尋，用 OpenStreetMap、USGS 光達與 Apple 2013 年的規劃圖把園區照真實尺寸拼出來，還能調整月份與太陽位置。耗時 6 小時 44 分、以 API 計價約 127.79 美元（作者實際用訂閱，/usage 顯示 98% Opus 5.5、2% Haiku），已部署上線。作者是本庫常客（互動鏡頭實驗室）。",
+  author:"@RyanSael (Ryan Sael)",
+  likes:745,
+  url:"https://x.com/RyanSael/status/2107499672915021992",
+  ptype:"原文",
+  prompt:"Hi I'm wondering if we can make a 3D explorer detailing Apple Park?\nand some kind of a virtual tour if that can happen? should be new branch worktree for this\n\nget it as detailed as you can please"
+},
+{
+  cat:"創意藝術",
+  title:"一句「我要視覺傑作」：Opus 5.5 自己上 Suno 作曲、在 Blender 裡把歌的頻譜刻成岩漿峽谷",
+  desc:"作者只說想要一支視覺傑作，給 Opus 5.5 Suno 與 Blender（Extra High），3 小時 27 分後拿回一支 20 秒、可無縫循環的短片，自己沒碰任何關鍵影格。模型先把音軌量到每個音高俯衝與靜音，地面就是這首歌真正的頻譜圖做成的岩漿峽谷、主角是磁流體球、第三隻眼的瞳孔隨每個大鼓放大，全部透過 Blender MCP 即時建構、Cycles 算圖；作者稱只用了約 2% 額度。注意：下方 prompt 是事後請模型反推整理的版本，並非一開始下的指令。",
+  author:"@kloss_xyz (klöss)",
+  likes:593,
+  url:"https://x.com/kloss_xyz/status/2107696042053431360",
+  ptype:"原文",
+  prompt:"MAGNETIC: one sound clip → a hyper-real psychedelic Blender short that loops forever\n\nYou have computer use (I'm logged into Suno), a terminal, Blender 4.2+ with the BlenderMCP addon, ffmpeg and Python. You are the creative director, sound engineer, cinematographer and VFX lead in one. Own every creative call and push past the first idea. Every visual must come from the sound itself.\n\n1. MAKE THE SOUND (Suno)\nCreate → Custom. Style:\n\"Dark glitch bass instrumental, gritty distorted saw synth lead where every note bends down like tape slowing, filtered intro sweeping open, 32nd-note stutter rolls, lowpassed half-time breakdown, heavy sidechain-pumped drop, 808 kick with a pitch dive on every beat, hard gated chops and dead silences, tape-stop power-downs and tape-start spin-ups, 150 bpm head-nod menace, crunchy saturated mix, deep sub. Dark glitch bass, tape-stop.\"\nExclude: vocals, festival supersaw builds, trap hi-hat rolls, lo-fi chill, long ambient intro.\nLyrics box gets structure tags only: [Filtered Intro, stutter rolls] [Kick In] [Tape Stop] [Breakdown, every note falls in pitch] [Drop, sidechain pump, gated chops] [Power Down, dead silence] [Drop] [Tape Start spin-up] [Hard Cut]\nWeirdness 45%, Style Influence 80%. Generate two batches, download the take with the clearest tape-stops, and cut a window of about 20 s on bar lines (at 150 bpm, 13 bars = 20.8 s) that holds a tape-stop, a drop and a power-down.\n\n2. LISTEN WITH MATH\nDecode to wav. Measure the tempo and bar grid, onsets, kicks, stutter rolls, silent frames, spectral centroid, and the exact frames where pitch dives (tape-stop) or bends up (tape-start). Plot the spectrograms and look at them. Map everything to 30 fps so every cut lands on a beat.\n\n3. CHOREOGRAPH\nTurn the analysis into per-frame animation channels. Integrate the measured playback speed into a tape clock, so the 3D world slows, freezes, dies and overdrives exactly when the tape does. Bake every channel onto one controller object and drive the scene from it.\n\n4. BUILD THE WORLD LIVE IN BLENDER THROUGH MCP\n- Hero: a ferrofluid sphere. Rosensweig spikes grown from Poisson-disk sites sampled on its surface, height from the bass, punched by kicks, thin-film iridescent black, microscopic surface tremor.\n- The ground is the sound: the clip's real spectrogram displaced into a 3D canyon in the magma colormap. Bass is a glowing river under the hero, harmonics rise into violet ridges, obsidian crust with lava in the cracks. It scrolls with the audio and freezes when time stops.\n- A third eye: a liquid-metal eye in the ferrofluid with a per-pixel magma iris (stroma fibres, collarette, dark limbal ring, glowing pupillary rim) and a black mirror pupil that dilates on every kick. It tracks the active camera in every shot, with micro-saccades on the beat.\n- A 16-step light sequencer visible only in reflections, a halo ring, a Seed-of-Life mandala that draws itself on the drop, magnetic tape rings printed with the spectrogram, dust floating like phosphenes, volumetric haze.\n- Palette: magma only. Black, violet, magenta, coral, orange, pale gold.\n\n5. MAP THE TRIP TO THE STRUCTURE\nPhosphenes in the intro. The eye blinks shut into closed-eye visuals (the canyon reveal). Geometry and tracers in the groove. At the tape-stop, time freezes into bullet time: droplets hang mid-explosion, every falling note melts the picture with a pixel sort, and the riser is a dolly-zoom into a feedback tunnel. On the drop the third eye opens. At the power-down the eye closes, the body melts, the video frame rate itself decelerates, black on the silent frame. The tape-start becomes a rotating 6-fold kaleidoscope with a spectral color shift.\n\n6. HOOK AND LOOP\nFrame 0 is the eye staring into the lens, because muted autoplay has to stop the scroll. The last 0.8 s dives back into the eye and lands on frame 0's exact framing, lens and lighting. Make everything time-driven periodic (one full field rotation per loop, noise moving on circular paths) so the seam disappears. Prove it: the last-to-first frame difference must be smaller than a normal frame-to-frame step.\n\n7. HYPER-REAL\nCycles, physically based materials, volumetrics, motion blur on the hero only, depth of field, lens dispersion, bloom, AgX. Iterate like a director: render low-res contact sheets of every shot, critique them hard, fix, repeat. Profile render cost before committing. Render the finals headless in resumable chunks.\n\n8. GLITCH POST, KEYED TO THE ANALYSIS\nReal datamosh (optical-flow pixel bleeding) on chosen cuts, 3-frame retrigger stutters on the rolls, a frame-rate tape-stop with sagging picture, VHS tracking noise and a red pitch-down drain, slice displacement, chroma split, a negative strobe on the gated silence, tracers, a breathing warp on the bass, film grain, halation, vignette, and a tiny tape-speed readout (PLAY / SLOW / STOP / FFWD).\n\n9. DELIVER\n1920x1080, 30 fps, H.264 High at 25 Mbps max, AAC 320k, audio untouched. Show me a low-res motion preview before the final render."
+},
+{
+  cat:"文件簡報",
+  title:"同一份產品簡報、兩種設計語言：數位廳設計系統版 vs 簡報設計師風格版的 HTML 投影片",
+  desc:"簡報設計師 FUJI 用 Opus 5.5 做 HTML 投影片，並排示範兩種風格：左邊套用日本數位廳（デジタル庁）公開的設計系統，右邊套用作者自己「プレゼン屋」的版型風格，範例內容是智慧型手機「ÉPURE」的產品說明資料。示範同一個模型只要換設計系統規範，就能產出風格一致、可直接播放的網頁簡報。",
+  author:"@yoshifujidesign (FUJI / Presentation designer)",
+  likes:769,
+  url:"https://x.com/yoshifujidesign/status/2107488624644411615",
+  ptype:"重建",
+  prompt:"用 HTML／CSS 做一份 16:9、可用方向鍵翻頁的產品說明投影片（單一 HTML 檔），主題是智慧型手機「ÉPURE」：封面、設計理念、拆解後的結構說明、主要規格、與競品比較、總結，共 8–10 頁，全部日文。請做兩個版本：A 版嚴格遵守日本數位廳設計系統（字級、色彩 token、間距、圖表樣式照其規範）；B 版改用簡報設計師風格（大量留白、強烈字級對比、單一重點色、每頁只講一件事）。兩版內容相同，只換設計語言，翻頁加入克制的進場動畫。"
+},
+{
+  cat:"創意藝術",
+  title:"2,000+ Star 開源動畫講解 skill 大更新：用 Opus 5.5 迭代出 9 種講解影片風格",
+  desc:"作者團隊的開源專案（任意主題 → 動畫講解影片的 skill）用 Opus 5.5 多輪迭代，一次新增 9 種講解影片風格並開源，示範影片可見各風格效果。流程：拉最新程式碼 → 在 Claude 系 harness 用該 skill 對任意主題產生動畫講解（指定風格如「v1 設計師」）→ 可選 TTS 配音 → 可選數位人口播合成。作者稱套用模板後連 Codex 也能做出接近的效果；開源連結在留言。",
+  author:"@LufzzLiz (岚叔)",
+  likes:829,
+  url:"https://x.com/LufzzLiz/status/2107408409859359211",
+  ptype:"重建",
+  prompt:"使用這個動畫講解 skill，替【任意主題，例如：為什麼天空是藍色的】做一支 60–90 秒的動畫講解影片，風格使用【v1 設計師】：先寫分鏡腳本（每幕一句重點、畫面元素與轉場），再用程式逐幕產生動畫並合成影片；完成後用 TTS 生成配音並對齊時間軸。如果我提供數位人圖片，再用配音驅動生成口播畫面，最後把講解動畫與數位人口播合成為成片。"
 }
 ];
 
