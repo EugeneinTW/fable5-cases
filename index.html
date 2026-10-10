@@ -4711,6 +4711,27 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/RhysSullivan/status/2108050941287227800",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）做一個 X 回覆守門工具「Reply Guard」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 用我的 X 帳號建立 app 並註冊 webhook，接收所有回覆到我推文的訊息；2) 每則回覆把原推文、回覆內容、回覆者的簡介與近期發文樣本當 state 送 Jev，問 Noul「這是否為 AI 生成或灌水的垃圾回覆」；3) 信心值 ≥ 0.9 就呼叫 API 隱藏該回覆，0.6–0.9 標為 Flagged 待我確認，其餘保留；4) 介面列出每則回覆：作者、時間、內容、垃圾機率條、分類標籤（Kept／Flagged／Hidden），可一鍵 View on X 或手動 Hide；5) 右上角提供「Log only」開關（只記錄不動作）與門檻設定。"
+},
+// ====== 2026-10-10 自動更新 ======
+{
+  cat:"工程研究",
+  title:"arc-cua：用決策模型驅動的快速電腦操作層，不必每步都截圖再問 LLM",
+  desc:"作者做了開源的 arc-cua：一個由決策模型驅動的電腦操作（computer use）層，支援 TypeSafe Jev 與 OpenAI Decisions API。重點是不用每做一個動作就截圖、再呼叫一次 LLM，而是由決策模型在既有選項中挑下一步；demo 在 macOS 地圖上執行 agent 拆出的子任務（找餐廳、設定出發鬧鐘），右側顯示決策步數。附 repo 連結。未附指令，下方 prompt 依描述重建。",
+  author:"@sxhivs (shiv)",
+  likes:196,
+  url:"https://x.com/sxhivs/status/2108239774893138358",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個開源的快速 computer use 層「arc-cua」，同時支援 OpenAI Decisions API 當替代後端。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 先由 LLM 把使用者目標拆成子任務清單（例如「找到餐廳」「設定出發鬧鐘」），之後的每一步都不再呼叫 LLM；2) 每步透過 macOS Accessibility API 讀出目前視窗的可互動元素樹（role、標題、位置），連同子任務與已執行動作當 state 送 Jev，問 Choice「下一個要操作的元素」（選項為元素清單）與 Choice「動作」（點擊／輸入／捲動／按鍵／子任務完成）；3) 需要輸入文字時才交給小型 LLM 產生內容；4) 動作信心值低於 0.6 時才截圖並呼叫多模態 LLM 決定，並記錄這種回退的次數；5) 介面右側即時顯示子任務清單與「Decision n / N」，最後輸出每步決策、信心值與耗時。"
+},
+{
+  cat:"工程研究",
+  title:"Company Brain：GitHub、多個 X 帳號與 Gmail 合成一個收件匣，Jev 判斷緊急度與要不要回",
+  desc:"作者傳一段 prompt 給自己的 agent，要一個有 Superhuman 風格操作體驗的「company brain」，把 GitHub、多個 X 帳號與多個 Gmail 合併成單一收件匣，第一版就頗可用。進來的訊息由 Jev 搭配 LLM 自動分類，截圖可見每則的排序理由：類別、Jev 判定的急迫度（68%）、Jev 預期需要回覆（87%）、等待時間、回報人數與觸及，相乘得出排序分數，並列出「可能是同一件事」的項目供合併；在介面內按 d 就能把工作派給 T3 Code agent 處理。作者打算日常使用幾天後發布成 Executor app。與先前收錄的同作者 Reply Guard 為不同工具。未附指令，下方 prompt 依描述重建。",
+  author:"@RhysSullivan (Rhys)",
+  likes:164,
+  url:"https://x.com/RhysSullivan/status/2108586246855643293",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個「Company Brain」統一收件匣，操作體驗仿 Superhuman（全鍵盤）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 串接 GitHub（issues、PR、mentions）、多個 X 帳號（mentions、DM）、多個 Gmail，全部同步成同一種 item；2) 每則 item 把內容、來源、寄件者資訊與對話脈絡當 state 送 Jev，問 Choice「類別」（support／bug／feature request／sales／social／noise）、Score「急迫度」（0–100%）、Noul「是否需要我回覆」；Jev 信心值低於 0.6 的分類交給 LLM 重判，並由 LLM 寫出一句摘要與建議下一步；3) 排序分數 = 類別權重 × 急迫度 × 需回覆 × 等待時間 × 回報人數 × 觸及，在詳情頁的「Why it ranks here」逐項列出；4) 用 Jev 比對新 item 與既有未結項目，問 Noul「是否為同一件事」，列在「Possibly the same thing」可一鍵合併；5) 快捷鍵：r 回覆、s 稍後、d 派給 coding agent（T3 Code）處理、e 完成、# 忽略；回覆框支援 AI 草稿與片語。"
 }
 ];
 
@@ -5314,6 +5335,67 @@ const OPUS_CASES = [
   url:"https://x.com/LexnLin/status/2108159248148611292",
   ptype:"重建",
   prompt:"用 Three.js 做一個「玻璃盒裡的小世界」互動玩具：1) 一個透明玻璃立方體（有折射與高光），裡面是一小塊有草地、樹、小屋和池塘的地形，頭頂飄著幾朵雲；2) 可以用滑鼠抓起雲朵，按住擠壓就會下雨，雨水落地會在池塘激起漣漪、讓草地變濕變深；3) 拖曳搖晃整個盒子會打雷閃電，盒內物件跟著輕微晃動；4) 提供「風刷」工具，在空中畫出的路徑會變成風場，雲、雨與樹葉沿風向飄動；5) 自動日夜循環（太陽月亮、星星、屋內亮燈）與四季切換（春花、夏綠、秋葉、冬雪），可用按鈕手動切換。"
+},
+// ====== 2026-10-10 自動更新 ======
+{
+  cat:"工程研究",
+  title:"七款開源 Rust 版 Adobe 替代品：PhotoCraft、VectorCraft、FilmCraft 一路到 PrintCraft",
+  desc:"有開發者在 Claude Opus 5.5 協助下，用 Rust 從零寫出七款對標 Adobe 主力產品的開源軟體：PhotoCraft（Photoshop）、VectorCraft（Illustrator）、FilmCraft（Premiere Pro）、LightCraft（Lightroom）、EffectCraft（After Effects）、DesignCraft（InDesign）、PrintCraft（Acrobat Pro），標榜 clean-room、不使用 Adobe 原始碼，支援 Windows／Linux／macOS，採 MIT／Apache 授權。保留：官網標示多數仍是 Early Alpha／In Development；本則為遊戲新聞帳號轉述，原作者為 ArtCraft 團隊（推文未標註個人帳號）。未附 prompt，下方 prompt 依描述重建。",
+  author:"@Pirat_Nation (Pirat_Nation 🔴)（轉述，原作者 ArtCraft 團隊）",
+  likes:17447,
+  url:"https://x.com/Pirat_Nation/status/2108437553615425881",
+  ptype:"重建",
+  prompt:"用 Rust 從零寫一個跨平台（Windows／Linux／macOS，另可編譯成 WebAssembly）的開源點陣影像編輯器，介面與操作邏輯要讓 Photoshop 使用者零學習成本，但必須是 clean-room 實作、不參考任何 Adobe 原始碼。1) 架構：核心影像引擎（圖層、混合模式、16-bit 色彩、非破壞性調整圖層）與 UI（egui 或 iced）分離，GPU 加速用 wgpu；2) 功能：圖層面板、選取工具（矩形、套索、魔術棒）、筆刷與橡皮擦、曲線／色階／色相飽和度調整、遮色片、歷史紀錄；3) 檔案：讀寫 PNG／JPEG／TIFF／WebP，並能匯入 PSD 的基本圖層；4) 附單元測試、跨平台 CI 與安裝包打包；5) 授權採 MIT／Apache-2.0 雙授權。完成後用同一套核心擴展出向量、影片、相片庫、動態特效、排版與 PDF 工具。"
+},
+{
+  cat:"遊戲",
+  title:"Rift Val：把《特戰英豪》的第一人稱射擊搬進《英雄聯盟》召喚峽谷",
+  desc:"作者讓 Opus 5.5 做出瀏覽器裡可玩的跨界遊戲「Rift Val」：以《特戰英豪》角色 Breach 的第一人稱視角走中路對抗《英雄聯盟》陣營，畫面有召喚峽谷地圖、小地圖、技能列（Q E C X）、治療／閃現、回城、武器庫與道具商店、計分板，操作是 WASD 加滑鼠射擊。在 localhost 執行。未附 prompt，下方 prompt 依描述重建。",
+  author:"@GamefxAI (Aymane)",
+  likes:5738,
+  url:"https://x.com/GamefxAI/status/2108236934971625563",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個瀏覽器可玩的跨界遊戲「Rift Val」：把第一人稱戰術射擊放進 MOBA 地圖。1) 場景：三路兩隊的 MOBA 地圖（河道、防禦塔、主堡、野區），右下角小地圖；2) 玩家是第一人稱射擊角色，WASD 移動、Shift 靜步、Space 跳、Ctrl 蹲，左鍵射擊、右鍵瞄準、R 換彈、1/2/3 切武器；3) 角色有四個技能 Q E C X（例如震波、閃光、地裂、大範圍擊暈），另有 H 治療、F 閃現、B 回城；4) 敵方是 MOBA 風格的小兵、防禦塔與英雄 AI，擊殺小兵得金錢與經驗，P 開道具商店、G 開武器庫；5) 上方顯示比分與時間，Tab 計分板；開場畫面「Click to Play」並列出操作說明。URL 參數可選角色與路線（?agent=breach&role=mid）。"
+},
+{
+  cat:"遊戲",
+  title:"把 Minecraft 塞進《碧血狂殺 2》：亞瑟·摩根在懸崖上蓋小木屋",
+  desc:"作者請 Opus 5.5 把 Minecraft 的建造玩法放進《碧血狂殺 2》：亞瑟可以拿著方塊在懸崖邊蓋小房子、放置活板門與植物，畫面下方是 Minecraft 風格的物品欄，方塊仍吃到 RDR2 的光影與夕陽。作者打趣說「他值得」。保留：推文未說明實作方式（mod 或重建場景）與耗時。未附 prompt，下方 prompt 依描述重建。",
+  author:"@0xAidanAi (Aidan)",
+  likes:5278,
+  url:"https://x.com/0xAidanAi/status/2108303873538683065",
+  ptype:"重建",
+  prompt:"幫我替《碧血狂殺 2》（PC 版）寫一個單機 mod，把 Minecraft 的方塊建造玩法加進遊戲：1) 用現成的 RDR2 腳本框架（ScriptHookRDR2）掛載，不修改遊戲原始檔；2) 玩家可開啟 Minecraft 風格的 9 格物品欄（木板、原木、玻璃、活板門、樹葉、紅石火把、煙火等），滑鼠滾輪切換；3) 準星對準地面或既有方塊時顯示放置預覽，左鍵放置、右鍵拆除，方塊對齊 1 公尺網格並有碰撞，可在上面行走；4) 方塊使用像素材質但接受遊戲本身的光照、陰影與天氣；5) 建造時角色播放蹲下敲打的動畫；6) 建好的結構存檔，下次載入同一區域會還原。"
+},
+{
+  cat:"遊戲",
+  title:"駕駛飛機穿越整個颶風：Three.js 瀏覽器飛行遊戲",
+  desc:"作者用 Claude Opus 5.5 與 Three.js 做出可在瀏覽器玩的颶風穿越飛行遊戲：分階段從外圍雨帶飛進眼牆（畫面為 Stage 3「Hot towers」），有閃電警示、雨滴打在鏡頭上、體積雲、氣象雷達小地圖、速度／高度／垂直速度儀表、機體耐久與加速條，擦身而過會跳出「Near miss」。作者先前也收錄過 Opus 5.5 噴射引擎與 Astra 作品。未附 prompt，下方 prompt 依描述重建。",
+  author:"@techartist_ (Techartist)",
+  likes:2280,
+  url:"https://x.com/techartist_/status/2108369354991759658",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個瀏覽器 3D 飛行遊戲：駕駛一架飛機穿越整個颶風。1) 颶風以螺旋雨帶與中心颶風眼構成，用體積雲（raymarching 或多層 billboard）呈現，越靠近眼牆雲越厚、亂流越強；2) 關卡分階段：外圍雨帶 → 對流熱塔（hot towers）→ 眼牆 → 颶風眼，每階段顯示名稱與倒數；3) 天氣效果：雨滴打在鏡頭上的水珠、閃電照亮雲層、強風讓機身偏航；4) HUD：右上氣象雷達小地圖（綠黃紅洋紅色階顯示降雨強度與飛機位置）、左下速度／高度／垂直速度、右下機體耐久與 Boost；5) 靠近雲柱或閃電而沒撞上時顯示「Near miss」並加分，撞擊扣耐久；6) 第三人稱追尾鏡頭，鍵盤或手把操作。"
+},
+{
+  cat:"工程研究",
+  title:"幾個 prompt 自建電子報平台取代 Beehiiv：年費從預估 4,000 美元降到 300 美元以下",
+  desc:"Marc Lou 因 Beehiiv 兩年內第三次漲價（首年 1,000 美元、未來將達 4,000 美元），用幾個 prompt 讓 Opus 5.5 做出自己的電子報平台：活動管理與編輯器、網頁存檔、API、名單清理與送達率報告，底層用 AWS SES + MongoDB，預估年費低於 300 美元。截圖為聯絡人頁（8.5 萬筆，分 Active／Pending／Unsubscribed／Bounced／Dormant）。他還設了排程：把不活躍訂閱者標為 Dormant、寄一封喚回信後就停寄，省錢也提升送達率。下一步要取代 Resend。未附 prompt，下方 prompt 依描述重建。",
+  author:"@marclou (Marc Lou)",
+  likes:1038,
+  url:"https://x.com/marclou/status/2108509543810605218",
+  ptype:"重建",
+  prompt:"幫我做一個自架的電子報平台取代 Beehiiv，後端用 AWS SES 寄信、MongoDB 存資料（Next.js 全端）。1) 多份電子報（每份有自己的名稱與頭像），訂閱表單與雙重確認；2) Contacts 頁：可匯入 CSV、依 email 搜尋、依電子報篩選，狀態分 Active／Pending／Unsubscribed／Bounced／Complained／Dormant 並顯示數量，每列顯示開信數、點擊數與加入日期；3) Campaign 管理：所見即所得編輯器、預覽、測試寄送、排程寄送，寄送時依 SES 速率限制分批；4) 公開網頁存檔：每期電子報自動產生可分享的網頁；5) SES 的 bounce／complaint 透過 SNS webhook 自動更新聯絡人狀態，並提供送達率報告；6) 每日排程：超過 90 天未開信的訂閱者標為 Dormant，寄一封喚回信，仍未互動就停止寄送；7) 提供 REST API 讓其他 app 新增訂閱者。"
+},
+{
+  cat:"遊戲",
+  title:"用乳房跑步的乳牛：Q W O P 分別控制四個乳頭的瀏覽器小遊戲",
+  desc:"把網路上「用乳房跑步的乳牛」迷因做成 QWOP 式的瀏覽器遊戲，由 Claude Opus 5.5 建置：玩家用 Q、W、O、P 分別控制前近、前遠、後近、後遠四個乳頭，目標跑完 100 公尺，畫面有距離、最佳紀錄、計時與第幾次嘗試。作者說試了 20 次連一半都跑不到。附可玩連結（在回覆中）。未附 prompt，下方 prompt 依描述重建。",
+  author:"@AIMind_Ai (AiMind)",
+  likes:544,
+  url:"https://x.com/AIMind_Ai/status/2108428917509911018",
+  ptype:"重建",
+  prompt:"用 Three.js 加物理引擎（cannon-es 或 Rapier）做一個 QWOP 風格的瀏覽器小遊戲：一頭卡通乳牛用粉紅色乳房當四隻腳跑步。1) 乳牛身體是剛體，四個乳頭是各自有關節馬達的「腳」；2) 按住 Q／W 分別伸縮前近、前遠乳頭，O／P 控制後近、後遠，需協調節奏才能前進，失衡會翻倒；3) 賽道長 100 公尺，兩側有圍欄、樹與另一頭圍觀的乳牛；4) HUD：左上目前距離與最佳紀錄、右上計時與第幾次嘗試、上方進度條（終點旗）、下方四個按鍵提示（Back near／Back far／Front near／Front far），按下時對應乳頭標示亮起；5) 翻倒後按 R 重來，最佳紀錄存 localStorage；6) 卡通低多邊形畫風、明亮配色。"
 }
 ];
 
