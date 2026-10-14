@@ -3436,6 +3436,27 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
   url:"https://x.com/NaderLikeLadder/status/2108984108722655466",
   ptype:"重建",
   prompt:"做一款以舊金山為舞台的多人線上賽車遊戲（Three.js 前端＋WebSocket 伺服器，開源）：1) 地圖：透過 Blender MCP 依真實街道與地標（金門大橋、Lombard Street 彎道、Market Street、丘陵坡道）建出低多邊形舊金山，分區塊匯出 glTF 以便串流載入。2) 開場畫面「CHOOSE YOUR DRIVER」：卡片式選擇角色，每位車手有不同車款與屬性。3) 玩法：街道競速、檢查點、計時排行榜；坡道要有起飛與落地物理。4) 多人：房間制，伺服器權威同步位置，客戶端內插補幀。5) 先完成一條可跑完的路線，再逐區擴充地圖。"
+},
+// ====== 2026-10-14 自動更新 ======
+{
+  cat:"工程研究",
+  title:"BirriaSDR：讓 GPT-6 Astra 逆向 Wi-Fi 網卡韌體，30 美元的 USB 網卡變成雙頻 40 Msps 軟體無線電",
+  desc:"Luigi Cruz 把 MT7921A Wi-Fi 網卡接上 Raspberry Pi 5，交給 GPT-6 Astra 一個目標：讓它透過 USB 輸出原始 I/Q 資料。Astra 先做出只能錄短片段的 burst 匯出器（老功能、不夠用），幾小時後改用晶片內部的封包引擎，以 DMA 串流每 16 bytes 四組 14 位元複數樣本，做成 2.4/5 GHz 雙頻、標稱 40 Msps 的 SDR，整個驅動只是 CyberEther flowgraph 裡的一支 Python 腳本，已開源。作者強調這不是一句「把它變 SDR」的 prompt，過程中要自己給方向；更高取樣率與頻寬仍屬實驗性、濾波器形狀明顯，算是概念驗證。",
+  author:"@luigifcruz (Luigi Cruz)",
+  likes:242,
+  url:"https://x.com/luigifcruz/status/2110075800687095854",
+  ptype:"重建",
+  prompt:"目標：讓接在 Raspberry Pi 5 上的 MT7921A USB 3.0 Wi-Fi 網卡透過 USB 持續輸出原始 I/Q 資料，當成軟體無線電（SDR）使用。1) 先研究 MT7921 韌體與驅動（mt76），找出可改寫的內部韌體、DMA 引擎與可執行的組合語言 payload 機制；已知的 burst I/Q 擷取（DD-WRT 也有）只能錄短片段，不算完成。2) 改用晶片內部的封包引擎，把連續 I/Q 樣本打包成固定區塊（例如每 16 bytes 四組複數樣本、I 與 Q 各佔 16 位元欄位）經 DMA 送出 USB，做到不間斷串流。3) 支援 2.4 GHz 與 5 GHz 調諧，測試 40／80／160 MHz 取樣設定並記錄實際頻寬與濾波器形狀。4) 把整個驅動寫成單一 Python 腳本，包進 CyberEther 的 flowgraph，能即時顯示頻譜與瀑布圖。5) 每一步都實機驗證，寫下限制與尚未穩定的部分。"
+},
+{
+  cat:"創意藝術",
+  title:"一張大頭照重建 360° 3D 人像：GPT-6 Astra 自己架開源重建管線，成品慘到作者自己笑出來",
+  desc:"Stefano 把 OpenAI Codex 負責人 Tibo（@thsottiaux）的頭像丟給 GPT-6 Astra，用一份約 9,000 字的長 prompt 要求它自己研究、安裝並執行開源的單張照片 3D 人像重建管線，交付可 360° 旋轉的 Three.js 檢視器、多角度渲染與重建報告。Astra 確實做出了帶前後版本、多視角按鈕與線框模式的本機檢視器，但模型本身的臉與頭型嚴重走樣（作者自嘲「他還沒準備好看到這個 💀」）；收錄作為「agent 自架重建管線」的完整 prompt 範本，成品品質並不理想。",
+  author:"@StefanoGPT (Stefano)",
+  likes:217,
+  url:"https://x.com/StefanoGPT/status/2110098269904789797",
+  ptype:"原文",
+  prompt:"# TASK: Photorealistic 3D Human Reconstruction From a Single Photograph\n\nYou are an expert in computer vision, 3D reconstruction, neural rendering, photogrammetry, facial geometry, and procedural modeling.\n\nYour objective is to reconstruct the person shown in the provided reference photograph as a **highly photorealistic, fully three-dimensional human model that can be viewed from any angle (360°)**.\n\n**The reference photograph is your ONLY source of information about this person's identity and appearance.**\n\nYou must work autonomously, researching, installing, configuring, and executing the most advanced open-source reconstruction methods available to you.\n\nDo not stop at creating a plan or generating scripts. Your goal is to produce the actual finished 3D model.\n\n## 1. PRIMARY OBJECTIVE: MAXIMUM FACIAL LIKENESS\n\nThe most important criterion is that the reconstructed person looks recognizably like the individual in the photograph.\n\nAnalyze and preserve:\n\n- Exact visible facial proportions and geometry\n- Overall skull shape, forehead, cheekbones, jawline, and chin\n- Eye shape, spacing, eyelids, eyebrows, and eye color\n- Nose bridge, tip, nostrils, and width\n- Mouth geometry, natural smile, lips, and visible teeth\n- Ear position and anatomically plausible shape\n- Hairline, hairstyle, individual hair strands, and hair density\n- Natural skin coloration, subtle texture, facial hair, and imperfections\n- Asymmetries and distinctive facial features\n\nAvoid generic-looking faces. Identity preservation takes absolute priority over generating a conventionally attractive or perfectly symmetrical human.\n\nDo not beautify, stylize, or significantly modify the person's appearance.\n\n## 2. TRUE 360-DEGREE RECONSTRUCTION\n\nThe provided photograph only shows one perspective, but the final model must have complete 3D geometry.\n\nReconstruct:\n\n- Front of face\n- Left and right three-quarter views\n- Full left and right profiles\n- Back of head and hair\n- Top and underside of head\n- Neck, shoulders, and visible upper torso\n- A plausible complete body if a full-body version is technically feasible\n\nFor regions not visible in the photograph, use anatomically realistic human geometry, statistical 3D morphable face models, and generative reconstruction methods to infer plausible shapes.\n\n**Important:** A single photograph cannot reveal the person's exact unseen anatomy. Prioritize maximum accuracy in visible regions and anatomically plausible, identity-consistent reconstruction everywhere else.\n\nDo not simply project the photograph onto a flat surface or generate a shallow 2.5D mesh.\n\nThe model must look convincing when the camera rotates around it, especially in side-profile views.\n\n## 3. BEST AVAILABLE RECONSTRUCTION TECHNOLOGY\n\nInvestigate and select the strongest practical open-source reconstruction pipeline available.\n\nEvaluate relevant technologies, potentially including:\n\n- FLAME-based 3D face reconstruction\n- DECA / EMOCA\n- Multi-view diffusion or image-conditioned 3D generation\n- TRELLIS / Hunyuan3D or more capable compatible alternatives\n- 3D Gaussian Splatting where useful as an intermediate\n- Neural surface reconstruction\n- Blender Python API\n- Advanced PBR texture generation\n- Anatomical mesh refinement and landmark-based optimization\n\nYou are not required to use all of these. Choose the pipeline that provides the highest possible facial similarity, physically valid geometry, and realistic rendering.\n\nCheck the actual execution environment first, including GPU, available VRAM, CUDA/Metal support, installed software, and model requirements.\n\nPrefer running pretrained models and proven reconstruction frameworks instead of attempting to manually sculpt a face from scratch.\n\nIf the optimal method is unavailable, implement the strongest executable alternative and document the limitations. Never claim to have generated a model or used a pretrained system unless it actually ran.\n\n## 4. GEOMETRY AND TEXTURES\n\nProduce a high-quality, anatomically plausible 3D mesh.\n\nRequirements:\n\n- Smooth, organic human facial geometry without artificial distortions\n- Real 3D nose, lips, eyelids, eye sockets, ears, and jaw\n- Anatomically plausible skull volume\n- Realistic neck and shoulder transitions\n- Properly positioned eyeballs, teeth, and mouth geometry\n- Realistic hair volume with geometry or strand-based hair\n- Clean topology where possible\n- UV-unwrapped surfaces\n- High-resolution PBR materials\n\nSkin must not resemble plastic or wax.\n\nImplement realistic skin shading, including:\n\n- Subsurface scattering\n- Fine pores and subtle microtexture\n- Natural color variation\n- Appropriate roughness maps\n- Physically plausible specular reflections\n- Normal and displacement maps where beneficial\n\nGenerate plausible textures for unseen regions without stretching the original photograph across the entire head.\n\n## 5. PRESERVE EXPRESSION AND APPEARANCE\n\nThe reference shows a person with short dark hair, a friendly smile, and a dark shirt.\n\nPreserve the expression as faithfully as practical, including the shape of the smile and teeth.\n\nDo not replace it with a neutral, expressionless generic face unless required by an intermediate reconstruction stage. The final presentation must reproduce the original expression.\n\nMaintain consistent identity across all camera angles.\n\nAvoid the common issue in image-to-3D reconstruction where the front looks accurate but the profile becomes noticeably different.\n\n## 6. ITERATIVE QUALITY OPTIMIZATION\n\nDo not accept the first generated model.\n\nImplement an iterative refinement process:\n\n1. Extract facial landmarks and relevant visual features from the reference.\n2. Reconstruct initial 3D geometry.\n3. Align the reconstructed camera with the source photograph.\n4. Render the model from the original camera perspective.\n5. Compare the rendering against the reference using facial landmarks, identity similarity metrics where available, silhouette alignment, and visual inspection.\n6. Adjust geometry, textures, pose, and expression to reduce discrepancies.\n7. Evaluate the left and right profile for anatomical plausibility.\n8. Repeat refinement where measurable improvement is possible.\n\nThe ultimate goal is maximum likeness, not merely a visually impressive generic 3D face.\n\nDo not present identity-similarity scores as objective proof of accuracy if the metric or pretrained model is unavailable.\n\n## 7. REQUIRED DELIVERABLES\n\nCreate the following outputs in a clearly organized `output/` directory:\n\n**3D assets**\n- `person_final.blend` - Fully editable Blender project\n- `person_final.glb` - Portable textured 3D model\n- `person_final.fbx` - Export if technically supported\n- `textures/` - Generated texture maps and supporting assets\n\n**Renders**\n- `front.png`\n- `front_left_45.png`\n- `left_profile.png`\n- `back_left_45.png`\n- `back.png`\n- `back_right_45.png`\n- `right_profile.png`\n- `front_right_45.png`\n\n**Visualization**\n- `turntable.mp4` - A smoothly rotating 360-degree video rendered with realistic studio lighting\n- A locally runnable interactive 3D viewer using Three.js, allowing users to rotate, zoom, and inspect the model from any direction\n\n**Documentation**\n- `README.md` - Exact commands to reproduce, open, and inspect everything\n- `reconstruction_report.md` - Methods used, actual execution results, limitations, and which parts of the model are inferred rather than observable\n\n## 8. RENDERING QUALITY\n\nUse physically based rendering with realistic studio lighting.\n\nPrefer Blender Cycles where supported, with appropriate samples, denoising, and accurate material settings.\n\nThe person should look like a real human photographed from different angles, rather than a videogame character, cartoon, mannequin, or wax sculpture.\n\nCreate neutral lighting suitable for evaluating facial likeness.\n\nGenerate high-resolution renders, preferably 2048 × 2048 or higher where resources permit.\n\n## 9. EXECUTION RULES\n\n- Work autonomously from beginning to end.\n- Use only the provided photograph as the identity reference.\n- You may download pretrained models, code, and generic resources, but no additional images of this person.\n- Do not ask for more photographs.\n- Do not substitute a generic human model and claim it is a faithful reconstruction.\n- Install necessary dependencies when possible.\n- Prefer actual working implementation over theoretical explanations.\n- Verify the generated assets load and render successfully.\n- If a GPU-dependent approach is unavailable, attempt an executable CPU-compatible fallback.\n- Explain any fundamental or technical limitations without overstating the result.\n\n## FINAL SUCCESS CRITERION\n\nI want to open the resulting 3D model, rotate it freely through 360 degrees, zoom in on the face, and see a convincing realistic reconstruction of the individual in the reference photograph.\n\n**Priorities, in order:**\n\n1. Facial identity preservation\n2. Accurate visible facial geometry\n3. Convincing full 360-degree anatomical reconstruction\n4. Photorealistic skin, hair, eyes, and materials\n5. High-quality interactive viewing and rendering\n6. Clean, reusable 3D project files\n\nStart by inspecting the reference image and available computing environment. Then select and execute the best achievable reconstruction pipeline.\n\nDo not stop at planning. Produce the actual assets."
 }
 ];
 
@@ -4764,6 +4785,27 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/_can1357/status/2109195967006220719",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）在 coding agent 的回覆管線加一層「表格自動配圖」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 觸發：agent 產生最終回覆後，解析其中所有 Markdown 表格，state 放表格欄名、前 20 列、欄位型別（數值／類別／時間）與使用者原始問題。2) 第一題 Noul「這張表畫成圖會比純表格更好懂嗎？」，機率低於 0.6 就不畫。3) 第二題 Choice 選圖表類型：橫條圖／直條圖／折線圖／堆疊條圖／散點圖。4) 第三題 Choice 選主要數值欄位與排序方式（遞減／原順序／時間）。5) 依結果用前端圖表元件在表格下方渲染圖，整個流程不回傳給主模型、不佔 agent context。6) 記錄每次決策與延遲，抽樣人工檢查誤判。"
+},
+// ====== 2026-10-14 自動更新 ======
+{
+  cat:"工程研究",
+  title:"每週客戶追蹤 agent：Jev 把客戶請求配對到正確的 GitHub issue，準確度追平 Opus、決策成本低 150 倍",
+  desc:"Akshay 把 Jev 放進 TrueFoundry 開源的 agent harness TrueForge，做出每週客戶追蹤 agent：把客戶的請求逐一配對到對應的 GitHub issue，回報進度並替新請求起草 issue。用 40 筆請求測試，準確度與全程交給 Opus 判斷相同，但決策成本約低 150 倍；信心值低的配對會退回給 Opus 複審，測試中攔下 5 筆原本會配錯的案例。程式執行跑在 Daytona 沙箱，作者另寫了完整重現文章。",
+  author:"@akshay_pachaar (Akshay)",
+  likes:183,
+  url:"https://x.com/akshay_pachaar/status/2109909532352917658",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個「每週客戶追蹤」agent，跑在開源 agent harness（例如 TrueForge）上、程式執行放在沙箱（例如 Daytona）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 輸入：本週客戶請求清單（來自 email／Slack 匯出），與 GitHub repo 的所有 open issues（標題、內文摘要、標籤）。2) 每筆請求先用關鍵字縮小到最多 10 個候選 issue，state 放請求原文與候選 issue 摘要，問 Choice「這個請求對應哪個 issue？」（選項為候選 issue 編號＋「沒有對應」）。3) 信心值低於 0.6 的配對交給 Opus 複審並記錄理由；「沒有對應」的請求由 LLM 起草新 issue（標題、重現步驟、標籤），寫入前需人工核准。4) 最後彙整一份可分享給團隊的週報：每個客戶請求目前對應的 issue 與狀態。5) 記錄每筆決策的信心值、延遲與成本，並與全程用 Opus 配對的結果做準確度比較。"
+},
+{
+  cat:"工程研究",
+  title:"jev-seo：一分鐘爬完整站，對照 Google 官方 52 條規則，由 Jev 判斷每頁定位與關鍵字互搶",
+  desc:"開源 SEO 稽核工具：給首頁網址約一分鐘爬完整站，逐項檢查 robots.txt、sitemap、死鏈、重新導向、canonical、結構化資料與 Core Web Vitals 等 52 條 Google 官方規則；每一頁再交給 Jev 判斷「這頁在做什麼、內容夠不夠具體、有沒有幾頁在搶同一個搜尋詞」，一次輸出 PDF、Excel、Markdown 三份報告。標準模式一站約 1 美分模型費，作者用同樣 59 頁跑兩次、評分平均只差 0.03；但分數只用來排整改順序，不能預測排名與流量。可當 Claude Code skill（/jev-seo 網址）使用。由 @haoge6699 轉述介紹，原作者見 GitHub repo。",
+  author:"@haoge6699 (闯荡大叔)（轉述）",
+  likes:165,
+  url:"https://x.com/haoge6699/status/2109835011772035193",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個開源 SEO 稽核 CLI「jev-seo」，也能包成 Claude Code skill（/jev-seo <網址>）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 從首頁網址爬完整站（尊重 robots.txt、限制併發），對照 Google Search Central 文件整理出的 52 條規則做確定性檢查：robots.txt、sitemap、死鏈、重新導向鏈、canonical、hreflang、結構化資料、標題與描述長度、Core Web Vitals。2) 每頁把標題、H1–H3、正文前 2,000 字與 URL 當 state 問 Jev：Choice「頁面類型」（首頁／分類／產品／文章／聯絡／其他）、Score「內容具體程度」（1–5）；再把同站頁面兩兩比對主要關鍵字，問 Noul「這兩頁是否在搶同一個搜尋詞」。信心值低於 0.6 的判斷標記為「需人工確認」。3) 依規則嚴重度與 Jev 判斷算出 0–100 總分，並產生整改清單（優先級、改法、官方文件出處）。4) 一次輸出 PDF（給客戶）、XLSX（整改進度表）、Markdown 三份報告。5) 提供 --full 參數串接 DataForSEO 取得排名、關鍵字與外鏈，所有付費 API 都可設預算上限。"
 }
 ];
 
@@ -5550,6 +5592,57 @@ const OPUS_CASES = [
   url:"https://x.com/hakimieiqbal/status/2109267022865732000",
   ptype:"重建",
   prompt:"做一款療癒風格的六角格島嶼擴建遊戲（Three.js，瀏覽器可玩）：開場是海中央一小塊六角地塊上的一名漂流者。畫面下方發三張地塊卡（森林、山地、土地等，各有資源產出與費用），玩家把卡片放到現有島嶼邊緣的空六角格上擴張島嶼；森林產木材、山地產石頭，左上角顯示資源與目標清單（例如從海裡撈起物資、砍一棵樹、堆滿木材堆）。島嶼延伸到燈塔後點亮它，會有一名新的漂流者加入。風格為低多邊形微縮立體、柔和海水與光影，保留之後加入經濟系統、更多地形與天氣變化的擴充空間。"
+},
+// ====== 2026-10-14 自動更新 ======
+{
+  cat:"遊戲",
+  title:"one shot 跑 24 小時：零外部素材的 Three.js 賽博龐克夜城，連能走進去的夜店都有",
+  desc:"作者讓 Opus 5.5 單一指令連續跑 24 小時，從零做出雨夜霓虹的賽博龐克城市：不用任何外部素材，只靠 Three.js，加上 Blender MCP 建模、Magnific MCP 只用來做音效。畫面中可開車穿梭街道，作者說城裡已經有能走進去、裡面有人跳舞的夜店和酒吧；下一步要改善人物模型與動畫、做成完全可互動的世界。",
+  author:"@Ainthropos (Ainthropos)",
+  likes:1610,
+  url:"https://x.com/Ainthropos/status/2109718931409699043",
+  ptype:"重建",
+  prompt:"從零用 Three.js 打造一座可開車探索的賽博龐克夜城，不使用任何外部素材，你可以連續工作很長時間，直到完成為止：1) 城市：程序生成街區、高樓、霓虹招牌與全息廣告，雨夜氛圍（雨滴粒子、濕地面反射、霧氣與體積光）。2) 建模：需要的車輛、路燈、招牌與室內道具透過 Blender MCP 建模並匯出 glTF；音效（雨聲、引擎、城市環境音、夜店音樂）可透過音效生成 MCP 製作。3) 玩法：第三人稱駕駛，可下車步行，部分建築可進入，至少包含一間有人群跳舞的夜店與一間酒吧。4) HUD 顯示地點名稱、時間與小地圖。5) 每完成一個系統就實際跑起來測試，以穩定 60fps 為目標，持續擴充細節。"
+},
+{
+  cat:"模擬視覺化",
+  title:"3D 恐龍圖鑑：抓著三角龍 360° 轉、放大看細節，一鍵換成深海鮟鱇魚",
+  desc:"Viktor Oddy 用 Opus 5.5 約 10 分鐘做出的 3D 互動恐龍圖鑑網站：左側分類目錄（獸腳類、蜥腳類、角龍類、翼龍、魚龍等），中央是可抓取旋轉、縮放的寫實三角龍，右側列出體長、體重、食性、分布與棲地，並有局部特寫卡；也能切換成深海鮟鱇魚。作者另錄了完整教學影片。",
+  author:"@viktoroddy (Viktor Oddy)",
+  likes:1030,
+  url:"https://x.com/viktoroddy/status/2109626172120121649",
+  ptype:"重建",
+  prompt:"做一個 3D 互動自然圖鑑網站「Dino Atlas」（Three.js＋glTF 模型）：1) 版面：左側分類導覽（獸腳類、蜥腳類、角龍類、翼龍、魚龍、深海生物…，每類顯示物種數），中央大幅 3D 模型，右側資訊面板（學名、年代、體長、體重、食性、分布）與「Habitat」、「Close-up Detail」卡片，上方有搜尋框。2) 互動：滑鼠拖曳 360° 旋轉、滾輪縮放，底部有 360° 自動旋轉與重設按鈕；點細節卡會把鏡頭飛到對應部位（例如三角龍的角與頸盾）。3) 物種切換：頂部縮圖列可在三角龍、深海鮟鱇魚等之間切換，切換時有淡入淡出與鏡頭過場，背景與光線依棲地改變（叢林日光 vs. 深海冷光）。4) 風格：米白紙質背景、襯線標題、博物館圖鑑質感。"
+},
+{
+  cat:"模擬視覺化",
+  title:"捲動就蓋房子：平面圖隨捲動一層層長成 3D 住宅",
+  desc:"Samnang Aing 用 Opus 5.5 做的捲動敘事網頁：開場是一張建築師風格的平面圖（標題「Every house starts as a plan」），往下捲時牆面、門窗、樓板與屋頂依序從平面圖升起，最後組成一棟完整的 3D 房子。作者說這支作品在 Threads 與 LinkedIn 一夜累積超過 6 萬次觀看。",
+  author:"@SammmAing (Samnang Aing)",
+  likes:1010,
+  url:"https://x.com/SammmAing/status/2109708195031900310",
+  ptype:"重建",
+  prompt:"做一個捲動驅動的 3D 建築敘事網頁（Three.js＋GSAP ScrollTrigger）：1) 開場：米白紙質背景上一張建築師手繪風平面圖（含尺寸標註、房間名稱、指北針與圖框），左側大標「EVERY HOUSE STARTS AS A PLAN.」，提示「Scroll to walk in」。2) 捲動過程：鏡頭由正上方慢慢傾斜成鳥瞰；牆面沿平面圖線條向上長出，接著門窗開口、樓板、樓梯、屋頂依序組裝，每一段配一句簡短文案說明施工階段。3) 結尾：完整的 3D 住宅，加上日光陰影與植栽，可拖曳環繞檢視。4) 線條在早期階段保持藍圖風格，逐步過渡到有材質的模型。5) 支援反向捲動倒帶，手機版降低多邊形數量。"
+},
+{
+  cat:"遊戲",
+  title:"「先讓它存在，再讓它變好」：Opus 5.5 負責寫程式、五種 AI 工具分工做出的可玩 3D 平台遊戲",
+  desc:"Chong-U 分享自己做一款可在瀏覽器遊玩的雨夜方塊平台遊戲的流程：GPT Images 2.5 出概念圖與 mockup、Blender＋Tripo 做 3D 模型、Spriterrific 做 2D 素材、ElevenLabs 做音效與配樂，最後由 Opus 5.5 把所有素材組成遊戲。素材多由其他工具生成，Opus 負責的是遊戲本體的程式與整合；附可玩連結。",
+  author:"@chongdashu (Chong-U)",
+  likes:1063,
+  url:"https://x.com/chongdashu/status/2109452512160039063",
+  ptype:"重建",
+  prompt:"用我提供的素材做一款可在瀏覽器遊玩的 3D 平台跳躍遊戲（Three.js）：素材包含 Blender／Tripo 匯出的 glTF 模型（方塊平台、角色、機關）、2D UI 與圖示、SFX 與 BGM 音檔，以及數張概念 mockup 作為美術方向。1) 先做出可玩的最小版本：角色移動、跳躍、碰撞、墜落重生、一關到終點。2) 場景：雨夜海面上的方塊平台，燈光從方塊縫隙透出，畫面上方顯示一句引言（例如「Where its light falls, it lands. Stay out of it.」），並做出依此規則運作的光照機關。3) 再逐步加上音效、背景音樂、關卡進度與簡單選單。4) 每加一個系統就實際試玩、修一個問題，再往下一步。"
+},
+{
+  cat:"模擬視覺化",
+  title:"假想情境模擬：「馬來西亞受夠煙霾、出兵印尼」新聞快報式戰況動畫",
+  desc:"Hanif 用 Opus 5.5 在 HyperFrames（HTML 轉影片框架）上做出的假想戰事模擬影片：以「BREAKING」新聞快報風格開場，地圖標示兩國位置，再依時間推演兵力調動與局勢變化。作者明確標註為 HYPOTHETICAL（純屬假設），同一作者另有「新加坡占領巴淡島」的逐小時推演。屬政治假想題材，觀看時請當作動態圖表練習。",
+  author:"@hanifproduktif (Hanif | AI For Productivity)",
+  likes:2350,
+  url:"https://x.com/hanifproduktif/status/2109675592409026851",
+  ptype:"重建",
+  prompt:"用 HyperFrames（HTML/CSS/JS 轉影片）做一支約 60–90 秒的「假想情境」地緣政治模擬動畫，主題：如果馬來西亞因跨境煙霾問題對印尼採取軍事行動會怎樣（明確標示為 HYPOTHETICAL，純屬虛構推演）。1) 開場：紅色「BREAKING」新聞快報條與國旗，深色背景上的東南亞地圖，以不同顏色標出兩國。2) 推演：依時間軸（T+0、T+6h、T+24h…）分段，用箭頭、圖示與數字標示兵力調動、外交反應與區域影響，每段配一行字幕說明。3) 收尾：可能的結局與國際反應摘要。4) 畫面底部固定顯示「SIMULATION · HYPOTHETICAL EVENTS」免責字樣。5) 1080p、新聞頻道風格字體與轉場，輸出 MP4。"
 }
 ];
 
