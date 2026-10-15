@@ -4806,6 +4806,17 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/haoge6699/status/2109835011772035193",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）做一個開源 SEO 稽核 CLI「jev-seo」，也能包成 Claude Code skill（/jev-seo <網址>）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 從首頁網址爬完整站（尊重 robots.txt、限制併發），對照 Google Search Central 文件整理出的 52 條規則做確定性檢查：robots.txt、sitemap、死鏈、重新導向鏈、canonical、hreflang、結構化資料、標題與描述長度、Core Web Vitals。2) 每頁把標題、H1–H3、正文前 2,000 字與 URL 當 state 問 Jev：Choice「頁面類型」（首頁／分類／產品／文章／聯絡／其他）、Score「內容具體程度」（1–5）；再把同站頁面兩兩比對主要關鍵字，問 Noul「這兩頁是否在搶同一個搜尋詞」。信心值低於 0.6 的判斷標記為「需人工確認」。3) 依規則嚴重度與 Jev 判斷算出 0–100 總分，並產生整改清單（優先級、改法、官方文件出處）。4) 一次輸出 PDF（給客戶）、XLSX（整改進度表）、Markdown 三份報告。5) 提供 --full 參數串接 DataForSEO 取得排名、關鍵字與外鏈，所有付費 API 都可設預算上限。"
+},
+// ====== 2026-10-15 自動更新 ======
+{
+  cat:"工程研究",
+  title:"鏈上代幣掃描器 CrawlHive：Jev 0.5 秒判斷訊號值不值得看，沒把握才交給 Grok，公開戰績含失誤",
+  desc:"作者三天內替自己的 Solana／BNB 代幣掃描器 CrawlHive 加上 9 項功能，決策層是 Jev：判斷一個訊號值不值得注意約 0.5 秒、每次約 0.00002 美元，29 個訊號總成本 0.0008 美元；有把握的由 Jev 處理，存疑的才叫 Grok bot 給 LOOK／WATCH／AVOID 判斷。另有 24 小時對照實際價格的公開戰績頁，作者也坦承上線 3 小時就發現「一天內新幣＋關聯錢包＋新開發者錢包」會被誤判為 CLEAN 而跑路，當天改規則。附 repo；影片是以樣本代幣跑的模擬 demo（畫面標示 SIMULATED DEMO）。加密貨幣題材，請自行評估風險。",
+  author:"@h100envy (h100envy)",
+  likes:184,
+  url:"https://x.com/h100envy/status/2110016241905942818",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）當決策層，替一個鏈上新幣掃描器加上自動判讀與分流。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n1) 資料：爬蟲每 3 分鐘掃 Solana、BNB Chain 新上架代幣，state 放代幣年齡、持有人分布、關聯錢包數、開發者錢包年齡、流動性、社群提及數。\n2) Jev 題目：worth_attention（Score 0–1：這個訊號值不值得通知使用者）、verdict（Choice：CLEAN / RISKY / SCAM）、action（Choice：LOOK / WATCH / AVOID）。\n3) 分流：worth_attention 與 verdict 信心都 ≥ 0.6 就直接採用 Jev 的結果；低於 0.6 才交給大模型（例如 Grok）做第二意見，並記錄兩者答案。\n4) 硬規則寫在程式裡、不交給模型：代幣不到 24 小時且有 ≥ 5 個關聯錢包、開發者錢包不到 1 天時，verdict 最高只能是 RISKY。\n5) 戰績頁：每個判斷 24 小時後對照實際價格，命中與失誤都公開顯示；每日統計 Jev 與大模型的呼叫數與花費，AI 成本設每日上限。"
 }
 ];
 
@@ -5643,6 +5654,57 @@ const OPUS_CASES = [
   url:"https://x.com/hanifproduktif/status/2109675592409026851",
   ptype:"重建",
   prompt:"用 HyperFrames（HTML/CSS/JS 轉影片）做一支約 60–90 秒的「假想情境」地緣政治模擬動畫，主題：如果馬來西亞因跨境煙霾問題對印尼採取軍事行動會怎樣（明確標示為 HYPOTHETICAL，純屬虛構推演）。1) 開場：紅色「BREAKING」新聞快報條與國旗，深色背景上的東南亞地圖，以不同顏色標出兩國。2) 推演：依時間軸（T+0、T+6h、T+24h…）分段，用箭頭、圖示與數字標示兵力調動、外交反應與區域影響，每段配一行字幕說明。3) 收尾：可能的結局與國際反應摘要。4) 畫面底部固定顯示「SIMULATION · HYPOTHETICAL EVENTS」免責字樣。5) 1080p、新聞頻道風格字體與轉場，輸出 MP4。"
+},
+// ====== 2026-10-15 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"平面圖＋實景照片 → 可走動的 3D 豪宅：Three.js 依比例重建，builder／critic 迴圈逐間比對",
+  desc:"作者讓 Claude Opus 5.5 把一份住宅平面圖和屋內照片做成可在瀏覽器裡走動的 Three.js 網站，依平面圖比例建出每個房間，畫面左上角疊著平面圖、右上角有導覽按鈕，客廳的沙發、電視牆與落地窗外的泳池都對照照片重建。推文後半是「爬建商網站、拿他們的平面圖做樣品屋再去推銷」的接案建議，該部分屬作者觀點、無法驗證；prompt 為作者附上給 agent 的起手指令。",
+  author:"@everestchris6 (Chris)",
+  likes:3799,
+  url:"https://x.com/everestchris6/status/2110036224320884998",
+  ptype:"原文",
+  prompt:"here's a floor plan and photos for one house. build it as a three.js site i can walk through in the browser, to scale from the plan, with every room, finish and piece of furniture matched to the photos. the bar is the photos themselves. split the house into pieces you can judge separately, and give each one a builder and a separate critic with fresh context. the critic compares a screenshot of our room with the matching photo, picks the better one, names the biggest gap, and sends it back. keep looping until ours wins or i stop you, and tell me anything you couldn't match."
+},
+{
+  cat:"創意藝術",
+  title:"Opus 5.5 寫 Python 驅動 Blender：圓形取景框裡的樹洞貓頭鷹 3D 動畫",
+  desc:"作者用 Claude Opus 5.5 寫 Python 腳本在 Blender 裡做出的 3D 動畫：紙雕質感的樹幹、樹洞裡睜大橘色眼睛的貓頭鷹、晃動的葉子與飄落光點，整體以圓形取景框加顆粒膠片質感呈現。推文只有一句說明，未附 prompt 與製作細節；同一作者先前另有一則「鋼琴曲＋3D 動畫」的 Opus 作品，兩者是不同產出。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:1432,
+  url:"https://x.com/kevin_t_ngo/status/2110010240825737683",
+  ptype:"重建",
+  prompt:"用 Blender Python API（bpy）從零做一支約 20 秒的 3D 短動畫，不使用外部模型或影像生成：1) 場景：森林裡一棵大樹的特寫，樹皮用分層的紙雕／剪紙風格幾何與溫暖的棕色調，背景是柔焦的淡紫色樹林與霧氣。2) 主角：樹洞裡的一隻貓頭鷹，橘色大眼睛、條紋胸羽，做出眨眼、轉頭與歪頭的動畫。3) 環境動態：上方枝葉隨風輕擺、空中有緩慢飄落的光點。4) 鏡頭：慢速推近，最後以圓形遮罩（vignette 取景框）呈現，加上膠片顆粒與輕微暖色調色。5) 用 EEVEE 或 Cycles 渲染 1080p 影片，所有建模、材質、動畫與鏡頭都由腳本產生。"
+},
+{
+  cat:"創意藝術",
+  title:"Claude 吉祥物 Clawd 的 3D 動畫短片：Opus 5.5 Ultracode 製作，含音效",
+  desc:"作者用 Opus 5.5 的 Ultracode 模式做出 Claude 吉祥物 Clawd（橘色像素小螃蟹）的 3D 動畫：Clawd 出現在終端機風格的深色介面裡、帶發光與景深效果，這版是改進音效後重新發布。未附 prompt 與製作流程，下方 prompt 依畫面與描述重建。",
+  author:"@LexnLin (Leon Lin)",
+  likes:1166,
+  url:"https://x.com/LexnLin/status/2110389810258968965",
+  ptype:"重建",
+  prompt:"做一支約 20–30 秒的 3D 角色動畫短片，主角是 Claude 的吉祥物 Clawd（橘色、方塊像素造型的小螃蟹，兩隻方眼、四條短腿）。1) 舞台：一個立體化的終端機介面，深色背景、圓角輸入框、左側有「>」提示符號，Clawd 從提示符旁邊冒出來。2) 表演：Clawd 走動、跳躍、東張西望、對游標做出反應，最後擺個姿勢收尾；動作要有彈性與擠壓伸展。3) 畫面：像素方塊帶自發光與柔和泛光，淺景深、輕微鏡頭推移。4) 音效：腳步、跳躍、鍵盤敲擊與介面提示音，全部用程式合成並與動作同步。5) 輸出 1080p 影片，可用 Three.js 或 Blender 腳本完成，所有建模與動畫由程式產生。"
+},
+{
+  cat:"遊戲",
+  title:"Unity 6 抓鬼遊戲：揹吸塵器背包闖鬼屋，抓到鬼的房間會「活過來」",
+  desc:"作者用 Claude Opus 5.5 在 Unity 6 做出第三人稱抓鬼遊戲：主角揹著銅製吸塵器背包在維多利亞風格的鬼屋裡探索，HUD 有「Captured 0/3」計數與小地圖，抓到鬼後房間會恢復生機，全程沒手寫程式。分工是 Unity 6 負責場景／光影／物理／UI、Blender＋Meshy 做角色與家具、ElevenLabs 做音效，Opus 5.5 負責 C# 腳本、場景設定、試玩與 bug 回報。作者的原則：一次只做一個系統、每完成一個能用的系統就 commit。",
+  author:"@rewind02 (rewind)",
+  likes:689,
+  url:"https://x.com/rewind02/status/2110333960702091428",
+  ptype:"重建",
+  prompt:"我們要在 Unity 6 做一款第三人稱抓鬼遊戲（Unity MCP 已連線），一次只做一個系統，每個系統能用就 commit 再做下一個：1) 先用灰盒做出核心手感：玩家揹著吸塵器背包，按住按鍵吸鬼，鬼會掙扎逃跑，吸力與拉扯要有張力條與手把震動感。2) 關卡：一棟維多利亞風格鬼屋（大廳旋轉樓梯、黑白棋盤地板、落地鐘、廚房、餐廳），房門可互動並顯示房間名稱（例如「E · Kitchen」）。3) 抓到該房間的鬼後，房間從陰暗破敗轉為明亮、家具歸位（燈光、材質與粒子過場）。4) UI：左下角銅管風格的「Captured x/3」計數與儀表、右下角小地圖。5) 我會提供 Blender／Meshy 做的角色與家具、ElevenLabs 的吸塵器聲、鬼哭聲與開門聲。每完成一個系統就自己進 Play mode 測試並列出 bug，再等我試玩回饋。"
+},
+{
+  cat:"遊戲",
+  title:"經營大亨遊戲的「海灘改版」：描述構想，Opus 5.5 寫完整個新區域與商家",
+  desc:"作者在自己開發中的手機經營遊戲《Business Empire Tycoon》上，只描述想法與遊戲設計，就讓 Claude Opus 5.5 寫完整個海灘更新：新增海濱街區、遊艇與水上活動、Boat rental 等海灘商家與服務，畫面上有遊戲時間、收入飄字與 FPS 顯示。屬既有專案的功能擴充而非一發做出整款遊戲；未附 prompt。",
+  author:"@alexcooldev (Alex Nguyen)",
+  likes:533,
+  url:"https://x.com/alexcooldev/status/2109920822068654290",
+  ptype:"重建",
+  prompt:"這是我開發中的等角視角經營大亨手機遊戲（現有城市街區、商家、顧客 AI、經濟系統都已完成，請先讀完專案架構再動手）。請做一個「海灘改版」：1) 新地圖區域：沿海道路、步道與護欄、沙灘、防波堤、碼頭與海面（波浪、船隻航跡）。2) 新商家與服務：Boat rental（租船）、水上摩托車、遮陽傘與躺椅出租、海灘小吃攤等，每種都要接上既有的購買、升級、收入與顧客流量系統。3) 海面上要有實際在跑的帆船、小艇與泳客，顧客會從街區走到海灘消費。4) 收入飄字（例如 +$4,830）、遊戲時間與天氣圖示沿用現有 UI 風格。5) 在手機上維持 50fps 以上，新增內容不要破壞既有存檔。"
 }
 ];
 
