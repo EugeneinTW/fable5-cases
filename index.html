@@ -4817,6 +4817,37 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/h100envy/status/2110016241905942818",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）當決策層，替一個鏈上新幣掃描器加上自動判讀與分流。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n1) 資料：爬蟲每 3 分鐘掃 Solana、BNB Chain 新上架代幣，state 放代幣年齡、持有人分布、關聯錢包數、開發者錢包年齡、流動性、社群提及數。\n2) Jev 題目：worth_attention（Score 0–1：這個訊號值不值得通知使用者）、verdict（Choice：CLEAN / RISKY / SCAM）、action（Choice：LOOK / WATCH / AVOID）。\n3) 分流：worth_attention 與 verdict 信心都 ≥ 0.6 就直接採用 Jev 的結果；低於 0.6 才交給大模型（例如 Grok）做第二意見，並記錄兩者答案。\n4) 硬規則寫在程式裡、不交給模型：代幣不到 24 小時且有 ≥ 5 個關聯錢包、開發者錢包不到 1 天時，verdict 最高只能是 RISKY。\n5) 戰績頁：每個判斷 24 小時後對照實際價格，命中與失誤都公開顯示；每日統計 Jev 與大模型的呼叫數與花費，AI 成本設每日上限。"
+},
+// ====== 2026-10-16 自動更新 ======
+{
+  cat:"工程研究",
+  title:"門口監視器即時認人：Jev 1.14 新的 box 題型一次框出人與臉並判斷身分",
+  desc:"Jev 1.14 加入圖片輸入與 box（物件定位）題型後，作者把家門口 Amcrest 監視器的畫面丟給 Jev：同一次呼叫回傳「有沒有人」（0.97）、人物外框、臉部外框，以及身分判斷（agent_47 0.91／unknown 0.09），延遲約 124＋183 毫秒，作者強調幾乎即時且非常便宜。圖片與 box 目前仍是官方標示的預覽功能。",
+  author:"@grichadev (Greg Pstrucha)",
+  likes:645,
+  url:"https://x.com/grichadev/status/2110515689505337480",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個門口監視器的即時人臉辨識服務。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。啟用預覽功能的 header：TypeSafe-Danger-Zone-Images: true。1) 從 IP 攝影機（RTSP）每秒抽 1–2 張影格，先用畫面差異做移動偵測，有動靜才呼叫 Jev。2) 每次呼叫問四題：person_present（Score，0–1，有沒有人）、person（box，人物外框）、face（box，臉部外框）、identity（Choice，選項為已登錄的家人／訪客名單＋unknown，state 放臉部參考照片）。3) 信心值門檻：person_present 低於 0.6 視為誤報不處理；identity 最高分低於 0.8 一律當 unknown，推播陌生人通知並附截圖；認出家人只記 log 不打擾。4) 在影像上疊加外框與標籤，右上角顯示各題答案、信心值與延遲毫秒數，所有事件存成可查詢的時間軸。"
+},
+{
+  cat:"工程研究",
+  title:"烤吐司攝影機：用 Jev 的 Score 題型看照片判斷熟度，到 2.0 就自動彈起",
+  desc:"作者示範 Jev 新的圖片輸入：把烤麵包機攝影機的畫面當成「刻度盤」，用 Score 題型問「吐司烤到幾分熟」，以 0（白吐司）到 4（燒焦）五張參考圖當等級，程式只寫一行 if toast >= 2.0: pop()，右側記錄每次呼叫的分數變化。作者標註畫面是真實錄下的呼叫，圖片支援仍是預覽功能；題目本身帶玩笑性質，但展示了「照片＋Score 當感測器」的用法。",
+  author:"@dotpem (Nathan LeClaire)",
+  likes:456,
+  url:"https://x.com/dotpem/status/2110733179955101775",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個「烤吐司熟度感測器」示範。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。啟用預覽功能的 header：TypeSafe-Danger-Zone-Images: true。1) 攝影機每 3 秒拍一張烤麵包機內的照片。2) 每次呼叫問一題 Score：「How done is the toast?」，等級 0–4，state 放五張參考圖（0 白吐司、1 微黃、2 金黃、3 深褐、4 燒焦）與目前照片。3) 決策：分數 >= 2.0 就呼叫 pop() 讓吐司彈起；若連續兩次信心值低於 0.6（例如蒸氣遮住鏡頭），改用計時器保底並提醒人工確認。4) 介面：上方顯示這次的呼叫與五格參考刻度、目前分數指標；下方是即時畫面，右側是每次呼叫分數的時間序列，超過門檻的區段反白並標出 pop() 的時間點。"
+},
+{
+  cat:"工程研究",
+  title:"Lambda 包一層 Jev 做 Generative UI：HR 助理依意圖秒出對應的操作介面",
+  desc:"作者把 AWS Lambda Web Function 當成 Jev 的包裝層，做出一個日文的 HR 助理 Generative UI：輸入「下次發薪多少？」「佐藤是誰？」「幫我和健太排 1on1」「11/2 起請兩週婚假」之類的請求，Jev 判斷意圖後挑出對應的預建 UI（薪資卡、人員卡、行事曆、請假單、指派表單）立刻呈現，作者的感想是比預期快很多、UI 一個接一個順順地出來。推文只附 demo 影片，未附程式碼。",
+  author:"@gee0awa (Daisuke Awaji)",
+  likes:188,
+  url:"https://x.com/gee0awa/status/2110366622800310605",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個 HR 助理的 Generative UI，後端用 AWS Lambda Web Function（Function URL）包一層 Jev。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 前端：聊天式首頁「こんにちは、○○さん」＋輸入框與建議 chip（下次薪資、查人、排 1on1、請假、指派研修、請求回饋、說明系統架構）。2) Lambda 收到輸入後問 Jev 一題 Choice：intent，選項為 salary_card／person_card／schedule_1on1／leave_request／assign_training／feedback_request／architecture／other，state 放使用者輸入、登入者資料與今天日期。3) 第二題依 intent 抽參數：例如 leave_request 用 Choice 選假別、用 Score 判斷是否需主管核准；人名用 Choice 從員工名單挑。4) 前端依 intent 渲染對應的預建 React 元件並帶入參數（不是讓模型生成 UI 程式碼）。5) 信心值低於 0.6 或 intent 為 other 時，改交給大模型回覆純文字，並在畫面上註明。目標是從送出到 UI 出現在 500 毫秒內。"
 }
 ];
 
@@ -5705,6 +5736,57 @@ const OPUS_CASES = [
   url:"https://x.com/alexcooldev/status/2109920822068654290",
   ptype:"重建",
   prompt:"這是我開發中的等角視角經營大亨手機遊戲（現有城市街區、商家、顧客 AI、經濟系統都已完成，請先讀完專案架構再動手）。請做一個「海灘改版」：1) 新地圖區域：沿海道路、步道與護欄、沙灘、防波堤、碼頭與海面（波浪、船隻航跡）。2) 新商家與服務：Boat rental（租船）、水上摩托車、遮陽傘與躺椅出租、海灘小吃攤等，每種都要接上既有的購買、升級、收入與顧客流量系統。3) 海面上要有實際在跑的帆船、小艇與泳客，顧客會從街區走到海灘消費。4) 收入飄字（例如 +$4,830）、遊戲時間與天氣圖示沿用現有 UI 風格。5) 在手機上維持 50fps 以上，新增內容不要破壞既有存檔。"
+},
+// ====== 2026-10-16 自動更新 ======
+{
+  cat:"工程研究",
+  title:"「我的 Mac 為什麼滿了？」Opus 5.5 掃完整顆硬碟，找出 97GB 垃圾並蓋出清理儀表板",
+  desc:"作者只問 Claude Opus 5.5 為什麼 Mac 空間滿了，它把整個家目錄掃過一遍、做出樹狀圖（treemap）式的空間瀏覽器：依類別上色（程式專案、iOS/Android SDK、AI 模型、套件快取），右側把建議分成「可安全刪除」（npm 快取、Next.js／Turbo 建置產物、Gradle 快取等，共 41.7GB）與「需人工確認」（Android 模擬器、Ollama 模型、node_modules 等，56GB），勾選後產生清理腳本。作者自嘲「有人付 29 美元買這種工具」。未附 prompt，下方依畫面重建。",
+  author:"@jayypatel18 (Jay Patel)",
+  likes:7407,
+  url:"https://x.com/jayypatel18/status/2110433209909743939",
+  ptype:"重建",
+  prompt:"我的 Mac 硬碟快滿了，幫我找出原因並做一個本機清理工具：1) 先掃描我的家目錄（唯讀，不要刪任何東西），統計各資料夾大小，辨識常見的可回收空間：npm／pnpm／uv／Puppeteer 快取、Next.js .next 與 .turbo 建置產物、Gradle 快取、Xcode DerivedData、Android SDK 與模擬器映像、Ollama 模型、閒置專案的 node_modules、git worktrees。2) 做一個本機網頁儀表板：頂部四張數字卡（清理後可用空間、可安全刪除、需確認、未掃描的系統空間）；左側是可點擊鑽取的 treemap，依類別上色（文件媒體、開發工具、程式專案、iOS/Android SDK、AI 模型、套件快取），可刪的區塊用斜線標示；右側是建議清單，分「Safe to remove」與「Review first」兩組，每項列出路徑與大小、可勾選。3) 底部顯示已選總量，按「Copy script」產生對應的 shell 清理腳本讓我自己執行，腳本裡每一行都要加註解說明刪了什麼、會不會影響專案。"
+},
+{
+  cat:"模擬視覺化",
+  title:"可玩的機場停機坪調度：每架飛機與地勤車都在 Blender 建模，跑在 Three.js 裡",
+  desc:"作者用 Claude Opus 5.5 做出名為「Groundline」的機場地勤調度介面：等角視角的航廈、空橋、飛機與加油車／行李車都是 Blender 建的模型，在 Three.js 裡即時運作，可以像策略遊戲一樣操作；介面上有準點率、平均過站時間、使用中登機門、處理行李數等指標，以及單一航班的「到站→下客→清潔→加油→登機→推出」過站進度條與航班清單。推文只有一句說明，未附 prompt。",
+  author:"@anxuanng (An Xuan)",
+  likes:1104,
+  url:"https://x.com/anxuanng/status/2110460775722852744",
+  ptype:"重建",
+  prompt:"做一個可以像策略遊戲一樣玩的機場停機坪即時調度網頁「Groundline」：1) 3D 資產：用 Blender（透過 Python 腳本）建出低多邊形、柔和配色的航廈（弧形玻璃屋頂）、5 座空橋、A320 等客機、加油車、行李拖車、餐車與油槽，匯出 glTF。2) Three.js 場景：等角俯視、可縮放旋轉；飛機依時刻表滑行進出登機門，地勤車沿路徑自動前往服務，跑道與滑行道有黃色標線。3) 模擬：每架飛機的過站流程為到站→下客→清潔→加油→登機→推出，各步驟有時間與延誤機率；玩家可指派車輛、調整優先順序，延誤會連鎖影響後續航班。4) UI：頂部指標卡（準點率、平均過站分鐘、使用中登機門、處理行李數），左下是選中航班的過站時間軸，右下是航班／車輛／登機門分頁清單與進度條，右上有模擬時鐘與倍速。"
+},
+{
+  cat:"創意藝術",
+  title:"魔戒「至尊魔戒的故事」動畫：每一格都用 JavaScript 畫出來",
+  desc:"作者用程式繪圖做出一支講述至尊魔戒的動畫短片：角色由 Claude Opus 5.5 繪製、背景交給 Haiku 5.5，每一格畫面都由 JavaScript 產生，畫風是帶紙質顆粒的扁平插畫（例如林間光束下放在石塊上的魔戒）。作者交代了分工：角色是 Opus、背景是 Haiku，作品主體仍以 Opus 為主。未附 prompt；同一作者先前另有鋼琴曲 3D 動畫與貓頭鷹動畫兩則 Opus 作品，三者是不同產出。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:801,
+  url:"https://x.com/kevin_t_ngo/status/2110385144846840172",
+  ptype:"重建",
+  prompt:"用純 JavaScript（Canvas 2D 或 SVG，不使用任何影像生成模型或外部素材）做一支約 60 秒、1:1 比例的動畫短片，主題是《魔戒》中至尊魔戒的故事：1) 分鏡 6–8 幕：末日火山鑄戒、戒指在戰場上被奪、沉入河底、多年後在河中被撿起、在山洞中被藏起、最後放在森林空地的石塊上被發現。2) 畫風：扁平剪紙插畫、低飽和綠與暖金色調、疊一層紙質顆粒與柔光光束，戒指永遠是畫面唯一的金色焦點。3) 角色與背景分成兩個模組：角色（人物、生物）以可動的向量部件組成，能做走路、伸手、轉頭；背景（森林、山洞、河流、火山）用分層視差。4) 鏡頭：緩慢推近、平移與淡入淡出轉場，每幕底部加一行簡短旁白字幕。最後提供逐格輸出成 PNG 序列的功能，方便合成影片。"
+},
+{
+  cat:"遊戲",
+  title:"16 天做出 3D 劇情遊戲《小王子：Across the Stars》：每顆星球都可以自由探索",
+  desc:"作者花 16 天，用 Claude Opus 5.5 把《小王子》做成可在網頁上遊玩的 3D 劇情遊戲：Tripo 批量生成 3D 場景資產、Blender 處理材質與光影，Opus 5.5 寫劇情調度與 3D 網頁渲染程式，故事裡的每顆星球都是可探索的場景，水彩畫風的開場是站在小星球上的小王子與玻璃罩裡的玫瑰。上線後流量爆量，目前支援中英法日等八種語言，作者表示之後會開源整個遊戲與製作流程。另有 @jinglian、@studio_yebisu 等帳號轉述，這裡收原作者版。",
+  author:"@Saccc_c (Sac)",
+  likes:16107,
+  url:"https://x.com/Saccc_c/status/2109962425512734739",
+  ptype:"重建",
+  prompt:"我們要把《小王子》做成可在瀏覽器遊玩的 3D 劇情遊戲（Three.js），美術資產由 Tripo 生成、Blender 整理，你負責全部程式與劇情調度。1) 先規劃：列出書中每顆星球（小王子的星球、國王、愛慕虛榮的人、酒鬼、商人、點燈人、地理學家、地球的沙漠與麥田），每顆星球一個場景，寫出需要的 3D 資產清單給我拿去 Tripo 生成。2) 用 Blender Python 腳本把匯入的模型統一材質（水彩手繪感、柔和光影）、擺放與烘焙光照，匯出 glTF。3) 遊戲：開場是星空中的小星球與「點擊開始旅程」，玩家可在球形星球上自由行走（重力朝向球心），走近角色觸發對話，對話用書中原意改寫；星球之間以星際飛行過場銜接；收集要素與章節進度。4) 環境細節：草葉與野花隨風擺動、星光閃爍、麥田金色光線、狐狸角色的互動。5) 多語系（至少中、英、法、日），手機與桌機都能順暢跑，提供畫質切換。一次做一顆星球，能玩就 commit 再做下一顆。"
+},
+{
+  cat:"創意藝術",
+  title:"互動式 3D 時尚刊物《The Book of Leather》：手抓翻頁、質感與動態反覆調到位",
+  desc:"作者用 Claude Opus 5.5 做出一本可互動的 3D 刊物網頁：黑白攝影搭配編輯排版（章節標題「The Transubstantiation of Skin」、目錄與頁碼），游標變成手形可抓起書頁翻動，頁面有彎曲的紙張形變，背景散落其他刊物。作者坦言自己花了好幾天調整 3D 模型、材質、動畫、特效與版面，並提到 Opus 5.5 理解他審美回饋的速度快到他來不及停下來思考。未附 prompt，下方依畫面重建。",
+  author:"@premiumtantan (Tân Tân Nguyễn)",
+  likes:581,
+  url:"https://x.com/premiumtantan/status/2110398817380315357",
+  ptype:"重建",
+  prompt:"做一個互動式 3D 時尚刊物網頁（Three.js），主題是皮革工藝的精品雜誌《The Book of Leather》：1) 場景：一本攤開的刊物置中，背景散落幾本其他刊物與皮件特寫照片，整體黑白攝影、暖灰紙色，淺景深。2) 翻頁：游標在書頁上變成手形，可以按住拖曳翻頁，頁面要有真實的紙張彎曲形變、陰影與回彈，放手後依速度決定翻過去或彈回。3) 內頁排版：左頁滿版黑白人像或皮件照片，右頁是編輯風版面——細襯線大標（例如「The Transubstantiation of Skin」）、等寬字小標、章節目錄與頁碼、兩欄內文。4) 細節：翻頁音效（可關）、hover 時頁角微微翹起、首次載入時書本從桌面滑入並自動翻開。我會一輪輪給你對質感、動畫節奏與版面的回饋，每輪只改我指出的部分。"
 }
 ];
 
