@@ -4848,6 +4848,27 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/gee0awa/status/2110366622800310605",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）做一個 HR 助理的 Generative UI，後端用 AWS Lambda Web Function（Function URL）包一層 Jev。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。1) 前端：聊天式首頁「こんにちは、○○さん」＋輸入框與建議 chip（下次薪資、查人、排 1on1、請假、指派研修、請求回饋、說明系統架構）。2) Lambda 收到輸入後問 Jev 一題 Choice：intent，選項為 salary_card／person_card／schedule_1on1／leave_request／assign_training／feedback_request／architecture／other，state 放使用者輸入、登入者資料與今天日期。3) 第二題依 intent 抽參數：例如 leave_request 用 Choice 選假別、用 Score 判斷是否需主管核准；人名用 Choice 從員工名單挑。4) 前端依 intent 渲染對應的預建 React 元件並帶入參數（不是讓模型生成 UI 程式碼）。5) 信心值低於 0.6 或 intent 為 other 時，改交給大模型回覆純文字，並在畫面上註明。目標是從送出到 UI 出現在 500 毫秒內。"
+},
+// ====== 2026-10-17 自動更新 ======
+{
+  cat:"工程研究",
+  title:"用 Jev 看泳池監視畫面偵測溺水：每小時不到 2.5 美元",
+  desc:"作者把泳池監視器影片交給 TypeSafe Jev 判斷有沒有人溺水，做成一個網頁 demo：左邊播放監視畫面並框出泳池內的人，右邊即時顯示判讀狀態與反應時間。作者強調成本「每小時不到 2.5 美元」就能幫忙看著泳池裡的小孩。誠實保留：推文沒公開準確率、誤報率與取樣頻率，屬概念展示，不能取代救生員。",
+  author:"@belmoncode (Joss Belmont)",
+  likes:1175,
+  url:"https://x.com/belmoncode/status/2110806173544812876",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個泳池溺水偵測 demo。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。啟用多模態圖片輸入。1) 前端：左邊播放泳池監視影片（可上傳或選 demo），右邊顯示狀態卡（Waiting／Safe／Watch／ALERT）與每次判讀耗時。2) 每 1 秒擷取一張影格送 Jev，一次問三題：people（box：標出水中每個人的位置，畫在畫面上）；state（Choice：正常游泳／在池邊／垂直不動或掙扎／沉在水下）；risk（Score 0–10：溺水風險）。3) 規則：state 為「垂直不動或掙扎」或「沉在水下」且連續 3 張成立，或 risk ≥ 7，就觸發 ALERT（畫面紅框＋警示音＋推播）；Jev 信心值低於 0.6 時標成 Watch 並保留影格給人工確認。4) 顯示累計成本，估算每小時費用。"
+},
+{
+  cat:"工程研究",
+  title:"PR Lens：用 Jev 把 PR 截圖對應到架構圖上改動的元件",
+  desc:"ColdteaAI 的 PR Lens 示範 Jev 1.14 的圖片能力：在 agent 開的 PR 裡，UI 改動的起點通常是截圖，PR Lens 先把整個系統架構攤在畫布上，再用 Jev 把每張 PR 截圖對應到實際被改動的元件，讓審查者先從「看得到的變化」和它對架構的影響開始 review，再讀程式碼。誠實保留：作者是產品方，推文為產品示範，沒給對應準確率。",
+  author:"@OhansEmmanuel (Ohans Emmanuel)",
+  likes:298,
+  url:"https://x.com/OhansEmmanuel/status/2111133240136462527",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個 PR 視覺審查工具。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。啟用多模態圖片輸入。1) 讀取 repo 產生架構清單：每個元件（頁面、元件、API route、資料表）一筆，含名稱、路徑與一句說明，畫成可拖曳的架構畫布。2) 讀取 GitHub PR：抓描述中的截圖與 diff 檔案清單。3) 每張截圖送 Jev 問：components（Choice，多選：架構清單中哪些元件出現在這張截圖裡）；change_kind（Choice：新增畫面／修改既有畫面／只改樣式／看不出變化）；region（box：截圖中改動最明顯的區域）。4) 把 Jev 選出的元件與 diff 實際動到的檔案交叉比對，在畫布上高亮；兩者不一致或信心值低於 0.6 的標成「需人工確認」。5) 審查頁面：左截圖、右架構畫布，點元件跳到對應 diff。"
 }
 ];
 
@@ -5787,6 +5808,77 @@ const OPUS_CASES = [
   url:"https://x.com/premiumtantan/status/2110398817380315357",
   ptype:"重建",
   prompt:"做一個互動式 3D 時尚刊物網頁（Three.js），主題是皮革工藝的精品雜誌《The Book of Leather》：1) 場景：一本攤開的刊物置中，背景散落幾本其他刊物與皮件特寫照片，整體黑白攝影、暖灰紙色，淺景深。2) 翻頁：游標在書頁上變成手形，可以按住拖曳翻頁，頁面要有真實的紙張彎曲形變、陰影與回彈，放手後依速度決定翻過去或彈回。3) 內頁排版：左頁滿版黑白人像或皮件照片，右頁是編輯風版面——細襯線大標（例如「The Transubstantiation of Skin」）、等寬字小標、章節目錄與頁碼、兩欄內文。4) 細節：翻頁音效（可關）、hover 時頁角微微翹起、首次載入時書本從桌面滑入並自動翻開。我會一輪輪給你對質感、動畫節奏與版面的回饋，每輪只改我指出的部分。"
+},
+// ====== 2026-10-17 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"特斯拉 Roadster 怎麼「飛」起來：火箭推進器、U 形坡道與發射塔的 3D 動畫",
+  desc:"一句「How the Tesla Roadster can fly」配上 Opus 5.5 做出的 3D 動畫：夜色中的白色 Roadster 在跑道上加速，衝上發光的 U 形彎道坡道，旁邊是鋼構發射塔，路燈與霧氣營造夜間測試場氛圍。推文全文只有「Made by Opus 5.5」，沒交代用的是 Three.js 還是其他引擎、花了幾輪，屬於成品展示。",
+  author:"@enes_code (Enes)",
+  likes:8193,
+  url:"https://x.com/enes_code/status/2110941423680061472",
+  ptype:"重建",
+  prompt:"用 Three.js 做一段 3D 動畫短片，主題是「特斯拉 Roadster 怎麼飛起來」，單一 HTML 檔、CDN 引入 Three.js。1) 場景：夜間測試場，濕潤的柏油跑道、兩排路燈、輕霧與遠處燈光，旁邊一座鋼構發射塔。2) 車輛：用基本幾何體拼出白色 Roadster 的低趴輪廓，車尾有可點燃的冷氣推進器（SpaceX 套件）。3) 劇情：車子從靜止加速→推進器噴出藍白色氣流與粒子→沿著一條發光的 U 形彎道坡道向上衝→離開坡道後短暫懸空、推進器維持高度→緩緩降落。4) 鏡頭：自動運鏡，跟拍、側拍、仰角各一段，可按空白鍵重播。5) 後製：Bloom 讓燈條與噴焰發光，加上動態模糊感與輕微鏡頭晃動。"
+},
+{
+  cat:"遊戲",
+  title:"把整顆地球變成開放世界：串 OpenMapTiles 的自製 C++／Metal 引擎，含天氣系統與室內",
+  desc:"作者形容是「GTA 和 Apple Maps v1 生的小孩」：自製 C++ 引擎、Metal（與 Vulkan）渲染，串流 OpenMapTiles 等公共圖資把整個地球渲染成可遊玩的開放世界，能在所有 Apple 平台跑。目前是沙盒：地球尺度的程序化天氣（雨、暴風、雲、龍捲風、颶風，遠遠就看得到並可縮時穿越）、每棟建築都有程序生成的室內、多種載具、滑板與滑雪場、攝影模式。開發方式是每晚試玩 Claude 當天的成果、寫新計畫，再讓 3 台 Mac 上的 Opus 5.5 隔天全天跑。誠實保留：作者說還沒有「遊戲」玩法，只是一層層系統。",
+  author:"@_chuckyc (Charlie Chapman)",
+  likes:1557,
+  url:"https://x.com/_chuckyc/status/2110779144191537364",
+  ptype:"重建",
+  prompt:"我們要從零寫一個地球尺度的開放世界引擎（C++，渲染層用 Metal，保留 Vulkan 後端介面），目標是在 macOS／iOS 上把整個地球變成可自由探索的沙盒。請分階段規劃並逐步實作，每階段結束要能執行並附測試：1) 地圖串流：讀取 OpenMapTiles 向量圖磚（加上公開 DEM 高程），依攝影機位置做 LOD 串流與快取，把道路、建物輪廓、水域、綠地轉成 3D 網格。2) 建物：依輪廓與樓層數擠出外觀，並為每棟建物用種子程序生成室內格局。3) 天氣：地球尺度的程序化天氣系統（雲、雨、風、暴風、龍捲風、颶風），從遠處可見並支援縮時。4) 載具與移動：步行、汽車、滑板（含滑板公園）、滑雪（含雪場與纜車）。5) 攝影模式：自由鏡頭、景深、時間與天氣調整。每天結束時寫一份進度摘要與明日計畫，讓我試玩後回饋。"
+},
+{
+  cat:"遊戲",
+  title:"20 天不看一行程式：Opus 5.5 ＋ Three.js 做的第三人稱科幻機車遊戲，不用 Blender",
+  desc:"作者說這款遊戲做了 20 天，他「一行程式都沒看過」，全部在同一個連續的 Claude Code 對話裡完成（autocompact 設在 250k），沒用 Blender，只有 Opus 5.5 和 Three.js。畫面是夜間城市高架道上的第三人稱機車騎士，HUD 有血量、彈藥、小地圖、任務清單與指令訊息。誠實保留：推文沒說明遊戲玩法與目前完成度，只有展示影片。",
+  author:"@Belbizaz (Frog King Simulator)",
+  likes:1472,
+  url:"https://x.com/Belbizaz/status/2111120760660254842",
+  ptype:"重建",
+  prompt:"用 Three.js 做一款可在瀏覽器遊玩的第三人稱科幻動作遊戲，不使用任何外部 3D 模型或 Blender，所有角色、載具與建物都用程式生成。1) 場景：夜間未來城市的高架道路，霓虹燈、路燈、遠處高樓與霧。2) 玩家：揹著背包的騎士，可騎機車（WASD 加速轉向、Shift 衝刺）、下車步行。3) 戰鬥：滑鼠瞄準射擊，敵方無人機與車輛會追擊。4) HUD：左上任務清單、上方血量與能量條、右下小地圖與彈藥數、左下指令／系統訊息欄。5) 效能：InstancedMesh 與 LOD，維持 60fps。請一次做一個系統，每完成一個就讓我試玩再進下一步。"
+},
+{
+  cat:"創意藝術",
+  title:"夕陽下的日式寺院：Three.js 打造金色光線穿過雕花木窗的場景",
+  desc:"Leon Lin 用 Opus 5.5 在 Three.js 裡做出一座「黃金時刻」的日本寺院：低角度暖色陽光穿過雕花格窗、在昏暗的木造室內投下光影，帶體積光與塵埃感。推文只有一句話加影片，沒附 prompt 與製作時間。",
+  author:"@LexnLin (Leon Lin)",
+  likes:865,
+  url:"https://x.com/LexnLin/status/2110657641831956870",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個「黃金時刻的日本寺院」3D 場景，單一 HTML 檔，不使用外部模型，全部程式生成。1) 建築：木造寺院內部與迴廊，柱子、橫樑、榻榻米、紙門，以及帶花形雕刻的格窗（用 shader 或 alpha 貼圖程序生成圖樣）。2) 光線：低角度的暖橘色夕陽從窗外射入，格窗的圖樣投影在地板與牆面，加上體積光（god rays）與漂浮的塵埃粒子。3) 氛圍：室內偏暗、高對比，色調暖金與深褐，ACES tone mapping、Bloom、輕微暗角。4) 鏡頭：緩慢推軌穿過室內走到窗前，可用滑鼠自由環視。"
+},
+{
+  cat:"遊戲",
+  title:"零程式基礎辭職做遊戲：Opus 5.5 打造的瀏覽器 MMO《Aestra》已有 1.7 萬人玩過",
+  desc:"作者一個月前辭職、完全不會寫程式，花掉最後的 1,400 美元，用 Claude Opus 5.5 和 TesanaAI 做出像素風瀏覽器多人線上遊戲《Aestra》。至今超過 17,000 人玩過，玩家會在主城交易、決鬥、組隊打副本，角色是永久死亡制。誠實保留：TesanaAI 負責哪部分推文沒交代；玩家數與花費是作者自述，但遊戲可免費在瀏覽器遊玩。",
+  author:"@M__Houser (Mike Houser)",
+  likes:729,
+  url:"https://x.com/M__Houser/status/2110750857528803516",
+  ptype:"重建",
+  prompt:"我完全不會寫程式，想做一款可在瀏覽器免費遊玩的像素風多人線上 RPG，請你從架構到上線全部負責，每一步用白話跟我解釋。1) 技術：前端 Canvas／Phaser 渲染俯視角像素地圖，後端用 WebSocket 伺服器處理多人同步，資料庫存角色與物品。2) 核心系統：主城大廳（玩家可見彼此、聊天泡泡）、玩家間交易、決鬥、組隊副本、永久死亡（角色死亡即刪除，留下墓碑紀錄）。3) UI：技能列、背包、小地圖、聊天框。4) 營運：部署到雲端、加上基本防作弊與伺服器監控，預估每月成本。先做出能讓 10 人同時在主城走動聊天的版本，我測過再往下做。"
+},
+{
+  cat:"創意藝術",
+  title:"讓 Opus 5.5 操作 Blender 蓋出虛構書房：98% 自動、約 455 美元、零手工",
+  desc:"作者讓 Opus 5.5 透過 Blender MCP 打造一間「自己住的」公寓書房，並整理出心得：要件定義最重要（公寓等級決定骨架、構造決定壁厚與窗框收邊）；給 AI 一份記錄自己歷史的 context 檔，它會主動放進祖父做的能面、祖母燒的陶杯；物件分成 bpy 自建／Tripo HD／Tripo SM 三種做法並讓 AI 判斷；全物件套物理規則避免穿模與漂浮；要求 AI「別自創，去看型錄」。成本：98% 作業由 Opus 5.5 medium 完成，API 換算約 455 美元，送了 50 次 prompt（多為語音輸入），Tripo 生成 41 次約 25 美元，遠景用 GPT Images 2.5。誠實保留：作者說還需要打磨。",
+  author:"@shion_takk (KOBATAKA｜Vibe Modeling)",
+  likes:666,
+  url:"https://x.com/shion_takk/status/2110896887096369573",
+  ptype:"重建",
+  prompt:"透過 Blender MCP 幫我做一間虛構的公寓書房（住的人是我，請先讀 my_history.md 了解我的經歷與喜好）。規則：1) 先做要件定義：公寓等級、構造種別（RC／SRC）、壁厚、窗框規格，依此建立房間骨架；窗框、門、家具尺寸一律查實際廠商型錄，不要自創。2) 每個物件先判斷做法：簡單幾何用 bpy 腳本建模；需要細節且會近看的用 Tripo HD 生成；遠處或次要的用 Tripo Smart Mesh 生成，並寫下判斷理由。3) 依我的歷史放入有意義的小物（例如家人的手作品、我的嗜好用品），書架上的書用我寫過的文章標題。4) 物理檢查：全物件列表逐一確認沒有穿模、漂浮，放置狀態合理。5) 加入小動態：螢幕畫面會動、小風扇會轉。6) 窗外遠景用生成的城市夜景圖片當背景。7) 夜間連續作業，context 用到 50～60% 就 compact，最後輸出渲染圖與動畫。"
+},
+{
+  cat:"工程研究",
+  title:"逆向小米顯示器做出控制軟體：補上不支援 DDC/CI 也能切輸入源",
+  desc:"小米顯示器不支援 DDC/CI，所以 BetterDisplay 之類的工具切不了輸入源；作者用 Opus 5.5 逆向小米顯示器的控制協定，做出一個 macOS 選單列小工具「Mi Monitor」：可切換 HDMI1／HDMI2／DP／USB-C 輸入、調亮度與顯示器音量，並有情境模式。作者自嘲對 Anthropic「罵歸罵，但 Opus 5.5 真的好用」。誠實保留：推文沒交代逆向的是哪個介面（USB HID 或官方 App 協定）。",
+  author:"@binaryify (Binaryify)",
+  likes:603,
+  url:"https://x.com/binaryify/status/2110557825907011640",
+  ptype:"重建",
+  prompt:"我的小米顯示器不支援 DDC/CI，BetterDisplay 切不了輸入源。請幫我逆向它的控制方式並做一個 macOS 選單列 App。1) 調查：列出顯示器透過 USB 暴露的裝置（ioreg／system_profiler），如果是 HID 裝置就 dump report descriptor；若官方有 Windows 控制軟體，分析它送出的封包格式。2) 找出切換輸入源（HDMI1／HDMI2／DP／USB-C）、亮度、音量的指令，寫成可單獨測試的 CLI。3) 用 SwiftUI 做選單列 App：顯示目前解析度與更新率、四個輸入源按鈕、亮度與音量滑桿、幾個情境預設。4) 每一步先在我確認後才送指令到顯示器，避免把螢幕弄壞。"
 }
 ];
 
