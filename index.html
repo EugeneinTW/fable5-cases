@@ -3457,6 +3457,17 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
   url:"https://x.com/StefanoGPT/status/2110098269904789797",
   ptype:"原文",
   prompt:"# TASK: Photorealistic 3D Human Reconstruction From a Single Photograph\n\nYou are an expert in computer vision, 3D reconstruction, neural rendering, photogrammetry, facial geometry, and procedural modeling.\n\nYour objective is to reconstruct the person shown in the provided reference photograph as a **highly photorealistic, fully three-dimensional human model that can be viewed from any angle (360°)**.\n\n**The reference photograph is your ONLY source of information about this person's identity and appearance.**\n\nYou must work autonomously, researching, installing, configuring, and executing the most advanced open-source reconstruction methods available to you.\n\nDo not stop at creating a plan or generating scripts. Your goal is to produce the actual finished 3D model.\n\n## 1. PRIMARY OBJECTIVE: MAXIMUM FACIAL LIKENESS\n\nThe most important criterion is that the reconstructed person looks recognizably like the individual in the photograph.\n\nAnalyze and preserve:\n\n- Exact visible facial proportions and geometry\n- Overall skull shape, forehead, cheekbones, jawline, and chin\n- Eye shape, spacing, eyelids, eyebrows, and eye color\n- Nose bridge, tip, nostrils, and width\n- Mouth geometry, natural smile, lips, and visible teeth\n- Ear position and anatomically plausible shape\n- Hairline, hairstyle, individual hair strands, and hair density\n- Natural skin coloration, subtle texture, facial hair, and imperfections\n- Asymmetries and distinctive facial features\n\nAvoid generic-looking faces. Identity preservation takes absolute priority over generating a conventionally attractive or perfectly symmetrical human.\n\nDo not beautify, stylize, or significantly modify the person's appearance.\n\n## 2. TRUE 360-DEGREE RECONSTRUCTION\n\nThe provided photograph only shows one perspective, but the final model must have complete 3D geometry.\n\nReconstruct:\n\n- Front of face\n- Left and right three-quarter views\n- Full left and right profiles\n- Back of head and hair\n- Top and underside of head\n- Neck, shoulders, and visible upper torso\n- A plausible complete body if a full-body version is technically feasible\n\nFor regions not visible in the photograph, use anatomically realistic human geometry, statistical 3D morphable face models, and generative reconstruction methods to infer plausible shapes.\n\n**Important:** A single photograph cannot reveal the person's exact unseen anatomy. Prioritize maximum accuracy in visible regions and anatomically plausible, identity-consistent reconstruction everywhere else.\n\nDo not simply project the photograph onto a flat surface or generate a shallow 2.5D mesh.\n\nThe model must look convincing when the camera rotates around it, especially in side-profile views.\n\n## 3. BEST AVAILABLE RECONSTRUCTION TECHNOLOGY\n\nInvestigate and select the strongest practical open-source reconstruction pipeline available.\n\nEvaluate relevant technologies, potentially including:\n\n- FLAME-based 3D face reconstruction\n- DECA / EMOCA\n- Multi-view diffusion or image-conditioned 3D generation\n- TRELLIS / Hunyuan3D or more capable compatible alternatives\n- 3D Gaussian Splatting where useful as an intermediate\n- Neural surface reconstruction\n- Blender Python API\n- Advanced PBR texture generation\n- Anatomical mesh refinement and landmark-based optimization\n\nYou are not required to use all of these. Choose the pipeline that provides the highest possible facial similarity, physically valid geometry, and realistic rendering.\n\nCheck the actual execution environment first, including GPU, available VRAM, CUDA/Metal support, installed software, and model requirements.\n\nPrefer running pretrained models and proven reconstruction frameworks instead of attempting to manually sculpt a face from scratch.\n\nIf the optimal method is unavailable, implement the strongest executable alternative and document the limitations. Never claim to have generated a model or used a pretrained system unless it actually ran.\n\n## 4. GEOMETRY AND TEXTURES\n\nProduce a high-quality, anatomically plausible 3D mesh.\n\nRequirements:\n\n- Smooth, organic human facial geometry without artificial distortions\n- Real 3D nose, lips, eyelids, eye sockets, ears, and jaw\n- Anatomically plausible skull volume\n- Realistic neck and shoulder transitions\n- Properly positioned eyeballs, teeth, and mouth geometry\n- Realistic hair volume with geometry or strand-based hair\n- Clean topology where possible\n- UV-unwrapped surfaces\n- High-resolution PBR materials\n\nSkin must not resemble plastic or wax.\n\nImplement realistic skin shading, including:\n\n- Subsurface scattering\n- Fine pores and subtle microtexture\n- Natural color variation\n- Appropriate roughness maps\n- Physically plausible specular reflections\n- Normal and displacement maps where beneficial\n\nGenerate plausible textures for unseen regions without stretching the original photograph across the entire head.\n\n## 5. PRESERVE EXPRESSION AND APPEARANCE\n\nThe reference shows a person with short dark hair, a friendly smile, and a dark shirt.\n\nPreserve the expression as faithfully as practical, including the shape of the smile and teeth.\n\nDo not replace it with a neutral, expressionless generic face unless required by an intermediate reconstruction stage. The final presentation must reproduce the original expression.\n\nMaintain consistent identity across all camera angles.\n\nAvoid the common issue in image-to-3D reconstruction where the front looks accurate but the profile becomes noticeably different.\n\n## 6. ITERATIVE QUALITY OPTIMIZATION\n\nDo not accept the first generated model.\n\nImplement an iterative refinement process:\n\n1. Extract facial landmarks and relevant visual features from the reference.\n2. Reconstruct initial 3D geometry.\n3. Align the reconstructed camera with the source photograph.\n4. Render the model from the original camera perspective.\n5. Compare the rendering against the reference using facial landmarks, identity similarity metrics where available, silhouette alignment, and visual inspection.\n6. Adjust geometry, textures, pose, and expression to reduce discrepancies.\n7. Evaluate the left and right profile for anatomical plausibility.\n8. Repeat refinement where measurable improvement is possible.\n\nThe ultimate goal is maximum likeness, not merely a visually impressive generic 3D face.\n\nDo not present identity-similarity scores as objective proof of accuracy if the metric or pretrained model is unavailable.\n\n## 7. REQUIRED DELIVERABLES\n\nCreate the following outputs in a clearly organized `output/` directory:\n\n**3D assets**\n- `person_final.blend` - Fully editable Blender project\n- `person_final.glb` - Portable textured 3D model\n- `person_final.fbx` - Export if technically supported\n- `textures/` - Generated texture maps and supporting assets\n\n**Renders**\n- `front.png`\n- `front_left_45.png`\n- `left_profile.png`\n- `back_left_45.png`\n- `back.png`\n- `back_right_45.png`\n- `right_profile.png`\n- `front_right_45.png`\n\n**Visualization**\n- `turntable.mp4` - A smoothly rotating 360-degree video rendered with realistic studio lighting\n- A locally runnable interactive 3D viewer using Three.js, allowing users to rotate, zoom, and inspect the model from any direction\n\n**Documentation**\n- `README.md` - Exact commands to reproduce, open, and inspect everything\n- `reconstruction_report.md` - Methods used, actual execution results, limitations, and which parts of the model are inferred rather than observable\n\n## 8. RENDERING QUALITY\n\nUse physically based rendering with realistic studio lighting.\n\nPrefer Blender Cycles where supported, with appropriate samples, denoising, and accurate material settings.\n\nThe person should look like a real human photographed from different angles, rather than a videogame character, cartoon, mannequin, or wax sculpture.\n\nCreate neutral lighting suitable for evaluating facial likeness.\n\nGenerate high-resolution renders, preferably 2048 × 2048 or higher where resources permit.\n\n## 9. EXECUTION RULES\n\n- Work autonomously from beginning to end.\n- Use only the provided photograph as the identity reference.\n- You may download pretrained models, code, and generic resources, but no additional images of this person.\n- Do not ask for more photographs.\n- Do not substitute a generic human model and claim it is a faithful reconstruction.\n- Install necessary dependencies when possible.\n- Prefer actual working implementation over theoretical explanations.\n- Verify the generated assets load and render successfully.\n- If a GPU-dependent approach is unavailable, attempt an executable CPU-compatible fallback.\n- Explain any fundamental or technical limitations without overstating the result.\n\n## FINAL SUCCESS CRITERION\n\nI want to open the resulting 3D model, rotate it freely through 360 degrees, zoom in on the face, and see a convincing realistic reconstruction of the individual in the reference photograph.\n\n**Priorities, in order:**\n\n1. Facial identity preservation\n2. Accurate visible facial geometry\n3. Convincing full 360-degree anatomical reconstruction\n4. Photorealistic skin, hair, eyes, and materials\n5. High-quality interactive viewing and rendering\n6. Clean, reusable 3D project files\n\nStart by inspecting the reference image and available computing environment. Then select and execute the best achievable reconstruction pipeline.\n\nDo not stop at planning. Produce the actual assets."
+},
+// ====== 2026-10-18 自動更新 ======
+{
+  cat:"工程研究",
+  title:"ASPIRE 開源：以 GPT-6 Astra 為後端的機器人 agent 框架，實體手臂解魔術方塊",
+  desc:"ASPIRE 是會自己發現技能、在實體機器人上持續自我修正的 agentic 機器人框架，V1.0 開源。團隊說 Astra 推出當天把後端換成 Astra，一夜之間把模擬 benchmark 刷到接近滿分：LIBERO-Pro 80 項 99%、Robosuite 7 項 100%、BEHAVIOR-1K 2 項 100%，並展示真實雙臂機器人操作（例如解魔術方塊）。誠實保留：屬研究團隊的開源發表；共同作者 Jim Fan 同日另提到 Opus 5.5 在他們的模擬評測上略勝 Astra。",
+  author:"@guanzhi_wang (Guanzhi Wang)",
+  likes:254,
+  url:"https://x.com/guanzhi_wang/status/2111127089428701366",
+  ptype:"重建",
+  prompt:"用 GPT-6 Astra 當 ASPIRE 的後端模型，讓實體雙臂機器人完成「Solve the Rubik's Cube.」這類長程操作任務。設定：1) 從 GitHub clone ASPIRE V1.0，依說明接上機器人控制介面與相機。2) 把 agent 後端模型換成 GPT-6 Astra。3) 讓 agent 先在模擬環境（LIBERO-Pro、Robosuite）自主發現並累積技能到 /robot skill library，再移轉到實體手臂。4) 實機執行時每一步先 Thinking 規劃、再呼叫技能，失敗就記錄原因並修正技能（continual skill refinement）。5) 輸出每項任務的成功率與失敗案例摘要。"
 }
 ];
 
@@ -5879,6 +5890,67 @@ const OPUS_CASES = [
   url:"https://x.com/binaryify/status/2110557825907011640",
   ptype:"重建",
   prompt:"我的小米顯示器不支援 DDC/CI，BetterDisplay 切不了輸入源。請幫我逆向它的控制方式並做一個 macOS 選單列 App。1) 調查：列出顯示器透過 USB 暴露的裝置（ioreg／system_profiler），如果是 HID 裝置就 dump report descriptor；若官方有 Windows 控制軟體，分析它送出的封包格式。2) 找出切換輸入源（HDMI1／HDMI2／DP／USB-C）、亮度、音量的指令，寫成可單獨測試的 CLI。3) 用 SwiftUI 做選單列 App：顯示目前解析度與更新率、四個輸入源按鈕、亮度與音量滑桿、幾個情境預設。4) 每一步先在我確認後才送指令到顯示器，避免把螢幕弄壞。"
+},
+// ====== 2026-10-18 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"號稱第一部 Claude 做的動畫《Gus & Spark》：25 分鐘一集，零 AI 生成影片",
+  desc:"作者讓 Opus 5.5 MAX 連續跑超過 15 小時，用程式碼一格一格做出 25 分鐘的 3D 動畫單集《Gus & Spark》，全片沒用任何影片生成模型。作者公開的數字：約 3.4 萬行程式碼、9.86 億 token，換算 API 價約 370 美元。誠實保留：推文沒交代用了哪套渲染工具、人工介入多少，也沒附 prompt；「第一部」是作者自稱。",
+  author:"@ziwenxu_ (Ziwen)",
+  likes:1854,
+  url:"https://x.com/ziwenxu_/status/2111212505947357651",
+  ptype:"重建",
+  prompt:"用程式碼做一集約 25 分鐘的 3D 動畫《Gus & Spark》，全片不准用任何影片或圖像生成模型，每一格都由程式渲染。流程：1) 先寫劇本與分鏡表（場次、鏡頭、時長、對白、情緒），兩個主角 Gus 與 Spark 的角色設定與造型。2) 用程式建模角色與場景（Three.js 或 Blender Python 皆可），角色要有骨架與可重用的表情、動作庫。3) 依分鏡逐場製作鏡頭運動、燈光與天氣（例如夜雨、室內暖光）。4) 配音用 TTS、配樂與音效用程式合成或授權素材，對嘴與節拍對齊時間軸。5) 逐場渲染成影格、ffmpeg 合成，每完成一場就截圖自我檢查構圖與連戲，再進下一場。長時間自主執行，進度與決策記錄在 log.md。"
+},
+{
+  cat:"模擬視覺化",
+  title:"整片海洋只有 61 KB：WebGPU 即時 FFT 海浪、白浪、夕陽波光與雲",
+  desc:"一個 61 KB、壓縮後自包含的 HTML 檔，在瀏覽器用 WebGPU 跑出 FFT 海浪、白浪、陽光在水面的閃爍、物理式夕陽天空與雲，WASD 自由飛行，沒用遊戲引擎也沒用渲染函式庫。據原作者說用 Claude Code + Opus 5.5 約 30 分鐘做成：Claude 在 headless Chrome 截圖，再派獨立 subagent 互評畫面，作者主要只對雲給意見。⚠️ 此為 @jurlycat 轉述，推文未標原作者帳號；需支援 WebGPU 的 Chrome。",
+  author:"@jurlycat (Jurly)（轉述，原作者未具名）",
+  likes:2467,
+  url:"https://x.com/jurlycat/status/2111306207239557288",
+  ptype:"重建",
+  prompt:"用純 WebGPU 寫一個可在瀏覽器自由探索的海洋場景，單一 HTML 檔、不准用任何遊戲引擎或渲染函式庫，最後壓縮到 100 KB 以內。必備：1) FFT 海浪（Tessendorf 頻譜，多層級 cascade），2) 依波峰尖銳度產生白浪泡沫，3) 太陽在水面的閃爍高光（sun glitter），4) 物理式大氣散射的夕陽天空與雲層，5) WASD + 滑鼠自由飛行鏡頭，畫面角落顯示 FPS 與 GPU 時間。工作方式：每完成一階段就用 headless Chrome 截圖，交給另一個沒看過程式碼的 subagent 評畫面哪裡不像真海，依意見修正後再截圖，直到評審沒有重大問題。"
+},
+{
+  cat:"遊戲",
+  title:"Opus 5.5 花 3 天蓋出的 Unreal 遊戲世界：秋楓森林、晨光與斗篷旅人",
+  desc:"作者讓 Opus 5.5 花 3 天在 Unreal Engine 裡建出一個可探索的遊戲世界：秋天的楓林、穿過樹葉的晨光體積光、石碑、旗幟與斗篷角色，畫面接近商業遊戲水準。誠實保留：場景資產用 Blender 製作、角色由 Tripo AI 生成，Opus 主導整合與建置；推文沒附 prompt 與人工介入程度。",
+  author:"@xikhar (Shikhar)",
+  likes:1243,
+  url:"https://x.com/xikhar/status/2111290504491258080",
+  ptype:"重建",
+  prompt:"透過 Unreal Engine MCP（或 Python 編輯器腳本）幫我在 UE5 建一個可走動的第三人稱遊戲世界，主題是「秋天的古老森林小徑」。需求：1) 地形：起伏丘陵、蜿蜒石子小徑、蕨類與紫色野花覆蓋的林下層。2) 植被：楓樹與針葉樹混林，楓葉橘紅漸層，用 PCG 或 foliage 工具撒布。3) 光線：清晨低角度陽光、Lumen 全域光照、穿過樹冠的體積光與薄霧。4) 道具：路邊石碑、紅色家紋旗幟、遠方神社入口。5) 角色：匯入我用 Tripo 生成的斗篷旅人，設好動畫藍圖與第三人稱相機。缺少的小型資產用 Blender Python 建模後匯入。每完成一區就截圖檢查構圖與光線，再繼續擴建。"
+},
+{
+  cat:"遊戲",
+  title:"用 Opus 5.5 復刻《Among Us》：13 小時、98 個 agent、972 美元",
+  desc:"作者用 Opus 5.5 復刻出《Among Us》：含 The Skeld 地圖、可設定內鬼數、投票時間、視野、擊殺冷卻等完整房間設定，有角色選擇與房間代碼。作者公開成本約 13 小時、動用 98 個 AI agent、API 費用 972 美元，宣傳影片也是 Opus 做的。未附 prompt。",
+  author:"@MrTacticalX (Mr Tactical)",
+  likes:690,
+  url:"https://x.com/MrTacticalX/status/2111447971468579029",
+  ptype:"重建",
+  prompt:"復刻《Among Us》的可玩網頁版（多人連線）。規格：1) 地圖：重現 The Skeld 的房間配置與通風管，任務點分布合理。2) 大廳：房間代碼加入、角色顏色選擇，房主可調整內鬼數、緊急會議次數、討論與投票時間、玩家速度、船員／內鬼視野、擊殺冷卻與距離、長短任務數。3) 玩法：船員做任務與回報屍體，內鬼擊殺、破壞與鑽通風管，會議投票與放逐動畫。4) 伺服器：權威式狀態同步、斷線重連。請拆成多個子任務平行交給 subagent（地圖、網路、UI、任務小遊戲、美術），每個模組完成都要寫測試並互相審查。最後再用程式做一支 30 秒的宣傳影片。"
+},
+{
+  cat:"遊戲",
+  title:"「盡可能詳細」的古希臘世界：衛城神殿、雅典娜像與整座城市，全用程式碼生成",
+  desc:"作者只要 Opus 5.5「把古希臘世界做得越詳細越好」，結果是一整座可飛覽的古城：山丘上的神殿與雅典娜巨像、層層疊疊的民居、柏樹與遠方山脈。作者強調沒用任何素材，畫面全是程式碼產生。推文未附完整 prompt 與工時。",
+  author:"@LexnLin (Leon Lin)",
+  likes:552,
+  url:"https://x.com/LexnLin/status/2111582260818239777",
+  ptype:"重建",
+  prompt:"Build an ancient Greek world as detailed as possible. 單一 HTML（Three.js 或 WebGPU），不准使用任何外部模型、貼圖或素材，所有幾何、材質與植被都用程式生成。內容：1) 山丘上的衛城：多立克柱式神殿（含山牆雕飾）、持盾雅典娜巨像、大理石階梯。2) 山腳下密集的城市：白牆紅瓦民居、市集廣場、劇場、港口。3) 自然：柏樹與橄欖樹、遠方石灰岩山脈、愛琴海。4) 光線：午後到黃昏的日照循環、大氣散射、陰影。5) 自由飛行相機與 LOD，確保整座城在瀏覽器能流暢執行。"
+},
+{
+  cat:"遊戲",
+  title:"概念圖變可走的 3D 世界：Opus 5.5 先排積木、GPT 照概念圖重繪、再投影回幾何",
+  desc:"把一張 GPT 生成的賽璐璐風村莊概念圖變成可走進去的 3D 遊戲場景：Opus 5.5 先用簡單方塊重建配置並從固定鏡頭截圖 → GPT 依概念圖在截圖上重繪 → Opus 寫 shader 把重繪的畫投影回 3D 幾何，室內也用同一流程。成品保有原插畫的筆觸，但能自由走動、進屋。誠實保留：角色是 GPT Images 生成、Minimax H3 做動畫，Opus 負責建模、投影 shader 與整合；推文措辭像在介紹，未明說是否為作者本人作品。",
+  author:"@hakimieiqbal (Hakimi Eiqbal)",
+  likes:833,
+  url:"https://x.com/hakimieiqbal/status/2111428789272019234",
+  ptype:"重建",
+  prompt:"我有一張賽璐璐風（cel-shaded）的村莊概念圖，請把它變成可走動的 3D 遊戲場景，同時保留原插畫的畫風。流程：1) 依概念圖用簡單方塊（box、cylinder、plane）在 Three.js 重建村莊配置：房屋、水井、市集攤位、圍籬、樹叢，相機放在與概念圖相同的視角，輸出一張截圖。2) 我會把截圖丟給圖像模型，依概念圖重繪成彩色插畫。3) 你寫一個 projection shader，從同一台相機把重繪的畫投影回這些 3D 幾何上，讓玩家在附近走動時仍像原插畫。4) 加入第三人稱角色控制、碰撞與進屋切換；室內場景重複同一流程。"
 }
 ];
 
