@@ -5951,6 +5951,67 @@ const OPUS_CASES = [
   url:"https://x.com/hakimieiqbal/status/2111428789272019234",
   ptype:"重建",
   prompt:"我有一張賽璐璐風（cel-shaded）的村莊概念圖，請把它變成可走動的 3D 遊戲場景，同時保留原插畫的畫風。流程：1) 依概念圖用簡單方塊（box、cylinder、plane）在 Three.js 重建村莊配置：房屋、水井、市集攤位、圍籬、樹叢，相機放在與概念圖相同的視角，輸出一張截圖。2) 我會把截圖丟給圖像模型，依概念圖重繪成彩色插畫。3) 你寫一個 projection shader，從同一台相機把重繪的畫投影回這些 3D 幾何上，讓玩家在附近走動時仍像原插畫。4) 加入第三人稱角色控制、碰撞與進屋切換；室內場景重複同一流程。"
+},
+// ====== 2026-10-19 自動更新 ======
+{
+  cat:"工程研究",
+  title:"Mac 只剩 27 GB：Opus 5.5 唯讀掃出 124 GB 開發殘留，畫成 treemap 再生清理腳本",
+  desc:"作者讓 Opus 5.5 只看檔案大小、不開內容地唯讀掃描家目錄，產出一個本機 HTML「Disk map」：依空間大小畫 treemap，分成「可安全刪除」與「先讓我看過」兩區，勾選後才產生用各工具官方清理指令（pnpm store prune、npm cache clean 等）組成的腳本，AI 自己不刪任何東西。結果找出 124 GB 開發殘留，光 ~/.codex 就 59 GB（其中 31 GB 是舊對話），可直接安全清掉的有 22.5 GB。推文附完整原文 prompt。",
+  author:"@Voxyz_ai (Vox)",
+  likes:1192,
+  url:"https://x.com/Voxyz_ai/status/2111472304643612774",
+  ptype:"原文",
+  prompt:`Scan my home folder read-only. Look at sizes only and don't open any file contents. Skip iCloud, the Photos library and external drives, and skip any folder that triggers a system permission prompt. Find the big folders left behind by development work and build a local HTML page: a treemap sized by space, split into 'safe to remove' and 'let me review first'. Sessions, models and Docker always go under 'let me review first'. For each item, show the path, the size and what happens if it's deleted. When I tick items, generate a cleanup script that uses each tool's own clean command, and don't delete anything yourself. Append each item's size to ~/disk-report/sizes.csv, and next time read it first and flag what grew.`
+},
+{
+  cat:"遊戲",
+  title:"Roadster Stunt Arena：幾個 prompt 做出瀏覽器多人特技賽車（含類 Rocket League 足球模式）",
+  desc:"作者用 Opus 5.5 在瀏覽器裡做出一款粉絲向 Roadster 特技賽車遊戲：Three.js 繪圖、Rapier 物理、Cloudflare 撐多人連線，有自由特技場、計時賽（檢查點、獎牌、幽靈車）、最多 20 人的汽車足球（Rocket League 式）與可開車門、換塗裝的展示間，還附排行榜，網址公開可玩。作者說只用了「幾個 prompt」，未附原始指令。",
+  author:"@aymericrabot (Aymeric Rabot)",
+  likes:729,
+  url:"https://x.com/aymericrabot/status/2111519266898169925",
+  ptype:"重建",
+  prompt:"做一款瀏覽器多人特技賽車遊戲《Roadster Stunt Arena》（粉絲作品，標註與車廠無關）。技術：Three.js 繪圖、Rapier 物理、Cloudflare Durable Objects 做多人房間與狀態同步。內容：1) 主選單：深色電影感 UI，顯示線上人數。2) Free Ride：夜間特技場，有跳台、U 形牆、可以騎牆。3) Time Attack：檢查點、金銀銅獎牌、自己最佳成績的幽靈車。4) Roadster League：汽車足球、巨大球體，最多 20 人分隊。5) Showroom：環繞鏡頭看車，可開鷗翼門、開燈、切換主動空力與塗裝。6) Leaderboard：世界紀錄與本週最佳。車輛要有主動尾翼、冷氣推進器等可切換的招式，手感要像街機賽車。"
+},
+{
+  cat:"創意藝術",
+  title:"Strawberry Corner：手繪水彩風的小咖啡店網站概念",
+  desc:"作者用 Opus 5.5 做的小咖啡店網站概念：畫面中央是一棟頂著大草莓的水彩風轉角小樓，左側導覽、右側季節特餐、熱銷品與周邊商品卡片，整體像繪本一樣溫暖，影片展示了互動與動態效果。作者是長期做概念 UI 的設計師，推文未附 prompt，也未說明插畫素材是否另外生成。",
+  author:"@DilumSanjaya (Dilum Sanjaya)",
+  likes:1080,
+  url:"https://x.com/DilumSanjaya/status/2111864428010582082",
+  ptype:"重建",
+  prompt:"幫一間叫「Strawberry Corner — Café & Little Things」的小咖啡店做一個溫暖、有記憶點的網站首頁概念。風格：手繪水彩繪本感、米色紙質底、紅綠點綴、手寫襯線混搭字體。版面：1) 左側：Logo、標語「Good Things Happen Here」、垂直導覽（Home / Menu / Shop / Events / My Bag）。2) 中央主視覺：一棟頂樓放著巨大草莓的轉角小樓，有遮陽棚、窗台花箱、路燈、店貓，滑鼠移過時窗戶亮燈、花瓣飄落。3) 右側：季節特餐卡、熱銷四品（價格）、周邊商品卡。4) 頂部顯示草莓點數與收藏數。所有動態要細緻不吵，載入時元素依序淡入，整頁單一 HTML 可直接開。"
+},
+{
+  cat:"創意藝術",
+  title:"「漢堡是怎麼做出來的」：每一格都由 Opus 5.5 用 JavaScript 畫出的手繪感動畫",
+  desc:"一支講漢堡製作過程的短動畫，畫風是帶陰影線與紙質底的手繪插畫，作者強調每一格都是 Opus 5.5 用 JavaScript 畫的，沒有使用圖像模型或外部素材。推文未附 prompt 與製作時間。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:567,
+  url:"https://x.com/kevin_t_ngo/status/2111569193347018977",
+  ptype:"重建",
+  prompt:"用純 JavaScript（Canvas 2D）做一支約 30 秒的手繪風解說動畫「How this burger was made.」，不准用任何圖片、圖像模型或外部素材，每一格都用程式畫。畫風：米色紙張紋理底、黑色描邊、交叉排線陰影、略微抖動的手繪線條。分鏡：1) 開場：完整的雙層起司漢堡冒著熱氣，標題手寫字。2) 依序倒帶拆解：上層麵包、起司融化滴落、牛肉餅在鐵板上煎、生菜與番茄切片、洋蔥圈、下層麵包烤上色。3) 每段配一行手寫字說明。4) 最後一層層組回去，回到開場畫面。轉場用物件本身帶動，動作要有預備動作與緩動，輸出 1080×1080。"
+},
+{
+  cat:"遊戲",
+  title:"把電視主畫面變成 Game Boy Color 寶可夢小鎮：走進建築開 App，改設定先打贏道館館主",
+  desc:"作者用 Opus 5.5 把自家電視的主畫面改成 Game Boy Color 風格的寶可夢小鎮：開機有仿任天堂的「Youtendo」像素開場，用遙控器操控角色在鎮上走，走進不同建築就開對應 App，想改系統設定得先打贏道館館主。推文只有影片，未說明是哪個電視平台與實作方式。",
+  author:"@robbietilton (Robbie Tilton)",
+  likes:687,
+  url:"https://x.com/robbietilton/status/2111936458923851923",
+  ptype:"重建",
+  prompt:"幫我把智慧電視（Android TV／Google TV）的主畫面換成一個 Game Boy Color 風格的寶可夢式像素小鎮啟動器。需求：1) 開機動畫：仿 GBC 開機的像素 Logo（自創名稱，不要用任天堂商標）。2) 主畫面是一個俯視角像素小鎮，玩家用遙控器方向鍵操控角色走動。3) 每棟建築對應一個已安裝的 App（例如影音館＝YouTube、電影院＝Netflix、音樂屋＝Spotify），走進門就啟動該 App。4) 系統設定藏在道館裡：要先跟館主打一場簡化版回合制對戰，贏了才開放設定。5) 160×144 解析度放大、四色調色盤、8-bit 音效。請說明怎麼打包成 launcher APK、設成預設主畫面，以及怎麼還原。"
+},
+{
+  cat:"遊戲",
+  title:"《El Eternauta Online》原型：30 分鐘把五月廣場變成下雪的可走動 3D 場景",
+  desc:"作者花約 30 分鐘做出阿根廷經典漫畫《永航員》（El Eternauta）的線上遊戲原型：在被雪覆蓋的布宜諾斯艾利斯五月廣場上，以第三人稱操控戴面罩的角色走動、跑、跳，畫面右上有 FPS 與 Gaussian splat 載入數的除錯面板。誠實保留：這是多工具接力——ChatGPT 畫草圖、Marble 生成 Gaussian splat 場景、Meshy 建模與綁骨，最後由 Opus 5.5 one shot 整合成可玩原型；角色 idle 動畫仍缺（面板寫「pose congelada」）。",
+  author:"@santisiri (santi)",
+  likes:1202,
+  url:"https://x.com/santisiri/status/2111466480357244992",
+  ptype:"重建",
+  prompt:"做一個網頁版第三人稱遊戲原型《El Eternauta Online — Plaza de Mayo》。素材：我提供一個五月廣場的 Gaussian splat 檔（.spz，約 500 萬個 splat）與一個已綁骨的角色 FBX（戴防毒面罩與雪衣）。需求：1) 用 Three.js 搭配 splat renderer 載入場景，依距離做 LOD 剔除，維持 60 FPS 以上。2) 第三人稱角色控制：WASD 移動、Shift 跑、空白鍵跳、R 重生、滾輪調整鏡頭距離，點畫面鎖定滑鼠、Esc 釋放。3) 下雪粒子、冷色調霧氣與夜間路燈光。4) 為廣場建立簡化碰撞體，避免穿牆。5) 按 P 開除錯面板，顯示 FPS、座標、目前動畫與可見 splat 數。缺少的動畫片段要在面板上標示，不要讓程式壞掉。"
 }
 ];
 
