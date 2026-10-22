@@ -4891,7 +4891,49 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/brainstormity/status/2112229561689587880",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）做一個本機電腦操作 agent「JEV Computer」。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。啟用多模態圖片輸入與 Box（框選）題型。架構：Python 後端 + 127.0.0.1:8000 的網頁控制台，用 pyautogui 控制滑鼠鍵盤、mss 截圖。迴圈：1) 截圖；2) 問 Jev 一題 Choice「下一步動作」：選項 click／type／scroll／hotkey／open_url／done，state 放任務描述、已完成步驟清單（最近 5 步）與目前網址；3) 若選 click，再問一題 Box「要點擊的元素在哪」，取框中心點，加入隨機微小位移與擬人移動曲線；若選 type，要打的文字只能取自任務描述中用引號標出的字串（避免模型自行編造內容）；4) 每步記錄截圖、題目、選項、信心值與理由。信心值低於 0.6 時暫停並在控制台請使用者確認；同一動作連續重複 3 次視為卡住並停止。控制台提供 Run、Dry run（只顯示決策不實際操作）、Stop，滑鼠移到任一螢幕角落立即中止；執行完產出完整步驟報告並統計 token 與花費。"
+},
+// ====== 2026-10-22 自動更新 ======
+{
+  cat:"工程研究",
+  title:"Lightpanda 把 Jev 塞進瀏覽器執行檔：judge() 0.2 秒判斷網頁是真內容還是 cookie 牆",
+  desc:"無頭瀏覽器 Lightpanda 把 TypeSafe Jev 內建進執行檔，做出 judge()：用一組預先定義的題目判斷頁面是否有真實內容，以及屬於文章、列表、商品還是文件；擋住的頁面、CAPTCHA、cookie 牆、登入牆、付費牆、錯誤頁、空搜尋、還在載入中的頁面（都可能回 HTTP 200）都能分辨出來。一次呼叫約 0.2 秒，示範影片 30 個網站共約 14 秒，遇到限流會退讓、會接受 cookie 牆，再決定保留或跳過每一頁。這是 Lightpanda 官方帳號發布的整合功能。",
+  author:"@lightpanda_io (Lightpanda)",
+  likes:199,
+  url:"https://x.com/lightpanda_io/status/2112818839528321479",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）為爬蟲做一個頁面分流函式 judge(page)。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。用 Lightpanda（或 Playwright）抓頁面，state 放：網址、HTTP 狀態碼、標題、可見文字前 3,000 字、主要 DOM 結構摘要（表單數、按鈕文字、iframe 數）。題目：1) Choice「頁面狀態」：real_content／blocked／captcha／cookie_wall／login_wall／paywall／error_page／empty_search／still_loading；2) 若為 real_content，再問 Choice「內容類型」：article／listing／product／docs。信心值低於 0.6 時重新等待 1 秒再抓一次；cookie_wall 時自動點接受再重判；still_loading 時延遲重試；收到 429 時指數退避。寫一個 triage_crawl.py 示範：讀入 30 個網址並行處理，輸出每頁的判斷、信心值與耗時，以及總耗時。"
+},
+{
+  cat:"工程研究",
+  title:"Jev 當審查層的 Deep Research Agent：Nemotron 查資料，Jev 決定夠不夠好、要不要再查一輪",
+  desc:"作者做的開源深度研究 agent：Nemotron（透過 Nebius Token Factory）負責研究與撰寫，Tavily 搜尋網路，LangChain 跑研究迴圈、LangSmith 追蹤每一步。初稿不直接回傳，而是交給 Jev 判斷「證據是否充分、是否回答原問題、能不能停止研究」，不夠就再研究一輪。重點是做研究的模型不能自己判定作品完成。專案是參加 Nebius AI Builder Program 時做的，帶有合作宣傳成分；與他先前收錄的資料分析 agent 是不同專案。",
+  author:"@Sumanth_077 (Sumanth)",
+  likes:199,
+  url:"https://x.com/Sumanth_077/status/2112560856131404144",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）當深度研究 agent 的審查層。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。架構（LangChain + LangSmith 追蹤）：研究模型用 Nemotron（Nebius Token Factory），搜尋用 Tavily。流程：問題 → 搜尋多個來源 → 撰寫附引用的初稿 → Jev 審查 → 不合格就帶著審查意見再研究 → 最終答案。Jev 審查三題，state 放原問題、初稿與引用來源摘要：1) Score「證據支持程度」1–5；2) Choice「是否涵蓋原問題的所有面向」：full／partial／off_topic；3) Choice「是否可以停止研究」：stop／research_more。規則：research_more、Score ≤ 3 或 partial 時再跑一輪，最多 3 輪；任一題信心值低於 0.6 時把初稿標為「需人工確認」。輸出最終答案、每輪的 Jev 判斷與信心值。"
+},
+{
+  cat:"工程研究",
+  title:"跨 agent 共用記憶：Beacon 錄下所有 coding agent 的工作紀錄，Jev 挑出值得傳下去的工程教訓",
+  desc:"作者用 Asymptote Labs 開源的 Beacon（持續擷取 Claude Code、Codex、Cursor、OpenCode、Hermes 等 20 多種 agent 的工作階段並建立共用索引）搭配 Jev，做出即時的跨 agent 記憶流程：每次執行被記錄後，由 Jev 判斷這段紀錄裡有沒有可重用的工程教訓，核准的教訓才會提供給下一個 agent，不轉交原始逐字紀錄。附 GitHub repo 與完整錄影；推文帶有推廣 Beacon 的成分。",
+  author:"@_avichawla (Avi Chawla)",
+  likes:321,
+  url:"https://x.com/_avichawla/status/2112862391268688291",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做跨 coding agent 的共用記憶流程。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。用 Beacon（asymptotelabs）擷取本機所有 agent（Claude Code、Codex、Cursor、OpenCode）的工作階段紀錄。每段紀錄先用規則濾掉例行檔案讀取與探索步驟，只保留錯誤、修正與使用者糾正的片段，再問 Jev：1) Choice「這段紀錄是否含可重用的工程教訓」：reusable／task_specific／noise；2) 若為 reusable，再問 Choice「教訓類型」：build_config／api_usage／testing／tooling／code_style；3) Score「適用範圍」1–5。用一個小 LLM 把核准片段濃縮成一句「情境 → 做法」教訓存進索引；信心值低於 0.6 的放進待審區給人工確認。新 agent 開工時依專案與任務檢索相關教訓注入 context，絕不傳遞原始逐字紀錄。附儀表板顯示被收錄與被拒絕的紀錄。"
+},
+{
+  cat:"工程研究",
+  title:"Harness² 接上 Jev 的影片行人辨識：模型權重不動，執行中自己學會「太小就放大兩倍」",
+  desc:"轉述文（原作者不明）：一位開發者把 Google Research 開源的 Harness² 框架接上 Jev，做出街景影片的行人辨識 demo。Jev 權重凍結，但系統會從失敗軌跡中提出、測試並收錄處理經驗（小目標、放大兩倍、遮擋、比對可見部分），寫進經驗庫後交給 Jev 判斷；信心值低於 0.70 時轉人工覆核。畫面顯示 person 框選信心 0.86、第 2/3 輪、20 次中 6 次轉人工。轉述者的描述較誇張（「AI 自己寫程式補短板」），細節以原 demo 為準。",
+  author:"@yyyole (沐阳，轉述)",
+  likes:451,
+  url:"https://x.com/yyyole/status/2112562728799731955",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）加上 Harness² 式的「執行期演化」框架做影片行人辨識。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。前景：逐幀（24 fps 取樣）把畫面送給 Jev，問 Box 題「標出每個行人」與 Choice「類別」，state 放目前套用的經驗清單；信心值 ≥ 0.70 直接輸出，低於 0.70 進人工覆核佇列。背景演化迴圈（Jev 權重不動）：收集失敗與低信心軌跡 → Propose 提出處理規則（例如目標小於畫面 2% 就裁切放大兩倍、被遮擋時只比對可見部位、太暗先調對比）→ Probe 在保留集上測試是否提升信心與準確率 → 有效的規則 Compose 進經驗庫（版本化 v1、v2…）並套用到 prompt 與前處理工具。做一個終端風儀表板：上方即時畫面與框、中間 Jev 輸出與信心條、下方軌跡／提案／測試／經驗庫四格與輪數、轉人工比例。"
 }
+
 ];
 
 // ====== Claude Opus 5.5 案例（Anthropic，2026-09-22 發布）======
@@ -6135,6 +6177,87 @@ const OPUS_CASES = [
   url:"https://x.com/lucas_martinic/status/2112514417300758643",
   ptype:"重建",
   prompt:"我有一台全新的 Mac 和一台 Pico 混合實境頭盔（已開啟開發者模式並用 USB 連上）。請你端到端完成：1) 自行安裝 Unity 6（含 Android Build Support）、Unity CLI 與 Pico CLI／SDK，全部用命令列與 headless 模式操作，不要叫我開任何 UI；2) 建立一個 Unity 專案，做一個混合實境「凍結時間」App：開啟穿透（passthrough）畫面，使用者捏合手勢或按扳機時，場景中所有物理物件（自己丟出的球、粒子、漂浮物）瞬間定格，同時穿透畫面套上輕微去色與時間停止音效，再按一次恢復；3) 用 headless 建置出 .apk，透過 adb／Pico CLI 安裝到頭盔並啟動；4) 完成後告訴我「可以測試了」，並列出你安裝了什麼、怎麼重建。"
+},
+// ====== 2026-10-22 自動更新 ======
+{
+  cat:"遊戲",
+  title:"Battle Drones：瀏覽器裡的終極動員令式 RTS，兩台裝置用「聲音」連線對戰",
+  desc:"Simon Willison 主要用 Claude Opus 5.5 做出的即時戰略遊戲：採礦車、工廠、坦克與砲塔，畫面有小地圖與「DOUBLE KILL」提示，完全在瀏覽器執行。最特別的是多人模式不靠伺服器，而是兩台裝置透過喇叭與麥克風的音訊連結互傳資料。作者用的是「mainly」，代表並非 100% 由 Opus 寫成。",
+  author:"@simonw (Simon Willison)",
+  likes:739,
+  url:"https://x.com/simonw/status/2112630778068881543",
+  ptype:"重建",
+  prompt:"用 Three.js 做一款可在瀏覽器執行的《終極動員令》風格即時戰略遊戲「Battle Drones」：斜俯視 3D 戰場（草地、道路、岩石、樹林），藍紅兩方各有主基地、礦物精煉廠、工廠與防禦砲塔；採礦車自動往返採礦換資源，可生產坦克、無人機與砲塔，框選單位下達移動／攻擊指令，敵方 AI 會擴張與進攻。UI：資源與時間、遊戲倍速（1x/2x/4x）、小地圖、連殺提示（DOUBLE KILL）。加入裝置對裝置多人模式：不使用任何伺服器，用 Web Audio API 把指令編碼成音訊（FSK 調變）從喇叭送出，另一台裝置用麥克風解碼，雙方以 lockstep 同步模擬；附錯誤校驗與重送。輸出可直接部署的靜態網站。"
+},
+{
+  cat:"工程研究",
+  title:"Robotics Bench：13 塊真實電路板的互動教學站，能親手焊接，也能故意把它弄壞",
+  desc:"作者用 Opus 5.5 搭配自製的 /colorfigures skill，做出手繪風的機器人入門教學網站：Arduino Uno、L298N、Raspberry Pi 5 等 13 塊真實電路板，可一步步貼片、迴焊、焊接、插上 USB、上傳範例程式；也能故意接錯——電容接反會爆、晶片冒煙、LED 燒掉。介面有標註開關、手繪抖動程度與配色、Lofi 音樂。推文同時在推廣該 skill，帶有宣傳性質。",
+  author:"@0xMovez (Movez)",
+  likes:1968,
+  url:"https://x.com/0xMovez/status/2112940162103615783",
+  ptype:"重建",
+  prompt:"做一個手繪插畫風的機器人入門教學網站「Robotics Bench」，一頁一塊電路板，共 13 塊：Arduino Uno R3、LED+電阻、電晶體開關、ESP32-S3、TB6612FNG、L298N、A4988、PCA9685、MPU-6050、Raspberry Pi 5 等，依「第 1 個月電子學→第 2 個月微控制器／馬達驅動／感測器」分章。每塊板子用等角 SVG 畫成墨線手繪風，可互動：剝成裸 PCB、貼片（pick & place）、逐顆放零件、焊接、插拔 USB、上傳範例 sketch、爆炸圖；接上後顯示即時狀態（RUNNING、Pin 13 HIGH，LED 真的亮起）。加入「故意弄壞」模式：電容接反會爆開、電壓接錯晶片冒煙、LED 無限流電阻會燒掉，並解釋原因。旁邊附「認識這塊板」說明與可編輯的範例程式碼。設定區：手繪抖動滑桿、主色切換、標註開關、Lofi／音效開關。單一 HTML，不需註冊。"
+},
+{
+  cat:"遊戲",
+  title:"Opus 5.5 在 Unreal Engine 從零蓋出遊戲小鎮：木構房屋、石板路與噴泉",
+  desc:"作者用 Opus 5.5 搭配 Blender 與圖像生成，在 Unreal Engine 裡從零搭出一座歐式小鎮：半木構房屋、石板坡道、市集攤位與噴泉，斗篷角色在鎮上奔跑，光影寫實。作者自註週額度用完，這只是早期預覽，城市尚未完成。與他先前收錄的秋楓森林世界、Three.js 蜘蛛人城市是不同場景。",
+  author:"@xikhar (Shikhar)",
+  likes:1542,
+  url:"https://x.com/xikhar/status/2112709928771277158",
+  ptype:"重建",
+  prompt:"你可以透過 MCP 操作 Unreal Engine 5 與 Blender，並能呼叫圖像生成工具做貼圖。請從零為我的第三人稱遊戲蓋一座歐式山城小鎮：1) 用 Blender 建模半木構（Fachwerk）房屋、石牆、市集攤位、木桶、陶罐、噴泉等模組化資產，貼圖用圖像生成做出灰泥、木樑、石板的 PBR 材質；2) 匯入 Unreal，依山坡地形擺放：蜿蜒石板路、階梯、擋土牆、遠方雪山；3) 打 Lumen 全域光與晴天斜陽，加植被、花草與噴泉水面；4) 放入斗篷角色可自由奔跑，碰撞正確。每完成一區先截圖給我確認再繼續擴建。"
+},
+{
+  cat:"模擬視覺化",
+  title:"Airsup 貨車裝載規劃台：26 筆貨、5 個停靠站、5 台車，每卸一站即時重算軸重",
+  desc:"作者讓 Claude Opus 5.5 做出貨車出發前的「車廂內部視角」：3D 剖開的 18 噸箱型車裡，各停靠站的貨物以顏色區分，介面即時顯示前後軸重是否超限、重心落在合法區間的位置、裝載率與體積，並在擺錯順序時跳出「第 2 站的貨擋住第 1 站」警示。一共 26 筆貨、5 站、5 台車，每卸一站都重新檢查軸重。這位作者擅長把產業系統做成 3D 儀表板，與先前收錄的倉庫俯瞰圖是不同題目。",
+  author:"@konstantinsaifo (Konstantin Saifoulline)",
+  likes:1299,
+  url:"https://x.com/konstantinsaifo/status/2112801199099637785",
+  ptype:"重建",
+  prompt:"用 React + Three.js 做一個物流「貨車裝載規劃台」網頁 App（品牌名 Airsup）。左側：今日計畫、訂單、碼頭、路線，以及車型清單（18 噸箱型車、53 呎乾貨車、冷藏車、40 呎貨櫃、平板車）與 5 個停靠站和時間。中間：3D 剖面視角的貨車，車廂內 26 筆棧板貨依停靠站上色，可切換 3D／側視／俯視／平面；上方顯示 6 個貨位的重量與填充率。右側：前後軸重（目前值／法定上限，超限標紅）、重心位置圖（標出合法區間，並畫出每卸一站後重心的移動點）。規則檢查：後卸的貨不可擋住先卸的貨（後進先出），違規時在 3D 物件上跳出提示；危險品分開統計。下方表格列出品項、SKU、產地、重量、貨位、客戶、停靠站與狀態。按「Optimise」自動重排，按「Load at dock」播放逐件裝車動畫，每模擬卸一站就即時重算軸重。"
+},
+{
+  cat:"創意藝術",
+  title:"零素材的阿爾卑斯湖：畫面、音樂與大自然音效全部由程式碼生成",
+  desc:"Leon Lin 請 Opus 5.5 打造一座阿爾卑斯山湖景：雪峰、針葉林、湖面倒影都由程式碼生成，不用任何貼圖或模型素材，連背景音樂與風聲、水聲等環境音也是程式即時合成。這位作者已多次以「全程式碼、零素材」場景入庫，這次是新的湖景題目。",
+  author:"@LexnLin (Leon Lin)",
+  likes:953,
+  url:"https://x.com/LexnLin/status/2112560562609803311",
+  ptype:"重建",
+  prompt:"用 Three.js 做一座阿爾卑斯山湖的沉浸式 3D 場景，規定：不准載入任何外部素材（貼圖、模型、音檔都不行），一切由程式生成。內容：程序化雪峰（多層 noise 地形，高處積雪、岩壁）、湖岸針葉林（instancing 大量松樹並隨風搖動）、可反射天空與山影的湖面（含細微波紋與菲涅耳效果）、晨霧與體積光、飄動的雲；相機緩慢環繞，可滑鼠拖曳。聲音全部用 Web Audio API 合成：環境配樂（柔和 pad 與鋼琴般音色）、風聲、湖水拍岸、鳥鳴。輸出單一 HTML。"
+},
+{
+  cat:"創意藝術",
+  title:"Ethan Mollick 的「水獺在飛機上用 Wi-Fi」終極版：Opus 5.5 交出一支電影預告片",
+  desc:"Ethan Mollick 長年用「一隻在飛機上用 Wi-Fi 的水獺」測試所有圖像模型，這次請 Opus 5.5 交出「終極回應」，它直接做成一支影片，開頭還有仿電影分級的片頭：「PG 級：危險的連線、輕微緩衝與過量鬍鬚」。搭配他回顧 AI 30 個月指數成長的文章發布。推文沒說明影片如何生成（Opus 5.5 本身不生成影像，推測是寫程式動畫），具體做法待查。",
+  author:"@emollick (Ethan Mollick)",
+  likes:796,
+  url:"https://x.com/emollick/status/2112656453685367004",
+  ptype:"重建",
+  prompt:"我測試每個 AI 圖像模型都用同一題：「畫一隻在飛機上用 Wi-Fi 的水獺」。請你交出這個測試的「終極回應」——不是一張圖，而是一支約 60 秒、可直接播放的電影預告片，全部用程式碼生成（HTML Canvas／SVG／Three.js 動畫 + Web Audio 合成音效與配樂，不使用外部素材）。結構：1) 仿電影分級片頭「本預告已由水獺測試協會核准，PG 級：危險的連線、輕微緩衝與過量鬍鬚」；2) 機艙內水獺掀開筆電、連不上 Wi-Fi 的戲劇性鏡頭；3) 史詩配樂下的轉折與高潮；4) 片名卡與幽默結尾。輸出單一 HTML，並可用 MediaRecorder 匯出成影片。"
+},
+{
+  cat:"文件簡報",
+  title:"DeepInfer 是怎麼運作的？Opus 5.5 寫出整支技術解說影片，再接 Kokoro 配音",
+  desc:"DeepSeek 剛開源推理框架 DeepInfer，作者隔天就用 Opus 5.5 做出一支解說影片，介紹這個「DeepSeek 正式 API 背後的推理引擎」，旁白用開源 TTS 模型 Kokoro 生成。推文只有一句話說明，影片的分鏡與動畫細節需點進影片看。",
+  author:"@cneuralnetwork (neural nets.)",
+  likes:754,
+  url:"https://x.com/cneuralnetwork/status/2112500556916986309",
+  ptype:"重建",
+  prompt:"讀 github.com/deepseek-ai/DeepInfer 的 README 與核心原始碼，做一支約 3 分鐘的技術解說影片「How does DeepInfer work?」。用 HTML + SVG/Canvas 寫成可逐場景渲染的動畫（或用 Remotion）：1) 片頭：DeepInfer——DeepSeek 正式 API 背後的推理引擎；2) 一個請求的生命週期：排程、批次合併、prefill／decode 分離；3) KV cache 管理與分頁；4) 平行策略（張量／專家平行）與解碼優化；5) 支援的硬體；6) 總結。每個場景寫好旁白稿，用 Kokoro TTS 生成語音並對齊動畫時間軸，輸出 1080p 影片。動畫風格：深色底、等寬字、方塊與箭頭流動示意。"
+},
+{
+  cat:"遊戲",
+  title:"一個月沒離開 Claude 終端機：Opus 5.5 ＋ Three.js 做出第三人稱小隊戰術射擊",
+  desc:"作者一個月來全程用 Opus 5.5 與 Three.js 開發，這次展示的是第三人稱戰術射擊：夜間城市巷戰、A–E 據點佔領、小隊成員（Rook、Vega、Hollis、Dray）各有角色並會喊話「Breaching – go, go!」、羅盤、小地圖與 FPS 監測。與先前收錄的科幻機車遊戲是不同作品。",
+  author:"@Belbizaz (Frog King Simulator)",
+  likes:563,
+  url:"https://x.com/Belbizaz/status/2112979473788477905",
+  ptype:"重建",
+  prompt:"用 Three.js 做一款瀏覽器第三人稱小隊戰術射擊遊戲。場景：夜晚的工業城區，有柱子、矮牆、路燈與霧氣，低多邊形加卡通描邊風格。玩法：兩隊各 500 分，搶佔 A–E 五個據點（據點圖示標示距離）；玩家帶一支 4 人 AI 小隊（突擊手、機槍手、反坦克、偵察兵），左側列出小隊成員、目前命令（例如 Follow the stack in）與小隊狀態（CONFIDENT），隊友會依命令移動、掩護、破門並用文字喊話。HUD：頂部羅盤與比分、右下小地圖、武器名稱與彈藥、手榴彈、衝刺體力條、FPS 與最差影格時間。支援 V 鍵切換第一／第三人稱。"
 }
 
 ];
