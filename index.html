@@ -4932,7 +4932,19 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/yyyole/status/2112562728799731955",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）加上 Harness² 式的「執行期演化」框架做影片行人辨識。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。前景：逐幀（24 fps 取樣）把畫面送給 Jev，問 Box 題「標出每個行人」與 Choice「類別」，state 放目前套用的經驗清單；信心值 ≥ 0.70 直接輸出，低於 0.70 進人工覆核佇列。背景演化迴圈（Jev 權重不動）：收集失敗與低信心軌跡 → Propose 提出處理規則（例如目標小於畫面 2% 就裁切放大兩倍、被遮擋時只比對可見部位、太暗先調對比）→ Probe 在保留集上測試是否提升信心與準確率 → 有效的規則 Compose 進經驗庫（版本化 v1、v2…）並套用到 prompt 與前處理工具。做一個終端風儀表板：上方即時畫面與框、中間 Jev 輸出與信心條、下方軌跡／提案／測試／經驗庫四格與輪數、轉人工比例。"
+},
+// ====== 2026-10-23 自動更新 ======
+{
+  cat:"工程研究",
+  title:"dsh-decision-review：DeepSeek Harness 的 Jev 外掛，決策層自動切給 Jev、執行層仍用原本的大模型",
+  desc:"作者為 DeepSeek Harness（DSH）寫了外掛 dsh-decision-review：主模型先形成 primaryChoice，外掛再把問題、預選、證據與約束送到相容 Jev /v1/decision 介面的複核服務，拿回 choice 與信心值交還主模型決定採不採納；分 off／shadow／advisory 三種模式，信心值分三層（達標可採納、未達標保留、過低視為棄權），複核方永遠拿不到工具與寫入權限，日誌脫敏，附 50 個測試，MIT 開源。作者稱目標是「決策下沉到小模型、執行保留大模型，成本和能力兩頭都要」。推文無 demo 影片，只有 repo。",
+  author:"@_ninetyhe (ninety是九零)",
+  likes:172,
+  url:"https://x.com/_ninetyhe/status/2112841822229934336",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）為 DeepSeek Harness（DSH 0.2.x）寫一個「獨立決策複核」外掛。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。設計：1) 註冊一個 __decision_review 工具，主模型必須先給出 question、options、primaryChoice、evidence、constraints 才能呼叫；2) 外掛把這些包成 Jev 的 state，questions 只有一題 Choice「recommendation」、criteria 等於 options，POST 到 {baseUrl}/v1/decision；3) 回傳固定結構 status、recommendation.choice、confidence、reasonCode：confidence ≥ minConfidence（預設 0.7）為 ok 可採納，≥ abstainBelow（預設 0.4）為 not_adoptable 保留但不推薦，再低則 abstained 證據不足；最終採納與否仍由主模型決定；4) 三種模式：off 不註冊工具、shadow 只記錄不回灌、advisory 回傳建議；5) 複核失敗不重試，直接回原因讓主模型照原判斷繼續；6) 權限、審批、寫操作、網路目標、工具白名單一律不交給複核方；7) 日誌只記點位、狀態、原因碼、模型、HTTP 狀態、請求 id、輸入指紋與耗時。用 Node 20 寫成 DSH bundle，附 50 個以上測試與中英文 README。"
 }
+
 
 ];
 
@@ -6258,7 +6270,39 @@ const OPUS_CASES = [
   url:"https://x.com/Belbizaz/status/2112979473788477905",
   ptype:"重建",
   prompt:"用 Three.js 做一款瀏覽器第三人稱小隊戰術射擊遊戲。場景：夜晚的工業城區，有柱子、矮牆、路燈與霧氣，低多邊形加卡通描邊風格。玩法：兩隊各 500 分，搶佔 A–E 五個據點（據點圖示標示距離）；玩家帶一支 4 人 AI 小隊（突擊手、機槍手、反坦克、偵察兵），左側列出小隊成員、目前命令（例如 Follow the stack in）與小隊狀態（CONFIDENT），隊友會依命令移動、掩護、破門並用文字喊話。HUD：頂部羅盤與比分、右下小地圖、武器名稱與彈藥、手榴彈、衝刺體力條、FPS 與最差影格時間。支援 V 鍵切換第一／第三人稱。"
+},
+// ====== 2026-10-23 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"剪紙風狐狸短片：全部 JavaScript、零素材，Opus 5.5 做出的紙藝動畫",
+  desc:"Leon Lin 讓 Opus 5.5 做了一支剪紙（paper-cut）風格的狐狸短片：層層疊起的紙質雪山、松林、花叢與小橋溪流，橘色紙狐狸站在橋上回望夕陽，整支影片全部由 JavaScript 程式生成、沒用任何外部素材。推文只有一句說明，分鏡與長度需點進影片看；作者先前的中國山水畫、阿爾卑斯湖等案例也是同一套「零素材純程式」做法。",
+  author:"@LexnLin (Leon Lin)",
+  likes:865,
+  url:"https://x.com/LexnLin/status/2113025231732224063",
+  ptype:"重建",
+  prompt:"做一支約 60 秒的「剪紙風」狐狸短片，全部用 JavaScript 生成，不准載入任何外部圖片、模型或音檔。畫面：用 Canvas 或 Three.js 把場景做成一層層疊放的紙板（前景花叢、木橋與溪流、草坡、松林、雪山、雲朵、夕陽天空），每一層有紙張纖維紋理、裁切邊緣與柔和投影，層與層之間做視差移動；主角是一隻紙藝質感的橘色狐狸，有簡單的走路與回頭動畫，走到橋上停下看夕陽。鏡頭緩慢推進與橫移，溪水與雲朵用紙片位移動畫表現流動。配樂與環境音（溪水、風、鳥鳴）用 Web Audio API 合成。輸出單一 HTML，並可用 MediaRecorder 匯出成影片。"
+},
+{
+  cat:"模擬視覺化",
+  title:"Drone Lab：13 架真實無人機一件件組起來再飛，含第一人稱 FPV 視角",
+  desc:"作者繼先前的 Robotics Bench（13 塊電路板）之後，用 Opus 5.5 搭配 /colorfigures skill 做了互動無人機教學站：13 種真實機型（5 吋花式四軸、65 mm Tiny Whoop、3 吋 cinewhoop、7 吋長距、競速機、GPS 空拍機、送貨機、農用六軸、飛翼、VTOL 傾轉旋翼等），每架可拆解、逐件加上機架、馬達、接線，有爆炸圖、煙測、馬達方向檢查與加速計校正等步驟，面板即時算零件數、重量、推重比與續航；組好後能在 13 個場地飛，含第一人稱 FPV 視角。畫面是手繪線稿風，可調抖動與配色。推文沒說明開發時間與原始 prompt。",
+  author:"@0xMovez (Movez)",
+  likes:654,
+  url:"https://x.com/0xMovez/status/2113292903741116893",
+  ptype:"重建",
+  prompt:"做一個互動式無人機教學網站「Drone Lab」，手繪線稿（hand-inked）風格、等角視圖。內容：13 種真實無人機（5 吋花式四軸 Betaflight+FPV、65 mm Tiny Whoop、3 吋 cinewhoop、7 吋長距 GPS rescue、競速四軸、GPS 空拍機 ArduPilot+雲台、送貨機 Pixhawk+companion、農用六軸、FPV 飛翼 INAV、VTOL 傾轉旋翼、Crazyflie 蜂群、三軸 tricopter、重載八軸），左側列表切換。每架機型：1) 「拆開／加下一個零件／幫我組好」逐件組裝（機架、馬達、電調、飛控、接收器、相機、電池），右上即時顯示零件數、重量、推重比與預估續航；2) 工作坊步驟按鈕：煙測（smoke stopper）、檢查馬達方向、校正加速計、插拔電池，做錯會有對應後果；3) 爆炸圖；4) 接線圖可點擊每個方塊看說明（UART、電源、相機線）；5) 「飛」：13 個場地（室內、賽道門框、長距離等）＋第一人稱 FPV 視角，用簡化飛行物理。控制列：手繪抖動強度、配色、標籤開關、Lo-fi 配樂與音效。單一網頁應用，可部署到 Vercel。"
+},
+{
+  cat:"模擬視覺化",
+  title:"Every Joule：一本可以動手玩的 3D 能量物理書，10 課先預測、再測試、再證明",
+  desc:"作者認為教育不該只有文字與平面圖，用 Opus 5.5 與 Three.js 做了一本 3D 物理書《Every Joule》：擺在桌面上的黃色精裝書可翻頁，每課要學生先預測、再動手測試、最後證明。第一課「能量儲存」用日常物件示範能量藏在哪裡（封面就是把水從一杯倒進另一杯）。底部有目錄、翻頁、靜音與對比度等控制。推文只放出第一課，其餘 9 課仍在建置中。",
+  author:"@techartist_ (Techartist)",
+  likes:593,
+  url:"https://x.com/techartist_/status/2113310927093436587",
+  ptype:"重建",
+  prompt:"用 Three.js 做一本互動式 3D 物理教材《Every Joule — a physics book about energy》。外觀：一本放在桌面上的黃色精裝書（書名壓印、書籤帶、紙質厚度），可翻頁、鏡頭隨頁面縮放，底部浮動工具列有目錄、上一頁／下一頁、靜音、對比度與學生模式。內容 10 課，每課依「預測 → 測試 → 證明」三段：先問學生一個問題並讓他選答案，再提供一個可操作的 3D 小實驗驗證，最後用數值與圖表證明。第一課「Energy stores（能量儲存）」：用日常物件（彈簧玩具、熱咖啡、舉高的書、電池、倒水的杯子）示範能量以哪種形式儲存（動能、重力位能、彈性位能、熱能、化學能），每個物件可拖曳或觸發，旁邊即時顯示能量計。後續課程主題：能量轉移、守恆、功與功率、效率、熱傳導、碰撞、擺與彈簧、電能、能源與永續。全部素材由程式生成，單一網頁，手機也能操作。"
 }
+
 
 ];
 
