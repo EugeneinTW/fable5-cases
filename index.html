@@ -3468,7 +3468,29 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
   url:"https://x.com/guanzhi_wang/status/2111127089428701366",
   ptype:"重建",
   prompt:"用 GPT-6 Astra 當 ASPIRE 的後端模型，讓實體雙臂機器人完成「Solve the Rubik's Cube.」這類長程操作任務。設定：1) 從 GitHub clone ASPIRE V1.0，依說明接上機器人控制介面與相機。2) 把 agent 後端模型換成 GPT-6 Astra。3) 讓 agent 先在模擬環境（LIBERO-Pro、Robosuite）自主發現並累積技能到 /robot skill library，再移轉到實體手臂。4) 實機執行時每一步先 Thinking 規劃、再呼叫技能，失敗就記錄原因並修正技能（continual skill refinement）。5) 輸出每項任務的成功率與失敗案例摘要。"
+},
+// ====== 2026-10-25 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"Stillwater：月夜沼澤裡開船漫遊的 Three.js 場景，有導航羅盤、拍照模式與地點探索",
+  desc:"作者用 GPT-6 Astra 在 Three.js 做出月夜沼澤場景「Stillwater」：落羽杉倒映在墨綠水面、霧氣與浮萍、一艘小船可用 WASD 控制油門與方向，畫面上有時速（knots）、羅盤、拍照模式（P）與野生動物切換（G），駛近特定地點會跳出「Discovered · Heron bend」之類的探索提示。這正是作者先前爆紅、庫內港灣場景提過的沼澤作品。推文只有一句說明，未附 prompt。",
+  author:"@chetanankola (Chetan Ankola)",
+  likes:375,
+  url:"https://x.com/chetanankola/status/2113909026253877485",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個可在瀏覽器即時執行的月夜沼澤探索場景「Stillwater」。場景：落羽杉林、垂掛的西班牙苔、浮萍與睡蓮、低空薄霧、雲層後的滿月，水面要有即時反射與細微波紋。玩法：玩家駕駛一艘小型工作船，W/S 控制油門、A/D 轉向、滑鼠拖曳看四周，預設『guided drift』緩慢自動漂流。UI 走極簡電影感：左上品牌字、上方中央地點名與時間、方位羅盤；左下顯示目前探索區域名稱與一句小標語、船速（knots）；右下拍照模式（P 鍵隱藏 UI）、暫停與全螢幕。在地圖上放 5～8 個命名地點（例如 Heron bend），駛近時淡入「Discovered · 地名」提示並播放環境音；G 鍵切換野生動物（飛過的鷺鷥、水面漣漪）。後製用 bloom、霧與色調映射營造暗綠色調，目標 60 fps。"
+},
+{
+  cat:"遊戲",
+  title:"零 3D 經驗、3 天做出手機沙漠駕駛遊戲：Astra 接 Godot 寫駕駛與車輪動畫",
+  desc:"作者沒有任何 3D 經驗，用 3 天做出一款手機駕駛遊戲雛形：GPT-6 Astra 連上 Godot 負責駕駛物理與車輪動畫的實作，車子則是 ChatGPT 先畫四視圖 → Hyper3D Rodin Gen-2.5 轉 3D → Smart Low Poly 減到約 2–3K 三角面、再拆出車輪。第一天就有粗略地圖與沙漠氛圍，再迭代約 3 小時車子就能開、基本遊戲循環成形。作者自註「還非常早期」；車輛模型由其他工具生成，Astra 負責的是程式與遊戲整合。",
+  author:"@hakimieiqbal (Hakimi Eiqbal)",
+  likes:320,
+  url:"https://x.com/hakimieiqbal/status/2113965521301377037",
+  ptype:"重建",
+  prompt:"你已透過 MCP 連上我的 Godot 4 專案。我要做一款手機（直式觸控）沙漠駕駛遊戲雛形：1) 先搭一張粗略的沙漠地圖：起伏沙丘地形、鐵絲網圍欄、電線桿、散落岩石與枯草，暖色斜陽與長影子營造沙漠氛圍；2) 匯入我放在 res://models/car.glb 的低多邊形車（約 2–3K 三角面，四個車輪已拆成獨立節點），用 VehicleBody3D + VehicleWheel3D 實作駕駛：油門、煞車、轉向、懸吊與輪胎抓地，沙地要有輕微打滑；3) 車輪依車速旋轉、前輪依轉向角轉動，並在沙地留下胎痕；4) 手機觸控控制：左側虛擬搖桿轉向、右側油門與煞車按鈕；5) 俯視追蹤鏡頭，隨車速拉遠；6) 完成一個基本遊戲循環（從起點開到終點計時）。每一步完成後在編輯器裡實際跑一次，回報幀率與問題。"
 }
+
 ];
 
 // ====== TypeSafe Jev 案例（決策模型，2026-09-15 發布）======
@@ -4943,8 +4965,26 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/_ninetyhe/status/2112841822229934336",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）為 DeepSeek Harness（DSH 0.2.x）寫一個「獨立決策複核」外掛。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。設計：1) 註冊一個 __decision_review 工具，主模型必須先給出 question、options、primaryChoice、evidence、constraints 才能呼叫；2) 外掛把這些包成 Jev 的 state，questions 只有一題 Choice「recommendation」、criteria 等於 options，POST 到 {baseUrl}/v1/decision；3) 回傳固定結構 status、recommendation.choice、confidence、reasonCode：confidence ≥ minConfidence（預設 0.7）為 ok 可採納，≥ abstainBelow（預設 0.4）為 not_adoptable 保留但不推薦，再低則 abstained 證據不足；最終採納與否仍由主模型決定；4) 三種模式：off 不註冊工具、shadow 只記錄不回灌、advisory 回傳建議；5) 複核失敗不重試，直接回原因讓主模型照原判斷繼續；6) 權限、審批、寫操作、網路目標、工具白名單一律不交給複核方；7) 日誌只記點位、狀態、原因碼、模型、HTTP 狀態、請求 id、輸入指紋與耗時。用 Node 20 寫成 DSH bundle，附 50 個以上測試與中英文 README。"
-}
+},
+// ====== 2026-10-25 自動更新 ======
+{
+  cat:"工程研究",
+  title:"個人化垃圾信過濾：Jev 判斷「這封我在不在乎」，信心值 > 90% 直接刪，跑了 3–4 週刪掉數百封",
+  desc:"Santiago（@svpino）寫了一支腳本，每收到新郵件就送給 Jev 判斷他在不在乎這封信，當作郵件服務商垃圾信過濾之上的一層「個人化垃圾信」偵測——專抓不算垃圾信、但他根本不想看的郵件。Jev 信心值超過 90% 就直接刪除。從 Jev 推出起跑了約 3–4 週、已刪掉數百封；第一週他人工檢查了多數被丟掉的信，確認沒有漏掉重要郵件。推文無附圖、未公開程式碼與判斷題目設計。",
+  author:"@svpino (Santiago)",
+  likes:181,
+  url:"https://x.com/svpino/status/2113622504191218009",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）做一個「個人化垃圾信」過濾腳本。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API，key 放在環境變數 TYPESAFE_API_KEY。
 
+流程：
+1. 用 Gmail API push 通知（或 IMAP IDLE）在每封新郵件抵達時觸發，只處理已通過郵件服務商垃圾信過濾、落在收件匣的信。
+2. state 放：寄件者名稱與網域、主旨、內文前 1,500 字、是否為回覆串、我過去是否寄信給這個寄件者、List-Unsubscribe 標頭是否存在、我手寫的一段「我在乎什麼／不在乎什麼」說明（例如：客戶、合作邀約、帳單要留；行銷電子報、活動推播、冷開發信不要）。
+3. 一題 Choice：care（我會想看）／dont_care（不想看但不是詐騙）／spam（真正的垃圾信）。
+4. 決策規則：dont_care 或 spam 且信心值 > 0.9 → 直接移到垃圾桶（保留 30 天可救回）；0.6–0.9 → 加上「Jev-待確認」標籤留在收件匣；< 0.6 → 不動。
+5. 每次刪除都寫一筆 log（時間、寄件者、主旨、選項、信心值），提供一個每日摘要指令列出被刪的信，方便第一週人工抽查是否誤刪。
+6. 支援白名單（網域／寄件者），白名單內的信不送 Jev。`
+}
 
 ];
 
@@ -6301,8 +6341,48 @@ const OPUS_CASES = [
   url:"https://x.com/techartist_/status/2113310927093436587",
   ptype:"重建",
   prompt:"用 Three.js 做一本互動式 3D 物理教材《Every Joule — a physics book about energy》。外觀：一本放在桌面上的黃色精裝書（書名壓印、書籤帶、紙質厚度），可翻頁、鏡頭隨頁面縮放，底部浮動工具列有目錄、上一頁／下一頁、靜音、對比度與學生模式。內容 10 課，每課依「預測 → 測試 → 證明」三段：先問學生一個問題並讓他選答案，再提供一個可操作的 3D 小實驗驗證，最後用數值與圖表證明。第一課「Energy stores（能量儲存）」：用日常物件（彈簧玩具、熱咖啡、舉高的書、電池、倒水的杯子）示範能量以哪種形式儲存（動能、重力位能、彈性位能、熱能、化學能），每個物件可拖曳或觸發，旁邊即時顯示能量計。後續課程主題：能量轉移、守恆、功與功率、效率、熱傳導、碰撞、擺與彈簧、電能、能源與永續。全部素材由程式生成，單一網頁，手機也能操作。"
+},
+// ====== 2026-10-25 自動更新 ======
+{
+  cat:"遊戲",
+  title:"致敬七龍珠第一集的 Mount Paozu 跑酷：小悟空在斷崖山路上閃木頭、蓄筋斗雲",
+  desc:"作者用 Opus 5.5 加 Crayon 在 Three.js 做的七龍珠同人跑酷遊戲，致敬第一集的帕奧茲山：卡通渲染的小悟空背著如意棒在斷崖山路上奔跑、跳過滾木，畫面上有生命值、七顆龍珠收集進度、分數倍率與「筋斗雲 NIMBUS」能量條，遠景是石柱山與雲海。附線上可玩連結。作者說是「又被要求做一款」同人跑酷，推文未附 prompt。另有搬運號 @ai_growth_avii 轉發同一支影片（905 讚），此處收原作者版。",
+  author:"@aniketjart (Aniket J)",
+  likes:5399,
+  url:"https://x.com/aniketjart/status/2113427367477878971",
+  ptype:"重建",
+  prompt:"用 Three.js 做一款可在瀏覽器玩的七龍珠同人跑酷遊戲，致敬第一集的帕奧茲山（Mount Paozu）。美術：卡通渲染（toon shading + 描邊）、明亮藍天白雲、石柱狀山峰與雲海遠景、沿斷崖蜿蜒的土路。角色：背著紅色如意棒、有尾巴的小悟空，跑步、跳躍、滑鏟都要有動畫。玩法：第三人稱背後視角的跑酷，路上有滾木、落石、斷橋要跳或閃；沿路收集七顆龍珠（HUD 顯示 0/7）；連續閃避累積分數倍率；收集能量填滿『筋斗雲 NIMBUS』條後按 Q 召喚筋斗雲飛行一段。HUD：左上暫停與三顆愛心、上方關卡進度條、右上分數與倍率。最後抵達終點小屋過關。單一 HTML 檔、無外部模型，所有角色與場景以程式生成。"
+},
+{
+  cat:"創意藝術",
+  title:"用 JavaScript 畫的手繪風資訊圖：《風的一天》雷達圖配鄉村插畫",
+  desc:"作者用 Claude Opus 5.5、以 @kepano 的 Pele 函式庫為基礎，用 JavaScript 程式繪出一組手繪風圖表：例如《The wind's day》把黎明到夜晚的風力與氣溫畫成雷達圖，下方是帶交叉陰影線的風車、教堂、小溪與放風箏的山丘插畫，整體像舊版畫書頁。推文附三張成品，未附 prompt 與製作細節。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:617,
+  url:"https://x.com/kevin_t_ngo/status/2114055708937421113",
+  ptype:"重建",
+  prompt:"以 kepano 的 Pele 繪圖函式庫為基礎，用 JavaScript 程式繪製一張手繪版畫風的資訊圖《The wind's day — in Hollin Vale, dawn to night》。內容：中央一張六軸雷達圖（Dawn、Morning、Noon、Afternoon、Dusk、Night），兩組資料「風有多強」（藍）與「空氣有多暖」（橘），每個軸旁配一句詩意註解（例如 Noon: turns the mill fastest）。下半部畫一座鄉村：風車、教堂與紅屋頂小屋、蜿蜒小溪與蘆葦、石牆小徑、果樹與放風箏的山丘、遠方雪山。風格：米色紙底、細墨線加交叉陰影線、淡彩上色、手寫襯線字、雙線外框。所有筆觸以程式生成並帶輕微抖動，不使用任何點陣素材。輸出 1200×1200 PNG。"
+},
+{
+  cat:"工程研究",
+  title:"一小時 one shot 的 Obsidian 複刻：檔案樹、Markdown 即時預覽、反向連結都有",
+  desc:"作者說 Opus 5.5 搭配 MyGo 在一小時內 one shot 出一個 Obsidian 複刻（截圖中稱 Bluebird）：左側檔案樹與 Daily／Projects 資料夾、分頁編輯器、Go 程式碼區塊語法高亮、待辦勾選、註腳，右側檔案資訊面板顯示字數、連結數、反向連結數與任務完成度，底部有 Sample Vault 切換。僅附一張截圖，未附 prompt，功能完整度無法從單圖驗證。",
+  author:"@localhost_5173 (EGOIST)",
+  likes:504,
+  url:"https://x.com/localhost_5173/status/2113789782006657191",
+  ptype:"重建",
+  prompt:"做一個 Obsidian 風格的桌面 Markdown 筆記 App（可用 Tauri 或 Electron），名稱 Bluebird。功能：1) 開啟本機資料夾當 vault，左側檔案樹支援資料夾展開、新增筆記／資料夾、排序與收合；2) 多分頁編輯器，Live Preview 模式：標題、粗體、程式碼區塊語法高亮、待辦清單可勾選、註腳 [^1]、圖片內嵌；3) [[wikilink]] 雙向連結與反向連結計算；4) 右側資訊面板顯示路徑、修改時間、檔案大小、字數、連結數、反向連結數、任務完成度（例如 1 of 2 done）；5) 左側功能列：檔案、搜尋、標籤、日曆、指令面板、隨機筆記；6) 底部狀態列顯示反向連結數、字數與字元數；7) 內附一個 Sample Vault（Welcome、Linking notes、Live Preview、Formatting、Daily、Projects）。介面配色與間距貼近 Obsidian 淺色主題。"
+},
+{
+  cat:"遊戲",
+  title:"零程式經驗、6 週做出《仙境傳說》×《魔物獵人》風 3D 遊戲：Opus 5.5 主導開發",
+  desc:"轉述：一位零程式與遊戲開發經驗的獨立開發者，用 6 週在 Godot 做出可玩的 3D 遊戲，融合《仙境傳說 RO》與《魔物獵人》，有自訂角色、場景、3D 素材、VFX 與 shader。分工是 Opus 5.5 透過 Claude Code 負責大部分開發，Codex 產生視覺參考與素材、Tripo AI 把參考圖轉成 3D 模型、Blender 處理小物件；作者還自建 AI 工作流維持美術風格一致、分派程式任務、跨 session 保留脈絡。預算約每月 400 美元，遊戲仍在開發中。推文為搬運號轉述，未標明原作者帳號。",
+  author:"@Octoberry (O🌷)",
+  likes:773,
+  url:"https://x.com/Octoberry/status/2113653280429478043",
+  ptype:"重建",
+  prompt:"你在我的 Godot 4 專案裡工作，透過 Claude Code 長期協作開發一款 3D 動作 RPG：美術走《仙境傳說 RO》的 Q 版角色與明亮色調，玩法走《魔物獵人》的大型魔物狩獵。第一個里程碑：1) 第三人稱角色控制器：移動、翻滾閃避、輕重攻擊連段、體力條；2) 一張草原狩獵區，含地形、樹木與水邊；3) 一隻大型魔物 AI：巡邏、發現玩家、三種攻擊招式、受傷部位破壞與倒地；4) 打擊感 VFX（命中閃光、粒子、鏡頭震動）與卡通描邊 shader；5) 素材以我放在 res://assets 的 Tripo 生成 GLB 為主，缺的小物件你寫 Blender Python 腳本產生。另外建立 docs/STYLE.md（美術風格規範）與 docs/HANDOFF.md（每次 session 結束更新進度與下一步），讓之後的 session 能接續。"
 }
-
 
 ];
 
