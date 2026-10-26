@@ -6382,6 +6382,57 @@ const OPUS_CASES = [
   url:"https://x.com/Octoberry/status/2113653280429478043",
   ptype:"重建",
   prompt:"你在我的 Godot 4 專案裡工作，透過 Claude Code 長期協作開發一款 3D 動作 RPG：美術走《仙境傳說 RO》的 Q 版角色與明亮色調，玩法走《魔物獵人》的大型魔物狩獵。第一個里程碑：1) 第三人稱角色控制器：移動、翻滾閃避、輕重攻擊連段、體力條；2) 一張草原狩獵區，含地形、樹木與水邊；3) 一隻大型魔物 AI：巡邏、發現玩家、三種攻擊招式、受傷部位破壞與倒地；4) 打擊感 VFX（命中閃光、粒子、鏡頭震動）與卡通描邊 shader；5) 素材以我放在 res://assets 的 Tripo 生成 GLB 為主，缺的小物件你寫 Blender Python 腳本產生。另外建立 docs/STYLE.md（美術風格規範）與 docs/HANDOFF.md（每次 session 結束更新進度與下一步），讓之後的 session 能接續。"
+},
+// ====== 2026-10-26 自動更新 ======
+{
+  cat:"文件簡報",
+  title:"用純程式碼複刻 Kurzgesagt 動畫科普影片：太陽、地球、月亮的扁平風解說",
+  desc:"作者用 Opus 5.5 以 100% 程式碼重現 Kurzgesagt 招牌的扁平向量動畫風格：發光的太陽、有雲層與夜面城市燈光的地球、月球在星空背景中運轉，左邊是作者自製版、右邊對照原作。作者稱每支影片成本 0 美元、約 10 分鐘做完（對照原作一支 1200 小時），並考慮把流程包成免費 Claude skill。保留：推文主打流量與收入對比，影片長度與旁白、配樂如何製作未說明。",
+  author:"@finnardley (Finn)",
+  likes:745,
+  url:"https://x.com/finnardley/status/2114188068500508998",
+  ptype:"重建",
+  prompt:"用純程式碼（可用 Remotion 或 HTML Canvas + GSAP，輸出 1080p MP4）做一支 Kurzgesagt 風格的 60 秒科普動畫，主題「為什麼月亮總是同一面朝向地球」。美術：扁平向量、無描邊、飽和的紫藍色宇宙背景加細碎星點、柔和光暈；太陽有多層同心光環，地球有可辨識的大陸、緩慢飄動的雲層、夜面亮起城市燈光，月球有隕石坑紋理。鏡頭：開場從太陽緩慢推到地月系統，接著示範潮汐鎖定（月球自轉與公轉同步，用箭頭與文字標示），最後拉遠收尾。動畫要有 Kurzgesagt 式的彈性緩動與物件微微浮動。旁白稿與字幕一併生成，字幕用粗體無襯線字。"
+},
+{
+  cat:"模擬視覺化",
+  title:"Three.js 賽博龐克天際城：滿天飛行車、每台都掛著標籤的未來都市",
+  desc:"作者只下了一句「做一座有飛行車的賽博龐克城市，越細越好」，Opus 5.5 用 Three.js 做出夕陽下的高樓群：成群飛行車在多層空中航道穿梭、拖著紅色光軌，部分車輛浮著資訊標籤，地面街道也有車流與霓虹，搭配光束與景深霧氣。保留：作者未說明花了幾輪迭代、是否使用外部模型素材。",
+  author:"@buildwithsid (siddharth)",
+  likes:725,
+  url:"https://x.com/buildwithsid/status/2114004943996846516",
+  ptype:"重建",
+  prompt:"Use Three.js to build a cyberpunk city with flying cars. Make it as detailed as possible: procedurally generated skyscrapers with lit windows and neon signage, multiple layered sky lanes where hundreds of flying cars travel with red/cyan light trails, floating HUD labels on selected vehicles (ID, speed), ground-level traffic, volumetric light shafts from a low sunset sun, atmospheric fog and bloom. Free-fly camera plus a cinematic auto-orbit mode. Single HTML file, keep it at 60fps with instancing."
+},
+{
+  cat:"工程研究",
+  title:"ESP32 Labs：在瀏覽器裡玩的 ESP32-S3 虛擬硬體實驗室，程式碼逐行連動板子",
+  desc:"轉述：開發者 Abderrahmen Gharsallah 用 Opus 5.5 做的開源 ESP32-S3 教學站，首頁是可拖曳旋轉的 3D 開發板，點各零件（USB-C、BOOT/RST、RGB LED、PCB 天線、排針）顯示說明與對應課程；22 個 lab 從點亮 RGB LED、GPIO 一路到 1.9 吋螢幕、Wi-Fi 掃描、Web Server、OTA 與 BLE，並把韌體原始碼與虛擬板子行為即時綁定，執行到哪一行、觸發哪個周邊都會視覺化。有線上版與原始碼。推文為中文科技號轉述，非原作者發文。",
+  author:"@realfxw（TechVerser，轉述；原作者 Abderrahmen Gharsallah）",
+  likes:615,
+  url:"https://x.com/realfxw/status/2113835212819808310",
+  ptype:"重建",
+  prompt:"做一個 ESP32-S3 互動教學網站「ESP32 Labs — bench guide」，口號 Wire · Flash · Watch · Read the code。1) 首頁「Meet the board」：Three.js 渲染可拖曳旋轉、滾輪縮放的 ESP32-S3 開發板 3D 模型，點選 USB-C、BOOT/RST、RGB LED、ESP32-S3 模組、PCB 天線、排針等部位會高亮並彈出說明卡，列出相關 GPIO 與用到它的 lab；2) 進度面板顯示已完成／進行中的 lab 數，可「從上次離開處繼續」；3) 22 個漸進式 lab：RGB LED、GPIO 按鍵、1.9 吋 IPS 螢幕、Wi-Fi 掃描、Web Server、OTA 更新、BLE、音訊；4) 每個 lab 左邊是 ESP-IDF／Arduino 程式碼，右邊是虛擬板子，逐行執行時同步高亮對應的周邊、腳位與暫存器並顯示說明；5) 腳位圖標出安全 GPIO 與應避免的 strapping pins。紙質感米白底配橘色重點色，響應式。"
+},
+{
+  cat:"創意藝術",
+  title:"夏祭り Pond Line：長滿花草、地板是錦鯉池的夢幻電車車廂",
+  desc:"作者用 Opus 5.5 在 Three.js 做的互動場景「Pond Line」：一節懸吊拉環與鐵桿都還在的通勤電車車廂，天花板垂下藤蔓、座位旁開滿粉紅花叢，走道變成清澈的水池，錦鯉在腳下游動，車窗外是海天一色，有 Cinematic shots 自動運鏡模式。作者已部署成線上版可直接遊玩。",
+  author:"@scottstts (Scott)",
+  likes:569,
+  url:"https://x.com/scottstts/status/2114035230113984749",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個名為「夏祭り Pond Line」的夢幻互動場景：日本通勤電車的車廂內部（綠色座椅、金屬扶桿、吊環、車頂空調與廣告螢幕），但被自然佔據——天花板垂下大量藤蔓與綠葉，座位兩側沿窗開滿粉紅與紫色花叢，原本的走道地板變成清澈見底的淺水池，數條錦鯉在水中游動並有焦散光紋與水面反射；車窗外是晴朗的海與天空，有夏日午後的柔和陽光。操作：滑鼠拖曳環視、WASD 在車廂內移動，另提供「Cinematic shots」按鈕自動切換數個電影感鏡位。加入輕微 bloom 與景深，單一頁面可部署。"
+},
+{
+  cat:"創意藝術",
+  title:"Grid Effect：一段動畫素材＋一首歌，生成三種格狀海報風音樂錄影帶",
+  desc:"作者給 Opus 5.5 一段 15 秒的動畫素材與 40 秒的音樂，用三個 prompt 做出三種 1:1 格狀 MV：Poster Grid（中央 6 格同步播放不同視覺處理、外圈獨立變化）、Style Infection（風格像傳染一樣在相鄰格子間連鎖擴散）、Temporal Mosaic（各格做時間偏移、倒放、殘影與定格），畫面有 RED/INK、RGB SPLIT、SUMI-E、HALFTONE 等標籤與「墨狼 INK WOLF」字卡。三個 prompt 皆為推文原文，此處收第一個。保留：作者未說明用什麼工具鏈渲染影片。",
+  author:"@aimikoda (Kōda)",
+  likes:552,
+  url:"https://x.com/aimikoda/status/2114167098284839305",
+  ptype:"原文",
+  prompt:"Create a 1:1 high-energy poster-grid music video, exactly matching the supplied music's duration. Divide the frame into near-square cells with thin grey lines, keeping the original footage as one continuous, clearly recognizable image across the grid. The center ~6 cells play in sync with distinct visual treatments, while outer cells create independent variations. Fill the composition with dense, rapidly evolving effects, layered motion graphics, typography, icons, flashes and rhythmic transitions. Let the footage and music inspire every creative choice. Push visual intensity with frequent beat-driven bursts, but keep the original characters, action and scene consistently recognizable. Effects enhance the footage rather than replace it."
 }
 
 ];
