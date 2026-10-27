@@ -6433,7 +6433,59 @@ const OPUS_CASES = [
   url:"https://x.com/aimikoda/status/2114167098284839305",
   ptype:"原文",
   prompt:"Create a 1:1 high-energy poster-grid music video, exactly matching the supplied music's duration. Divide the frame into near-square cells with thin grey lines, keeping the original footage as one continuous, clearly recognizable image across the grid. The center ~6 cells play in sync with distinct visual treatments, while outer cells create independent variations. Fill the composition with dense, rapidly evolving effects, layered motion graphics, typography, icons, flashes and rhythmic transitions. Let the footage and music inspire every creative choice. Push visual intensity with frequent beat-driven bursts, but keep the original characters, action and scene consistently recognizable. Effects enhance the footage rather than replace it."
+},
+// ====== 2026-10-27 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"以 20 馬赫飛越整顆地球：從高空俯衝巴黎街景的地球飛行模擬器",
+  desc:"作者想把 Opus 5.5 推到極限，做了一個可以在全球自由飛行、最高到 20 馬赫的地球模擬器：從高空直接俯衝到巴黎香榭大道一帶的 3D 城市，畫面右下角即時顯示速度。作者想重現「站在山頂、想直接起飛」的自由感。推文未附 prompt，也未說明地形與建物資料來源。",
+  author:"@RiadEtm (Riad)",
+  likes:888,
+  url:"https://x.com/RiadEtm/status/2114350973619437706",
+  ptype:"重建",
+  prompt:"用 CesiumJS（或 Three.js + 3D Tiles）做一個瀏覽器版地球飛行模擬器：載入全球地形與 3D 建物圖磚，玩家以第一人稱或機尾視角飛行，W/S 控制油門、滑鼠控制俯仰與滾轉，速度可從 0 一路加到 20 馬赫（約 24,500 km/h），右下角 HUD 顯示即時速度（km/h 與馬赫）、高度與目前所在城市名稱。加入大氣散射、雲層與高度相關的霧效，高速時加動態模糊與風切音效；按 T 可輸入城市名直接傳送（例如 Paris、Tokyo）。"
+},
+{
+  cat:"文件簡報",
+  title:"Learn ESP32：把 ESP32 開發板拆成一次一個電路的互動學習 App",
+  desc:"延續作者先前的 Learn Arduino，這次換成 ESP32：左側課程列表（呼吸燈、桌燈、距離計、驅動輪子、柵欄門…共 20 課），中間是可旋轉的 3D 開發板，右側有腳位說明、範例程式碼與「Try it yourself」編輯器，底部進度條顯示完成幾課。作者表示以 Opus 5.5 製作，推文未附 prompt。",
+  author:"@DilumSanjaya (Dilum Sanjaya)",
+  likes:740,
+  url:"https://x.com/DilumSanjaya/status/2114762155333689679",
+  ptype:"重建",
+  prompt:"做一個「Learn ESP32」互動學習網頁 App，介面風格為米白底、橘色強調、細格線的硬體說明書風：左側導覽（Home、Lessons、Components、Reference、Settings），底部橫向課程卡片（20 課，從點亮 LED、桌燈、距離計、驅動輪子到柵欄門，完成後打勾），中央是可旋轉縮放的 3D ESP32 DevKit 模型，點擊腳位會高亮並顯示用途；右側分頁 Overview／Pinout／Example／Specifications，下方「Try it yourself」可編輯 Arduino 程式碼並模擬執行，讓板上 LED 或接線元件即時反應。頂端顯示目前課程與進度（例如 11/20）。"
+},
+{
+  cat:"創意藝術",
+  title:"互動像素作品集：點花灑花瓣、點天空招蝴蝶，四季場景可切換",
+  desc:"作者用 Claude Opus 5.5 做的像素風個人作品集：主畫面是一幅會動的像素畫（例如春天山坡上的紫雲英花田），點花朵會散落花瓣、點天空會招來蝴蝶、可拖曳讓蝴蝶飛，下方縮圖列可切換其他場景並暫停播放。推文只有短句與 demo，未附 prompt。",
+  author:"@ann_nnng (Anh Nguyen)",
+  likes:692,
+  url:"https://x.com/ann_nnng/status/2114717745443127698",
+  ptype:"重建",
+  prompt:"做一個互動像素風個人作品集網頁：中央是一幅帶手繪不規則邊框的像素畫場景（第一幕為春天山坡上的粉紅紫雲英花田、藍天白雲），場景內元素持續微動（花朵搖曳、雲朵飄移）。互動：點擊花朵會散出花瓣粒子、點擊天空會飛來一隻蝴蝶、拖曳可引導蝴蝶飛行。畫面下方顯示場景名稱與一行說明（例如「Milk vetch field — Spring, pink pinwheels over the hill」），再下方是 4 張場景縮圖可切換（四季不同場景）與播放／暫停鈕。全部用 Canvas 自繪，不使用外部圖片素材。"
+},
+{
+  cat:"模擬視覺化",
+  title:"610 萬格的 3D 燃燒模擬：黑體輻射決定火焰顏色，零素材零音檔",
+  desc:"作者用 Opus 5.5 做出寫實營火：不是貼圖或粒子特效，而是 610 萬個格點的 3D 燃燒模擬，火焰顏色由黑體輻射物理計算，另加火花與餘燼；畫面中的木柴、火光與聲音都沒有使用任何素材或音效檔。推文未附 prompt。",
+  author:"@LexnLin (Leon Lin)",
+  likes:682,
+  url:"https://x.com/LexnLin/status/2114370856810107201",
+  ptype:"重建",
+  prompt:"用 WebGPU 做一個寫實營火的即時 3D 燃燒模擬，不使用任何貼圖、模型或音效檔：以約 610 萬格（例如 128×384×128）的體素網格解 Navier–Stokes 流體（平流、浮力、渦度約束、壓力投影），追蹤溫度、燃料與煙密度；火焰顏色依溫度用黑體輻射（Planck 公式）換算成 RGB 再做 ray marching 體積渲染。木柴用程式生成的 SDF 圓柱加樹皮噪聲，餘燼發光隨溫度變化；另加火花與餘燼粒子隨上升氣流飄動。聲音用 Web Audio 合成：低頻轟鳴加隨機劈啪聲。背景全黑，鏡頭可環繞。"
+},
+{
+  cat:"文件簡報",
+  title:"Ethan Mollick 新書《Co-Existence》官網，用 Opus 5.5 重做",
+  desc:"Mollick 把自己新書的網站用 Opus 5.5 重做：米白底、亮黃色塊與等寬字的編輯風版面，封面搭配米開朗基羅《創造亞當》雙手。作者對比初版（用 Opus 4.8 做）需要大量人工才能做出有辨識度的靜態網站，這次幾乎由 Opus 自己完成，認為已脫離「千篇一律的 Claude 設計風」。推文未附 prompt。",
+  author:"@emollick (Ethan Mollick)",
+  likes:531,
+  url:"https://x.com/emollick/status/2114404221021778347",
+  ptype:"重建",
+  prompt:"幫我的新書《Co-Existence: The Next Phase of AI》（作者 Ethan Mollick，前作《Co-Intelligence》）做一個有辨識度的靜態官網，不要一般 AI 生成網站的通用樣式：米白紙張底色、亮黃色標籤塊、等寬字體標題的編輯風設計；頂部左側書名標籤、右側「Get the book →」按鈕帶粗底線；首屏放大書封（藍天白雲與《創造亞當》雙手），往下依序是本書主旨、章節預覽、作者介紹、媒體推薦與各通路購買連結。響應式、純 HTML/CSS，可直接部署為靜態網站。"
 }
+
 
 ];
 
