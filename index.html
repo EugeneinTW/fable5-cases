@@ -5016,6 +5016,17 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/trq212/status/2115135857669881939",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）做一個 AI 原生的 macOS Dock「FocusDock」（Swift + SwiftUI）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API，key 放在環境變數 TYPESAFE_API_KEY。\n\n1. Dock 外觀：畫面底部的懸浮膠囊列，左側是模式切換鈕（Writing／Building／Talking，可新增），右側是 App 圖示；每個模式定義在 modes/*.json：顯示哪些 App、擋哪些通知、進入時自動開啟哪些視窗。\n2. 活動分類：每 10 秒或前景 App／視窗標題變化時收集 state：前景 App、視窗標題、最近 3 個切換過的 App、終端機最後一行指令、目前時間。問 Jev 一題 Choice：目前活動屬於哪個模式（選項 = 現有模式名稱 + other）。信心值 ≥ 0.75 且連續兩次相同才自動切換模式；低於 0.6 不動作。\n3. 通知分流：攔截每則系統通知，state 放 App、標題、內文、目前模式。問 Jev 一題 Choice：show_now／batch_later／drop，再一題 Score 1–5 緊急度。show_now 且緊急度 ≥ 4 才立即顯示，其餘收進模式結束時的摘要；信心值低於 0.6 一律 batch_later。\n4. 提供本地 CLI（focusdock modes add／edit），讓我的 coding agent 能修改 modes/*.json；新增的模式自動成為 Jev 題目的新選項。\n5. 每次決策寫 log（state 摘要、選項、信心值、延遲毫秒），並提供指令統計一天的模式時間分配與被延後的通知數。"
+},
+// ====== 2026-10-29 自動更新 ======
+{
+  cat:"工程研究",
+  title:"Lightpanda agent 用 Jev 處理登入：0.53 秒找出帳號欄、密碼欄與送出鈕，Haiku 5.5 要 7.83 秒",
+  desc:"無頭瀏覽器 Lightpanda 的 agent 新增登入處理：由 TypeSafe Jev 從頁面中挑出帳號欄位、密碼欄位與送出按鈕。示範影片左右對照同一個 /login 任務：Jev 2 次呼叫、0.53 秒完成；Claude Haiku 5.5 搭瀏覽器工具要 8 次工具呼叫、7.83 秒。這是 Lightpanda 官方帳號發布的整合功能，與庫內先前收錄的 judge() 頁面分流是不同功能。保留：只示範單一登入頁，未說明複雜登入（多步驟、2FA、iframe）的處理情況。",
+  author:"@lightpanda_io (Lightpanda)",
+  likes:325,
+  url:"https://x.com/lightpanda_io/status/2115166932357771702",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）為無頭瀏覽器 agent 做一個登入處理函式 login(page, credentials)。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。用 Lightpanda（或 Playwright）載入登入頁，把所有可互動元素整理成清單（序號、tag、type、name、id、placeholder、aria-label、附近的 label 文字、按鈕文字），放進 state。題目：1) Choice「哪一個是帳號／Email 欄位」，選項 = 所有 input 的序號 + none；2) Choice「哪一個是密碼欄位」；3) Choice「哪一個是送出按鈕」，選項 = 所有 button／submit 的序號 + none。三題併成 2 次呼叫。任一題信心值低於 0.6 或選 none 時，交給大模型（例如 Claude Haiku）以完整 DOM 重判；帳號與密碼選到同一個元素時視為失敗。填入後送出，再問一題 Choice「登入結果」：success／wrong_credentials／needs_2fa／captcha／still_on_login。credentials 只從環境變數讀取，log 中遮蔽。寫一個 benchmark 腳本比較 Jev 版與純 LLM 工具呼叫版的耗時與呼叫次數。"
 }
 
 ];
@@ -6567,8 +6578,58 @@ const OPUS_CASES = [
   url:"https://x.com/AshizawaKamome/status/2114885775901020394",
   ptype:"重建",
   prompt:"你已透過 Blender MCP 連上 Blender。請從空場景開始，做一棟亞洲城市地下感的賽博龐克集合住宅：1) 主體是多棟 12–15 層的老舊混凝土高樓圍出中庭，外側是層層開放外廊與鐵欄杆，各戶陽台堆滿晾衣、冷氣室外機、雜物與燈光；2) 屋頂違建：鐵皮小屋、圓柱水塔、太陽能板、天線、衛星碟、盆栽與植物；3) 材質：混凝土要有水漬與剝落，欄杆與鐵皮要有鏽蝕，部分窗戶亮暖色燈；4) 地面是雨後濕亮柏油路與黃色標線，帶反射與積水；5) 遠景加水面與一片低細節城市，黃昏偏藍天光；6) 用 Cycles 從高角度俯瞰算一張成品圖。所有幾何用 Python 腳本程序化產生，不下載外部模型。"
+},
+// ====== 2026-10-29 自動更新 ======
+{
+  cat:"文件簡報",
+  title:"Backcountry 101：一步一步教你生火的等角插畫求生技能 App",
+  desc:"作者用 Opus 5.5 做的求生技能學習 App，地形圖紙底配手繪等角插畫：「Making Fire」課程分 6 步（收集材料、準備火圈、搭柴、點火、維持、熄滅），每步右側有 Instructions／Explanation／Tips 分頁與子步驟清單，場景中的火柴、木柴、鍋具會標註並隨步驟動起來，上方有播放／倍速控制與課程進度條。保留：推文附連結但未說明課程總數與完成度，也未附 prompt。作者是庫內多次收錄的 Dilum Sanjaya。",
+  author:"@DilumSanjaya (Dilum Sanjaya)",
+  likes:816,
+  url:"https://x.com/DilumSanjaya/status/2115488004425089201",
+  ptype:"重建",
+  prompt:"做一個網頁版求生技能學習 App「Backcountry 101 — Learn · Practice · Prepare」（React + Vite）。視覺：米色地形等高線底圖、手繪風等角（isometric）插畫、深綠與橘色點綴，左側窄邊欄（首頁、課程、指南針、裝備、自然）。主畫面是一個等角場景，以第一堂課「Making Fire」為例：6 個步驟——收集材料、準備火圈、搭柴、點火、維持火勢、安全熄滅——底部是步驟卡片列，完成的打勾。每一步場景中的物件（木柴、火種、石圈、火柴盒、水壺、刀）會依步驟動畫組合，並用引線標籤標出目前操作的物件。右側面板有 Instructions／Explanation／Tips 三個分頁，Instructions 列出 2–4 個子步驟可逐一點選；上方有重播、旋轉視角、圖層、上一步、播放、倍速控制，右上顯示課程進度（3/6）。另外預留課程選單，至少規劃：生火、搭庇護所、淨水、辨識方位、急救。"
+},
+{
+  cat:"創意藝術",
+  title:"又一座零素材的療癒小世界：水車、垂柳、雙瀑布與夕陽涼亭",
+  desc:"作者讓 Opus 5.5 用純程式碼（零素材）做出一座療癒系 3D 小世界：水車小屋、垂柳、兩道瀑布、滿地繡球花、夕陽下的小涼亭，畫面中戴草帽的角色拿著捕蟲網在花間小路上走，右上有「Midday · Day 14 · Summer」的時間天氣面板，底部是道具欄（捕蟲網、玻璃罐、筆記本、地圖、提燈）。作者說「another」，顯示是系列作。保留：推文未附 prompt，未說明是否有完整玩法。",
+  author:"@keydol123 (Harry Jackson)",
+  likes:616,
+  url:"https://x.com/keydol123/status/2115168883040817610",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個療癒系 3D 小世界，所有模型、材質、植物都用程式碼程序化生成，不載入任何外部素材。場景：河邊一座有木製水車在轉動的小屋，數棵垂柳隨風擺動，後方兩道並列瀑布帶水霧粒子，河流有流動與反光；草地鋪滿繡球花、羽扇豆與小野花，花叢間有蝴蝶飛舞；小丘上有一座小涼亭。玩家是戴花草帽、拿捕蟲網的小角色，俯視 3/4 視角跟隨，WASD 移動，可以捕蝴蝶收進玻璃罐。UI：右上角時間天氣卡（時段、Day N · 季節，含日照弧線），底部 5 格道具欄（捕蟲網、玻璃罐、筆記本、地圖、提燈）。光影：柔和陰影、日夜循環，夕陽時暖色光照涼亭。"
+},
+{
+  cat:"創意藝術",
+  title:"給一份 brief 就做出 2,700 萬觀看格式的卡通短片原型：Claude 在 Blender 搭景、畫角色、配樂配字幕",
+  desc:"作者拿一個 8 天 2,700 萬觀看的 YouTube Shorts 卡通格式當目標，讓 Opus 5.5 自己做原型：挑一個真實故事並查核、設計並畫出角色、在 Blender 搭出每個場景（畫面是比薩斜塔施工中的鷹架與工人）、逐字對齊字幕、自己寫音效與配樂，本機算圖 5 分鐘；作者稱這是第一個 prompt 的結果，再一個 prompt 修品質就能發。保留：推文附了一整串 skill／MCP 工具堆疊（Blender MCP、HyperFrames 等）並導流到長文，帶有推廣成分；成片品質與原頻道仍有差距。",
+  author:"@Y0urDumble (Dumble)",
+  likes:1031,
+  url:"https://x.com/Y0urDumble/status/2115193601458151552",
+  ptype:"重建",
+  prompt:"你是一人卡通短片工作室，用 Claude Code（Opus 5.5）＋ Blender MCP 製作一支 60 秒直式（9:16）歷史小故事卡通短片。1) 故事：挑一個有反轉的真實歷史小故事（例如比薩斜塔為什麼會斜），先查核關鍵事實並列出來源，再寫出前 2 秒的鉤子與 5–7 個劇情節拍；2) 角色：設計 2–3 個圓頭簡筆風卡通角色（大眼、粗輪廓線），做成可切換表情與口型的 2D 貼片，放進 3D 場景中；3) 場景：在 Blender 中用 Python 程序化搭出每個節拍的場景（例如施工中的塔、鷹架、石塊、吊臂），風格化材質、柔和天光，每搭完一景先算一張預覽圖自己檢查構圖再修；4) 動畫：依迪士尼 12 原則做擠壓伸展與預備動作，鏡頭推拉搖移；5) 聲音：生成旁白、音效與一段循環配樂，檢查音畫同步；6) 剪輯：逐字對齊的大字幕（白字黑邊、重點字放大），輸出 1080×1920 MP4，本機算圖控制在 10 分鐘內。"
+},
+{
+  cat:"工程研究",
+  title:"Hop：一個下午做出 Mac 與 Windows 互傳的 AirDrop，零行手寫程式",
+  desc:"作者在空資料夾讓 Opus 5.5 做跨平台 AirDrop「Hop」：Opus 自選 Electron 一套程式碼跑 macOS 與 Windows，每 1.5 秒用 UDP 在區網廣播發現裝置並顯示在雷達上，檔案點對點直傳、對方可接受或拒絕、自家電腦可設永遠接受；動 UI 前先寫測試（兩個假裝置互傳資料夾與 3 MB 檔案逐位元比對）；設計分給平行 agent（用 WebGL shader 重現 iOS 17 NameDrop 光暈、畫 3 個圖示概念挑一個、做下載站），再由審查 agent 抓到一個在 Mac 上會全黑的 shader bug；GitHub Actions 自動出 .dmg 與 .exe。保留：作者稱「逆向工程 AirDrop」，實際上是重做類 AirDrop 的區網傳檔，並非相容蘋果協定；完整 prompt 放在回覆串，推文本身未附。",
+  author:"@0xMovez (Movez)",
+  likes:618,
+  url:"https://x.com/0xMovez/status/2115130015260291145",
+  ptype:"重建",
+  prompt:"在這個空資料夾裡做一個開源的跨平台檔案互傳 App「Hop」，體驗要像 AirDrop：把檔案拖到另一台電腦的圖示上就傳過去，不經雲端、不用帳號、不用線。要求：1) 一套程式碼同時跑 macOS 與 Windows（建議 Electron），自行決定技術細節；2) 裝置發現：每 1.5 秒在區網用 UDP 廣播，對方出現在一個雷達畫面上；3) 傳輸：兩台機器直接串流檔案與資料夾，接收端跳出 Accept／Decline，可對自己的裝置設定「永遠接受」；4) 寫 UI 前先寫整合測試：兩個假裝置互相發現並傳送一個資料夾和一個 3 MB 檔案，逐位元比對；5) 設計：把工作分給平行子 agent——一個用 WebGL shader 做出類似 iOS 17 NameDrop 的光暈動畫、一個畫 3 個 App 圖示概念並選出最好的、一個做下載用的落地頁；6) 每個部分完成後由獨立的審查 agent 檢查（特別是跨平台渲染差異）；7) 設定 GitHub Actions，每次發版自動建置 .dmg（在 macOS runner 上）與 .exe；8) 首次啟動加上啟動 log 與強制開窗的 fallback。"
+},
+{
+  cat:"遊戲",
+  title:"Opus 5.5 搭配 Blender 與 Unreal 做出可以實際遊玩的森林湖泊遊戲",
+  desc:"作者稱 Opus 5.5 透過 Blender 與 Unreal Engine 建出一款可以實際遊玩的遊戲，影片縮圖是俯視的大片針葉林、中央湖泊與橫跨湖面的步道，帶有地形等高線般的水面紋理。作者自己也「不敢相信真的能玩」。保留：推文只有一句話與影片，未說明玩法、耗時、人工介入程度與 prompt，資訊量有限。",
+  author:"@dhruvalgolakiya (Dhruval)",
+  likes:1260,
+  url:"https://x.com/dhruvalgolakiya/status/2115106296794104086",
+  ptype:"重建",
+  prompt:"你可以透過 MCP 操作 Blender 與 Unreal Engine 5。請做一款可遊玩的第三人稱森林探索小遊戲：1) 在 Blender 用 Python 程序化產生素材：針葉樹（3 種變體）、岩石、木棧道、小木屋，匯出 FBX；2) 在 Unreal 建立 2km×2km 地形：大片針葉林以 PCG／Foliage 散佈，中央一座湖，一條木棧道橫跨湖面連接兩岸，加入小路網；3) 水面用 Water 外掛，帶反射與波紋；4) 玩家用第三人稱角色，可走、跑、跳，鏡頭可轉；5) 玩法：在森林中找到 5 個發光收集物，全部收集後湖心步道盡頭出現終點，UI 顯示收集進度與計時；6) 加入霧氣、晨光與環境音；7) 打包成 Windows 可執行檔，並回報每一步做了什麼。"
 }
-
 
 ];
 
