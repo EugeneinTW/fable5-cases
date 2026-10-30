@@ -3510,6 +3510,17 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
   url:"https://x.com/rewind02/status/2114686854796566829",
   ptype:"重建",
   prompt:"你已透過 Codex 連上 Godot MCP 與 Blender MCP。game/ref 資料夾裡有我想要的美術風格參考圖（溫暖的奇幻冒險風、第三人稱）。1) 先完整讀過 game/ref 的每張圖，寫一份 docs/STYLE.md 歸納配色、光線、材質、比例與植被密度，之後每一步都以此為準；2) 在 Blender 建模道具：城門、市集攤位、噴泉、路牌、鍛造爐，輸出 GLB 到 res://assets/props；3) 在 Godot 搭世界：城堡與城門、城鎮廣場、森林小徑、成片草地、體積霧與暖色斜陽，放一個可操控的第三人稱角色；4) 從玩家視角走一遍，截圖與參考圖逐張對照，列出偏差（色調、霧、植被、比例）並修正，重複到風格一致為止。"
+},
+// ====== 2026-10-30 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"《缺席的主音》：E 大調賦格，全曲不准出現 E 這個音",
+  desc:"作者用 GPT-6 Astra（Ultra effort）挑戰「不可能的任務」：用 LilyPond 寫一首 E 大調的管風琴三聲部賦格，但從頭到尾不能用 E（含等音拼法）。成品取名〈The Absent Tonic〉，有呈示部、手鍵盤與踏板分譜，影片附演奏音檔。作者自評聽起來「很怪，但意外地好聽、放鬆」。保留：主音缺席是否仍算真正的 E 大調、對位品質如何，推文沒有樂理層面的檢驗。",
+  author:"@aug5thmusic (Auggie)",
+  likes:210,
+  url:"https://x.com/aug5thmusic/status/2115447484986372101",
+  ptype:"原文",
+  prompt:"In LilyPond, write a fugue for organ in E major without ever using the note E (or its enharmonic spellings)."
 }
 
 ];
@@ -5027,6 +5038,17 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/lightpanda_io/status/2115166932357771702",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）為無頭瀏覽器 agent 做一個登入處理函式 login(page, credentials)。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。用 Lightpanda（或 Playwright）載入登入頁，把所有可互動元素整理成清單（序號、tag、type、name、id、placeholder、aria-label、附近的 label 文字、按鈕文字），放進 state。題目：1) Choice「哪一個是帳號／Email 欄位」，選項 = 所有 input 的序號 + none；2) Choice「哪一個是密碼欄位」；3) Choice「哪一個是送出按鈕」，選項 = 所有 button／submit 的序號 + none。三題併成 2 次呼叫。任一題信心值低於 0.6 或選 none 時，交給大模型（例如 Claude Haiku）以完整 DOM 重判；帳號與密碼選到同一個元素時視為失敗。填入後送出，再問一題 Choice「登入結果」：success／wrong_credentials／needs_2fa／captcha／still_on_login。credentials 只從環境變數讀取，log 中遮蔽。寫一個 benchmark 腳本比較 Jev 版與純 LLM 工具呼叫版的耗時與呼叫次數。"
+},
+// ====== 2026-10-30 自動更新 ======
+{
+  cat:"工程研究",
+  title:"Switch：給 Jev 這類決策模型用的 harness 框架，程式先生成選項、Jev 只負責挑",
+  desc:"決策模型不會產生 tool call，沒辦法直接塞進 coding agent harness。作者做了開源框架 Switch：依「領域」定義 state，再由程式把 state 轉成一連串有限選項的問題，讓 Jev 在多步迴圈中逐一挑選，等於「在有限選項上跑 agent loop」；目前內建西洋棋與評估用的 rubric judge 兩個領域，主要用途是讓 Jev 當 eval 評審、在 200 頁文件裡自己翻找需要看的頁面。作者坦白：Jev 下棋很爛，當評審的表現也還取代不了 GPT-6.1 Sol；框架也支援 pi-ai 套件裡的其他決策模型。",
+  author:"@onusoz (Onur Solmaz)",
+  likes:570,
+  url:"https://x.com/onusoz/status/2115868447834042415",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做一個 TypeScript 的「決策模型 harness」框架 Switch。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。設計：1) 核心介面 Domain<State>：initialState()、questions(state) 回傳本步要問 Jev 的題目（每題是 Choice／Score／Noul，Choice 的選項由程式根據 state 列舉）、apply(state, answers) 回傳新 state、isDone(state)。2) Runner：迴圈呼叫 Jev、記錄每步的選擇與信心值，信心值低於 0.6 時可設定交給備援模型（例如 GPT-6.1 Sol）或停下來；輸出完整軌跡 JSON。3) 內建兩個領域：a) 西洋棋：state 放 FEN，Choice 選項是所有合法走法；b) 文件評審：state 放已看過的頁碼與筆記，每步 Choice 選「翻到第 N 頁／依 rubric 打分／結束」，Score 題目依 rubric 各項給 poor／fair／good／excellent，頁面以截圖傳入。4) 抽象出 provider 介面，能換成其他決策模型。5) 附一個 eval：同一批任務比較 Jev 與大模型評審的一致率與成本。"
 }
 
 ];
@@ -6629,6 +6651,37 @@ const OPUS_CASES = [
   url:"https://x.com/dhruvalgolakiya/status/2115106296794104086",
   ptype:"重建",
   prompt:"你可以透過 MCP 操作 Blender 與 Unreal Engine 5。請做一款可遊玩的第三人稱森林探索小遊戲：1) 在 Blender 用 Python 程序化產生素材：針葉樹（3 種變體）、岩石、木棧道、小木屋，匯出 FBX；2) 在 Unreal 建立 2km×2km 地形：大片針葉林以 PCG／Foliage 散佈，中央一座湖，一條木棧道橫跨湖面連接兩岸，加入小路網；3) 水面用 Water 外掛，帶反射與波紋；4) 玩家用第三人稱角色，可走、跑、跳，鏡頭可轉；5) 玩法：在森林中找到 5 個發光收集物，全部收集後湖心步道盡頭出現終點，UI 顯示收集進度與計時；6) 加入霧氣、晨光與環境音；7) 打包成 Windows 可執行檔，並回報每一步做了什麼。"
+},
+// ====== 2026-10-30 自動更新 ======
+{
+  cat:"遊戲",
+  title:"Wyrnfall：和孩子一起玩的 D&D 桌遊，AI 當地城主",
+  desc:"作者一直想和孩子玩 D&D、讓 AI 擔任地城主，於是用 Opus 5.5 做出「Wyrnfall — The Bell Beneath Blackwater」：多人連線、以 D&D 為靈感的桌上角色扮演網頁遊戲，開場是暮色懸崖上的巨龍與羊皮卷風格的冒險之書介面，用 Google 登入加入自己的桌次。保留：目前是邀請制私人預覽，一般人只能排候補名單；推文沒交代 AI 主持的實際規則判定與長期劇情表現。",
+  author:"@MengTo (Meng To)",
+  likes:1655,
+  url:"https://x.com/MengTo/status/2115756268925448353",
+  ptype:"重建",
+  prompt:"做一款多人連線的網頁版 D&D 風格桌上角色扮演遊戲，由 AI 擔任地城主（Game Master），適合大人帶小孩一起玩。1) 大廳：奇幻冒險之書風格的介面（羊皮紙、金色雕花框、襯線字），背景是暮色中懸崖與盤旋巨龍的動態場景，配環境音；用 Google 登入，可建立或加入一張「桌」。2) 角色：簡化版 D&D 角色卡（種族、職業、六項屬性、生命值、物品），提供適合兒童的預設角色。3) 遊戲流程：AI 地城主用旁白描述場景、扮演 NPC、提出選擇；玩家輪流用文字或按鈕行動，需要判定時擲 d20（畫面上有骰子動畫）並由 AI 依規則解釋結果。4) 多人同步：同桌玩家即時看到旁白、擲骰與輪次；主持人家長可暫停、調整難度與內容分級。5) 存檔：每桌的劇情進度、角色狀態可保存，下次接著玩。6) 附更新日誌頁與邀請制候補名單。"
+},
+{
+  cat:"模擬視覺化",
+  title:"Every Breath：氧氣從空氣走到細胞的 3D 生物課，呼吸、氣體交換、循環、細胞呼吸逐課拆解",
+  desc:"作者給 GCSE 與國中生物做的互動網頁：透過半透明人體看肺與支氣管，按住畫面（或空白鍵）就吸氣、放開就吐氣，橫膈膜跟著動，右側有可拖曳的縮放刻度（×1、×10、×100，從肺放大到更小的尺度），下方顯示吸入的公升數。四個主題（呼吸、氣體交換、血液循環、細胞呼吸）各自有示範、練習與自我檢測題。以 Opus 5.5 搭 Three.js 打造，同作者先前做過 3D 能量物理書等教學網頁。",
+  author:"@techartist_ (Techartist)",
+  likes:543,
+  url:"https://x.com/techartist_/status/2115565230772392277",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個給國中／GCSE 學生的互動生物課網頁「Every Breath」，主題是氧氣如何從空氣進到身體細胞。1) 主畫面：半透明玻璃質感的人體上半身，可看見氣管、支氣管樹、肺與橫膈膜。2) 第一課「Breathe In」：按住畫面或空白鍵吸氣、放開吐氣，肺與橫膈膜同步起伏，右下顯示吸入空氣公升數與「深呼吸 0/2」任務。3) 右側做一個可拖曳／滾輪操作的縮放刻度（×1 → ×10 → ×100 → 更高），從整個肺一路放大到肺泡、微血管、紅血球與粒線體。4) 共四個單元：呼吸、肺泡氣體交換、血液循環、細胞呼吸，每個單元都要有示範動畫、一個動手練習、以及「Check yourself」選擇題。5) 左側是課程進度節點，上方有上一課／下一課；深色背景、青綠色強調、襯線大標題，支援音效開關。"
+},
+{
+  cat:"文件簡報",
+  title:"子代理到底怎麼運作：手繪紙質風的小方塊角色動畫",
+  desc:"作者用 Opus 5.5 做了一支解釋「子代理（subagents）如何運作」的動畫：米白紙質背景、手繪筆觸與排線陰影，一個長著四隻腳的橘色小方塊角色當主角，用分身、分工、回報的畫面講主代理與子代理的關係。同作者先前也用同一套風格做過 Anthropic 版本控制工具 Scion 的解說動畫。保留：推文只有一句話，沒交代使用的動畫工具與製作流程。",
+  author:"@devteamdrew (DreW)",
+  likes:542,
+  url:"https://x.com/devteamdrew/status/2115581339357286477",
+  ptype:"重建",
+  prompt:"做一支 60–90 秒的解說動畫，主題是「AI coding agent 的子代理（subagents）怎麼運作」，用程式產生（例如 Remotion 或 Motion Canvas），輸出 1080p MP4。美術：米白紙張紋理背景、手繪黑色描邊與排線陰影、地平線一條細線；主角是一個有兩隻小手四隻短腿、會眨眼的橘色方塊。分鏡：1) 主角收到一個大任務（頭上冒出一長串待辦），扛不動；2) 它分裂出幾個顏色較淺的小方塊（子代理），每個領走一件事，各自走進自己的小房間（獨立 context）；3) 子代理各自工作時，主角繼續做自己的事；4) 子代理把精簡的結果卡片送回來，主角拼成完整答案；5) 結尾一句總結：子代理＝平行處理＋乾淨的 context。動作要有彈性的 squash & stretch，配輕快的木琴音效與字卡。"
 }
 
 ];
