@@ -3521,6 +3521,18 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
   url:"https://x.com/aug5thmusic/status/2115447484986372101",
   ptype:"原文",
   prompt:"In LilyPond, write a fugue for organ in E major without ever using the note E (or its enharmonic spellings)."
+},
+
+// ====== 2026-11-01 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"Three.js r187 極限測試：用 Codex 驅動 Astra，兩天蓋出不含任何匯入模型的迷你城市",
+  desc:"作者想看 Three.js r187 能推到多遠，用 Codex 搭 GPT-6 Astra 蓋出一座迷你城市：鐘塔廣場、噴水池、環形高架軌道與層層建築，全部用 Three.js 生成，沒有匯入 3D 模型。作者回覆說前後約兩天斷續製作，流程是先和 ChatGPT 討論到想法清楚、做參考圖，再用 ChatGPT 協助下指令給 Codex，靠大量來回微調細節。保留：作者明說「沒有捷徑」，這不是一次生成；完整過程尚未公開（作者說之後會寫文章），下方 prompt 依回覆重建。",
+  author:"@zavrenn (Mohamed)",
+  likes:325,
+  url:"https://x.com/zavrenn/status/2116564845860360225",
+  ptype:"重建",
+  prompt:"用 Three.js r187 做一座等角視角的迷你城市，不准匯入任何 3D 模型，所有建築、樹木、街道和設施都用程式碼生成。場景以鐘塔廣場和噴水池為中心，周圍是奶油色歐風建築，上方有一圈環形高架軌道，有列車持續行駛。光線柔和，要有接觸陰影與環境遮蔽，鏡頭可環繞。我會附參考圖，先做整體配置，截圖給我看，再逐區細修門窗、欄杆、屋簷與植栽，每次只改一個區塊。先評估 r187 有哪些新功能可用，並注意效能。"
 }
 
 ];
@@ -6738,6 +6750,58 @@ const OPUS_CASES = [
   url:"https://x.com/MrTacticalX/status/2115768888507941008",
   ptype:"原文",
   prompt:"In Blender, build a very detailed, realistic oak tree. When the tree is shaken, its leaves fall off in a beautiful, physically convincing way. Film it as a short, premium video.\n\nBackground: a soft, seamless, warm cream / off-white studio backdrop. The tree stands on a small natural base: a mossy soil mound with some grass and roots. The rest of the frame is the cream backdrop with soft contact shadows. Minimal and calm, like a product shot.\n\nThe tree: a regular English oak. A thick, gnarled trunk with deep, furrowed bark. Realistic branching with twisting limbs that split into smaller branches and twigs. A full, dense crown of proper lobed oak leaves (thousands of them), with colour variation from green to a few yellowing leaves, translucency when backlit, and a few acorns. Real bark texture with displacement, and leaves with veins and a slight curl. It must look like a real oak, not a lollipop tree.\n\nLighting: soft, warm studio light with a large softbox key, a gentle rim light so the leaves glow, and soft shadows on the cream floor. Render in Cycles with denoising.\n\nAnimation (about 16 seconds): For the first 3 seconds the tree is still, with only a faint breeze and a slow camera push-in. At 3 seconds the tree is shaken hard, as if an invisible giant grabbed the trunk. The trunk and branches whip and sway with a natural lag, bending and springing back. Leaves detach and fall: each one tumbles, flutters and spins, gliding side to side like real falling leaves, not dropping straight down. The crown should visibly thin. A few acorns drop and bounce. The leaves land and pile up on the base and the floor around it. At the end the last few leaves drift down and the camera holds on the half-bare tree with its carpet of leaves.\n\nPhysics: use real baked physics. It must look natural, with no leaves passing through the floor.\n\nSound: a light breeze, a rustle burst on the shake, and soft leaf patter as they land. Real recorded sound effects only, kept subtle.\n\nFormat: 1080x1350 (4:5), tree centred, first frame bright."
+},
+
+// ====== 2026-11-01 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"一張圖、一句「做出模型」：可逐件拆解的機械章魚，8 條手臂塞進 202 節鏈環與 480 顆滾輪",
+  desc:"作者給 Opus 5.5 一張參考圖並說「make the model」，每片外殼、鏡頭與鏈節都是 Three.js 程式碼。Opus 先渲一張靜態圖和參考圖並排比對、補了 3 輪才開始做影片；第一版看起來像玩具，它又回頭把 8 條手臂加到 202 節鏈環、480 顆滾輪，每條手臂只用一個 draw call、逐幀沿彎曲鏈計算姿態。全片 25 秒、2,616 行程式碼，每 2～3 秒就有零件打開，0:16 在 330° 轉台上整隻炸開再組回去。保留：成品是預先編排好的動畫，不是物理模擬；介面版面與同日 @Nyxera0x 的機械蠍相同，疑似同一套 skill 的產物，推文也有導流該 skill 的意味。作者說 prompt 在留言，本次沒抓到全文，故為重建。",
+  author:"@0x_fokki (Fokki)",
+  likes:5951,
+  url:"https://x.com/0x_fokki/status/2116289885870981296",
+  ptype:"重建",
+  prompt:"我附上一張機械章魚的參考圖。用 Three.js 把它做成模型，每個零件都用程式碼建出來，不准貼圖片或匯入模型。流程：1) 先渲一張靜態圖放在參考圖旁邊比對，至少修 3 輪，比對沒過就不要開始做影片。2) 細節要夠密，不能像玩具：8 條手臂共約 200 節鏈環、480 顆滾輪，每條手臂用一個 draw call（InstancedMesh），每幀沿彎曲鏈計算每節姿態。3) 做一支約 25 秒的影片：每 2～3 秒就有東西打開（鏡頭旋開、外罩掀開、幫浦旋轉升起），約 0:16 在 330° 轉台上整隻炸開，轉完前重新組回，最後章魚自己游出畫面。4) 所有動畫用 render(t) 決定，同一時間點永遠是同一格。旁邊加工程儀表板，顯示深度、推力、次系統狀態與操作紀錄。"
+},
+{
+  cat:"模擬視覺化",
+  title:"用 NVIDIA 免費 SimReady 模型蓋出即時運作的倉庫：貨架、輸送線與揀貨區都在動",
+  desc:"作者讓 Opus 5.5 拿 NVIDIA 免費釋出的 SimReady 3D 模型組成一座會即時運作的倉庫，畫面上方有營運數字，地面劃出 Pick and Pack 等作業區，貨架、棧板、輸送設備與搬運車都是現成的高擬真資產。亮點是把模擬用資產直接變成可看的營運場景。作者在留言附上轉成 GLB 的 Hugging Face 資料集 codepawl/simready-glb。保留：推文只有一句話加影片，沒說明互動程度、資料是否為模擬、花費與迭代輪數，下方 prompt 依畫面重建。",
+  author:"@anxuanng (An Xuan)",
+  likes:1456,
+  url:"https://x.com/anxuanng/status/2116504653215248436",
+  ptype:"重建",
+  prompt:"用 NVIDIA 免費的 SimReady 模型（可用 Hugging Face 上轉好 GLB 的 codepawl/simready-glb）做一座即時運作的 3D 倉庫網頁，用 Three.js 呈現。場景：挑高廠房、深色地坪、黃色標線，分成收貨、貨架儲區、Pick and Pack、出貨等作業區。貨架和棧板放上紙箱，搬運機器人與輸送線持續運作，把貨從儲區送到包裝區再到出貨口。上方放營運數字（在途訂單、平均處理時間、機器人數量），視窗底部有時間軸可暫停與調整速度。先確認模型載入後比例與軸向正確，再排布局，最後渲一張俯視截圖檢查有沒有穿模或懸空。"
+},
+{
+  cat:"創意藝術",
+  title:"Suno MCP 串 Opus 5.5：把拍點和歌詞時間全餵給它，做出字字踩拍的動態字體短片",
+  desc:"作者用新出的 Suno MCP，把歌曲的拍子與歌詞時間點整包交給 Opus 5.5，由 Claude Code 做出約 99 秒的直式動態字體影片，文字切換完全踩在節拍上。作者認為 Suno MCP 看似不起眼，但能傳的曲目資訊很多，不會削弱 Opus 的創意發揮。保留：作者自註用藍牙耳機看會覺得音畫不同步，建議有線或直接外放；細部流程與 prompt 未公開（回覆說效果不好就出解說影片），下方 prompt 為重建。",
+  author:"@posi_posi8 (posi_posi)",
+  likes:1147,
+  url:"https://x.com/posi_posi8/status/2116102597572755766",
+  ptype:"重建",
+  prompt:"用 Suno MCP 做一支音畫完全同步的動態字體影片（直式 1080×1920，約 90～100 秒）。1) 透過 Suno MCP 生成或取得歌曲，抓出 BPM、每一拍的時間點與歌詞時間軸，存成 beat map。2) 用 Remotion 或 HyperFrames 做動畫，版面走米白底、大黑字的極簡風，每個詞在拍點上切入，重拍時放大、換版或反白，副歌速度加倍。3) 所有轉場時間都從 beat map 讀取，不准手動猜秒數。4) 渲完抽幾個拍點的畫面檢查，對不準就回頭修 beat map 再重渲。開頭放「SOUND ON」提示。"
+},
+{
+  cat:"創意藝術",
+  title:"珍奶店的生意畫成四張狀態圖：先用 TLA+ 驗證，TLC 還抓出尖峰時段沒人檢查粉圓鮮度的 bug",
+  desc:"作者用 @poteto 的 /statechart skill 加 Opus 5.5，把經營珍奶店畫成四張手繪感狀態圖：一杯訂單的流程、早 7 到晚 9 的營業日、店員與煮鍋兩個並行區域，以及一張壞掉的規則。特別的是每張圖都先寫成小型 TLA+ 模型、由 TLC 窮舉驗證，再用 pele 排版、程式畫出筆觸；第四張就是 TLC 找到的路徑：尖峰時沒人確認粉圓放多久，舊粉圓就會上桌。程式、模型與圖都在 GitHub（kevintngo/statechart-art）開源。保留：主題是虛構情境，驗證只代表模型自身一致；同一作者同一 skill 的〈One becomes two〉細胞圖另收一筆。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:801,
+  url:"https://x.com/kevin_t_ngo/status/2116270190040416313",
+  ptype:"重建",
+  prompt:"用 @poteto 的 /statechart skill 畫一組「經營珍奶店」的狀態圖藝術，四張各示範一種圖：1) 平面圖：從排隊到拿到飲料，含分支與迴圈（珍珠賣完就退款、做錯飲料重做）。2) 含父狀態：店內 7 am～9 pm 的一天，Open 裡有 quiet、busy、rush。3) 雙區域並行：店員和煮珍珠的鍋各自運作，等對方的步驟用括號標示。4) 破規則：讓 TLC 找出尖峰時沒人檢查粉圓鮮度而端出舊粉圓的路徑，用紅線標最短路徑。每張先寫 TLA+ 模型並用 TLC 檢查，再用 pele 排版，最後用 JavaScript 模擬鋼筆與色鉛筆畫成手繪插畫，不用任何圖像模型。狀態畫成訂單票、櫥窗便條或木牌，步驟是紅線，放進一個可閱讀的網頁並寫明製作方法。"
+},
+{
+  cat:"創意藝術",
+  title:"〈One becomes two〉：細胞週期畫成可逐步操作的狀態圖，61 個狀態、77 步都經 TLC 驗證",
+  desc:"同樣用 /statechart skill 加 Opus 5.5，這次畫一個動物細胞的生命週期：從 G1、S、G2 到有絲分裂，並列出 p53 壞掉、帶著損傷複製、染色體分錯等違規路徑與結局（細胞凋亡、兩個帶突變的細胞等）。模型以 TLA+ 撰寫、TLC 驗證共走訪 61 個狀態、77 步；用 JavaScript 模擬鉛筆、粉彩與中性筆繪製，字型是由 Hershey 1967 字型描出的 Kevin Sans。網頁可逐步操作，也能改看文字版，MIT 授權開源。保留：TLC 只驗證模型的邏輯，不代表生物學內容正確，推文沒提到專業審閱；prompt 依網站說明重建。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:543,
+  url:"https://x.com/kevin_t_ngo/status/2116423724379656329",
+  ptype:"重建",
+  prompt:"用 @poteto 的 /statechart skill 畫出一個動物細胞的生命週期，標題〈One becomes two〉。先用 TLA+ 建模：G1、G0、S、G2、前期、前中期到分裂，含 DNA 損傷與 p53 檢查點；加入違規分支（p53 壞掉仍複製損傷 DNA、染色體沒抓好就分裂），用 TLC 窮舉，回報走訪的狀態與步數，並標出違反規則的狀態與路徑。接著用 pele 排版，以 JavaScript 模擬鉛筆、粉彩和中性筆畫出來：每個狀態是一張玻璃切片，每條線是一步。做成網頁，支援逐步操作，並提供純文字版讓人閱讀整張圖。不用任何圖片模型，程式碼與圖以 MIT 授權放上 GitHub。"
 }
 
 ];
