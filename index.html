@@ -6802,8 +6802,58 @@ const OPUS_CASES = [
   url:"https://x.com/kevin_t_ngo/status/2116423724379656329",
   ptype:"重建",
   prompt:"用 @poteto 的 /statechart skill 畫出一個動物細胞的生命週期，標題〈One becomes two〉。先用 TLA+ 建模：G1、G0、S、G2、前期、前中期到分裂，含 DNA 損傷與 p53 檢查點；加入違規分支（p53 壞掉仍複製損傷 DNA、染色體沒抓好就分裂），用 TLC 窮舉，回報走訪的狀態與步數，並標出違反規則的狀態與路徑。接著用 pele 排版，以 JavaScript 模擬鉛筆、粉彩和中性筆畫出來：每個狀態是一張玻璃切片，每條線是一步。做成網頁，支援逐步操作，並提供純文字版讓人閱讀整張圖。不用任何圖片模型，程式碼與圖以 MIT 授權放上 GitHub。"
+},
+// ====== 2026-11-02 自動更新 ======
+{
+  cat:"工程研究",
+  title:"HackerTube：兩小時把 4,300 萬則 HN 留言濾成 6,454 支好片，做出自己的 YouTube",
+  desc:"Karpathy 受不了 YouTube 的推薦，週末請 Opus 5.5 做替代品：掃過 Hacker News 20 年、4,300 萬則留言，篩出 6,454 支反覆被推薦的影片，全程約 2 小時。免登入、偏好只存在瀏覽器，縮圖固定取影片中段畫面而非上傳者設計的封面，留言分析資料也打包成 zip 讓人自己再做一版。他只手動做三件事：開 Google Cloud API key、開 VPS、買網域；上線、安全強化和部署都交給 Claude。保留：據他部落格與轉述，留言過濾這段有用 Sonnet 跑 Claude Code Workflow，主導與介面是 Opus 5.5；推文沒附 prompt，以下依文章描述重建。",
+  author:"@karpathy (Andrej Karpathy)",
+  likes:28088,
+  url:"https://x.com/karpathy/status/2116957135661945283",
+  ptype:"重建",
+  prompt:"幫我做自己的 YouTube，影片來源是 Hacker News 上被推薦過的影片。\n\n1. 下載 HN 歷年全部留言，篩出推薦 YouTube 影片的留言，彙整成一份反覆被推薦的影片清單，並依主題分類（約 150 個主題）。留言量很大，篩選工作可以分批交給較便宜的模型。\n2. 用 YouTube Data API 補影片中繼資料（API key 我來申請）。\n3. 做 YouTube 風格的介面：首頁、主題分類、搜尋、歷史紀錄、稍後觀看。縮圖一律取影片中段的畫面，不用上傳者的封面。\n4. 不要登入。個人化推薦的偏好全部存在瀏覽器本機。\n5. 把留言分析結果打包成一個 zip 開放下載，讓別人能丟給自己的 agent 做自己的版本。\n6. 我開好 VPS 後會給你 IP，請更新系統、完成安全強化、部署並最佳化，全程由你操作。"
+},
+{
+  cat:"工程研究",
+  title:"DuoDesk：拿開源引擎重製出跨 Windows／Mac／Linux 的同一張桌面，兩天零手寫，prompt 全文公開",
+  desc:"作者把一個 GPL-3.0 的開源螢幕與輸入共享引擎交給 Opus 5.5，以 TeamViewer／AnyDesk 的截圖當品質標準，做出 DuoDesk：一組滑鼠鍵盤跨電腦、共用剪貼簿、跨螢幕拖檔、筆電或平板當第二螢幕。11 個平行 agent 改約 370 個檔案，其中一個專門列出「不能改名」的項目以維持舊裝置配對；GitHub Actions 會打包 .dmg、.exe、AppImage、.deb 和 .apk。保留：推文標題說「逆向工程」，實際上是在開源專案上重新品牌與擴充；過程中有 agent 用測試部署弄掛正式網站，Opus 20 秒內回滾，之後收回所有 agent 的部署權限，所以 prompt 裡才有那條禁令。作者也在文末導流自己的文章。",
+  author:"@0xMovez (Movez)",
+  likes:661,
+  url:"https://x.com/0xMovez/status/2116538107017212194",
+  ptype:"原文",
+  prompt:"Build \"DuoDesk\": one desk for all your computers and your phone. One mouse, one keyboard,\none clipboard across Windows, macOS and Linux, plus an Android app.\n\nI attached an open-source screen-sharing and input-sharing engine (GPL-3.0) as the starting\npoint, and screenshots of TeamViewer / AnyDesk as a quality bar. Match the polish, not the\nbrand: original name, logo, icons and copy. Keep the license, the copyright headers and\na credit to the original authors in About.\n\n## How to work\n1. Read the whole codebase first: the Electron apps per OS, the shared JS, the native\n   helpers (C# on Windows, Swift on macOS, C on Linux) and the Android app. Write me a\n   map of what each part does before changing anything.\n2. Design first, code later. Make 4 different UI concepts (ASCII, Aurora glass, Glass\n   folders, Pixel) as interactive HTML pages. Let me pick and give feedback, iterate.\n   Only then touch the app.\n3. Rebrand with parallel sub-agents, each owning its own files (no two agents edit the\n   same file). Before they start, one agent writes the list of what must NOT be renamed\n   because other devices and old installs depend on it: package ids, URL scheme, ports,\n   helper exe names, the settings folder, protocol message names.\n4. Build in parallel: app shell, pages, illustrations, Android, website, CI. Each agent\n   tests its pages in its own isolated test window with a fake backend, so they never\n   break each other.\n5. After the build, run separate REVIEW agents: one for each feature that was changed\n   (input sharing, camera, clipboard), one for leftover old names. They fix what they find.\n6. Verify for real: run every page in the test window with realistic mock data, then\n   install the packaged app on my Windows PC and my MacBook and test mouse, keyboard and\n   clipboard between them. Show me screenshots and the logs.\n\n## Stack\n- Keep the engine's stack: Electron per OS, shared plain JS, the native input helpers,\n  Jetpack Compose on Android.\n- Security: contextIsolation, no nodeIntegration, preload exposes only the app API.\n  Devices pair once with a code, and the traffic between them is encrypted. No account,\n  no cloud.\n- Fonts bundled offline. Strict CSP on the website.\n\n## Features\n- One mouse and keyboard: push the cursor off the edge of one screen and it lands on the\n  other computer, the keyboard follows. Screen layout editor to place the devices.\n- Shared clipboard (text, images, files) and drag-and-drop of files across the edge.\n- Second screen: any laptop or Android tablet as an extra display.\n- Apps of the other computer in their own windows.\n- Phone on the desktop: calls, texts, notifications, phone camera as a webcam.\n- Camera between computers in Multi-device mode: one switch shares it with every device,\n  one camera runs at a time, the page shows who is watching.\n- Multi-device mode: more than two devices on one desk.\n- Wi-Fi, USB cable or Bluetooth.\n- Home dashboard with every device, and a Ctrl+K command bar that does real actions\n  (\"turn on clipboard\" turns it on).\n- Tip page and Feedback page (bug, idea, thank you; system info only when the user asks).\n\n## Rules for input sharing (non-negotiable)\n- A crossing only happens on the OUTER edge of the desktop. If another monitor continues\n  beyond that edge, there is no crossing.\n- No crossing while a mouse button is held, during the cooldown after a crossing, or right\n  after the cursor arrives.\n- When a push at the edge does NOT cross, the helper logs why (not outer edge, outside the\n  zone, button, cooldown), the edge, the position and the monitor layout. At most one line\n  every 2 seconds. Nobody should have to guess again.\n- The app logs which mode it started in and which helper it launched.\n\n## Design language\nDark, calm, Apple-like:\n- dark glass panels and a slow living spectral gradient behind everything;\n- sidebar in groups, a live status bar, glowing command bar while typing;\n- illustrations: a minimal monochrome device kit (Windows PC, MacBook, Linux, phone) and\n  one calm animated scene per feature, one accent color each. Not bright, not busy;\n- every page has its own live header: a radar on Connection, a screen map with a moving\n  cursor on Mouse, real ping and battery on Overview;\n- respect prefers-reduced-motion.\n\n## Website\n- Landing page on Vercel with real screenshots of the final app and an interactive\n  features section.\n- One-click Download: /api/download?os=win|mac|linux|android redirects to the right file\n  of the latest GitHub release, so the button downloads instead of opening GitHub.\n- Private analytics dashboard behind a password from an env variable: page views and\n  downloads per OS, no cookies. Store counts in Upstash Redis.\n- Deploy the site from its own folder only. Turn off automatic deploys from git, or a push\n  deploys the repo root and the site shows 404.\n\n## Packaging & release\n- electron-builder with publish: 'never' (otherwise CI fails asking for a GitHub token):\n  - Windows: NSIS installer for x64 and ARM64;\n  - macOS: .dmg for Apple silicon with my own installer background, rendered from HTML\n    in CI;\n  - Linux: AppImage, .deb and an AUR package.\n- Android: .apk built in CI (no local SDK needed).\n- GitHub Actions: on a \"v*\" tag build every OS (Mac on macos-latest) and upload the files\n  to the release.\n- README: first-run steps. SmartScreen → More info → Run anyway; on Mac\n  `xattr -dr com.apple.quarantine /Applications/DuoDesk.app` and allow Accessibility and\n  Input Monitoring.\n\n## Safety rules for agents\n- No agent deploys the site or changes Vercel settings. Only you, and only when I say so.\n- Never type or store my passwords. I enter secrets myself in the terminal.\n- Nothing is committed with my private email. Use the GitHub noreply address.\n\n## Done means\n- all tests pass and every page works in the test window with mock data;\n- CI produces a public release with .exe, .dmg, AppImage, .deb and .apk;\n- the Download button on the site gives me 2.5.0 for my system;\n- on my real Windows PC and MacBook the cursor and keyboard cross between screens and\n  copy-paste works both ways;\n- you show me screenshots of the real app."
+},
+{
+  cat:"工程研究",
+  title:"一發畫出 BLDC 馬達控制器原理圖：Opus 5.5 花 30 分鐘，從保護電路到霍爾感測一張完成",
+  desc:"作者先前用 GPT-6 Astra 一發畫過無刷馬達控制器 KiCad 原理圖，這次換 Opus 5.5，30 分鐘產出。附圖可見 24V 輸入與反接、突波保護、12V／3.3V 降壓、ESP32-S3 主控、DRV8412 三相功率級、INA240 電流感測、霍爾輸入與 USB-C，圖上還附功率級與佈局注意事項。保留：推文只有一張圖，留言有人問「但它能動嗎」，作者沒交代是否打樣或實測，也沒回 prompt 和工具鏈；以下 prompt 依圖上規格重建。",
+  author:"@KodaClement (Clem)",
+  likes:509,
+  url:"https://x.com/KodaClement/status/2116821632245465512",
+  ptype:"重建",
+  prompt:"在空白 KiCad 專案裡畫一張完整的 BLDC 馬達控制器原理圖，24V 輸入、Hall 感測。\n\n規格：24V 輸入含保險絲、反接與突波保護；12V 降壓供閘極驅動，3.3V 降壓供主控（24V 或 USB VBUS 以二極體 OR 供電）；主控用 ESP32-S3-WROOM-1，原生 USB 燒錄除錯，保留 RESET／BOOT 按鍵；功率級用 DRV8412，三相輸出加鐵氧體；每相低側分流電阻搭配 INA240 量電流，輸出接 ADC1；另有母線電壓量測與 Hall 輸入濾波。\n\n依功能分區畫，標好網路名稱與元件值，把功率級設定與佈局注意事項寫在圖上。完成後跑 ERC，修到沒有錯誤。"
+},
+{
+  cat:"創意藝術",
+  title:"The Owl and the Pussy-cat：能翻開、旋轉的 3D 旋轉木馬立體書，六幕場景星形展開",
+  desc:"Techartist 用 Opus 5.5 替 Edward Lear 的童詩〈貓頭鷹與貓咪〉做互動立體書：綠色精裝書放在木桌上，翻開後六個場景星形立起，可以旋轉、操作紙張機關，附絲帶書籤、音效和章節導覽，頁面上會顯示對應詩句。保留：作者沒公開 prompt 與流程，留言有人追問也還沒回；以下 prompt 依影片畫面重建。",
+  author:"@techartist_ (Techartist)",
+  likes:654,
+  url:"https://x.com/techartist_/status/2116407421065482362",
+  ptype:"重建",
+  prompt:"用 Three.js 替 Edward Lear 的童詩〈The Owl and the Pussy-cat〉做一本 3D 旋轉木馬式立體書（carousel pop-up book）。\n\n場景：綠色布面精裝書放在木紋桌上，封面有鏤空窗和金色燙字，書口粉色，夾兩條紫色絲帶。\n互動：按「Open the book」後封面翻開，六個場景像星形一樣立起來；使用者可拖曳旋轉整本書，並操作紙張機關。每個紙片的摺疊都要用巢狀轉軸，開書時依序站起，不能穿模。\n內容：把整首詩分成六幕，每幕用分層紙片呈現，切換場景時左側同步顯示該段詩句，底部有章節導覽與音效開關。\n風格：印刷童書感，紙張有纖維質感、波浪條紋海面、柔和的陰影。全部用程式碼生成，不用外部 3D 模型。"
+},
+{
+  cat:"模擬視覺化",
+  title:"暴風雨裡的迷你鑽油平台：一句話的等角立方世界，接著再要一隻哥吉拉",
+  desc:"作者用 Opus 5.5 加 Three.js，先要「風暴中的小型鑽油平台」，做出切成方塊的等角海面：翻騰的海浪、白沫、斜雨、亮燈的平台、火炬和拖船，海水還從方塊邊緣流下去。接著再要求一隻哥吉拉加進場景。保留：推文只寫這兩句要求，沒有完整 prompt 與耗時；以下 prompt 依推文與畫面重建，靜態圖看不出動態品質。",
+  author:"@Guronnimo (Jeroen van Welsenes)",
+  likes:668,
+  url:"https://x.com/Guronnimo/status/2116503955119255977",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個等角視角的迷你立方世界：暴風雨中的小型海上鑽油平台。\n\n整塊場景切成一個方塊，側面看得到水層與海床。海面要有程式生成的翻騰巨浪和白沫，海水從方塊邊緣流下；斜雨持續落下；平台有亮燈的艙房、直升機坪、鑽塔和燃燒中的火炬臂，旁邊有一艘小拖船隨浪起伏。不用外部模型或貼圖。\n\n做完後第二步：讓一隻哥吉拉從海裡出現在同一個場景。"
 }
-
 ];
 
 // ====== 資料區結束 ======
