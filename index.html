@@ -5287,6 +5287,22 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/GergelyOrosz/status/2119183668929315075",
   ptype:"重建",
   prompt:`用 TypeSafe Jev（model jev-latest）幫一個電子報作者的全部文章（數百篇）建搜尋網站的分類層。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。流程：1) 匯出 Substack 全部文章，切段後做 embedding 存進 turbopuffer，支援全文＋向量混合搜尋；2) 每篇文章送 Jev，state 放標題、副標與前 2,000 字：Choice「主題分類」：工程管理／職涯與招募／AI 與工具／大型科技公司內幕／系統架構／產業趨勢／其他，Choice「文章類型」：深度分析／訪談／新聞速評／指南教學，Choice「付費牆」：免費／付費；3) 搜尋時也用 Jev 判斷查詢意圖（Choice：找特定文章／找主題總覽／找引言或數字），決定結果排序與分面；4) 信心值低於 0.6 的分類標成「未分類」並列入人工檢查清單。前端提供分類與年份篩選，並顯示每月 Jev 用量與成本。`
+},
+// ====== 2026-11-09 自動更新 ======
+{
+  cat:"工程研究",
+  title:"ESP32 Agent：用 Jev 判斷信心值操作真 iPhone，沒把握才交給千問，124 步完成一整課多鄰國",
+  desc:"作者的 ESP32 Agent 透過外接硬體操作真的 iPhone（不需開發者帳號或 Mac），TestFlight 已近 400 人安裝。1.0.3 版在免費線路加入 Jev：每一步先由 Jev 判斷置信度，有把握就直接執行，沒把握再交給 Qwen 3.8 Flash；手機畫面用傳統視覺與 OCR 整理成虛擬「控件樹」讓模型選元素而非猜座標，建樹耗時壓在 68 毫秒內。Demo 是完整的多鄰國打卡，一課共 124 步，還能監聽手機聲音做聽力題。程式碼開源；App Store 正式版仍在審核中。",
+  author:"@iamhenryyuan (Henry Yuan)",
+  likes:151,
+  url:"https://x.com/iamhenryyuan/status/2119318922092572953",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）當手機操作 agent 的決策層，降低每一步都呼叫大模型的成本。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+1) 感知：每一步截取 iPhone 畫面，用傳統視覺演算法＋OCR 整理成虛擬控件樹（每個節點含 id、類型、文字、座標框），目標 100 毫秒內完成，不呼叫大模型。
+2) 決策（Choice 題）：state 放任務目標（例如「打開多鄰國完成一課」）、目前控件樹摘要、最近 5 步動作與結果；選項是控件樹中的可點元素 id，加上 scroll_up／scroll_down／back／type_text／done。
+3) 信心值門檻：Jev 置信度 ≥ 0.6 直接執行；低於 0.6 把同樣的 state 交給 Qwen 3.8 Flash 決定，並把結果記錄下來供日後比對。
+4) 錯誤回復：若畫面出現「So close! Try again」之類的錯誤提示，加一題 Score 題評估「上一步是否成功」（0–1），低於門檻就回退重試。
+5) 長任務不設 40 輪上限，每步在 UI 顯示動作、理由與縮圖，可標記 Correct／Wrong，最後統計 Jev 自行處理的比例與總花費。`
 }
 ];
 
@@ -7307,6 +7323,17 @@ const OPUS_CASES = [
 3. 在角色周圍加上程序化的黑煙／霧氣粒子，從斗篷下擺飄散。
 4. 深灰背景的攝影棚打光（主光、輪廓光），做一段 360 度轉台影片和一張正面定格圖。
 每完成一步先截圖給我看，再進行下一步。`
+},
+// ====== 2026-11-09 自動更新 ======
+{
+  cat:"文件簡報",
+  title:"切換明暗模式的 toggle UI 合集：會折射、色散、帶焦散光的「真玻璃」開關",
+  desc:"作者用 Opus 5.5 做出一系列切換明暗模式的 toggle 介面，可用左右鍵逐一切換展示。附圖第 06 款「Real glass」是一塊可拖曳的玻璃膠囊，壓在大字「glass」上會即時放大與折射、R/B 色散約 ±22%、有菲涅耳邊緣與聚焦焦散光，游標就是光源，畫面還標出倒角 22%、0.72× 放大等參數。未附 prompt 與製作細節，下方 prompt 依畫面重建。",
+  author:"@chetaslua (Chetaslua)",
+  likes:2387,
+  url:"https://x.com/chetaslua/status/2119353034165891308",
+  ptype:"重建",
+  prompt:"做一個單一 HTML 的「明暗模式 toggle 展示集」，至少 6 款不同風格的開關，頂部有導覽列（左右箭頭切換款式、Space 觸發 toggle、H 隱藏介面、Esc 離開），每款按下都要讓整頁在淺色與深色主題間做精緻的過場動畫。其中一款做成「Real glass」：一塊圓角膠囊形的玻璃，可用滑鼠拖曳，壓在背景的巨大粗體文字上時要用 WebGL shader 即時做出折射放大（約 0.72×）、R/B 通道分離的色散、邊緣菲涅耳反光與聚焦的焦散光暈，游標位置當作光源。背景用淺灰細格線加幾團柔和彩色光暈，並像技術圖說一樣用細引線標註 BEVEL、MAGNIFICATION、DISPERSION、CAUSTIC 等參數，底部一列色票可換玻璃色調。"
 }
 ];
 
