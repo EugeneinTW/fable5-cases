@@ -1413,6 +1413,83 @@ Godot 階段：
 5. 聲音全部程式合成：摩擦聲、點燃的轟聲、燃燒劈啪聲，不配樂。
 6. 火焰往上燒時，火柴棒的炭化表面要長出發光龜裂紋。
 7. 渲染後自己回看成品，火焰形狀或溫度不合理就調參數重烘。`
+},
+// ====== 2026-11-10 自動更新 ======
+{
+  cat:"遊戲",
+  title:"划船穿過 8 個夢境世界：可在瀏覽器裡玩的遊戲 demo（Fable 5.2）",
+  desc:"Fable 5.2 發布當天作者貼出的作品：一段在瀏覽器裡就能玩的小船旅程，依序穿過 8 個夢幻風格的世界，附圖是金黃色夕陽下小孩划船經過木棧橋、水面倒影與飛鳥的畫面。推文只有一句說明，未附 prompt、製作時間與技術細節。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:2506,
+  url:"https://x.com/kevin_t_ngo/status/2119868968307695818",
+  ptype:"重建",
+  prompt:`做一個可在瀏覽器直接遊玩的 3D 小品遊戲（單頁網頁，Three.js）：玩家划著一艘小木船，依序穿過 8 個夢境般的世界，每個世界有自己的主題、色調與音樂氛圍（例如金黃夕陽的蘆葦沼澤與木棧橋、漂浮島嶼、夜空倒映的星海、巨大花園等）。
+要求：
+1. 鍵盤或滑鼠控制划槳方向，船會在水面留下波紋，水面要有倒影與光影變化。
+2. 每個世界之間用穿越門或霧氣做平順轉場，畫面風格像水彩繪本。
+3. 加上飛鳥、螢火蟲或漂浮光點等環境動畫，以及程式合成的環境音。
+4. 終點有收尾畫面；整體以氛圍與探索為主，不需要戰鬥。`
+},
+{
+  cat:"遊戲",
+  title:"《Gilt & Gutter》：兩個可選角色的 1v1 第一人稱射擊遊戲 demo（Fable 5.2）",
+  desc:"同一位作者在 Fable 5.2 發布當天的第二個作品：可在瀏覽器遊玩的 1v1 第一人稱射擊遊戲，有兩名可操作角色，封面是卡通渲染的蒸汽龐克風雙女主角、各持造型槍枝，站在復古售票亭前，標題字也做了設計。推文未說明遊戲細節、製作時間與 prompt，角色美術是否全由程式產生也沒交代。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:157,
+  url:"https://x.com/kevin_t_ngo/status/2119900487688622171",
+  ptype:"重建",
+  prompt:`做一款可在瀏覽器遊玩的 1v1 第一人稱射擊遊戲 demo《Gilt & Gutter》（Three.js 或 Babylon.js）。
+要求：
+1. 兩名可選角色：一位白髮、拿華麗黃銅長槍的鍍金系角色，一位紫髮、戴護目鏡、拿雙管霰彈槍的街頭系角色，各有不同的武器手感、移動速度與一個特殊技能。
+2. 一張復古蒸汽龐克風的小型競技場地圖（售票亭、樓梯、立柱可當掩體），卡通渲染加描邊。
+3. 對手由 AI 控制，會移動、找掩體與射擊；有血量、彈藥、換彈與擊殺回合計分。
+4. 標題畫面、角色選擇畫面與結算畫面，介面風格與標題字一致。`
+},
+{
+  cat:"創意藝術",
+  title:"寫 Python 操控 Blender，從零做出整支劍龍短片（Fable 5.2）",
+  desc:"作者說整支影片都是 Claude Fable 5.2 從零做出來的：模型自己寫 Python 去操控 Blender 建模、設定與渲染，附圖是一隻劍龍在湖邊低頭吃木賊草、背景淺景深模糊的寫實畫面。推文只有一句話，未附 prompt、片長、花費與是否用了外部素材。",
+  author:"@alexmichael (Alex)",
+  likes:1121,
+  url:"https://x.com/alexmichael/status/2119876626179870838",
+  ptype:"重建",
+  prompt:`只用 Python 腳本操控 Blender（bpy），從零做一支約 20–30 秒的寫實自然紀錄片風短片：一隻劍龍在清晨的湖邊低頭吃木賊草。
+要求：
+1. 用程式建模劍龍（骨板、尾刺、皮膚皺褶紋理）並綁骨架，做出低頭、咀嚼、甩尾的動畫。
+2. 程序化生成湖岸、木賊草叢（隨風擺動）與遠方針葉林，水面要有倒影。
+3. 電影感鏡頭：長焦、淺景深、柔和側逆光，2–3 個鏡頭切換。
+4. 用 Cycles 渲染成 1080p 影片，渲染前先輸出幾張靜態截圖自己檢查比例與光影。`
+},
+{
+  cat:"模擬視覺化",
+  title:"原子筆在紙上寫字的微距 ASMR：53 萬根紙纖維、2700 萬個 5 微米墨水像素（Fable 5.5）",
+  desc:"作者系列實測第 18 集：一句 prompt 請 Claude Code 裡的 Fable 5.5 Xhigh 拍原子筆寫字的微距鏡頭，作者沒碰 Blender。365 分鐘（約 4 小時是 GPU 渲染）、API 成本 12.42 美元。模型用 535,030 根纖維鋪出紙張再像造紙廠一樣壓平；墨水鋪在 2700 萬個 5 微米像素上，只落在 1 公釐筆珠真正碰到纖維的地方，所以筆跡邊緣會斷續；不用字型，而是 9 筆手工筆畫、127.9 公釐墨跡，依人手的速度與壓力行筆；筆珠真的會滾動。聲音用 11 段真實錄音而非合成，筆尖速度決定每一筆的音量、音高與亮度。模型也自己抓出問題：後面的筆畫提早滲進畫面變成小叉叉（重疊筆畫共用同一個時鐘），以及停在畫外的筆在字上留下鬼影。成品 22 秒、1080p30、660 幀 Cycles、無配樂。推文沒附原始 prompt。",
+  author:"@camperaigg (camper)",
+  likes:177,
+  url:"https://x.com/camperaigg/status/2119777467074580741",
+  ptype:"重建",
+  prompt:`在 Blender 用 Cycles 拍一支約 22 秒、1080p30 的微距 ASMR 短片：一支原子筆在白紙上寫字。全部由你用腳本完成，我不會打開 Blender。
+要求：
+1. 紙張要由數十萬根個別鋪設的纖維構成，再壓平成紙，近看要看得到纖維紋理。
+2. 墨水用高解析度貼圖（每像素約 5 微米），只落在 1 公釐筆珠實際接觸纖維的地方，筆跡邊緣自然斷續。
+3. 不使用字型：手工設計筆畫路徑，依真人手寫的速度與壓力變化行筆；筆珠要依筆跡實際滾動。
+4. 聲音使用真實的書寫錄音素材，由畫面中筆尖速度控制每一筆的音量、音高與亮度，並跟著筆的位置做左右聲道定位；不加配樂。
+5. 渲染後自己逐格回看，檢查筆畫是否提早出現、筆是否在字上留下陰影等問題並修正。`
+},
+{
+  cat:"創意藝術",
+  title:"用 LilyPond 寫一首貝多芬風鋼琴奏鳴曲樂章，自己錄音再做成樂譜影片（Fable 5.2）",
+  desc:"作者請 Claude Fable 5.2 用 LilyPond 寫一個早期貝多芬風格的鋼琴奏鳴曲樂章：模型寫出樂譜、錄成音訊，再做成影片。畫面上方是捲動的 C 小調奏鳴曲（Allegro con brio）雙行譜，下方是五個八度的古鋼琴鍵盤會隨音符亮起，底部標出呈示部、發展部、再現部、尾聲的進度。作者強調畫面上每個音符都來自同一份原始碼。推文未附 prompt，「錄音」所用的音源未說明。",
+  author:"@imjustnewatai (imjustnewatai)",
+  likes:160,
+  url:"https://x.com/imjustnewatai/status/2119919644836347926",
+  ptype:"重建",
+  prompt:`用 LilyPond 寫一個早期貝多芬風格的鋼琴奏鳴曲第一樂章（C 小調，Allegro con brio），完整奏鳴曲式：呈示部（第一、第二主題）、發展部、再現部、尾聲。
+接著：
+1. 從同一份 LilyPond 原始碼輸出樂譜與 MIDI，用鋼琴音源（例如 FluidSynth 加古鋼琴 SoundFont）渲染成音訊。
+2. 做一支樂譜影片：上方雙行譜隨播放捲動、有播放游標；下方五個八度的古鋼琴鍵盤，彈到的鍵即時亮起；底部用時間軸標出呈示部、發展部、再現部、尾聲。
+3. 深藍底、白色古典字體標題「SONATA IN C MINOR」，輸出 1080p 影片。
+畫面上的每個音符都必須來自那份 LilyPond 原始碼。`
 }
 ];
 
@@ -5303,6 +5380,24 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
 3) 信心值門檻：Jev 置信度 ≥ 0.6 直接執行；低於 0.6 把同樣的 state 交給 Qwen 3.8 Flash 決定，並把結果記錄下來供日後比對。
 4) 錯誤回復：若畫面出現「So close! Try again」之類的錯誤提示，加一題 Score 題評估「上一步是否成功」（0–1），低於門檻就回退重試。
 5) 長任務不設 40 輪上限，每步在 UI 顯示動作、理由與縮圖，可標記 Correct／Wrong，最後統計 Jev 自行處理的比例與總花費。`
+},
+// ====== 2026-11-10 自動更新 ======
+{
+  cat:"工程研究",
+  title:"語音點咖啡：還在講話，飲料卡片就已更新，從說出口到上螢幕約 200 毫秒",
+  desc:"作者用 TypeSafe Jev 做了一套語音點咖啡系統：一邊說話，飲品與每一次修改（換奶、加糖、改大小）就同步出現在畫面上，作者稱從說出單字到螢幕更新約 200 毫秒，趁還沒講完就先反應。影片是桌面網頁操作畫面加右下角作者鏡頭，開場是「What can I get started for you?」。推文未說明語音辨識用什麼、Jev 的題目怎麼設計。",
+  author:"@kunalabcdani (Kunal Abichandani)",
+  likes:173,
+  url:"https://x.com/kunalabcdani/status/2119892841723990319",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）做一個語音點咖啡的網頁，讓訂單在使用者講話途中就即時更新。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+1) 語音：瀏覽器串流語音辨識（例如 Deepgram 或 Web Speech API），每收到一段部分轉寫就送去決策，不等句子結束。
+2) 決策題（同一段 state 一次送多題）：state 放目前為止的轉寫文字與現有訂單 JSON。
+   - Choice「意圖」：新增品項／修改現有品項／刪除品項／結帳／無關閒聊。
+   - Choice「飲品」：拿鐵、美式、卡布奇諾、摩卡、抹茶拿鐵、冷萃、無。
+   - Choice「尺寸」：小／中／大／未提及；Choice「奶類」：全脂／燕麥／杏仁／豆漿／未提及；Score「甜度」0–5。
+3) 信心值門檻：≥ 0.7 直接更新畫面上的飲品卡片；0.4–0.7 先以淡色預覽；< 0.4 不動作，等更多語音或在句尾交給大模型確認。
+4) 畫面：中央大字問候語「What can I get started for you?」，飲品卡片即時出現與變形，記錄每次從單字出現到畫面更新的延遲，目標 200 毫秒內。`
 }
 ];
 
@@ -7334,6 +7429,116 @@ const OPUS_CASES = [
   url:"https://x.com/chetaslua/status/2119353034165891308",
   ptype:"重建",
   prompt:"做一個單一 HTML 的「明暗模式 toggle 展示集」，至少 6 款不同風格的開關，頂部有導覽列（左右箭頭切換款式、Space 觸發 toggle、H 隱藏介面、Esc 離開），每款按下都要讓整頁在淺色與深色主題間做精緻的過場動畫。其中一款做成「Real glass」：一塊圓角膠囊形的玻璃，可用滑鼠拖曳，壓在背景的巨大粗體文字上時要用 WebGL shader 即時做出折射放大（約 0.72×）、R/B 通道分離的色散、邊緣菲涅耳反光與聚焦的焦散光暈，游標位置當作光源。背景用淺灰細格線加幾團柔和彩色光暈，並像技術圖說一樣用細引線標註 BEVEL、MAGNIFICATION、DISPERSION、CAUSTIC 等參數，底部一列色票可換玻璃色調。"
+},
+// ====== 2026-11-10 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"每一格都是 Python、零 3D 素材：機械錶擒縱機構的電影感微距短片",
+  desc:"作者稱這可能是他用 Opus 5.5 做過最好的作品：每一格畫面都是 Python 產生、沒用任何 3D 素材。附圖是寬銀幕構圖的機械錶內部特寫：拉絲金色擒縱輪、紅寶石軸承與紅色擒縱叉瓦，暗藍色背景、淺景深加底片顆粒。推文只有一句說明，未附 prompt、片長與渲染方式。",
+  author:"@LexnLin (Leon Lin)",
+  likes:2324,
+  url:"https://x.com/LexnLin/status/2119558994352304202",
+  ptype:"重建",
+  prompt:`只用 Python 寫程式產生每一格畫面（不使用任何 3D 模型或貼圖素材），做一支 2.39:1 寬銀幕、電影感的機械錶微距短片。
+要求：
+1. 程序化建出瑞士槓桿擒縱機構：拉絲金屬擒縱輪、帶紅寶石叉瓦的擒縱叉、擺輪與游絲、紅寶石軸承，零件比例與咬合要正確，擺動節奏符合真實（例如 4 Hz）。
+2. 鏡頭在零件間緩慢推移，淺景深、冷暖對比打光、金屬與寶石要有正確的反射與折射。
+3. 加上底片顆粒、暗角與輕微色散，營造電影質感。
+4. 程式合成滴答聲與齒輪聲，跟擒縱動作同步。
+5. 輸出 1080p 影片。`
+},
+{
+  cat:"模擬視覺化",
+  title:"汽車總裝線的瓶頸猜謎：SimReady 模型建 7 個工站，先點選你猜的瓶頸再看 10 倍速跑完整班",
+  desc:"作者讓 Claude Opus 5.5 用 NVIDIA 免費的 SimReady 3D 模型，在 Airsup 裡建出一條汽車總裝線：車身進線、座艙、座椅、底盤合車（Marriage）、輪胎、加注、測試 7 個工站，每站標出計畫節拍（47–62 秒）、作業員與機器人數量，座椅站還設了「每 3.1 分鐘停 34 秒」的干擾。玩法是先點選你猜的瓶頸工站，再用 10 倍速看整班運轉、核對每小時產量與待料車數。和同作者先前收錄的 V8 引擎產線是不同的產線題目。推文未附 prompt。",
+  author:"@konstantinsaifo (Konstantin Saifoulline)",
+  likes:546,
+  url:"https://x.com/konstantinsaifo/status/2119268851015905627",
+  ptype:"重建",
+  prompt:`用 NVIDIA 免費的 SimReady 3D 模型（CC BY 4.0）建一條可互動的汽車總裝線模擬（網頁，3D 俯視倉儲廠房）。
+要求：
+1. 7 個工站依序為 Body in、Cockpit、Seats、Marriage、Wheels、Fill、Test，每站設定計畫節拍（約 47–62 秒／車）、作業員與機器人數量，並給其中一兩站加入隨機停機或缺人等干擾（例如每 3 分鐘停 30 多秒）。
+2. 頂部 KPI：本班完成車數／目標、每小時產量、等待中的車數、目前瓶頸。
+3. 開始前跳出「Which station will be the bottleneck?」，讓使用者先點一個工站下注，再以 1x／2x／5x／10x 播放整班運轉，結束時揭曉實際瓶頸並解釋原因。
+4. 底部每站卡片即時顯示狀態（READY／作業中／停機），車輛、作業員、機器人與堆高機都要在場景裡實際移動。`
+},
+{
+  cat:"文件簡報",
+  title:"Kurzgesagt 風科普動畫「如果太陽消失了？」：整份 prompt 公開，20 分鐘做出 30 秒成片",
+  desc:"作者用 Claude Opus 5.5 重現 Kurzgesagt 風格的科普動畫，稱約 20 分鐘做完，並公開整份 prompt。prompt 規格極細：1920×1080、30fps，一個 2D canvas 加一個 WebGL canvas 畫行星；太陽、會自轉並有晨昏線與城市燈光的地球、太空人吉祥物都用程式畫；每個動畫事件對齊旁白的單字時間戳（ElevenLabs 或本機 kokoro + faster-whisper）；用 Playwright 逐格渲染加動態模糊，再用 libx264 編碼、響度母帶到 -14 LUFS。和庫內 @finnardley 的 Kurzgesagt 復刻是不同作者、不同題目的作品。保留：原文中一處被 X 轉成短網址的函式名，這裡以 render(t) 代替；配樂與音效需下載免版稅素材。",
+  author:"@treyscalez (trey)",
+  likes:547,
+  url:"https://x.com/treyscalez/status/2119489762134295014",
+  ptype:"原文",
+  prompt:`<inputs>
+Ask me for: one topic as a "what if" question (default: "What if the Sun vanished?"), the length (default 30 seconds), and whether I have an ElevenLabs key (if not, use a free local voice).
+</inputs>
+
+<direction>
+A Kurzgesagt-style animated explainer at 1920x1080, 30fps, drawn entirely in code: one 2D canvas plus one WebGL canvas for planets.
+Space: a vertical gradient #081d2c to #102348, five huge parallax nebula blobs (teal rgb 24,150,160 at 20%, blue 40,95,195 at 16%, coral 220,95,110 at 10%, indigo 60,70,175 at 15%), three star layers at parallax depths .12/.35/.6 that twinkle, 40% of the near stars drawn as 4-point sparkles.
+The Sun: radius 300px, half off the left edge. A radial gradient #fff7dc to #ffc857 to #ff8f4a with an offset highlight, additive halo rings at 1.23/1.48/1.76/2.1x the radius, 18 faint rotating ray wedges, 28 drifting glowing granules on its surface.
+Earth: an orthographic sphere in a fragment shader, 4x supersampled, from a 2048x1024 map painted from longitude/latitude polygons: land #5fc47a, forest #48ad6b, desert #f5c75f, rainforest #3a9d62, ice #f1f8ff, ocean gradient #4dc7eb to #1a66b8, white capsule clouds. Tilt .26 rad, spin .55 degrees per second. Day/night uses smoothstep(-.12, .24, N·L) with the light direction recomputed from Sun to Earth every frame. Navy night side with ~380 warm city lights, a coral band on the terminator, a cyan rim, ocean specular, an atmosphere halo that is stronger on the lit side.
+A small astronaut mascot (~180px) built from rounded rectangles: suit #f3f7fb, orange #ff8f4a boots, a visor gradient #1f5a73 to #0a1c2c with glowing cyan eyes that look at whatever matters, a blinking antenna light, an idle bob, squash and stretch on every pose.
+Type: Fredoka 600/700 only. Captions in caps with 3-6px letter spacing in teal #8fd8e6, gold #ffd98a or white, sitting in rounded pills of rgb(6,20,40) at 62%. Every line of text rises 1.3x its own height through a clip on an ease-out-quint.
+Finish: a vignette to rgba(4,4,20,.45) and a 6% film grain re-randomized 24 times per second.
+Banned: outlines, flares or loops on the Sun's edge, static infographic strips, full stops in on-screen text, text that fades in whole, AI images or AI video, Kurzgesagt's own characters, bird or music.
+</direction>
+
+<structure>
+30 seconds, every line of narration gets a camera move or a transformation, nothing ever holds still.
+Tight on the Sun at 2.25x (0s) → on the word "vanished" it swells 6% for 0.22s, collapses in 0.33s, then a white flash and a shockwave ring (1s) → pull back to 1x revealing Earth still lit and the astronaut staring at the empty spot (1.6-3s) → on "eight" an 8:20 countdown slams in from 1.7x to 1x and starts ticking, a "LAST LIGHT" label rides the edge of the growing dark disc (3.2s) → dive to 2.3x on Earth with light streaks flowing in (5.6s) → on "you" a YOU pin drops (7s) → on "left" a photon lands on the pin with "THIS LIGHT LEFT THE SUN / 8 MIN 20 SEC AGO" (7.5s) → on "play" the pin morphs into a play button, "YOU PRESSED PLAY / 15 SEC AGO" (8.8s) → one pull-back from 2.4x to a 0.3x orbit view, "LAST LIGHT" and "GRAVITY" riding the ring (9.6-12.5s) → on "nothing" a dotted circle at the empty centre (13.4s) → on "hits" the darkness sweeps Earth in 0.7s, city lights pop on, the countdown turns gold at 0:00 (15.8s) → on "black" the background fades almost to black (17.4s) → Jupiter appears, "STILL SHINING FOR 1 HOUR+" (17.9s) → zoom out, a dashed tangent line, "30 KM/S" as Earth flies straight off (20.8s) → a thermometer counts 15 to -70°C while frost grows from the poles (22.8s) → a 0.8s rewind on a separate story clock (24.3s) → sunglasses drop onto the astronaut (25.2s) → a photon tagged "8:20 OLD", then the title (27.7s).
+For any other topic, keep the same shape: the event happens on its word, pull back to show scale, dive in to make it personal ("you"), pull back out, the consequence with a live counter, an escalation, a funny beat with the mascot, a callback and the title.
+</structure>
+
+<build>
+1. One HTML file. Every frame is a pure function of time: render(t) draws frame t. No timers, no CSS animation.
+2. Camera moves on easeInOutCubic, zoom is interpolated in log space, every pop is a damped spring (damping .42-.5, frequency 12-16).
+3. Voice: ElevenLabs eleven_v4 with a designed voice (calm, warm, curious male, late 30s, crisp, light neutral European English), stability .5, similarity .75, generated with timestamps. Without a key, use kokoro-onnx locally and get word times with faster-whisper. Every animation event fires on its word. About 165 words per minute, 0.24s between sentences, a 0.36s beat before the big reveal.
+4. The darkness front: any pixel within the front's radius from the Sun turns to night with a 30px soft edge. The front moves at ~47px/s and ramps to 700px/s near Earth.
+5. Keep two clocks: ambient time for twinkle, spin and bob, and a separate story clock for events, so a rewind stays consistent.
+6. Render with Playwright in headless Edge with the GPU: seek every frame at 30fps and blend 2 subframes (shutter 0.6) for motion blur, then encode with libx264 at CRF 16 for the master and CRF 20 for delivery.
+7. Sound: a calm royalty-free space music bed 7dB under the voice, timed so its natural ending lands on the title, swelling 5dB under the title. One downloaded royalty-free sound effect per event kind (collapse, impact, pull-back whoosh, countdown tick, dive, pin tap, photon land, play click, light hit, reveal, frost, rewind), each peak-aligned to its frame and 4-10dB under the voice. Master with gain plus a limiter to -14 LUFS, -2.2dB true peak.
+</build>
+
+<gotchas>
+Make the WebGL globe canvas at least 2 x radius x zoom x 1.18 pixels or the sphere clips flat in close-ups. Never draw prominences on the Sun's edge, they read as white hooks. Never pad the voice to fit the visuals, tighten the read instead. Speed the darkness front up near Earth or it takes 13 seconds to cross the planet. Show me a contact sheet of every beat before rendering.
+</gotchas>
+
+<start>
+Ask me the inputs, write the narration with the beat each word triggers, show it to me, then build and render the video.
+</start>`
+},
+{
+  cat:"創意藝術",
+  title:"會動的拼貼繪本動畫：所有動態由 Opus 5.5 寫程式，畫作與紙張質感交給 GPT Image",
+  desc:"作者的分工說明得很清楚：動畫由 Claude Opus 5.5 製作、所有動態都是程式寫的；畫作與紙張質感則用 GPT Image 2.6（透過 fal）生成。附圖是剪紙拼貼風的太陽與藍色海鷗，壓在桃紅色厚塗筆觸的天空上，紙邊有毛邊與纖維感。推文未附 prompt 與片長。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:661,
+  url:"https://x.com/kevin_t_ngo/status/2119436039488156158",
+  ptype:"重建",
+  prompt:`做一支剪紙拼貼繪本風的短動畫（網頁 Canvas 或 WebGL，輸出影片）。
+分工：
+1. 先用圖像模型生成素材：厚塗筆觸的桃紅色天空、山丘、海浪等背景畫作，以及帶毛邊的手工紙紋理（太陽、雲、海鷗、房子等剪紙元件各一張）。
+2. 所有動態由你寫程式完成：把剪紙元件當成獨立圖層，做出太陽光芒緩慢旋轉與呼吸、海鷗振翅飛越、雲層視差移動、海浪起伏。
+3. 動作要有手工逐格動畫的頓挫感（例如每秒 12 格），元件邊緣保留紙張毛邊與輕微陰影，看起來像真的剪紙在桌上被移動。
+4. 輸出 1080×1080、約 20 秒的循環影片。`
+},
+{
+  cat:"工程研究",
+  title:"「Pick for me」電影挑選 App：全用 Opus 5.5 做出，連 Figma 都沒開",
+  desc:"作者說整個 App 都是用 Opus 5.5 做的，這次連 Figma 都沒打開。影片是實機操作：畫面中央是電影資訊（例如《Interstellar》2014・科幻・2 小時 49 分），背景是柔和的粉紫漸層，下方有波形狀的時間軸滑桿與「Pick for me」隨機挑片按鈕，另有搜尋、收藏與篩選按鈕。推文開頭「我們廚房不允許爛設計」是玩笑話，App 用途是幫人挑電影。未附 prompt 與技術細節。",
+  author:"@BreejeAnadkat (Breeje Anadkat)",
+  likes:527,
+  url:"https://x.com/BreejeAnadkat/status/2119750356703809727",
+  ptype:"重建",
+  prompt:`用 SwiftUI 做一個幫人挑電影的 iOS App，介面自己設計，不使用 Figma 稿。
+要求：
+1. 主畫面一次只顯示一部電影：大標題片名，下方一行年份・類型・片長，背景是依電影主色生成的柔和漸層（例如粉紫、深藍），切換時漸層平滑過渡。
+2. 底部是波形狀的橫向滑桿，可左右拖曳瀏覽候選片單，目前位置有亮點標記；拖動要有觸覺回饋。
+3. 中央膠囊按鈕「Pick for me」：依篩選條件隨機挑一部，帶洗牌動畫。
+4. 左上搜尋、右上隨機或收藏、左下書籤、右下篩選（類型、片長、年代）。
+5. 電影資料用 TMDB API，收藏存在本機。整體風格極簡、毛玻璃按鈕、圓角大字。`
 }
 ];
 
