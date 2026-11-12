@@ -1564,6 +1564,93 @@ Godot 階段：
 工作方式：開幾個 subagent 分工並互相挑戰——一個負責美術方向（復古羊皮紙與燙金的鐵路公司風格），一個負責世界觀與在地角色，一個負責幽默與文案（例如「All services subject to dragons」這類標語），一個負責遊戲機制與平衡。每輪由你統整意見、決定取捨，再實作。
 核心玩法：玩家經營一家奇幻城區的運輸公司，規劃路線、排班次、在龍、詛咒與節日之間把乘客與貨物準時送到；「好的物流就是對抗邪惡的方式」。
 要有主選單（新特許狀、週日班次、路線簿、設定、製作名單）、存檔與一段簡短開場故事。`
+},
+// ====== 2026-11-12 自動更新 ======
+{
+  cat:"遊戲",
+  title:"純 Three.js 第一人稱射擊遊戲：零外部素材、零外部動畫（Fable 5.2）",
+  desc:"作者稱整款 FPS 由 Fable 5.2 設計並寫成，全部在 Three.js 內完成，沒有用任何外部素材或動畫；影片可見戰術風格的暫停選單（Resume、Gunsmith 改槍、Settings）與兩隊計分板。保留：推文未公開 prompt、耗時與費用，只有 demo 影片。",
+  author:"@JaydenDavisNC (Jayden Davis)",
+  likes:692,
+  url:"https://x.com/JaydenDavisNC/status/2120306434575392793",
+  ptype:"重建",
+  prompt:`用 Three.js 做一款可在瀏覽器遊玩的第一人稱射擊遊戲，單一專案，不准載入任何外部模型、貼圖或動畫檔，全部用程式生成。
+1. 場景：一棟夜間的廢棄飯店（大廳、走廊、客房），幾何與材質用程式建出，暖色燈光、陰影與體積霧。
+2. 玩家：WASD 移動、滑鼠瞄準、衝刺、蹲下、右鍵瞄準鏡、換彈；槍的後座力、槍口火光、彈殼、彈孔貼花都用程式做。
+3. 敵人 AI：兩隊對戰（Vanguard vs Ember），bot 會巡邏、找掩體、包抄；回合制，畫面上方顯示比分與剩餘時間。
+4. 選單：ESC 暫停顯示 RESUME / GUNSMITH / SETTINGS / QUIT，旁邊列兩隊計分板（擊殺、死亡、助攻）；Gunsmith 可換瞄具、槍管、彈匣並即時反映在槍模上。
+5. 音效用 Web Audio 程式合成，目標穩定 60 FPS。`
+},
+{
+  cat:"模擬視覺化",
+  title:"從零在 Blender 建一把機械鍵盤，再讓它自己打字：2 小時 55 分、90.78 美元（Fable 5.2）",
+  desc:"作者請 Fable 5.2 在 Blender 從零做出一把機械鍵盤（鋁合金外殼、PCB、定位板、軸體一層層組起來），最後讓鍵帽依序按下、實際「打字」。影片標註耗時 2 小時 55 分、API 花費 90.78 美元。同作者先前已有 Opus 5.5 的 Blender 案例，這次是 Fable 5.2 版本；保留：未公開 prompt 原文。",
+  author:"@MrTacticalX (Mr Tactical)",
+  likes:543,
+  url:"https://x.com/MrTacticalX/status/2120342453807157720",
+  ptype:"重建",
+  prompt:`用 Blender（透過 Python / MCP 操作）從零建一把 75% 配列的機械鍵盤，全部程式建模，不用外部模型。
+1. 結構要真實：CNC 鋁合金外殼（霧面藍陽極）、PCB（焊點與熱插拔座）、定位板、穩定器、每一顆機械軸（外殼、軸心、彈簧）、PBT 鍵帽與字符。
+2. 先做一段爆炸視圖動畫：外殼 → PCB → 定位板 → 軸體 → 鍵帽依序落下組裝。
+3. 組好後讓鍵盤「自己打字」：依一句英文逐鍵按下，鍵帽下沉、軸心壓縮、回彈都要有正確行程；旁邊螢幕同步出現文字。
+4. 攝影棚打光、淺景深、米色桌面，Cycles 算圖輸出 1080p 影片。
+5. 每個階段先渲一張靜態圖自己檢查比例與穿模，再繼續。`
+},
+{
+  cat:"工程研究",
+  title:"用 CAD API 建出 107 個零件的四軸無人機，連馬達線圈都建模，飛行是吃自身質量與慣量的物理模擬（Fable 5.2）",
+  desc:"作者讓 Fable 5.2 透過 kinth 的 CAD API 設計一台四軸無人機：107 個零件，連馬達繞線都建了出來；起飛畫面是用模型本身的質量與慣量跑的剛體物理模擬，沒有任何手動關鍵影格，最後在 kinth 裡做成動畫。保留：kinth 是作者合作／推廣的平台，未公開 prompt、耗時與費用。",
+  author:"@OmarSourman (Omar Mansour)",
+  likes:319,
+  url:"https://x.com/OmarSourman/status/2120279023309996363",
+  ptype:"重建",
+  prompt:`用 CAD API（程式化建模）設計一台完整的四軸無人機，每個零件都是實體，輸出可組裝的 CAD 組件。
+1. 零件要細到真實等級：碳纖機架與機臂、4 顆無刷馬達（定子、轉子、磁鐵、銅線繞組都建模）、螺旋槳、電調、飛控板、電池與綁帶、GPS 天線、起落架、螺絲。
+2. 依材料密度從 CAD 實體算出每個零件的質量與慣量張量，整機質心要落在中心附近。
+3. 寫一個 6 自由度剛體飛行模擬：用上面算出的質量與慣量、馬達推力曲線，做一段從停機坪起飛、懸停、平移的飛行，全程物理驅動，不准手動關鍵影格。
+4. 畫面左下顯示時間、高度、速度、傾角的即時數據。
+5. 輸出一段展示動畫：先爆炸視圖展開全部零件，再組回去起飛。`
+},
+{
+  cat:"創意藝術",
+  title:"巴洛克長笛奏鳴曲：以柯雷里數字低音開頭，之後全由模型作曲，低音聲部首見 9-8 掛留（Fable 5.2）",
+  desc:"作者長期用 LilyPond 測試模型作曲。這次給 Fable 5.2 一段柯雷里的數字低音當開頭 8 小節，請它寫成巴洛克長笛奏鳴曲，再接著寫快板與緩板。作者指出這是他第一次看到模型在數字低音（通奏低音）裡寫出 9-8 掛留，而 Opus 只把九度寫在獨奏聲部，顯示 Fable 更敢用不協和音。保留：用的是 Extra High effort，第四樂章還沒寫完就用完額度；prompt 1 中的 LilyPond 原始碼推文未附。",
+  author:"@aug5thmusic (Auggie)",
+  likes:155,
+  url:"https://x.com/aug5thmusic/status/2120231120143110463",
+  ptype:"原文",
+  prompt:`Prompt 1: "Use this figured bass as the starting point for a flute sonata movement in the Baroque style. Use two staves for the basso continuo and one for the flute. Respond with only the code block. [LilyPond code]"
+Prompt 2: "Compose an allegro to follow this movement."
+Prompt 3: "Compose a largo, the sonata's third movement. The movement after this, the fourth, will be the last."`
+},
+{
+  cat:"創意藝術",
+  title:"全程式做出的動畫節目片頭：Python 做動畫、Blender 算圖（Fable 5.2）",
+  desc:"Kevin Ngo 讓 Fable 5.2 做一段手繪卡通風的節目片頭（戴帽子的女孩拉弓、復古 REC 與日期字樣的錄影機畫面），畫面上每個元素都是程式：用 Python 寫動畫、在 Blender 算圖。同作者另有 Fable 5.2 的魂系 Boss 戰案例。保留：未公開 prompt、耗時與費用。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:366,
+  url:"https://x.com/kevin_t_ngo/status/2120540964909711415",
+  ptype:"重建",
+  prompt:`做一段 20–30 秒的動畫節目片頭，全部用程式產生：Python 寫動畫邏輯、透過 Blender 的 Python API 建場景並算圖，不用任何外部圖片或影片素材。
+1. 風格：90 年代手繪卡通感，粗描邊、平塗上色（Grease Pencil 或 toon shader），配色鮮明（鈷藍、明黃、紅橘）。
+2. 角色：戴漁夫帽、穿黃色雨衣的女孩，做幾個有個性的動作——拉弓瞄準、眨眼、轉身；動作要有預備與跟隨（squash & stretch）。
+3. 外框模擬家用錄影機畫面：左上紅點 REC、右下時間與日期（例如 PM 3:10 / 1996. 8. 1），輕微掃描線與色偏。
+4. 背景有雲朵飄過、圓形放射色塊，鏡頭切換有節奏，最後收在節目標題字卡。
+5. 先渲幾張關鍵影格自己檢查，再輸出 1080p 影片。`
+},
+{
+  cat:"遊戲",
+  title:"從零生成 maimai 譜面：YOASOBI〈アイドル〉的節奏遊戲譜（Fable 5.2）",
+  desc:"作者請 Fable 5.2 從零寫一份 maimai（街機圓形節奏遊戲）的譜面，影片是 YOASOBI〈アイドル〉的譜面實際播放：tap、hold、slide 等音符沿圓形判定環流動。保留：推文一句話帶過，未公開 prompt、使用的譜面格式或模擬器，也沒說明是否經人工修改。",
+  author:"@matcha7th (greentea)",
+  likes:630,
+  url:"https://x.com/matcha7th/status/2120233099577401502",
+  ptype:"重建",
+  prompt:`從零替 YOASOBI〈アイドル〉寫一份 maimai 譜面（simai 格式，可在 AstroDX / MajdataView 之類的模擬器載入）。
+1. 先分析歌曲結構與 BPM（含變速），列出前奏、主歌、副歌、間奏的小節範圍。
+2. 譜面難度設定在 Master 13 左右：主歌用 tap 與 hold 配合人聲節奏，副歌加入 slide（直線、弧線、星形）與雙押、EACH，間奏放一段 touch／break 的見せ場。
+3. 配置要順手：避免不自然的交叉手、slide 起點跟前一顆音符位置銜接，高潮段落的密度明顯拉高。
+4. 輸出完整 simai 原始碼，並附一段說明各段落的設計意圖。`
 }
 ];
 
@@ -7675,6 +7762,52 @@ Ask me the inputs, write the narration with the beat each word triggers, show it
 3. 「扭蛋」按鈕：一鍵隨機洗牌目前圖層的參數（位置、大小、顏色、節奏），不喜歡就再洗；可鎖定某些參數不被洗。
 4. 重複器（repeater）：把任一元素沿網格、圓形或時間軸複製，做出節奏性的重複圖樣。
 5. 對齊音樂：匯入音檔後依 BPM 切拍，元素可設定在拍點切換；可錄下整段輸出 1080p 影片。`
+},
+// ====== 2026-11-12 自動更新 ======
+{
+  cat:"文件簡報",
+  title:"把教科書和論文變成 3Blue1Brown 風格解說影片：用 Opus 5.5 做了近百支，外掛已開源（Opus 5.5）",
+  desc:"作者從 Opus 5.5 推出後就用 Claude Code 把教科書與論文做成 3Blue1Brown 風格的動畫解說影片自學（影片示範愛因斯坦《相對論》的「同時性」）。他發現 Opus 5.5 很會做動畫但不太會教，於是寫了一個外掛：給它一份來源（例如 PDF），Claude 會讀完、規劃一系列影片，並從五種「presenter」教學法中為每支挑最合適的。已做近百支，外掛併入 Heptabase 官方 plugin、免費開源。保留：作者是 Heptabase 團隊成員，屬自家產品推廣。",
+  author:"@alanchan_tw (Alan Chan)",
+  likes:1139,
+  url:"https://x.com/alanchan_tw/status/2120169953412202718",
+  ptype:"重建",
+  prompt:`讀這份 PDF（愛因斯坦《相對論：狹義與廣義理論》第 8、9、17 節），幫我做一系列 3Blue1Brown 風格的解說影片教會我「同時性的相對性」。
+1. 先讀完來源，規劃 3–5 支影片，每支只講一個核心觀念，列出觀念之間的先後依賴。
+2. 每支影片先決定教學法：視覺推導、反例、類比、逐步證明或提問引導，選最適合該觀念的一種，並說明理由。
+3. 用 Manim 製作：深色背景、座標網格、黃藍主色，關鍵物體（火車、閃電、觀察者）用簡單幾何表示，用時空圖的世界線說明「同一時間」對不同觀察者不同。
+4. 每支 3–6 分鐘，配旁白稿（TTS）與字幕；畫面左下標註原文出處與章節。
+5. 結尾放一題思考題，答案留到下一支影片開頭揭曉。`
+},
+{
+  cat:"創意藝術",
+  title:"「我下 prompt，Opus 5.5 設計」：現金流預測 SaaS 的落地頁，粉紫晚霞森林配儀表板（Opus 5.5）",
+  desc:"作者只說「I prompted. Claude Opus 5.5 designed.」，影片展示 Opus 5.5 做出的虛構 SaaS「Altura」落地頁：標題「See your cash runway clearly, months ahead」，背景是粉紫晚霞與花樹森林，中央嵌一張完整的現金流儀表板（總餘額、預測長條圖、18 個月 runway 儀表、AI 洞察），下方有客戶 logo 列。保留：未公開 prompt 與迭代次數。",
+  author:"@kevserctk (Kevser)",
+  likes:771,
+  url:"https://x.com/kevserctk/status/2120087191887970536",
+  ptype:"重建",
+  prompt:`設計並實作一個金融科技 SaaS 的落地頁，產品叫 Altura：連接銀行帳戶與帳本，預測現金流、模擬情境、提早抓出資金缺口。單一 HTML（可用 Tailwind）。
+1. Hero：大標「See your cash runway clearly, months ahead」，副標一句，兩顆按鈕（Start Forecasting / Book a Demo）。
+2. 背景：日落時分的粉紫色天空與開花的樹林，從畫面底部往上漸層，氛圍溫暖但專業。
+3. Hero 下方嵌一張逼真的產品儀表板截圖（用 HTML 做出來，不是圖片）：側邊欄、總現金餘額、12 個月預測長條圖、Runway 半圓儀表顯示 18 mo、銀行帳戶列表、AI insights 卡片、未來 14 天收支。
+4. 再往下一列灰階客戶 logo；導覽列有 Product、Forecasting、Solutions、Pricing、Resources。
+5. 字體乾淨、留白充足、細節精緻，像頂級設計工作室的作品。`
+},
+{
+  cat:"創意藝術",
+  title:"替個人網站做三幕動態場景：設定 persona 再下 prompt，淡雅水彩風（Opus 5.5）",
+  desc:"作者在 Fable 5.2 發布當天提醒「也別忽略 Opus 5.5」，展示用 Opus 5.5 替自己個人網站做的三個動態場景：先給模型一個 persona，再加一些 prompt，畫面是淡紫粉色水彩感的天空、樹影與小屋線稿。保留：未公開 persona 與 prompt 內容，也沒說明用的是 Canvas、WebGL 還是 SVG。",
+  author:"@brian1zhou (Brian Zhou)",
+  likes:528,
+  url:"https://x.com/brian1zhou/status/2119966939535786306",
+  ptype:"重建",
+  prompt:`你是一位擅長水彩與留白的插畫家兼創意工程師，替我的個人網站做三個可切換的動態背景場景，全部用程式繪製（Canvas 或 WebGL），不用外部圖片。
+1. 共同風格：米白紙張底、淡紫與粉色水彩暈染、鉛筆細線稿，像速寫本裡的一頁；動畫緩慢、安靜。
+2. 場景一「黃昏」：天空水彩慢慢暈開，遠處有細瘦的樹幹與小屋線稿。
+3. 場景二「夜」：同一片風景轉成藍紫色調，星點緩慢閃爍、窗戶亮起暖光。
+4. 場景三「晨霧」：霧從下方飄過，線稿若隱若現，偶爾有鳥飛過。
+5. 捲動或點擊時用水彩擴散的轉場切換場景；手機上降低粒子數保持順暢，並尊重 prefers-reduced-motion。`
 }
 ];
 
