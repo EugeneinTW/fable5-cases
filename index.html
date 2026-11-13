@@ -1651,6 +1651,84 @@ Prompt 3: "Compose a largo, the sonata's third movement. The movement after this
 2. 譜面難度設定在 Master 13 左右：主歌用 tap 與 hold 配合人聲節奏，副歌加入 slide（直線、弧線、星形）與雙押、EACH，間奏放一段 touch／break 的見せ場。
 3. 配置要順手：避免不自然的交叉手、slide 起點跟前一顆音符位置銜接，高潮段落的密度明顯拉高。
 4. 輸出完整 simai 原始碼，並附一段說明各段落的設計意圖。`
+},
+// ====== 2026-11-13 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"一張 PS5 手把照片 → 可逐件拆開的 3D 拆解導覽：觸控板掀起、搖桿連萬向架拔出、扳機馬達齒輪滑出",
+  desc:"作者用 Claude Code 裡的開源 skill「teardown」，給 Fable 5.2 一張 PS5 DualSense 手把照片，得到一支 24 秒、60 fps 的拆解導覽：觸控板掀起、兩支搖桿連萬向架拔出、L2／R2 後方的馬達與齒輪滑出，切換回饋時扳機力道從 30% 跳到 78%，旁邊是儀表板式的參數面板。流程是先把動作寫成數學、每個節拍渲靜態圖自查修正，再錄影。保留：推文語氣偏推廣該 skill，完整 prompt 放在外連文章、推文未附。",
+  author:"@Nyxera0x (Nyxera)",
+  likes:511,
+  url:"https://x.com/Nyxera0x/status/2120518714743308542",
+  ptype:"重建",
+  prompt:`我附上一張 PS5 DualSense 手把的照片。用 Three.js 把它做成可逐件拆解的 3D 模型與導覽影片，每個零件都用程式碼建出來，不匯入模型或貼圖。
+1. 先建內部再建外殼：主機板、電池、兩支類比搖桿（含萬向架）、觸控板、L2／R2 扳機後方的馬達與減速齒輪、震動馬達。
+2. 動作先寫成數學：定義一條時間軸，每個節拍（外殼分離、觸控板掀起、搖桿拔出、扳機機構滑出）用同一組參數驅動模型與旁邊的數據面板。
+3. 介面做成儀表板：左側搖桿輸入、扳機力道、震動強度；右側零件清單與狀態，扳機回饋開啟時力道由 30% 升到 78%。
+4. 每個節拍先渲一張靜態圖和照片比對、自己找問題修正，全部通過後才錄 24 秒、60 fps 的導覽影片。`
+},
+{
+  cat:"工程研究",
+  title:"6 分鐘、0.79 美元：Fable 5.2 在本機搭出無縫 PBR 材質管線，圖像模型畫底、程式算其餘貼圖、Blender 算圖",
+  desc:"作者讓 Fable 5.2（max effort）在自己電腦上建一條材質管線：Nano Banana Pro 以 4K 畫出顏色與高度圖，接縫由程式消除（不是重畫），法線、粗糙度、金屬度與自發光貼圖也由程式從高度與顏色推導，最後 Blender Cycles 算出一排材質球（熔岩、鱗片、蜂巢、磚塊等）。單一材質不到 6 分鐘、約 0.79 美元；整條管線含影片共花 200 分鐘 agent 時間。保留：底圖由圖像模型生成，Fable 負責的是管線與後處理；未公開 prompt。",
+  author:"@Stefan_3D_AI (Stefan 3D AI)",
+  likes:411,
+  url:"https://x.com/Stefan_3D_AI/status/2120773803869659150",
+  ptype:"重建",
+  prompt:`在我的電腦上建一條「一句 prompt → 無縫 PBR 材質」的自動管線，最後用 Blender Cycles 算圖驗收。
+1. 輸入一句材質描述（例如「發光裂縫的熔岩岩石」），呼叫圖像模型（Nano Banana Pro）以 4K 產出 color 與 height 兩張圖。
+2. 用程式把貼圖做成無縫：偏移半個尺寸、偵測接縫、以頻域或混合方式修補，不要叫圖像模型重畫。
+3. 由 height 與 color 用程式推導 normal、roughness、metallic、emissive 貼圖，參數可調。
+4. 寫 Blender Python：建材質球場景、接好 Principled BSDF，用 Cycles 渲一排材質球並輸出轉台影片。
+5. 記錄每個材質的耗時與 API 花費，跑幾種材質驗證接縫肉眼不可見後才算完成。`
+},
+{
+  cat:"工程研究",
+  title:"參考 Jane Street 的 magic-trace，從零做出筆電上的 3D 交易終端：EMA 8/55 多空回測、25 組參數地形、240 條價格路徑錐",
+  desc:"作者讓 Fable 5.2 在 Claude Code 參考 Jane Street 開源的 magic-trace（「每筆單都對到觸發的那根 K 棒」），從零做出交易終端：抓 300 根真實 S&P 500 日線、切訓練／驗證／鎖住的測試窗，EMA 8/55 交叉多空策略含 2 bps 手續費，在 3D 圖上標出每筆進出場、25 組參數的回撤地形、權益曲線、240 條重抽樣價格路徑錐、成交明細與同步觸發的 agent 日誌。作者誠實列出結果：策略 +7.98%、買進持有 +20.11%、最大回撤 -9.33%。保留：標題帶「should be BANNED」的流量語氣；推文中 repo 連結為短網址，prompt 內以 magic-trace 的 GitHub 位址代入。",
+  author:"@ludoonchart (ludoonchart)",
+  likes:298,
+  url:"https://x.com/ludoonchart/status/2120690015051067714",
+  ptype:"原文",
+  prompt:`（依序貼給 Claude Code，模型選 Fable 5.2）
+1. Clone https://github.com/janestreet/magic-trace and read its README. Then write a plan for a trading terminal that, like magic-trace, shows exactly what happened and when: every order logged on the bar it fired on. No code yet.
+2. Pull 300 real daily S&P 500 bars from a public source, no key needed. Split them by time into train, validation and a locked test window. Never touch the test window.
+3. Write an EMA 8/55 crossover strategy that goes long and short, with 2 bps fees on every trade.
+4. Draw every LONG and SHORT on a 3D chart at the exact bar, with each trade's P&L on the floor under it.
+5. Sweep 25 EMA combos (5 fast × 5 slow) and show each one's validation drawdown as a 3D landscape against a 1.5% limit.
+6. Add an equity curve with drawdown vs buy & hold, a cone of 240 resampled price paths, a ledger of every fill, and make the agent log fire on the same bar.`
+},
+{
+  cat:"創意藝術",
+  title:"素材零：只用程式碼做出一整顆行星，從一片草葉一路飛到外太空不剪接（總共不到 320KB）",
+  desc:"作者用 Fable 5.2 做出一顆完整的程序化行星，不用任何 3D 模型、圖片或音訊，全部是程式碼、合計不到 320KB；影片從一片草葉的特寫一鏡到底拉到海面、雲層、再飛出大氣層到太空，開場字卡寫「這不是實拍」。同作者先前有 Opus 5.5 的擬真海洋案例。保留：未公開 prompt、使用的引擎與耗時。",
+  author:"@KanaWorks_AI (KANA｜東京AI映像)",
+  likes:243,
+  url:"https://x.com/KanaWorks_AI/status/2120756625699143977",
+  ptype:"重建",
+  prompt:`用 WebGL（Three.js 或純 shader）做一顆完全程序化的行星，不准使用任何 3D 模型、圖片、貼圖或音訊檔，所有東西都由程式碼生成，總檔案大小控制在 320KB 以內。
+1. 地表：多層噪聲生成大陸、山脈與海岸線；近距離時長出逐片搖曳的草葉與細節（LOD 隨距離切換）。
+2. 海洋：有反光與波浪的水面，太陽在海面上拉出光帶。
+3. 大氣：Rayleigh／Mie 散射的天空與日落、可穿越的體積雲。
+4. 太空：飛出大氣層後看到整顆星球的大氣光暈與星空。
+5. 做一條一鏡到底的攝影機路徑：從一片草葉特寫開始，掠過海面、穿過雲層、飛到太空，全程不剪接、不掉幀。
+6. 程序化合成環境音（風聲、海浪），一樣不用音檔。`
+},
+{
+  cat:"工程研究",
+  title:"一天做完上架：3D 折紙教學 App「Origami Helper」，紙一步一步折、可轉角度、可用 AR 擺進房間",
+  desc:"作者用剛推出的 Fable 5.2 一天內從零做出折紙 App「Origami Helper」，在 11 月 11 日「折紙之日」上線：畫面中的紙會一步一步折，可從任意角度確認、用觸控操作學折法，支援 AR 把作品放進真實房間，折好的作品還會住進一個「小世界」。首頁收錄紙鶴、手裏劍、紙飛機、盒子、愛心、頭盔、企鵝等 18 個作品，免費、免註冊，先出 Web 版，App Store／Google Play 標示近日公開。保留：製作方法寫在回覆串，推文本身未附 prompt。",
+  author:"@ryoma_nakajima (りょうま)",
+  likes:216,
+  url:"https://x.com/ryoma_nakajima/status/2120472383241011323",
+  ptype:"重建",
+  prompt:`從零做一個 3D 折紙教學 App「Origami Helper」（先做 Web 版，架構要能包成 iOS／Android）。
+1. 核心：用 Three.js 模擬一張正方形紙，依步驟資料（摺線、山摺／谷摺、旋轉、翻面）做出逐步折疊動畫，紙面要有厚度、陰影與雙色正反面。
+2. 操作：可自由旋轉視角、觸控滑動前進／後退一步，每步配一句簡短說明。
+3. 收錄至少 18 個作品（紙鶴、手裏劍、紙飛機、盒子、愛心、頭盔、企鵝、溜溜球等），首頁以卡片列出並有一個大的 3D 展示。
+4. AR：支援 WebXR，把完成的作品放到真實房間的桌面上。
+5. 小世界：完成的作品會出現在一個可以互動的小場景裡。
+6. 免登入、免費，日文介面並預留多語系；完成後在手機與桌機實測每個作品都能折到最後一步。`
 }
 ];
 
@@ -3955,6 +4033,22 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
 2. 擺放衛浴、廚房與主要家具，檢查動線與規範：門的開向、樓梯淨高、走廊淨寬、浴缸／床不得與牆或樓梯衝突。
 3. 產出一套建照用圖說：各層平面圖、立面圖、剖面圖、配置圖，標註尺寸、房間名稱與面積，標籤不得重疊。
 4. 匯出 PDF 圖說與 3D 模型，並列出所有你做的假設與需要建築師確認的地方。`
+},
+// ====== 2026-11-13 自動更新 ======
+{
+  cat:"工程研究",
+  title:"重現「權重空間寫程式」9 個實驗：Astra 從全零權重寫出 Breakout 策略平均 309.9 分，一次修好車輛爬坡策略",
+  desc:"alphaXiv 團隊用 Codex 驅動 GPT-6 Astra，把原始「weight-space programming」部落格的 9 個實驗全部重跑：實驗 4 一次編輯 4,813 個權重（佔 2.8%），讓車輛策略爬坡成功率從 0/1,024 變 1,024/1,024，比原作者少改 21%；實驗 5 從全零初始化直接寫出 Breakout 策略，平均 309.9 分，約原文的 12 倍。誠實保留：實驗 8 編輯 Qwen3.5-0.8B 解數學，原作者 50 輪到 MATH-500 48.1%，他們只做到 34.4%。完整 agent 軌跡、activation 等產物公開成可續跑的專案。",
+  author:"@askalphaxiv (alphaXiv)",
+  likes:189,
+  url:"https://x.com/askalphaxiv/status/2120573496078283191",
+  ptype:"重建",
+  prompt:`你是研究 agent，任務是重現「weight-space programming」部落格的 9 個實驗：不靠梯度訓練，直接閱讀並編輯神經網路權重來改變行為。
+1. 先讀原文，為每個實驗列出目標、原作者數字與評估方式，建立統一的實驗紀錄格式。
+2. 實驗 4（修車輛爬坡策略）：分析失敗策略的 activation，找出造成失敗的權重，做一次性編輯；在 1,024 次 held-out 測試上回報成功率與改動的權重數。
+3. 實驗 5（從零寫遊戲策略）：所有權重初始化為 0，直接寫出 Breakout 的策略網路，跑多局回報平均分數。
+4. 實驗 8（編輯 Qwen3.5-0.8B 解數學）：在有限的前向傳遞次數內編輯權重，回報 MATH-500 分數。
+5. 其餘實驗照同樣流程完成；每個實驗都輸出圖表、結果檔與完整軌跡，並和原作者數字並排比較，做不到的要誠實寫出差距。`
 }
 ];
 
@@ -5559,6 +5653,25 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
    - Choice「尺寸」：小／中／大／未提及；Choice「奶類」：全脂／燕麥／杏仁／豆漿／未提及；Score「甜度」0–5。
 3) 信心值門檻：≥ 0.7 直接更新畫面上的飲品卡片；0.4–0.7 先以淡色預覽；< 0.4 不動作，等更多語音或在句尾交給大模型確認。
 4) 畫面：中央大字問候語「What can I get started for you?」，飲品卡片即時出現與變形，記錄每次從單字出現到畫面更新的延遲，目標 200 毫秒內。`
+},
+// ====== 2026-11-13 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"讓 Lisa Simpson 即時模仿我的表情：Jev 判斷表情，MiniMax-H3-Image 兩步生成每一格",
+  desc:"作者通勤回家路上約 30 分鐘做出的小玩具：左邊是作者的鏡頭畫面，由 TypeSafe Jev 即時判斷臉部表情，右邊的 Lisa Simpson 依判斷結果做出同樣的表情；每一格都是 MiniMax-H3-Image 搭配兩步 pDMD LoRA 重新生成（每張約 3 秒）。保留：每格約 3 秒，所以是「準即時」；推文未說明 Jev 的題目與表情類別怎麼設計。",
+  author:"@whensdeyi (Dawna Yi)",
+  likes:185,
+  url:"https://x.com/whensdeyi/status/2120527444692308171",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）判斷鏡頭中的臉部表情，再讓圖像模型畫出卡通角色做同樣的表情。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+1) 擷取：網頁開啟鏡頭，每秒擷取一張畫面送去判斷。
+2) 決策題（同一張畫面一次送多題）：
+   - Choice「主要表情」：微笑／大笑／驚訝／生氣／難過／嘟嘴／眨眼／吐舌／面無表情。
+   - Choice「頭部方向」：正面／左轉／右轉／抬頭／低頭。
+   - Score「嘴巴張開程度」0–3、Score「眉毛上揚程度」0–3。
+3) 信心值門檻：主要表情置信度 ≥ 0.6 才觸發新的生成；低於 0.6 沿用上一格，避免畫面亂跳。
+4) 生成：把判斷結果組成 prompt（例如「Lisa Simpson, surprised, mouth wide open, head turned left, simple background」），以 MiniMax-H3-Image 搭配 2-step pDMD LoRA 生成，約 3 秒一張。
+5) 介面：左右並排顯示鏡頭畫面與生成結果，下方顯示 Jev 的判斷與置信度。`
 }
 ];
 
