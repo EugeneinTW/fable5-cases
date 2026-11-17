@@ -1901,6 +1901,89 @@ alright i hope that all made sense, good luck`
 6. 用同一套筆觸系統蓋出雪嶺、雲杉林與一間小木屋。
 7. 硬性規定：筆觸的位置與排序只能由世界座標或物件本身決定，絕對不能依賴相機，否則鏡頭一動顏料就會爬動。
 8. 完成後整理成可發佈的靜態網站，附上原始碼與操作說明。`
+},
+// ====== 2026-11-17 自動更新 ======
+{
+  cat:"遊戲",
+  title:"3 天做出的類魂遊戲：Three.js 瀏覽器直接跑，Fable 5.2 指揮最多 9 條 Opus 5.5 支線分工",
+  desc:"作者用 Claude Code 花 3 天做出受《黑暗靈魂》啟發的第三人稱動作遊戲，瀏覽器直接跑、沒有 build 步驟，有完整光影、特效與音效，畫面是披斗篷的騎士走在雨中的石造城鎮，HUD 有血條、羅盤與任務提示。分工：第一步由 Fable 5.2 接一個 prompt，6 小時、12 個 prompt 後有可玩的關卡與 Boss；之後 Fable 5.2 當協調者，把光影、特效、角色、道具、UI、音效各開一條 Opus 5.5 支線（最多同時 9 條，各自擁有檔案）。29 個 3D 模型是 Seedream 5.0 Pro 畫 A-pose 概念圖、Tripo 3D 轉 GLB，骨架與動畫由 agent 用程式寫；岩石、陶罐、石材是免費 CC0 掃描；每次改動都拍 4K 前後對照、交給盲測評審，只留贏或平手的。保留（作者自述）：影片是腳本 bot 在跑、不是真人遊玩，每個場景都是擺好的；嚴格評審多數只給 5～6 分（目標 9 分），載入超過 10 秒，走路動畫被退了 4 次以上才過；回覆區有人指出近戰沒有受擊硬直。",
+  author:"@MengTo (Meng To)",
+  likes:960,
+  url:"https://x.com/MengTo/status/2121896633848017145",
+  ptype:"重建",
+  prompt:`用 Three.js 做一款受《黑暗靈魂》啟發的第三人稱動作遊戲，瀏覽器直接開啟、不要 build 步驟（ES modules + importmap）。你是協調者，目標是先可玩、再逐輪把畫面推到評分 9/10。
+1. 先做到可玩：一個石造城鎮關卡、鎖定與翻滾、輕重攻擊、耐力條、補血瓶、幾種小兵與一隻 Boss，死亡後從營火重生。
+2. 可玩之後把工作拆給支線 agent，一個領域一條、各自擁有自己的檔案：光影、特效、角色、道具、UI、音效，最多同時九條，由你負責合併與驗收。
+3. 3D 模型我會提供 GLB（概念圖轉 3D，未綁骨）：請用程式寫骨架與動畫（待機、走、跑、翻滾、攻擊、受擊、死亡）。岩石與石材用 CC0 掃描素材。
+4. Dream loop：每一輪我會給一張「同鏡位、同構圖、只是算得更好」的目標圖，你對著它修材質、霧、雨、火光與後製。
+5. UI：先給我整套 HUD 概念（血條、耐力、快捷道具、羅盤、任務提示），我確認後再做；邊框要有不均勻、帶陰影與雜訊的金屬質感。
+6. 每次改動都附同鏡位的 4K 前後截圖，動畫附前後影片；另開一個沒看過過程的評審 agent 盲測 X／Y，只保留贏或平手的改動。完整回合用兩位評審、10 分制評分表，取低分，持續做到 8 分以上。
+7. 音效用我提供的音效庫，不要自己合成程序音效。`
+},
+{
+  cat:"遊戲",
+  title:"Ashira2093：Fable 5.2＋Blender＋Unreal 做出的雨夜賽博龐克城市導覽",
+  desc:"作者公開自己的遊戲專案 Ashira2093 的城市導覽影片：雨夜的日式街道、巨大看板與紅綠燈下，持刀的女主角以第三人稱走過斑馬線，遠處有發光的巨型人像，左上有 HUD。作者說用的是 Claude Fable 5.2 搭配 Blender 與 Unreal，只用了一天就把想要的畫面做出來，下個月會再更新。保留：推文只說 Fable 5.2「幫我把構想做出來」，沒交代哪些模型、材質是 Fable 經 Blender 做的、哪些是現成素材，也沒有 prompt 與可玩版本。同作者另有一個 GPT-6 Astra 的草原場景，是不同作品。",
+  author:"@seftsaint (ashira2093)",
+  likes:373,
+  url:"https://x.com/seftsaint/status/2121931382255755691",
+  ptype:"重建",
+  prompt:`你已透過 MCP 連上 Blender 與 Unreal Engine。幫我的遊戲專案做一段可以用第三人稱走過的雨夜賽博龐克城市街區：
+1. 先在 Blender 建模組化的街道資產：大樓立面、日文招牌與巨型看板、紅綠燈與號誌桿、斑馬線路面、路樹、路障，命名與比例統一後匯出到 Unreal。
+2. 在 Unreal 拼出一個十字路口為中心的街區，遠處放一座發光的巨型人像當地標。
+3. 氣氛：夜晚、下雨、濕路面反射、體積霧、霓虹與看板的自發光，整體偏冷色，只留少量紅色重點光。
+4. 放入我提供的主角（持刀、第三人稱跟隨鏡頭），可以走、跑，左上角放簡單的 HUD。
+5. 每完成一步就從玩家視角截圖給我看，對照我的參考圖列出差異再修；不要一次改太多東西。
+6. 最後錄一段沿著街道走一圈的導覽鏡頭。`
+},
+{
+  cat:"創意藝術",
+  title:"互動聖誕卡片組：掛著花圈的窗邊、聖誕紅與燭光，可切換多張卡片",
+  desc:"作者用 Claude Fable 5.2 做了一組互動聖誕卡片並附上線上連結：畫面中央是一張有紙張紋理的直式卡片，畫著掛花圈與紅蝴蝶結窗簾的雪夜窗景、窗台上的聖誕紅、茶壺、燭光與禮物，下方縮圖列可切換四張卡片，另有翻面與暫停按鈕，游標移上去會有互動。作者只寫「很喜歡」，推文沒有 prompt、製作時間與迭代次數；畫面左上有 TypingMind 標誌，應是透過該介面使用 Fable 5.2。同作者另有錦鯉池、果凍骰子等案例，這是不同作品。",
+  author:"@ann_nnng (Ann Nguyen)",
+  likes:245,
+  url:"https://x.com/ann_nnng/status/2122283549000712249",
+  ptype:"重建",
+  prompt:`做一組可以在瀏覽器裡互動的聖誕卡片，單一 HTML 檔，畫面全部用程式畫（Canvas／SVG／CSS），不要用任何圖片檔：
+1. 版面：白底置中一張直式卡片，要有手工紙的紋理與柔和陰影；下方一排縮圖可切換 4 張卡片，旁邊有「翻面」與「暫停動畫」按鈕。
+2. 風格：水彩加色鉛筆的手繪感，紅、綠、奶油白為主色，線條略微不規則。
+3. 四張卡片各一個場景，例如：掛花圈與紅蝴蝶結窗簾的雪夜窗景（窗台有聖誕紅、茶壺、蠟燭與禮物）、壁爐與襪子、雪地小屋、聖誕樹下的禮物堆。
+4. 互動：雪會持續飄；游標靠近蠟燭火光會搖曳並照亮周圍；點花圈鈴鐺會晃動；點窗戶遠處的房子會亮燈；拖曳卡片會有輕微的 3D 傾斜。
+5. 翻面後是可以輸入祝福語的手寫字體內頁。
+6. 手機與桌機都要能正常操作，動畫維持流暢。`
+},
+{
+  cat:"工程研究",
+  title:"砂防堰堤 4D 施工步驟動畫：從 2D 施工計畫圖用 Blender 做出逐日推進的 4D 模型",
+  desc:"土木工程師把 2D 的施工計畫圖交給 Claude Fable 5.2，在 Blender 做出砂防堰堤的 4D 施工模型動畫：俯瞰河谷，堰堤依「左岸一次施工、二次…到右岸五次」分塊逐步長出來，上方標示目前工序（例如工事用道路的設置）、假定日期與「稼働日 1/899」，下方是整體進度時間軸，圖例區分打設中、新設混凝土、施工場地與臨時圍堰。作者說品質比 Opus 5.5 又更上一層，「BIM/CIM 用這個就夠了」。保留（畫面上自己註明）：沒有工程表，施工順序依計畫圖、天數是套用標準日數的假定；1 格等於 1 個工作日；樹木與水面只是示意，地形由等高線概略建出。推文未附 prompt。同作者另有 Opus 5.5 的河川計算與橋梁點雲案例，這是不同作品。",
+  author:"@dobokuya77 (土木屋77)",
+  likes:203,
+  url:"https://x.com/dobokuya77/status/2121936943969898742",
+  ptype:"重建",
+  prompt:`資料夾裡有一座砂防堰堤的 2D 施工計畫圖（平面圖、斷面圖、施工步驟圖，PDF／DXF）。請用 Blender（Python 腳本）做一支 4D 施工步驟動畫：
+1. 先讀圖並整理成表：堰堤本體的分塊（左岸一次～五次、右岸一次～五次）、工事用道路、施工場地、臨時圍堰（大型砂包等）各自的位置、尺寸與施工順序。讀不出來或有疑義的地方列出來問我，不要自己猜。
+2. 地形：從圖上的等高線建出概略地形，河道水面與樹木只做示意。
+3. 依分塊建出堰堤的 3D 模型，每一塊是獨立物件，帶「開始日、結束日、工種」屬性。
+4. 沒有工程表，所以請依施工步驟圖的順序、用標準的作業天數假定每個工序的日數，並把假定條件寫成一張表給我確認。
+5. 動畫：1 格 = 1 個工作日。正在澆置的區塊用橘色，已完成的新設混凝土用淺灰，施工場地與臨時圍堰各用一色，並放圖例。
+6. 畫面上方顯示標題、目前工序名稱、假定日期與「工作日 n／總日數」，下方放整體進度時間軸，標出左右岸各次施工的區間。
+7. 固定俯瞰鏡位算圖，輸出 1080p MP4，並在畫面上註明「工程日數為假定」「地形為概略」。`
+},
+{
+  cat:"創意藝術",
+  title:"90 年代玩具廣告：畫面全用程式做，Python 寫動畫、Blender 算圖",
+  desc:"作者讓 Claude Fable 5.2 做了一支 90 年代風格的玩具電視廣告，強調「看到的每樣東西都是程式做的」：動畫用 Python 寫、交給 Blender 算圖，沒有用影片或圖像生成模型。影片以錄影帶的 PLAY 字樣與雜訊橫紋開場，刻意做出 VHS 側錄質感。保留：推文只有兩句說明與影片，沒有 prompt、製作時間與迭代次數，配音與配樂的來源也沒交代；封面只截到開場的雜訊畫面，玩具本體要看影片。同作者另有動畫節目片頭、80 年代音樂錄影帶等同一套做法的案例，這是不同作品。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:199,
+  url:"https://x.com/kevin_t_ngo/status/2122215593382457738",
+  ptype:"重建",
+  prompt:`用程式做一支 30 秒的 90 年代玩具電視廣告，所有畫面都要由程式產生：動畫與場景用 Python（bpy）寫，交給 Blender 算圖，不使用任何影片或圖像生成模型，也不匯入現成模型。
+1. 先自己設計一款虛構玩具（例如可變形的機器人車或發射飛盤的玩具槍），不能有真實品牌與商標，寫出一頁產品設定與 6～8 個鏡頭的分鏡給我確認。
+2. 用程式建模：玩具本體、可動關節、包裝盒，以及一個誇張的遊戲場景（漸層背景、幾何圖形、霓虹色塊）。
+3. 鏡頭語言照 90 年代廣告：快速推拉、傾斜鏡位、玩具飛入畫面、閃電與星爆圖形、結尾的包裝盒全家福加上「電池另售」字樣。
+4. 後製做出錄影帶側錄質感：4:3 畫面、PLAY 字樣與開場雜訊、色彩溢出、掃描線、輕微抖動與追蹤條紋。
+5. 配樂與音效用 Python 合成：快節奏合成器配樂、重擊聲與雷射音效，結尾留一段口號的字卡。
+6. 每個鏡頭先算低解析度預覽給我看，確認後再算完整版，最後用 ffmpeg 合成 MP4。`
 }
 ];
 
@@ -5865,6 +5948,26 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
 3) 信心值門檻：主要表情置信度 ≥ 0.6 才觸發新的生成；低於 0.6 沿用上一格，避免畫面亂跳。
 4) 生成：把判斷結果組成 prompt（例如「Lisa Simpson, surprised, mouth wide open, head turned left, simple background」），以 MiniMax-H3-Image 搭配 2-step pDMD LoRA 生成，約 3 秒一張。
 5) 介面：左右並排顯示鏡頭畫面與生成結果，下方顯示 Jev 的判斷與置信度。`
+},
+// ====== 2026-11-17 自動更新 ======
+{
+  cat:"工程研究",
+  title:"用 Jev 當路面電車的自動駕駛決策層：看既有行車影片，逐格建議加速、維持、減速或煞車",
+  desc:"作者把 TypeSafe Jev 接成路面電車的「自動駕駛」決策層：畫面是電車駕駛視角的行車影片，物件偵測先框出軌道範圍、路邊車輛與行人，左上「What the AI sees」列出電車速度、周圍人車數、在軌道上的數量、正朝軌道移動的數量、號誌與一句鏡頭描述；右上「RoboZET AI Decisions」由 Jev 給出建議（例如 KEEP STEADY）與各選項的信心值：加速 20%、維持 67%、收油 10%、煞車 3%、緊急煞車 0%，另有「前方淨空」80%，單次決策約 0.23 秒。作者在串文附了完整專案連結，並說已向電車公司提案。保留（作者自述）：不是即時影像，只是處理既有的行車路線影片並「建議」動作，沒有真的控制車輛；物件偵測跑在作者本機 GPU，用的模型沒有交代；選 Jev 是因為隨插即用、手上資料不夠訓練自己的分類器；作者同意目前還不能上路，實際部署應由車載電腦跑辨識與決策、雲端只做交通協調。",
+  author:"@dumbuffalo (DrQuicheEater)",
+  likes:343,
+  url:"https://x.com/dumbuffalo/status/2122293757248995825",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）當路面電車自動駕駛的決策層，輸入是一段既有的電車駕駛視角行車影片（不是即時影像，只輸出建議、不控制車輛）。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+1) 感知（本機 GPU）：對每一格跑物件偵測與追蹤，框出行人、汽車、腳踏車與號誌；標出軌道走廊的多邊形；算出每個物件是「在軌道上」「正朝軌道移動」還是「在旁邊」，並產生一句鏡頭描述（例如「一位穿黑大衣的人正走在右側月台邊」）。
+2) state（每 0.5 秒送一次）：電車速度（停止／慢／中／快）、周圍人車數、在軌道上的數量、正朝軌道移動的數量、號誌狀態（紅／綠／無）、鏡頭描述。
+3) 決策題（同一份 state 一次送多題）：
+   - Choice「下一步動作」：加速／維持速度／收油／煞車／緊急煞車。
+   - Noul「前方軌道是否淨空」：是／否。
+   - Score「風險等級」0–3。
+4) 信心值門檻：「下一步動作」最高選項 ≥ 0.6 才採用；低於 0.6 一律降一級（維持→收油、收油→煞車）；只要「緊急煞車」≥ 0.3 或「前方淨空」的「是」低於 0.5，就直接建議煞車並標紅提示人工確認。
+5) 介面：影片上疊軌道走廊與偵測框（朝軌道移動的物件用橘框加標籤）；左上面板「AI 看到什麼」列出 state；右上面板顯示建議動作的大字、每個選項的信心值長條、前方淨空的百分比，以及「由 Jev 決定・耗時 n 秒」。
+6) 記錄每次決策的延遲與結果，跑完整段影片後輸出一份報告：各動作的次數、平均延遲、低信心而降級的時間點。`
 }
 ];
 
@@ -8173,6 +8276,259 @@ Ask me the inputs, write the narration with the beat each word triggers, show it
 3. 寫成 Claude Code 可安裝的 skill：使用者選風格、給主題後，自動寫腳本、分鏡、做動畫、用程式合成配樂與旁白字幕，最後輸出 MP4。
 4. 另做一個線上畫廊網站，可依類別瀏覽、搜尋 99 種風格並播放示範片，提供中英文切換。
 5. 每完成一個類別就自我檢查：同類別的風格之間要一眼分得出來，不合格的重做。`
+},
+// ====== 2026-11-17 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"OBJECT STROBE：把渦輪增壓器拆開診斷的 9.6 秒產品短片，Blender 全程式建模（附完整原文 prompt）",
+  desc:"作者在 Claude Code 裡讓 Opus 5.5 驅動 Blender，做出一支直式 9.6 秒、可無縫循環的產品短片：主角是一顆渦輪增壓器，模型全由程式（SDF 建模）產生、不匯入任何素材，畫面像機器視覺系統在診斷零件：拆解、逐件檢視、裝回、推過極限、恢復，零件在實體、色散玻璃與物理場三種材質間閃切，疊上追蹤框、讀數與警報圖形，音效也用 numpy 合成。作者公開完整 prompt，把 [OBJECT] 換成任何物件即可重跑。成本（作者回覆）：約 57.5 萬輸出 token、約 5 小時 agent 作業、7 個版本（其中 4 次完整重算），RTX 4070 筆電上 Cycles 算圖合計約 4 小時，沒用影片模型。保留：主文寫的是「我的輸入加 9 次修改」，與回覆說的 7 個版本略有出入；作者自己說音效仍然很弱，正在另做外掛改善；回覆區有人指出音效提示只對應格數、沒跟著畫面事件走。prompt 中的 Blender 下載連結原為短網址，已還原為官網。",
+  author:"@AmirMushich (AmirMušić)",
+  likes:1254,
+  url:"https://x.com/AmirMushich/status/2121982602122760352",
+  ptype:"原文",
+  prompt:`# OBJECT STROBE: a product film built entirely in code
+
+> Paste this into Claude Code in an empty folder. Replace \`[OBJECT]\` once, in the line below. Nothing else needs editing.
+
+**OBJECT = [OBJECT]**
+
+You are the technical director and the art director on a 9.6-second vertical loop for Instagram Reels. The hero is
+[OBJECT], modelled entirely in code, with no imported models, no stock assets, no logos and no brand names. The film reads as the
+output of a machine-vision system diagnosing [OBJECT]:
+- the object comes apart and is inspected part by part;
+- it goes back together and is pushed past its limit;
+- it recovers and settles into one clean hero frame that loops into frame 0 without a seam.
+
+Under the analysis graphics, each part strobes between three passes: **solid** (finished material), **glass**
+(dispersive x-ray), and **field** (a simulation plot of the one physical quantity that matters to [OBJECT]).
+
+Work like a studio, not like a demo: every decision below has a reason, and every number on screen has to be true.
+
+---
+
+## 0. How you work
+
+- Work only inside this folder. Keep scripts in \`scripts/\`, frames in \`renders/\`, finished files in \`deliver/\`, notes in \`board/\`.
+- **Every frame is a pure function of its frame number.** No accumulated state and no randomness without a seed. Any frame
+  can be re-rendered alone and match its neighbours.
+- **One GPU, one render.** Never run two Blender renders at once. Run anything longer than two minutes in the background.
+- **Ask before installing software, downloading fonts or spending money.** Say what, from where and how big.
+- **Show, then continue.** At each checkpoint (★), build a contact sheet and show it to me before going on:
+  - every 6th frame with frame numbers burned in;
+  - 100 % crops where detail matters.
+- Write a \`README.md\` as you go: what each script does and the exact commands to reproduce the result.
+
+## 1. Preflight
+
+Check, report in one table, and fix what's missing (after asking):
+
+| Need | Check | If missing |
+|---|---|---|
+| Blender ≥ 4.2 (needs the *Khronos PBR Neutral* view transform) | \`blender --version\`. On Windows also try \`C:\\Program Files\\Blender Foundation\\*\\blender.exe\`; on macOS \`/Applications/Blender.app/Contents/MacOS/Blender\` | \`winget install BlenderFoundation.Blender\` / \`brew install --cask blender\` / the official .tar.xz from https://www.blender.org/download/ on Linux |
+| GPU for Cycles | in Blender's Python: \`cycles\` prefs \`get_devices()\`; prefer OPTIX > CUDA > METAL > HIP | CPU works: halve the samples, render at 50 % first, and tell me the time estimate |
+| ffmpeg | \`ffmpeg -version\` | winget \`Gyan.FFmpeg\` / brew \`ffmpeg\` / apt \`ffmpeg\` |
+| Python 3.10+ with numpy, opencv-python, pillow | make a local \`.venv\`, install there, never globally | — |
+| Fonts: **Fira Mono** (data) and **Space Grotesk** (tags), both SIL OFL from Google Fonts | look in system or user font folders | ask, then download into \`fonts/\` and load them by path |
+
+Then render one 540×960 test frame of a cube with the final render settings. Report the device and seconds per frame,
+and project the full render time before you build anything.
+
+## 2. Study the object ★
+
+Before modelling, write \`board/OBJECT.md\`:
+
+1. **Anatomy.** List 25–50 real parts of [OBJECT] with their real names: housings, inner mechanism, fasteners, seals, the
+   small parts people never see. Give each one:
+   - a group (shell / core / small);
+   - a primary material;
+   - an **explode vector** (direction and distance along the object's natural assembly axis; large shells travel farthest).
+2. **The field.** Pick the ONE physical quantity [OBJECT] truly lives with:
+   - heat for an engine part;
+   - load for a structure;
+   - pressure or flow for a valve or a lung;
+   - charge for a battery;
+   - vibration for a speaker.
+
+   Name it, give it a unit, a realistic working range and a **limit**. This becomes the story.
+3. **The story in four beats**, specific to [OBJECT]:
+   - cold, at rest;
+   - working, the field rises in a front across the object, from source to far end;
+   - **over the limit**, the most extreme frame of the film;
+   - recovery, a front running back.
+4. **Proportions.** Overall size, key diameters and thicknesses, from real-world references you know. Turn them into one
+   constants table that all geometry reads from.
+
+## 3. Build ([OBJECT] in code)
+
+- Model with signed distance functions in numpy and mesh them with surface nets plus a few Newton steps onto the surface
+  (crisp edges, no blobby marching-cubes look).
+  - Use smooth unions for cast parts, hard booleans for machined ones.
+  - Use real threads on fasteners.
+  - Use bpy only for assembly and materials.
+- Each part is its own object. Each one stores custom properties: \`xv\` (explode vector), \`grp\`, \`seed\`, \`tbase\` (field
+  value 0–1) and \`hamp\` (field noise amplitude).
+- Cache SDF results to disk. Decimate large shells to a sane vertex budget (≈ 3 M vertices total is fine).
+- **Hero asset bar:** sculpt-level detail on the parts the camera dwells on. Detail density here buys more than more parts:
+  bevels, bosses, ribs, casting seams, machined faces. Do not show a primitive blockout as the hero.
+- ★ Look-dev sheet: four configurations (assembled / exploded / core only / close-up) × three passes, rendered at 50 %.
+
+## 4. Look
+
+- **One \`Strobe\` shader node group** on every part, switched per object through Attribute nodes (OBJECT type): \`st\` 0 solid,
+  1 glass, 2 field.
+  - **Glass:** three Glass BSDFs on R, G and B at IOR ≈ 1.47 / 1.51 / 1.57, added together. This is cheap dispersion with
+    rainbow edges.
+  - **Field:** object-space 4D noise around \`tbase\`, plus a radial and an axial term, fed through one colour ramp. Emission
+    rises with the field value, so hot parts glow and cold ones read as a scan.
+- **The field palette has two hues, never a rainbow:**
+  - cold: navy → cobalt → ice;
+  - an unlit dark band between them;
+  - hot: ember → red → orange → near-white.
+
+  No green and no yellow-green: they read as engineering software, not as a film. Define the ramp once (sRGB hex) and use
+  the same ramp in the shader, the legend and every inset. In the cold acts, damp the noise so the scan stays blue.
+- Studio world: dark ground, two or three hard softboxes. Camera and transmission rays see a pale environment, so the glass
+  reads.
+- **Film transparent.** Backdrops are composited later, which lets the backdrop change per act.
+- Khronos PBR Neutral view transform, exposure −1, 16-bit RGBA PNG.
+
+## 5. Timeline: 288 frames = 6 bars at 150 BPM
+
+One beat is 12 frames and an eighth is 6. **Every cut lands on an eighth.** Act lengths:
+
+| frames | act | configuration | what happens |
+|---|---|---|---|
+| 0–11 | acquire | assembled, glass ghost, **light** backdrop | the hook: the most beautiful material on frame 0 |
+| 12–53 | separation | explode flight | outer parts leave first, small inner parts follow; ease-out, no overshoot |
+| 54–89 | inspection | exploded, slow drift | **one continuous shot** that keeps the flight's framing; only materials strobe |
+| 90–131 | core lock | close-up on the heart part, outer shells hidden | strip light along the edges, f/1.4 depth of field, three field pulses on beats |
+| 132–167 | reassembly | exact reverse order | inner parts seat first, shells close last; the camera follows the shells |
+| 168–215 | working | assembled | the field front runs source → far end, on the same curve the graphics draw |
+| 216–245 | **limit** | assembled | the extreme of the film: everything in the field pass, an alarm flicker on the beat (2.5 Hz) |
+| 246–269 | recovery | assembled | a front runs back; parts return to the solid pass one by one |
+| 270–287 | clean | assembled, solid, **light**, **no graphics** | the product alone; framing, drift and rotation run into frame 0 |
+
+- Material states are random only in the diagnostic acts (blocks of 1–4 frames, seeded per part). In the story acts they
+  are **deterministic**: a part's pass follows the front.
+- **Never intercut configurations that read as different assembly states.** Hold one configuration per act.
+- Acts 168–269 are **one continuous camera move**: one slow push and orbit, with no cuts inside the story.
+
+## 6. Camera and motion
+
+- A fixed shot per configuration, with the object's main axis at about −27° on screen and a low, slightly heroic angle.
+- **Auto-framing:** project a subsample of the real mesh vertices (not bounding boxes) and fit the lens to a fill target.
+  Re-aim at the visual centre, and compute it once per act so repeated shots match.
+- Place the subject 70 px above centre: the Reels caption covers the bottom.
+- Motion blur from keys at f−0.25, f and f+0.25, computed with that frame's own act, so nothing smears across a cut.
+- **Seam math, not eyeballing:** after the render, export each part's projected 2D box per frame. Measure the spread
+  (the mean distance of the part centres from their centroid) across every act boundary.
+  - A jump over 2 px means a stutter. Fix it in the camera, not in the edit.
+
+## 7. Render ★
+
+- Run \`--track\` (timeline JSON) and \`--track2d\` (per-frame part boxes, depth, pass, field value). Then render all
+  frames with Cycles at 128 samples, adaptive threshold 0.03, OptiX denoise.
+- Frames 0–11 are the hook: render them at 512 samples with threshold 0.01. Grain in the glass at 100 % is not acceptable.
+- Render low-res tests of the extremes first (frames 0, 110, 200, 230, 262, 280). Judge the palette on its real backdrop
+  before spending the full render.
+
+## 8. The vision layer (graphics in Python)
+
+The graphics are diegetic: they are the machine's own readout, never captions or decoration. Composite them in numpy and
+PIL over the raw RGBA frames.
+
+- **Two backdrops only:** light for frames 0–11 and the clean beat, dark for the whole diagnosis.
+  - On light, the object casts a soft offset shadow plus a contact shadow.
+  - On dark, glowing parts spill a large, warm, blurred glow onto the ground.
+  - Add a touch of bloom and chromatic aberration, and one **static** grain texture (grain that changes every frame looks cheap).
+- **Blend modes:** white vectors use **Exclusion**, so they invert what is under them; apply this to some elements, not
+  all. Over mid-grey, where Exclusion disappears, the ink is picked from the actual pixels under each label.
+- **The safe band** (1080×1920): everything readable lives in y 250–1500 and clears the action column on the right
+  (x > 930 for y 1000–1500).
+- **Type:**
+  - Fira Mono 24 / 28 for data, Space Grotesk 34 for part names;
+  - Regular weight only (bold reads cheap);
+  - 2 px lines, 4 px for the lead line.
+  - Labels never overlap: a placed label shifts, or it drops.
+- **One lead graphic per act:**
+  - acquire: a dashed hull filling in;
+  - separation: multi-object tracking with velocity labels and short trails, plus a curved dashed node web;
+  - inspection: segmentation boxes on a 30 px grid, with the part names;
+  - core lock: crosshair, lock box, a thermal inset and a 1-bit dithered edge inset;
+  - reassembly: twelve rays converging on the seat point;
+  - working: the front line;
+  - limit: the alarm plate;
+  - recovery: the recovery front;
+  - clean: **nothing**.
+- **Glitch with purpose:** datamosh, slice, RGB split or pixel-sort, only *inside* tracked boxes, held for 2–3 frames.
+  Never full frame. The bars must sample the part itself, never empty background.
+- **Invert slap:** invert, then black and white, then contrast 1.5. Three frames on, three off, three on, at the separation,
+  the working start and the limit. **One polarity throughout:** the object as a white silhouette on black, graphics white.
+- **Red belongs to the alarm.** It appears only after the limit is truly crossed. Everything else is white.
+- **One scale for every number:** each temperature, pressure or load on screen is computed from that part's real field
+  value through one function, for example \`T = min + (max − min) · v^1.6\`.
+  - The legend, the insets, the log and the tags all agree.
+  - The limit act is the highest reading of the film.
+  - Parts the recovery front has passed read as recovered.
+  - IDs are consistent everywhere.
+- **The log:** a typewriter with a scrambled leading edge, top left. Lines carry live values, not invented ones.
+
+## 9. Sound (synthesised from the timeline, numpy only)
+
+Three layers with roles:
+- **mechanics:** impacts, the ejection roll, seat clicks, the lock;
+- **machine voice:** the characteristic sound of [OBJECT] at work. Its pitch follows the real state curve from the
+  timeline, about two octaves over the working act;
+- **data:** blips on log lines, ticks. Keep it about 18 dB under the other layers.
+
+Events:
+- a downbeat sound on frame 0;
+- the separation as a roll, with three accents on the largest parts;
+- near-silence in the inspection;
+- three pulses with the core lock;
+- a reversed swell into the lock at frame 168;
+- one signature double hit for every slap;
+- at the limit, a warning on its first beat and the alarm from the frame the limit is crossed;
+- a release sound into the recovery;
+- one soft air hit when the backdrop turns light.
+
+Render the score twice in a row and keep the second pass, so tails wrap into frame 0. For phones, add harmonics so the
+low end survives small speakers, and keep everything under 200 Hz centred. Master with gain plus a limiter to −14 LUFS
+integrated and −1.5 dBTP. Check the mono fold-down.
+
+Also write \`deliver/cues.csv\`: time, frame, bar.beat, event, what. Someone may want to redo the sound by hand.
+
+## 10. Finish and delivery
+
+- Encode with an explicit BT.709 conversion (\`scale=out_color_matrix=bt709:out_range=tv\`) and write all three colour tags
+  into the stream (\`h264_metadata\` bitstream filter). Untagged files shift gamma on phones.
+- Deliver:
+  - \`*_ig.mp4\`: two-pass H.264, 16 Mb/s, AAC 320k;
+  - \`*_master.mp4\`: CRF 15;
+  - \`*_clean.mp4\`: the same film with no graphics and no slaps, for clients;
+  - \`audio/\`: the mix and its stems;
+  - \`cues.csv\`;
+  - five 4K stills (hook, close-up, limit, recovery, clean), composited on their own backdrops;
+  - a 1080×1920 cover that holds up as a 3:4 grid crop.
+
+## 11. Quality gates (measure them and report the numbers)
+
+1. **Seams:** spread jump ≤ 2 px at every act boundary; the reassembly spread decreases monotonically.
+2. **Loop:** the object's bounding box on frames 287 and 0 matches within 2 px. Only the material changes at the loop.
+3. **Flashes:** at most 3 full-field luminance flips in any second (aim for far fewer).
+4. **Compression:** re-encode at 720p and 2.5 Mb/s, as the platform will, and check that every label is still readable.
+5. **Safe band:** draw the Reels UI zones over six frames; no readable element inside them.
+6. **Truth:** read every number on six frames aloud against the story. A reading that contradicts the picture is a bug.
+7. **Taste:**
+   - one hero per frame;
+   - nothing static for long;
+   - nothing jittering at random;
+   - no green;
+   - no red before the alarm;
+   - no text outside the HUD;
+   - no logos.
+
+Finish with a short report: the files, the measured gates, render time and anything you could not verify.`
 }
 ];
 
