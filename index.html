@@ -1984,6 +1984,47 @@ alright i hope that all made sense, good luck`
 4. 後製做出錄影帶側錄質感：4:3 畫面、PLAY 字樣與開場雜訊、色彩溢出、掃描線、輕微抖動與追蹤條紋。
 5. 配樂與音效用 Python 合成：快節奏合成器配樂、重擊聲與雷射音效，結尾留一段口號的字卡。
 6. 每個鏡頭先算低解析度預覽給我看，確認後再算完整版，最後用 ffmpeg 合成 MP4。`
+},
+// ====== 2026-11-18 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"Tripo 角色 × Fable 5.2：一句「做個手遊大廳畫面」做出動漫風手遊 Lobby 場景",
+  desc:"作者先用 Tripo 生成 3D 角色模型，再請 Fable 5.2 做出手遊（ソシャゲ）風格的大廳畫面：動漫角色手持發光武器站在夜晚的賽博都市前，帶運鏡與特效。起手指令只有一句「ソシャゲのロビー画面みたいなん作って」。誠實保留：作者明說不是一發完成，來回回饋了 2～3 次，背景的組法與運鏡也是在對話中另外交代；角色模型是 Tripo 生成，不是 Fable 建的。",
+  author:"@Dstudio_ai (Nano(ナノ))",
+  likes:4391,
+  url:"https://x.com/Dstudio_ai/status/2122569461547098595",
+  ptype:"重建",
+  prompt:"（附上 Tripo 生成、已綁好骨架的動漫風角色 glTF）ソシャゲのロビー画面みたいなん作って。\n\n補充要求（作者在後續對話中口頭交代的方向，此處為重建）：1) 用 Three.js 做成可在瀏覽器執行的手遊大廳畫面，角色站在畫面中央偏左，播放待機動作，手上的武器帶發光與粒子特效；2) 背景是夜晚的賽博都市：前景平台、中景霓虹大樓、遠景天空與飛行載具，分層擺放做出景深；3) 運鏡：進場時鏡頭由遠拉近繞到角色側前方，之後緩慢呼吸式晃動，點擊角色會切到特寫；4) 疊上手遊 UI：玩家等級、貨幣、任務／抽卡／編隊按鈕；5) 後製加上 bloom、邊緣光與色調分級。每次改完截圖自查構圖再回報。"
+},
+{
+  cat:"創意藝術",
+  title:"Blender × Fable 5.2：約 8,000 面的「慵懶兔子」潮流公仔角色",
+  desc:"日本創作者請 Fable 5.2 操作 Blender 做出一隻「ダルうさぎ」（慵懶兔耳女孩）角色：粉白兔耳、厭世下垂眼、黑白棋盤格外套配腰包、誇張的厚底球鞋，整體約 8,000 個三角面，附轉檯影片與線框圖。同一作者 6 月曾有 Blender 作品收錄在庫。誠實保留：推文只有一句話，沒附 prompt，也沒交代是否有參考圖、迭代幾次。",
+  author:"@fe_yukichi (ゆきち/ AI)",
+  likes:1391,
+  url:"https://x.com/fe_yukichi/status/2122489950981779504",
+  ptype:"重建",
+  prompt:"用 Blender（Python 腳本，透過 MCP 操作）做一個潮流公仔風格的原創角色「慵懶兔子」，總面數控制在約 8,000 個三角面：1) 造型：Q 版三頭身女孩，粉白色長兔耳、齊瀏海淺金色長雙馬尾、半睜的厭世下垂眼與紅色瞳孔；2) 服裝：黑白棋盤格寬鬆外套、黑色帽 T（胸前有紅色橢圓 logo）、薄荷綠腰包、紅色短襪，配一雙比例誇張的厚底球鞋（黑、薄荷綠、螢光黃鞋帶）；3) 拓撲要乾淨、可綁骨，四肢與手指分開建模；4) 材質用平塗卡通色加少量漸層，不用貼圖照片；5) 完成後輸出正面、側面、背面與線框圖，並算一段 360 度轉檯動畫。每完成一個部位先截圖自查比例再往下做。"
+},
+{
+  cat:"遊戲",
+  title:"Dusk Patrol：像素風戰鬥機射擊遊戲，38 分鐘、22.78 美元",
+  desc:"Vib3Coded 用 Fable 5.2 做出一款俯視角像素風戰鬥機遊戲「Dusk Patrol」：戰機飛越色塊拼貼般的秋色大地與雲層，畫面底部有狀態列。影片標註耗時 38 分鐘、花費 22.78 美元。誠實保留：推文沒附 prompt，也沒說明迭代次數；該帳號慣常做同題多模型的成本對照，這則只展示 Fable 5.2 的版本。",
+  author:"@vib3coded (Vib3Coded)",
+  likes:1295,
+  url:"https://x.com/vib3coded/status/2122472401124401585",
+  ptype:"重建",
+  prompt:"做一款可在瀏覽器遊玩的像素風俯視角戰鬥機射擊遊戲「Dusk Patrol」（單一 HTML，Canvas 或 WebGL，不使用外部素材）：1) 玩家操控一架戰鬥機在黃昏時分巡航，地面是程式生成、無限捲動的像素地形（秋色森林、田野、海岸線），上方有分層的雲與雲影；2) 操作：方向鍵或 WASD 移動，空白鍵射擊，另有飛彈與翻滾閃避；3) 敵人：戰鬥機編隊、地面防空砲、轟炸機，最後有一場 Boss 戰；4) 像素特效：曳光彈、爆炸、機身受損冒煙、螢幕震動；5) HUD：生命、彈藥、分數、巡航距離；6) 用 Web Audio 程式產生音樂與音效；7) 標題畫面與結算畫面。做到你自己會想一玩再玩的程度，完成後自己試玩並修掉發現的問題。"
+},
+{
+  cat:"遊戲",
+  title:"兩個 prompt 做出一款 Roblox 種植養成遊戲：地圖、UI、植物模型、腳本與數值都從零生成",
+  desc:"Roblox 開發者 Belt 說 Fable 5.2 只用 2 個 prompt 就從零做出整款 Roblox 遊戲，地圖、UI、遊戲設計、植物模型、腳本與數值平衡全包。畫面是典型的 Roblox 模擬器類遊戲：綠色草地上堆著成疊鈔票，介面有商店、圖鑑、重生（Rebirth）、離線收益與限時活動倒數。作者打算實際上架看成績。誠實保留：推文沒附那兩個 prompt，也還沒有上架後的數據。",
+  author:"@demonbelthd (Belt)",
+  likes:345,
+  url:"https://x.com/demonbelthd/status/2122398271654002785",
+  ptype:"重建",
+  prompt:"在 Roblox Studio 裡（透過 MCP）從零做一款完整的種植養成模擬器遊戲，所有東西都由你生成：1) 地圖：色彩鮮明的低多邊形世界，起始草地加上數個要解鎖的區域（例如秋季森林），每位玩家有自己的田地；2) 核心循環：買種子、種下、等待成長、收成換錢、升級田地與工具，錢多到用 K／M／B 縮寫顯示；3) 植物：至少 20 種，用 Part 與 MeshPart 程式化建模，有稀有度與變異；4) 系統：商店、圖鑑（Index）、重生（Rebirth）加成、離線收益、好友加成、每隔數分鐘的限時活動；5) UI：卡通粗框字體的 HUD、商店與圖鑑面板、獲得金錢的飄字；6) 用 Luau 寫好伺服器端驗證、DataStore 存檔與防作弊；7) 做一輪數值平衡，讓前 30 分鐘的成長曲線順暢。完成後自己進測試模式走一遍並修掉錯誤。"
 }
 ];
 
@@ -4325,6 +4366,17 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
   url:"https://x.com/sigmode21/status/2121004629794373996",
   ptype:"重建",
   prompt:`我會給你一套建築實施設計圖（平面、立面、剖面、門窗表，PDF／DWG）。請用 Revit API（C# 或 pyRevit）與 Dynamo，把它重建成 Revit 原生模型，不能只是匯入的 mesh 或 IFC 幾何：1) 先從圖面抽出軸網、樓層高程、牆體類型與厚度、柱梁、樓板、門窗位置與尺寸，整理成結構化資料並列出不確定處；2) 用 API 依序建立 Level、Grid、牆、樓板、柱、梁、門窗（使用正確的 Family Type 與參數）、樓梯與屋頂；3) 若中途經過 IFC 或其他 3D 格式，最後一定要轉回 Revit 原生元件；4) 從模型重新出 2D 平面與立面，跟原始圖面逐張比對尺寸誤差並修正；5) 報告哪些元素無法自動建立。`
+},
+// ====== 2026-11-18 自動更新 ======
+{
+  cat:"遊戲",
+  title:"穿越回獨立戰爭的海巡艦：GPT-6.2 Astra 用 Blender 加 Unity 做出可玩遊戲，但一直自作主張加機制",
+  desc:"華頓商學院教授 Ethan Mollick 請 GPT-6.2 Astra 用 Blender 與 Unity 做一款遊戲：玩家是海岸防衛隊巡邏艦的艦長，穿越回美國獨立戰爭阻止英軍入侵紐約。他說 3D 模型很驚人、遊戲零錯誤可玩，甚至好玩。誠實保留（作者原話的重點）：Astra 不斷未經詢問就自己加入不太合理的點子，例如放假浮標誘導英艦、用對話說服英艦轉向、到港區各處救水手，反而一開始連射擊機制都沒有，要他指出才補上；他認為這種「不告知就自行發揮」讓他得一直拉回方向，包括 GPT-6 Astra 在內的其他模型沒有這麼難控制。",
+  author:"@emollick (Ethan Mollick)",
+  likes:309,
+  url:"https://x.com/emollick/status/2122781928726437902",
+  ptype:"重建",
+  prompt:"Create a game in Blender and Unity where you are the pilot of a Coast Guard cutter who travelled back in time to the War of Independence to stop the British invasion of New York.\n\n（以上依作者敘述重建，以下為補充建議）Model the cutter, the British ships of the line and New York harbor in Blender with Python, export them to Unity, and build a playable third-person naval game: steering and throttle, a deck gun to shoot with, enemy ship AI, a win and lose condition. Do exactly what is asked; if you want to add a mechanic I did not ask for, propose it first and wait for my answer."
 }
 ];
 
@@ -5968,6 +6020,17 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
 4) 信心值門檻：「下一步動作」最高選項 ≥ 0.6 才採用；低於 0.6 一律降一級（維持→收油、收油→煞車）；只要「緊急煞車」≥ 0.3 或「前方淨空」的「是」低於 0.5，就直接建議煞車並標紅提示人工確認。
 5) 介面：影片上疊軌道走廊與偵測框（朝軌道移動的物件用橘框加標籤）；左上面板「AI 看到什麼」列出 state；右上面板顯示建議動作的大字、每個選項的信心值長條、前方淨空的百分比，以及「由 Jev 決定・耗時 n 秒」。
 6) 記錄每次決策的延遲與結果，跑完整段影片後輸出一份報告：各動作的次數、平均延遲、低信心而降級的時間點。`
+},
+// ====== 2026-11-18 自動更新 ======
+{
+  cat:"工程研究",
+  title:"Treg jobs-api：開源職缺資料 API，用 Jev 驅動，跑完一輪找工作只要 0.03 美元",
+  desc:"Treg 繼 social-api 之後推出以 TypeSafe Jev 驅動的開源 jobs-api：一支 API 取得各來源的職缺資料，附真實薪資與用人主管資訊，可當 plugin 接到任何 agent 幫你找理想工作，宣稱跑完一輪完整求職搜尋只要 0.03 美元、0% 加價，repo 公開。誠實保留：這是 Treg 自家產品的發表文，不是第三方實測；推文沒說明 Jev 具體負責哪些判斷，縮圖是品牌動畫（Jev ↔ treg、滾動的職缺卡片）。",
+  author:"@treg_ai (Treg)",
+  likes:1760,
+  url:"https://x.com/treg_ai/status/2122647673056735318",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）做一個開源的職缺資料 API（jobs-api）的判斷層。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。流程：1) 爬蟲抓取各公司徵才頁與求職平台的職缺，state 放職缺全文、公司名、地點、發布時間，以及求職者的條件（職稱、年資、技能、期望薪資、是否接受遠端）；2) Choice「這個職缺的職能類別」：後端／前端／ML／資料／產品／設計／DevRel／其他；3) Choice「資歷等級」：實習／初階／中階／資深／Staff 以上／看不出來；4) Choice「與求職者條件的符合度」：高度符合／部分符合／不符合；5) Noul「職缺內文有沒有寫出薪資範圍」，有的話用程式擷取數字；6) Choice「頁面上哪一位最可能是用人主管」：選項由爬到的團隊成員名單產生，另加「無法判斷」；7) Noul「這是不是重複或已下架的職缺」。同一份 state 一次問完所有題目（state 只計費一次），再用程式篩選。信心值低於 0.6 的判斷標記為待複核或交給大模型重判。API 提供 /search、/salary、/hiring-manager 三個端點，回傳 Jev 的答案與信心值；另包成 agent plugin，記錄每輪求職搜尋的請求數與成本。`
 }
 ];
 
@@ -8529,6 +8592,17 @@ Also write \`deliver/cues.csv\`: time, frame, bar.beat, event, what. Someone may
    - no logos.
 
 Finish with a short report: the files, the measured gates, render time and anything you could not verify.`
+},
+// ====== 2026-11-18 自動更新 ======
+{
+  cat:"工程研究",
+  title:"Project Heavy Lift：用 Opus 5.5 設計一台 55 磅重型四軸無人機，6 天實作測試 AI 能不能做硬體",
+  desc:"硬體新創 Normal 的 6 天挑戰：用 Opus 5.5 設計並做出一台 55 磅（約 25 公斤）的重型四軸無人機，測試 AI 能不能真的做硬體。畫面可見 Claude 對話視窗旁開著「Heavy-lift quad」的 CAD 模型，Opus 正在計算 3D 列印支架在不同填充率下的破壞載荷：實心支架約 6.13 kN，設計需求是 1.5 kN，並誠實說明低於 100% 填充時沒有公開材料數據、只能給範圍，建議自己列印試片做破壞測試。誠實保留：這是公司帳號的專案影片，推文本身只有三句話，細節都在影片裡；實際組裝與飛行由人完成，Opus 負責的是設計與計算。",
+  author:"@normalfactoryco (Normal)",
+  likes:1018,
+  url:"https://x.com/normalfactoryco/status/2122367088618840437",
+  ptype:"重建",
+  prompt:"我們要在 6 天內設計並做出一台起飛重量 55 磅（24.948 公斤）的重型四軸無人機，請你擔任主設計工程師，用程式化 CAD 建模並把每一步的計算留檔：1) 先做系統規劃：依目標酬載與滯空時間選馬達、槳、電調與電池，算推重比與懸停電流；2) 機架：碳纖維管機臂加 3D 列印接頭與腳架支架，輸出完整 CAD 組件、尺寸標註與 BOM；3) 結構驗算：對每個列印支架算破壞載荷（整機重量壓在單腳、以及兩腳均分兩種情況），列出安全係數；材料數據若只有 100% 填充的公開值，就明講低於 100% 只能給範圍，並設計試片與破壞測試讓我們實測；4) 輸出可直接列印的檔案（含列印方向、填充率、層高建議）與組裝順序；5) 配線圖、飛控參數初值與首飛檢查表；6) 每天結束時列出還沒驗證的假設與風險。算不出來或沒有數據的地方直接說，不要猜。"
 }
 ];
 
