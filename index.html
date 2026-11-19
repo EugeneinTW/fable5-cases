@@ -2025,6 +2025,89 @@ alright i hope that all made sense, good luck`
   url:"https://x.com/demonbelthd/status/2122398271654002785",
   ptype:"重建",
   prompt:"在 Roblox Studio 裡（透過 MCP）從零做一款完整的種植養成模擬器遊戲，所有東西都由你生成：1) 地圖：色彩鮮明的低多邊形世界，起始草地加上數個要解鎖的區域（例如秋季森林），每位玩家有自己的田地；2) 核心循環：買種子、種下、等待成長、收成換錢、升級田地與工具，錢多到用 K／M／B 縮寫顯示；3) 植物：至少 20 種，用 Part 與 MeshPart 程式化建模，有稀有度與變異；4) 系統：商店、圖鑑（Index）、重生（Rebirth）加成、離線收益、好友加成、每隔數分鐘的限時活動；5) UI：卡通粗框字體的 HUD、商店與圖鑑面板、獲得金錢的飄字；6) 用 Luau 寫好伺服器端驗證、DataStore 存檔與防作弊；7) 做一輪數值平衡，讓前 30 分鐘的成長曲線順暢。完成後自己進測試模式走一遍並修掉錯誤。"
+},
+// ====== 2026-11-19 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"AnyMachine：讓 agent 在 Blender 把機械完整建模、綁骨架、做動畫（直升機、救生艇、30 公尺高蹺機器人）",
+  desc:"作者公開一套叫 AnyMachine 的工作流程，影片裡的直升機、救生艇、30 公尺高的高蹺步行機器人和一台小搬運機器人，都是 Claude Fable 5.2 照這套流程在 Blender 建模、綁定並做動畫。流程先讓 agent 產生整機與每個關節、機構的參考圖，再選路線：逐零件硬表面建模，或從生成的 mesh 出發、把活動零件重建在真實轉軸上；算圖後與參考圖並排比對，不足處做第二輪。誠實保留：參考圖與特寫影片用了 fal 的圖像／影片模型，並非全程單一模型；作者說同一流程也能換 Astra 6.2 跑。",
+  author:"@apekshik (apek)",
+  likes:1060,
+  url:"https://x.com/apekshik/status/2123139308932702468",
+  ptype:"重建",
+  prompt:`你已透過 MCP 連上 Blender。請把一台機械完整做出來：建模、綁定（rig）、做動畫。題目：一架雙引擎搜救直升機（之後我會換成救生艇、30 公尺高的高蹺步行機器人、小型搬運機器人，流程要能重複使用）。
+
+請照這個流程走，中途不要問我：
+1. 參考圖：先用圖像模型產生整機的參考圖（前、側、後、俯視），再針對每一個關節與機構各產生一張特寫（主旋翼槳轂、尾旋翼、起落架、艙門滑軌、絞盤）。列出所有會動的零件、各自的轉軸或滑軌、活動範圍。
+2. 選路線並說明理由：(a) 用 Python 在 Blender 逐零件硬表面建模；或 (b) 從生成的 mesh 出發，把會動的零件切開，重建在真實的轉軸上。
+3. 建模：每個活動零件是獨立物件，原點放在真實的轉軸位置，命名一致，父子層級照機構的實際連接關係。
+4. 綁定：依第 1 步列的轉軸建立骨架或約束（旋轉、滑動、連桿），設好活動範圍，逐一轉動確認沒有穿模。
+5. 動畫：做一段 10–15 秒的展示：槳葉起轉、起落架收放、艙門開關、絞盤放纜。
+6. 自我檢查：把算圖結果與參考圖並排輸出，逐項比對比例、零件數、關節位置；差距明顯的地方做第二輪修正。機器越大越複雜，特寫就做得越多。
+7. 交付：.blend 檔、轉台影片、機構展示影片，以及一份清單：零件數、關節數、哪些地方與參考圖仍有落差。`
+},
+{
+  cat:"工程研究",
+  title:"只看胺基酸序列預測蛋白質結構：Fable 5.2 正確折出泛素（ubiquitin）",
+  desc:"計算生物學家 Sergey Ovchinnikov 測試 Fable 5.2 能不能只憑序列預測蛋白質結構：讓模型預測殘基接觸圖與二級結構，再用動態規劃和線性代數把接觸轉成 3D 模型，看完模型後回頭修正接觸，重複數輪。附圖左邊是第 4 輪由接觸推得的模型，右邊是真實的泛素結構 1UBQ（76 個殘基），折疊方式一致。誠實保留：泛素是研究得最透徹的蛋白之一，模型可能在訓練資料中看過；只展示這一個例子。推文引的那句是作者的摘要，實際指令較長（見附圖），這裡的 prompt 前段依附圖可見的原文改寫、後段補完。",
+  author:"@sokrypton (Sergey Ovchinnikov)",
+  likes:418,
+  url:"https://x.com/sokrypton/status/2122929243260608651",
+  ptype:"重建",
+  prompt:`We are testing whether you can tell, from a protein sequence alone, which residues are in contact in its folded structure. You will predict a contact map, turn it into a 3D model with code, look at what the model says about your contacts, and revise them, several times.
+
+Rules
+- Predict contacts from the sequence. You may reason about secondary structure (helices, strands, turns) from the sequence and from your local contacts. Do not reason about domains, the protein's family or what it is, or its overall fold or topology, and do not describe any of these. Do not search the web or any database. What we want to measure is whether you can see contacts in the sequence itself.
+- Residues are numbered from 1. A contact means C-beta atoms (C-alpha for glycine) within 8 A, at sequence separation |i - j| >= 3.
+
+Sequence
+MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGG
+
+Procedure
+1. Predict contacts. Write a list of (i, j) pairs you believe are in contact, local ones (|i - j| from 3 to 5) included. A folded protein has roughly 2 x L to 3 x L of them.
+2. Predict secondary structure per residue (H / E / C) and make it consistent with the contacts: use dynamic programming to align strand pairings and helix periodicity with the contact list.
+3. Build a 3D model: turn the contacts into a target distance matrix, complete it (shortest paths), recover C-alpha coordinates with linear algebra (classical MDS / eigendecomposition), then refine with a few rounds of gradient descent that keep consecutive C-alphas 3.8 A apart and remove clashes. Fix the chirality.
+4. Look at the model: list which predicted contacts it satisfies, which it violates, and which new contacts it implies. Revise the contact list.
+5. Repeat steps 1-4 for at least 4 rounds. Output the final contact map, the secondary structure string and a PDB file of the C-alpha trace, and render the model as a cartoon coloured rainbow from N to C.`
+},
+{
+  cat:"模擬視覺化",
+  title:"X 光鏡子：一般視訊鏡頭即時疊出頭骨、大腦、肌肉與手骨，跟著你的動作走",
+  desc:"一個網頁、免安裝：用一般 webcam 追蹤臉與手，把 3D 的頭骨、大腦、肌肉、眼球疊在自己頭上，每個部位有標籤；張嘴時下顎跟著開，手伸進畫面就看到指骨。控制面板可分層開關、調亮度與透明度、選擇只顯示左半或右半、用「X 光鏡片」圈出局部，還有對齊自己頭型的尺寸微調，影像只在本機處理。⚠️ 這則是轉述（「A guy built…」），原作者未具名（影片中出鏡者）；轉述者自行推測用到 MediaPipe、Three.js 與開源解剖圖集 Z-Anatomy，文末導向自己的文章。面板上註明解剖模型是一位成人的真實 3D 資料集，按頭型縮放，不是掃描你本人，也不是醫療工具。",
+  author:"@Damir_Akaza (Damir Akaza)",
+  likes:400,
+  url:"https://x.com/Damir_Akaza/status/2122782331907735555",
+  ptype:"重建",
+  prompt:`做一個單頁網頁「X-Ray Mirror」，免安裝、影像不離開本機：用一般 webcam 即時把解剖構造疊在我頭上。
+
+1. 追蹤：用 MediaPipe 在瀏覽器裡追蹤臉（478 個點）和雙手（每手 21 個點），每一格更新頭部的位置、旋轉與下顎張開程度。
+2. 模型：用 Three.js 把 3D 的頭骨、大腦、頭頸部肌肉、眼球疊在鏡頭畫面上，跟著頭轉動；解剖模型用開源的 Z-Anatomy（BodyParts3D）。我張嘴時下顎骨要跟著打開；手進入畫面時，沿著手部關鍵點畫出指骨與掌骨。
+3. 標籤：每個部位有引線標籤，我靠近鏡頭時模型放大，標籤要保持可讀。
+4. 控制面板：
+   - Layers：Skull／Brain／Muscles／Eyes／Head outline／Hand bones 各自開關，加上 Skull、Brain、Muscles、Everything 四個快捷鍵與 Show labels。
+   - Look：X-ray 與 Solid 兩種外觀、亮度滑桿。
+   - Mixed reality：「真實的我透出多少」的透明度、邊緣羽化、Reveal 模式（X 光鏡片跟著手、只顯示左半／右半、從頭頂往下、從下巴往上）、鏡片大小。
+   - Fit to my head：整體大小、寬、高、深，以及左右／上下／前後的位移（公分），附 Reset fit。
+   - Show tracking data：顯示系統當下追蹤到的點與數值。
+5. 在面板底部寫清楚：解剖模型是一位成人的真實 3D 資料集，縮放後貼在你的頭上，呈現的是構造通常所在的位置，不是你本人的掃描，也不是醫療工具；影像只在這台電腦上處理，不會上傳。`
+},
+{
+  cat:"遊戲",
+  title:"瀏覽器裡的下坡登山車遊戲：作者連騎 7 天、逐版回報手感，three.js 製作",
+  desc:"作者說「Claude Fable 5.2 感覺不到腳踏車，但我可以」，於是花 7 天試騎每一個版本、告訴模型哪裡手感不對，做出一款 three.js 的下坡登山車（downhill MTB）遊戲，瀏覽器直接玩。畫面是秋天的樹林林道，騎士在土坡上抬前輪，落葉飄散、路邊有紅白標樁，光影與植被相當細。誠實保留：這不是一發成品，而是 7 天人工試玩加反覆修正的結果；推文沒公開指令。",
+  author:"@BananaOfMercy (BananaOfMercy)",
+  likes:171,
+  url:"https://x.com/BananaOfMercy/status/2123037856398733438",
+  ptype:"重建",
+  prompt:`用 three.js 做一款在瀏覽器直接玩的下坡登山車（downhill MTB）遊戲，單一網頁、不用外部模型檔。
+
+1. 場景：秋天的森林山坡，一條往下的土質林道，有彎道、土坡跳台、落差與樹根路段；兩旁是程式生成的樹（橘黃葉）、灌木、草與石頭，空中有落葉，路邊插紅白標樁，有霧與柔和的陽光陰影。
+2. 車與騎士：有避震的登山車和戴安全帽的騎士，第三人稱追尾鏡頭。騎士要有重心動作：站起、後移、壓彎、落地吸震。
+3. 物理（最重要）：前後輪各自接觸地面並有抓地力；前後煞車分開，前煞太重會前翻；重心前後移可以抬前輪和後輪滑；飛躍時可調整俯仰，落地角度不對會摔；速度越快轉向越沉；懸吊壓縮與回彈要看得出來。
+4. 操作：鍵盤與手把都支援（加速／前煞／後煞／左右傾／重心前後），摔車後一鍵回到最近的檢查點。
+5. 玩法：計時下坡賽，顯示分段時間與最佳紀錄。
+
+我會實際試騎每一版並回報手感（例如「落地太彈」「入彎沒有抓地感」）。每次請只調整對應的物理參數，並說明你改了哪些數值、為什麼。`
 }
 ];
 
@@ -6031,6 +6114,32 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/treg_ai/status/2122647673056735318",
   ptype:"重建",
   prompt:`用 TypeSafe Jev（model jev-latest）做一個開源的職缺資料 API（jobs-api）的判斷層。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。流程：1) 爬蟲抓取各公司徵才頁與求職平台的職缺，state 放職缺全文、公司名、地點、發布時間，以及求職者的條件（職稱、年資、技能、期望薪資、是否接受遠端）；2) Choice「這個職缺的職能類別」：後端／前端／ML／資料／產品／設計／DevRel／其他；3) Choice「資歷等級」：實習／初階／中階／資深／Staff 以上／看不出來；4) Choice「與求職者條件的符合度」：高度符合／部分符合／不符合；5) Noul「職缺內文有沒有寫出薪資範圍」，有的話用程式擷取數字；6) Choice「頁面上哪一位最可能是用人主管」：選項由爬到的團隊成員名單產生，另加「無法判斷」；7) Noul「這是不是重複或已下架的職缺」。同一份 state 一次問完所有題目（state 只計費一次），再用程式篩選。信心值低於 0.6 的判斷標記為待複核或交給大模型重判。API 提供 /search、/salary、/hiring-manager 三個端點，回傳 Jev 的答案與信心值；另包成 agent plugin，記錄每輪求職搜尋的請求數與成本。`
+},
+// ====== 2026-11-19 自動更新 ======
+{
+  cat:"工程研究",
+  title:"Rivet 內部客服工單分類器：把「判斷嚴重度」拆成一串是非題，逐題交給 Jev",
+  desc:"Rivet 共同創辦人 Nathan Flurry 分享踩坑心得「Jev 不會推理」：一開始照寫 LLM prompt 的方式，一題問「這張工單是 SEV 幾」並附上各等級說明，結果普通；讀了文件後改成拆開的小問題（正式服務是否掛掉？是否被卡住且沒有替代方案？Rivet 是否有東西壞了？），再用程式由上而下判定等級，效果很好。附圖是內部工具的「How it decided」面板：五題依序列出信心值（3%、2%、8%、4%、82%），最後一題命中，判為 SEV3。遇到判錯的工單，就讓 LLM 把它加進測試集、調整判斷邏輯、再對舊工單回測。內部支援工具各分類器的題數：支援分類與客戶狀態 13 題、嚴重度 6 題、團隊回覆與問題辨識 6 題、後續追蹤時機 6 題、關聯依賴 4 題、指定隊友 2 題、對話分組 2 題。誠實保留：是內部工具，沒有公開 repo，也沒給準確率數字；推文裡的程式碼是示意的虛擬碼。",
+  author:"@NathanFlurry (Nathan Flurry)",
+  likes:468,
+  url:"https://x.com/NathanFlurry/status/2123108222470959600",
+  ptype:"重建",
+  prompt:`用 TypeSafe Jev（model jev-latest）替我們的內部客服工具做一個工單嚴重度分類器。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。
+
+原則：Jev 不會推理，不要一題問「這是 SEV 幾」。把判斷拆成互相獨立的是非題，每題一次 Jev 呼叫，再用程式組合結果。
+
+1) state 放 messages（這張工單的完整對話，含客戶與我方回覆）與客戶方案等級。
+2) 每題都是 Noul，題目直接指向 state 的欄位，依序為：
+   - messages 是否描述安全漏洞或憑證外洩？
+   - messages 是否提到對方資料遺失或毀損？
+   - messages 是否提到對方的正式環境服務掛掉或無法使用？
+   - messages 是否提到對方被卡住、而且沒有替代方案？
+   - messages 是否回報我們產品有東西壞掉或失敗？
+3) 判定邏輯寫在程式裡，由上而下檢查、第一個命中就決定：前兩題任一為是 → SEV1；正式環境掛掉或被卡住 → SEV2；有東西壞掉但有替代方案或影響有限 → SEV3；都不是 → SEV4。
+4) 信心值門檻：「是」的信心值 ≥ 0.6 才算命中；落在 0.4–0.6 之間視為不確定，標記給人工或交給大模型複判，並記錄下來。
+5) 介面：每張工單顯示「How it decided」面板，逐題列出題目、需要的答案、信心值百分比、YES／NO、是否命中，最下面顯示最後判定的等級與一句說明。
+6) 回測流程：遇到判錯的工單，把工單與期望等級加進測試集，由 LLM 調整題目措辭或判定順序，再對所有舊工單重跑，確認沒有把原本判對的弄錯才合併。
+7) 同樣的做法再做其他分類器：支援類別與客戶狀態、團隊是否已回覆、後續追蹤時機、指定給哪位隊友、對話分組，各自拆成 2–13 題。`
 }
 ];
 
@@ -8603,6 +8712,46 @@ Finish with a short report: the files, the measured gates, render time and anyth
   url:"https://x.com/normalfactoryco/status/2122367088618840437",
   ptype:"重建",
   prompt:"我們要在 6 天內設計並做出一台起飛重量 55 磅（24.948 公斤）的重型四軸無人機，請你擔任主設計工程師，用程式化 CAD 建模並把每一步的計算留檔：1) 先做系統規劃：依目標酬載與滯空時間選馬達、槳、電調與電池，算推重比與懸停電流；2) 機架：碳纖維管機臂加 3D 列印接頭與腳架支架，輸出完整 CAD 組件、尺寸標註與 BOM；3) 結構驗算：對每個列印支架算破壞載荷（整機重量壓在單腳、以及兩腳均分兩種情況），列出安全係數；材料數據若只有 100% 填充的公開值，就明講低於 100% 只能給範圍，並設計試片與破壞測試讓我們實測；4) 輸出可直接列印的檔案（含列印方向、填充率、層高建議）與組裝順序；5) 配線圖、飛控參數初值與首飛檢查表；6) 每天結束時列出還沒驗證的假設與風險。算不出來或沒有數據的地方直接說，不要猜。"
+},
+// ====== 2026-11-19 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"「看了就會變強」的彈幕射擊教學影片：Godot + Opus 5.5 製作",
+  desc:"日本開發者 Korin 用 Godot 引擎和 Opus 5.5 做了一支彈幕射擊（弾幕シューティング）的教學影片，號稱光看就能變厲害：直式畫面上敵機朝自機射出一串子彈，疊上箭頭與日英雙語字幕示範技巧，例如「引きつけて少しずつ避ける」（把子彈引過來，再一點一點閃開）。誠實保留：推文只有一句話，沒交代分工細節與指令，推測是 Opus 5.5 寫 Godot 專案、由引擎算出畫面；「看了就變強」是作者的玩笑式說法。",
+  author:"@korinVR (Korin)",
+  likes:5542,
+  url:"https://x.com/korinVR/status/2122856839608177052",
+  ptype:"重建",
+  prompt:`用 Godot 4 做一支「看了就會變強」的彈幕射擊教學短片（直式 3:4，約 60–90 秒），全部畫面由 Godot 專案算出來再錄成影片，不用影片生成模型。
+
+1. 畫面：黑底加藍色格線；上方一架敵機、下方一架自機（自機中心畫出紅色的小判定點），子彈用粉紅外框的白色橢圓。
+2. 每一課一個技巧，依序示範，各 10–15 秒：
+   - 引きつけて少しずつ避ける（自機狙い彈：等子彈靠近再小幅移動，不要大動作）
+   - 切り返し（被逼到畫面邊緣前，大幅移動折返）
+   - 看判定點而不是看整架機體
+   - 扇形彈：從縫隙穿過去，不要繞外圈
+3. 每一課先播「錯誤示範」（自機被擊中、畫面閃紅），再播「正確示範」，用綠色箭頭畫出建議的移動路線。
+4. 字幕：畫面中央大字日文、下方小字英文（例：Dodge little by little），每課開頭出現 1.5 秒。
+5. 自機的移動用腳本控制成固定的示範路徑，確保每次錄出來一樣；輸出 Godot 專案與錄製用的場景。`
+},
+{
+  cat:"工程研究",
+  title:"1,792 平方呎住宅的全套機電管線（MEP）從零配置：1,784 個零件、對照建築法規自查 10/10 通過",
+  desc:"Opus 5.5 拿到一棟位於 Colorado Springs、1,792 平方呎（3 房 2 衛加車庫）的住宅平面圖，從零配置所有機電系統：12 個出風口加閣樓主風管、20 條 PEX 給水專管共 754 呎、10 個衛浴器具的排水與通氣、19 個迴路 98 個電氣裝置，以及通往暖爐、熱水器和爐具的瓦斯管，共 1,784 個零件。接著對照 2021 IRC、2021 IPC/IFGC 與 2023 NEC 自查（插座間距、GFCI、煙霧與一氧化碳警報、通風、存水彎臂長、瓦斯關斷閥），10/10 通過、0 碰撞。第一輪其實有 26 處真實碰撞，逐一改道；複查時又抓出並修正 8 處自己的法規錯誤。誠實保留（作者自註）：平面圖是為這次測試做的模擬案例，還沒做負載計算與風管尺寸計算，只有配置與法規檢查；發文帳號偏轉述風格，未說明實際操作者。",
+  author:"@Solvaix (Solvaix)",
+  likes:3281,
+  url:"https://x.com/Solvaix/status/2122759994672120184",
+  ptype:"重建",
+  prompt:`附件是一棟單層住宅的平面圖：Colorado Springs，1,792 平方呎空調面積，3 房 2 衛、雙車庫、板式基礎（slab on grade）。請擔任機電協調工程師，從零配置全屋 MEP，並輸出一份可逐步播放的協調平面圖（單一 HTML，圖上分層顯示並統計各系統已放置的符號數）。
+
+1. HVAC：暖爐位置、閣樓主風管與支管、每個房間的出風口與回風口。
+2. 給水：PEX home run 配置，從分水器到每個器具各一條冷／熱水管，統計總長度。
+3. 排水與通氣（DWV）：每個器具的存水彎、排水坡度、通氣管，板下排水主幹。
+4. 瓦斯：從錶位到暖爐、熱水器、爐具，每個設備前有關斷閥。
+5. 電氣：配電盤、迴路劃分、插座、開關、燈具、煙霧與一氧化碳警報器。
+6. 碰撞檢查：把所有管線當 3D 線段加管徑，找出跨系統的碰撞，逐一改道後重跑，回報第一輪碰撞數與最終碰撞數。
+7. 法規自查：對照 2021 IRC、2021 IPC／IFGC、2023 NEC，至少檢查插座間距、GFCI 位置、煙霧／CO 警報器、通風、存水彎臂長、瓦斯關斷閥等 10 項，逐項列出通過與否與依據條文；查到自己的錯誤就修正並記錄。
+8. 最後列出：各系統零件數、總零件數、你沒做的事（例如負載計算、風管尺寸計算），不要把這份圖說成可施工的圖說。`
 }
 ];
 
