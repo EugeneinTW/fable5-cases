@@ -2108,6 +2108,25 @@ Procedure
 5. 玩法：計時下坡賽，顯示分段時間與最佳紀錄。
 
 我會實際試騎每一版並回報手感（例如「落地太彈」「入彎沒有抓地感」）。每次請只調整對應的物理參數，並說明你改了哪些數值、為什麼。`
+},
+// ====== 2026-11-21 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"three.js 的 Gaussian Splatting 日式庭園：約 120 萬個點、283MB 在瀏覽器裡呈現",
+  desc:"日本影像創作者用 Claude Fable 5.2 做出 three.js 的 Gaussian Splatting 展示：夜色中的日式庭園，石燈籠、苔石、紅葉與松樹從黑暗裡浮現，共 1,197,659 個 splat（約 120 萬）、資料 283MB，配樂由 Suno MCP 生成。作者說這東西一碰就會陷進去，先前一直裝作沒看到。誠實保留：推文只寫「以 Fable 5.2 製作」，沒交代 splat 資料的來源（實拍掃描或生成），也沒公開指令；Fable 做的應是 three.js 端的載入與呈現。",
+  author:"@seiiiiiiiiiiru (SEIIIRU😈AIを使う映像クリエイター)",
+  likes:308,
+  url:"https://x.com/seiiiiiiiiiiru/status/2123702907534979541",
+  ptype:"重建",
+  prompt:`用 three.js 做一個在瀏覽器播放的 Gaussian Splatting 展示頁，單一網頁。
+
+1. 資料：我提供一個日式庭園的 Gaussian splat 檔（約 120 萬個 splat、283MB）。用 three.js 的 splat renderer 載入，顯示載入進度，載完後在角落標出 splat 數量與檔案大小。
+2. 呈現：背景全黑，庭園從黑暗中慢慢亮起，像被一束光掃過；石燈籠、苔石、紅葉、松樹依序現身。splat 以粒子散開再聚合的方式進場。
+3. 鏡頭：自動沿著踏石小徑緩慢推進並輕微搖移，也可以用滑鼠拖曳環視、滾輪縮放；放開後回到自動運鏡。
+4. 效能：依距離與視錐排序、剔除，桌機維持 60 FPS；記憶體不夠時自動降低 splat 數量。
+5. 聲音：留一個背景音樂的播放鈕（我會另外放音檔），預設靜音。
+
+先做能載入並自由觀看的版本，再加進場動畫與運鏡。`
 }
 ];
 
@@ -4460,6 +4479,25 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
   url:"https://x.com/emollick/status/2122781928726437902",
   ptype:"重建",
   prompt:"Create a game in Blender and Unity where you are the pilot of a Coast Guard cutter who travelled back in time to the War of Independence to stop the British invasion of New York.\n\n（以上依作者敘述重建，以下為補充建議）Model the cutter, the British ships of the line and New York harbor in Blender with Python, export them to Unity, and build a playable third-person naval game: steering and throttle, a deck gun to shoot with, enemy ship AI, a win and lose condition. Do exactly what is asked; if you want to add a mechanic I did not ask for, propose it first and wait for my answer."
+},
+// ====== 2026-11-21 自動更新 ======
+{
+  cat:"工程研究",
+  title:"讓 Astra＋Codex 操作真實機器人更接近即時：拿杯子 11.1 分鐘縮到 3.4 分鐘",
+  desc:"Hao AI Lab（大學研究室）指出 robot-use agent 已能控制真實機器人，但太慢；他們把 GPT-6 Astra＋Codex 的機器人 agent 調到更接近即時：拿杯子任務從 11.1 分鐘降到 3.4 分鐘、摺毛巾約 18 分鐘降到約 6 分鐘，機器人實際在動的時間比例從 24% 拉到 84%。影片是雙臂機器人解魔術方塊，畫面疊著 agent 的 move_to_pose 呼叫與思考狀態。附部落格與程式碼。誠實保留：加速來自研究室做的 harness 工程，不是模型本身變快；影片以高倍速播放（畫面標 320×），3 到 6 分鐘離人類速度仍有距離。",
+  author:"@haoailab (Hao AI Lab)",
+  likes:159,
+  url:"https://x.com/haoailab/status/2123593596918235515",
+  ptype:"重建",
+  prompt:`你透過 Codex 控制一台雙臂機器人（有 move_to_pose、夾爪開合、取得相機畫面等工具）。目前完成「把杯子放到杯墊上」要 11 分鐘，機器人只有約四分之一的時間在動，其餘都在等你思考。請改造這個 agent 迴圈，讓它更接近即時：
+
+1. 先量測：記錄每一步的思考時間、工具呼叫時間、機器人實際運動時間，算出「機器人在動的時間比例」當基準。
+2. 邊動邊想：機器人執行一個動作時，就先規劃下一步，不要等動作結束才開始思考。
+3. 一次下多步：把可預期的連續動作（靠近、對位、夾取、抬起）合成一個動作序列一次送出，只在需要看結果的地方停下來看相機。
+4. 少看多做：只在關鍵檢查點取影像，降低影像解析度與張數；簡單步驟用較低的推理強度。
+5. 安全：每個序列仍要有碰撞與力道上限檢查，出錯時立刻停下並重新觀察。
+
+改完後用拿杯子和摺毛巾兩個任務各跑 5 次，回報完成時間、成功率、機器人運動時間比例的前後對照。`
 }
 ];
 
