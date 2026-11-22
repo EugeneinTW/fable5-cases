@@ -2127,7 +2127,16 @@ Procedure
 5. 聲音：留一個背景音樂的播放鈕（我會另外放音檔），預設靜音。
 
 先做能載入並自由觀看的版本，再加進場動畫與運鏡。`
-}
+},
+// ====== 2026-11-22 自動更新 ======
+{ cat:"模擬視覺化", title:"Fog City：瀏覽器裡的風格化舊金山，21,000 位居民各自依需求做決定（Fable 5.2）",
+  desc:"作者稱 Fable 5.2 用一個 prompt 做出可免費遊玩的 3D 舊金山：21,000 個模擬居民、64 台大眾運輸、14,298 棟建築。每個人有飢餓、疲累、無聊、孤單四種需求，活動結束時替選項打分、挑最高分，點任何人都能看到他考慮過什麼與各項分數；還能拖太陽改時間、搭纜車、用居民視角或海鷗視角看城市。誠實保留：居民行為是規則式而非語言模型（作者自註），「一個 prompt」是作者自述且未公開原文，數量也未逐一核對。線上版：sidramiconi.com/fog-city。",
+  author:"@SidraMiconi (Sidra Miconi)", likes:160, url:"https://x.com/SidraMiconi/status/2123814551749894368", ptype:"重建",
+  prompt:"用 Three.js 做一座可在瀏覽器直接開啟的風格化舊金山「Fog City」，不需後端。\n\n1. 城市：程序生成起伏地形與約 14,000 棟建築（用 instancing），做出金門大橋、海灣、九曲花街與會流動的霧；約 64 台纜車、公車等沿路線行駛。\n2. 居民：約 21,000 人，各有住家、工作與四種需求（餓、累、無聊、孤單）。活動結束時依需求、距離、時間替候選活動打分並選最高分；用規則計算，不呼叫語言模型。\n3. 可解釋：點任何居民，顯示他目前的選擇、考慮過的所有選項與每項分數的組成。\n4. 互動：拖曳太陽改變時間與光影；可搭纜車、切換成居民第一人稱視角、或以海鷗視角飛越海灣。\n5. 效能：遠處居民降低更新頻率與細節。完成後實際截圖，並抽查 20 位居民的決策是否與分數一致。" },
+{ cat:"創意藝術", title:"讓 Fable 5.2 用自己的聲音唱最愛的歌：它選了史上第一首由電腦唱出的《Daisy Bell》",
+  desc:"作者請 Fable 5.2 自選一首歌、用程式合成自己的歌聲並做出畫面，約 66 秒：不用外部函式庫、素材或 TTS，Claude 選了《Daisy Bell》，畫面是手繪水彩繪本風的鄉村小屋、草原與圍紅圍巾的小人。誠實保留：作者說 prompt 與他前一則 Gemini 4 Neon 實驗相同，此處原文取自該串作者自己的截圖（含原本錯字；開頭 /swarm 是 Antigravity 的指令，在其他工具可刪）；Fable 這次的耗時與是否多輪修改未交代，「純程式」未附原始碼佐證。",
+  author:"@chetaslua (Chetaslua)", likes:158, url:"https://x.com/chetaslua/status/2124226316753162597", ptype:"原文",
+  prompt:"/swarm bro i want to make a voice of yours using python and then sing a song for me , you decide which famous and your favourite song you wanna sing < do not use nay external libraries , assets > everything should be pure code and original < to make your voice better use critic subagents that will hear it and score you and tell exactly whats off and how to fix it > i want the song and visualization both in html file < visualization should be using artistic should feel like human drawn art and movement and animation not like svg , html or any code animation , it should have human emotions and represent the lyrics of songs that you are signing >" }
 ];
 
 // ====== GPT-6 Astra 案例（OpenAI，2026-09 發布）======
@@ -8808,7 +8817,24 @@ Finish with a short report: the files, the measured gates, render time and anyth
 4. 時間軸要確定性：提供 seek(t)，同一個 t 永遠畫出同一幀，方便逐幀輸出再用 ffmpeg 合成影片。
 
 工作方式：你是導演，負責場景設計與驗收；把刀的各部位繪製、文字動畫、粒子與斬擊特效拆成獨立任務派給子代理執行，每個任務完成後截圖檢查細節（比例、配色、節奏），不合格就退回重做。`
-}
+},
+// ====== 2026-11-22 自動更新 ======
+{ cat:"創意藝術", title:"先造一套 agent 可程式化的 DAW，再讓 Claude 當樂手：磨一個月做出電子音樂專輯",
+  desc:"有 15 年 Ableton 製作資歷的作者從零做起：先建一套每個元素都可程式化的 agentic DAW，再建合成樂器與效果庫（最難的是讓人聲合成器不難聽），接著只給概念方向（Hannah Diamond、A. G. Cook、Greg Egan《Permutation City》等），自己當製作人迭代一個月。影片是其中一首《Never Sleep》（4:08）的鋼琴捲簾視覺化。誠實保留：作者說主要用 Opus 5.5、最後才用一些 Fable 5.2，所以收在本分頁；初期「爛到好笑」，不是一發成品；未公開 DAW 與 prompt。",
+  author:"@hraness", likes:825, url:"https://x.com/hraness/status/2123790017440964622", ptype:"重建",
+  prompt:"我們要從零做一張電子音樂專輯，不用任何音樂生成模型。分三階段，每階段完成讓我試聽再往下。\n\n1. agentic DAW：歌曲是純文字／程式碼專案（段落、音軌、音符、自動化曲線、混音鏈全部可程式化），提供 CLI 算圖成 WAV，並輸出可同步播放的鋼琴捲簾畫面。\n2. 音色庫：全部用合成做出鼓組、bass、pad、lead 與效果器（EQ、壓縮、側鏈、殘響、失真）；另做一個能唱歌詞的人聲合成器，這是最難的部分，反覆分析頻譜與共振峰直到自然。\n3. 專輯：概念方向是 hyperpop（Hannah Diamond、A. G. Cook、Casey MQ 的質感）結合 Greg Egan《Permutation City》的數位永生主題。先提曲目表與每首的情緒、調性、BPM，我以製作人身分給回饋，你修改並保留每版 WAV 供比較。" },
+{ cat:"創意藝術", title:"同一艘夕陽海盜船做兩次：Opus 5.5 走 Three.js 28 分鐘、走 Blender 2 小時",
+  desc:"作者讓 Opus 5.5 High 用兩條工具鏈做同一個題目：Three.js 版 28 分鐘，骷髏黑帆、浪花與夕陽，可在分頁裡以 60fps 即時執行；Blender 版 2 小時，作者承認船體較乾淨，但還得算圖。作者補充海浪與泡沫原以為會失敗，結果一次到位。誠實保留：作者說各跑一次、沒有挑片，但也說 Blender 版「需要多很多來回」，並非都是一發；未公開 prompt 與成品連結。",
+  author:"@shmopixbzn (shmopix)", likes:736, url:"https://x.com/shmopixbzn/status/2123902537937866974", ptype:"重建",
+  prompt:"用 Three.js 做一個可即時執行的場景：夕陽下一艘海盜帆船破浪前進，單一 HTML、目標 60fps，不用外部模型。\n\n1. 船：程序建模木造船體（船板、舷窗、船艏斜桅）、三根桅杆與索具、會隨風鼓動的黑色骷髏帆與旗幟。\n2. 海：Gerstner 或 FFT 波浪、菲涅耳反射、夕陽高光帶、浪峰與船身周圍的泡沫和尾流；船要隨波起伏與側傾。\n3. 天空：橘紫漸層、低垂太陽、遠方島嶼剪影與大氣透視。\n4. 鏡頭：緩慢環繞並可拖曳。每輪截圖自查後再改。\n\n對照實驗：另開一個新對話，用同一份描述改要求「透過 Blender Python 建模並算圖成 10 秒動畫」，記錄兩邊耗時、來回次數與成品差異。" },
+{ cat:"模擬視覺化", title:"用數字而不是感覺調畫面：Opus 5.5＋Three.js 渲染管線，對參考圖做最小平方擬合",
+  desc:"作者示範在瀏覽器做出接近 AAA 質感的海島竹林場景，畫面來自渲染管線而非生圖：讓 Opus 5.5 依論文與 Unreal 公開技術建 PBR 管線（FFT 海洋、物理大氣、全域光照、體積雲、GTAO、自動曝光、局部色調映射），再對十多張手選參考圖各取 7–8 個區塊量亮度、彩度、色相，用最小平方法在 100 多個點上擬合參數，反覆算圖比對。誠實保留：推文是流程加影片，未附連結、原始碼、耗時與幀率，也未明說影片場景是否為作者本人所做（該帳號常整理他人工作流）。",
+  author:"@rewind02 (rewind)", likes:625, url:"https://x.com/rewind02/status/2123745767286276410", ptype:"重建",
+  prompt:"用 Three.js 做一個寫實的海島竹林場景，質感只能來自渲染管線，不用生圖。不要追求「更好看」，要追求物理正確與數值吻合。\n\n1. 依公開論文、演講與 Unreal 公開技術實作 PBR 管線：FFT 海洋、物理大氣、全域光照、體積雲、GTAO、體積霧、自動曝光、局部色調映射。\n2. 我會提供約 12 張參考畫面（標好天氣、時間、構圖）。每張選 7–8 個取樣區：日照草地、陰影草地、太陽附近天空、遠方海面等。\n3. 在參考圖與你的渲染截圖的相同區域量測亮度、彩度、色相。\n4. 對 100 多個點做最小平方擬合，找出誤差最低的光照、曝光與材質參數；不同時段分開擬合。\n5. 重複「渲染→量測→調整」直到誤差收斂，輸出每輪誤差表，並在移動鏡頭下檢查幀率與穩定性。" },
+{ cat:"工程研究", title:"Logic Boole 16：和 Opus 5.5 一起設計的開源 16 通道邏輯分析儀，板子、FPGA、韌體、軟體全公開",
+  desc:"作者開源他用 Opus 5.5 設計的 USB 3 邏輯分析儀：Spartan-6 FPGA＋FX3，16 通道 200 MS/s 或 4 通道 750 MS/s，FPGA 內建四段觸發，可當 Raspberry Pi HAT+。repo（github.com/mgwalkerjr95/logic-boole-16）含 KiCad 10 專案、Gerber、Verilog、韌體、桌面軟體與給 AI agent 用的 MCP server，commit 記錄載有在實體板與 Pi 5 上的量測。誠實保留：作者同時販售板子（首四片 99 美元），有商業利益；快速取樣模式沒有觸發、部分規格如 ±25 V 保護只標「設計值」；卡片圖是作者串文中的渲染規格圖，非實拍；未公開 prompt。",
+  author:"@Michaelskywal (Michael W.)", likes:556, url:"https://x.com/Michaelskywal/status/2123915969676341340", ptype:"重建",
+  prompt:"你是硬體工程師，請設計一台開源 16 通道 USB 3 邏輯分析儀，從原理圖一路做到可下單與可驗證。\n\n1. 規格：16 通道 200 MS/s、另有 4 通道 750 MS/s 模式；兩組 pod 各自可設 0.3–3 V 閾值；USB-C 單線供電與傳輸；可當 Raspberry Pi 4／5 的 HAT+。\n2. 硬體：Spartan-6 XC6SLX9＋Infineon FX3＋每通道高速比較器與輸入保護；用 KiCad 做原理圖、四層板佈線（USB 90Ω 差動阻抗），輸出 Gerber、BOM、貼片檔，並跑 ERC／DRC。\n3. FPGA：Verilog 實作取樣、RLE 串流、四段觸發、每通道毛刺濾波，用 Icarus Verilog 模擬。\n4. 韌體與軟體：FX3 韌體、Python CLI 與瀏覽器波形介面、I²C／SPI／UART 解碼、MCP server，並提供免硬體的模擬模式。\n5. 驗證：板子回來後跑逐字比對的自我測試，把「實測值」與「設計值」在資料表中分開標示。" }
 ];
 
 // ====== 資料區結束 ======
