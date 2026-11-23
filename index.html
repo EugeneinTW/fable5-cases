@@ -6187,6 +6187,17 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
 5) 介面：每張工單顯示「How it decided」面板，逐題列出題目、需要的答案、信心值百分比、YES／NO、是否命中，最下面顯示最後判定的等級與一句說明。
 6) 回測流程：遇到判錯的工單，把工單與期望等級加進測試集，由 LLM 調整題目措辭或判定順序，再對所有舊工單重跑，確認沒有把原本判對的弄錯才合併。
 7) 同樣的做法再做其他分類器：支援類別與客戶狀態、團隊是否已回覆、後續追蹤時機、指定給哪位隊友、對話分組，各自拆成 2–13 題。`
+},
+// ====== 2026-11-23 自動更新 ======
+{
+  cat:"工程研究",
+  title:"別再 @ 你的 agent：讓 Jev 判斷 Slack／Discord 訊息需不需要 agent 回應",
+  desc:"Rivet 共同創辦人 Nathan Flurry 的做法：頻道裡每則新訊息先丟給 Jev 判斷「agent 該不該回」，不用再手動 @ 機器人；附圖是 Discord 裡他 @ 自家 agent「Gregory」的對話，用來說明想擺脫的痛點，範例程式碼另在串文回覆中連結。誠實保留：推文沒給準確率、延遲或成本數字，附圖是問題示意而非 Jev 判斷結果的畫面；有網友回覆指出更難的是判斷 agent 何時該保持沉默。",
+  author:"@NathanFlurry (Nathan Flurry)",
+  likes:167,
+  url:"https://x.com/NathanFlurry/status/2124173743048339924",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）替我們在 Slack／Discord 的 agent 做一個「要不要回應」的閘門，讓成員不必再 @ 它。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n1) 監聽頻道所有新訊息；state 放新訊息全文、發送者、最近 10 則對話（含 agent 自己的發言）、agent 的名字與職責說明（例如「負責部署、CI 與 on-call 問題」）。\n2) Noul「這則訊息是不是在對 agent 說話或要求它做事？」\n3) Noul「這則訊息是不是在回應 agent 上一則發言（追問、確認、糾正）？」\n4) Choice「訊息屬於哪類」：明確任務請求／問 agent 職責範圍內的問題／人與人之間的閒聊／公告或機器人通知／其他。\n5) 程式判定：第 2 或第 3 題為是且信心值 ≥ 0.7，或第 4 題為前兩類 → 交給大模型產生回覆；信心值落在 0.4–0.7 之間 → 只加一個 👀 表情，不出聲，被點了再回；其餘忽略。\n6) 記錄每則訊息的三題答案、信心值、延遲與成本，提供一週報表：觸發率、被成員用 @ 補叫的漏判次數、被抱怨多嘴的誤判次數，用來調題目措辭與門檻。"
 }
 ];
 
@@ -8834,7 +8845,18 @@ Finish with a short report: the files, the measured gates, render time and anyth
 { cat:"工程研究", title:"Logic Boole 16：和 Opus 5.5 一起設計的開源 16 通道邏輯分析儀，板子、FPGA、韌體、軟體全公開",
   desc:"作者開源他用 Opus 5.5 設計的 USB 3 邏輯分析儀：Spartan-6 FPGA＋FX3，16 通道 200 MS/s 或 4 通道 750 MS/s，FPGA 內建四段觸發，可當 Raspberry Pi HAT+。repo（github.com/mgwalkerjr95/logic-boole-16）含 KiCad 10 專案、Gerber、Verilog、韌體、桌面軟體與給 AI agent 用的 MCP server，commit 記錄載有在實體板與 Pi 5 上的量測。誠實保留：作者同時販售板子（首四片 99 美元），有商業利益；快速取樣模式沒有觸發、部分規格如 ±25 V 保護只標「設計值」；卡片圖是作者串文中的渲染規格圖，非實拍；未公開 prompt。",
   author:"@Michaelskywal (Michael W.)", likes:556, url:"https://x.com/Michaelskywal/status/2123915969676341340", ptype:"重建",
-  prompt:"你是硬體工程師，請設計一台開源 16 通道 USB 3 邏輯分析儀，從原理圖一路做到可下單與可驗證。\n\n1. 規格：16 通道 200 MS/s、另有 4 通道 750 MS/s 模式；兩組 pod 各自可設 0.3–3 V 閾值；USB-C 單線供電與傳輸；可當 Raspberry Pi 4／5 的 HAT+。\n2. 硬體：Spartan-6 XC6SLX9＋Infineon FX3＋每通道高速比較器與輸入保護；用 KiCad 做原理圖、四層板佈線（USB 90Ω 差動阻抗），輸出 Gerber、BOM、貼片檔，並跑 ERC／DRC。\n3. FPGA：Verilog 實作取樣、RLE 串流、四段觸發、每通道毛刺濾波，用 Icarus Verilog 模擬。\n4. 韌體與軟體：FX3 韌體、Python CLI 與瀏覽器波形介面、I²C／SPI／UART 解碼、MCP server，並提供免硬體的模擬模式。\n5. 驗證：板子回來後跑逐字比對的自我測試，把「實測值」與「設計值」在資料表中分開標示。" }
+  prompt:"你是硬體工程師，請設計一台開源 16 通道 USB 3 邏輯分析儀，從原理圖一路做到可下單與可驗證。\n\n1. 規格：16 通道 200 MS/s、另有 4 通道 750 MS/s 模式；兩組 pod 各自可設 0.3–3 V 閾值；USB-C 單線供電與傳輸；可當 Raspberry Pi 4／5 的 HAT+。\n2. 硬體：Spartan-6 XC6SLX9＋Infineon FX3＋每通道高速比較器與輸入保護；用 KiCad 做原理圖、四層板佈線（USB 90Ω 差動阻抗），輸出 Gerber、BOM、貼片檔，並跑 ERC／DRC。\n3. FPGA：Verilog 實作取樣、RLE 串流、四段觸發、每通道毛刺濾波，用 Icarus Verilog 模擬。\n4. 韌體與軟體：FX3 韌體、Python CLI 與瀏覽器波形介面、I²C／SPI／UART 解碼、MCP server，並提供免硬體的模擬模式。\n5. 驗證：板子回來後跑逐字比對的自我測試，把「實測值」與「設計值」在資料表中分開標示。" },
+// ====== 2026-11-23 自動更新 ======
+{
+  cat:"工程研究",
+  title:"40 美元 ESP32-S3 圓形螢幕做成 Pixel Watch 風介面：自寫驅動，60 FPS 零掉幀",
+  desc:"轉述：原作者為 YouTube 創作者 PopaSpinka。他拿 Waveshare ESP32-S3（466×466 圓形 AMOLED、無 GPU）開發板，原廠韌體捲動時圖示會撕裂；改用 Claude Code 從零寫顯示驅動、觸控驅動與繪圖庫（不用 LVGL、Arduino_GFX），再由 Opus 5.5 把 Google 公開的 Wear OS 範例移植進來：滾動數字、Pixel Watch 卡片牆、天氣、音樂播放器，宣稱 60 FPS、零掉幀、靜止時不重繪，兩個晚上完成，已開源可從 Chrome 直接燒錄。誠實保留：推文為搬運號轉述，未附 repo 連結與 prompt；影片中也呈現第一次用標準驅動時畫面閃爍的失敗版本。",
+  author:"@RetroChainer（轉述 PopaSpinka）",
+  likes:1059,
+  url:"https://x.com/RetroChainer/status/2124205345606103149",
+  ptype:"重建",
+  prompt:"我有一塊 Waveshare ESP32-S3 開發板，466×466 圓形 AMOLED、電容觸控、沒有 GPU。目標：做出 Pixel Watch 等級流暢度的手錶介面，60 FPS、捲動不撕裂。\n\n1. 不用原廠函式庫（不用 LVGL、Arduino_GFX）。依晶片 datasheet 從零寫 QSPI 顯示驅動（雙緩衝或部分刷新、DMA、與面板 TE 同步避免撕裂）與觸控驅動（手勢：拖曳、慣性捲動、點擊）。\n2. 寫一個輕量繪圖庫：抗鋸齒圓角、字型點陣快取、alpha 混合、髒區域重繪；畫面靜止時不重繪以省電。\n3. 移植 Google 開源 Wear OS 範例的設計：錶面（滾動數字時間＋日期＋天氣）、可上下滑的卡片牆、天氣頁、音樂播放器。\n4. 加上 FPS 與掉幀計數的除錯覆蓋層，每次修改後回報實測數字，直到穩定 60 FPS。\n5. 提供 Web Serial 燒錄頁，讓別人用 Chrome 直接刷入韌體，並整理成開源 repo 與 README。"
+}
 ];
 
 // ====== 資料區結束 ======
