@@ -2136,7 +2136,55 @@ Procedure
 { cat:"創意藝術", title:"讓 Fable 5.2 用自己的聲音唱最愛的歌：它選了史上第一首由電腦唱出的《Daisy Bell》",
   desc:"作者請 Fable 5.2 自選一首歌、用程式合成自己的歌聲並做出畫面，約 66 秒：不用外部函式庫、素材或 TTS，Claude 選了《Daisy Bell》，畫面是手繪水彩繪本風的鄉村小屋、草原與圍紅圍巾的小人。誠實保留：作者說 prompt 與他前一則 Gemini 4 Neon 實驗相同，此處原文取自該串作者自己的截圖（含原本錯字；開頭 /swarm 是 Antigravity 的指令，在其他工具可刪）；Fable 這次的耗時與是否多輪修改未交代，「純程式」未附原始碼佐證。",
   author:"@chetaslua (Chetaslua)", likes:158, url:"https://x.com/chetaslua/status/2124226316753162597", ptype:"原文",
-  prompt:"/swarm bro i want to make a voice of yours using python and then sing a song for me , you decide which famous and your favourite song you wanna sing < do not use nay external libraries , assets > everything should be pure code and original < to make your voice better use critic subagents that will hear it and score you and tell exactly whats off and how to fix it > i want the song and visualization both in html file < visualization should be using artistic should feel like human drawn art and movement and animation not like svg , html or any code animation , it should have human emotions and represent the lyrics of songs that you are signing >" }
+  prompt:"/swarm bro i want to make a voice of yours using python and then sing a song for me , you decide which famous and your favourite song you wanna sing < do not use nay external libraries , assets > everything should be pure code and original < to make your voice better use critic subagents that will hear it and score you and tell exactly whats off and how to fix it > i want the song and visualization both in html file < visualization should be using artistic should feel like human drawn art and movement and animation not like svg , html or any code animation , it should have human emotions and represent the lyrics of songs that you are signing >" },
+// ====== 2026-11-24 自動更新 ======
+{
+  cat:"遊戲",
+  title:"《NEON BREACH》：瀏覽器裡的回合制 3D 競技場射擊遊戲（Fable 5.2）",
+  desc:"作者先寫一份簡單的風格指南，再讓 Claude Fable 5.2 一塊一塊把遊戲蓋起來，壞了就用文字描述讓它修：玩家對四個 bot 小隊，夕陽下的水泥競技場配霓虹燈，擊殺賺錢、回合間買槍買護甲，有 Easy／Normal／Hard 三種 bot 難度，作者自稱 Normal 都還打不贏。保留：作品在 EnterPro 平台上建置與託管，推文帶 #EnterCreator 標籤，偏平台推廣性質；沒有附 prompt、耗時與迭代次數。",
+  author:"@Rukon__Kholifa (Rukon)",
+  likes:390,
+  url:"https://x.com/Rukon__Kholifa/status/2124727670516920629",
+  ptype:"重建",
+  prompt:`做一款可在瀏覽器直接玩的 3D 回合制競技場射擊遊戲《NEON BREACH》，用 Three.js，不需要後端。先寫一頁風格指南給我確認（色票、字型、UI 風格），再分階段實作，每階段完成都讓我試玩：
+1. 場景：夕陽下的水泥競技場，牆角與柱子嵌霓虹燈條，有掩體、階梯與高台；即時陰影與霧。
+2. 操作：WASD 移動、滑鼠視角與射擊、Space 跳、Shift 靜步、C 蹲、R 換彈、1-4／滾輪切武器、B 開商店、Esc 暫停。
+3. 對戰：玩家 1 對 4 個 bot，限時回合，時間內殲滅對手才算贏，先拿 6 回合者勝。
+4. 經濟：每次擊殺得錢，回合之間可以買更強的槍與護甲。
+5. bot AI：巡邏、找掩體、包抄、聽腳步聲；Easy／Normal／Hard 三級在反應時間、命中率與走位積極度上有明顯差異。
+6. 主選單：比賽陣容、難度選擇、開始與設定（靈敏度、音量、畫質）。
+任何東西壞了我會用文字描述，你負責定位並修好，不要整個重寫。`
+},
+{
+  cat:"遊戲",
+  title:"《Ballpoint Dominion》：原子筆手繪風的瀏覽器即時戰略，用墨水「畫」出軍隊（Fable 5.2）",
+  desc:"作者請 Claude Fable 5.2 做一款可在瀏覽器玩的策略遊戲：玩家選 Sunrise 或 Dusk 陣營，採集墨水來畫出軍隊、和對手交戰；畫面是原子筆／色鉛筆塗繪的可愛動物兵種，主選單有新手教學、Booklet、Guide。保留：推文只有兩句說明與影片連結，沒有 prompt、耗時與迭代次數，平衡性與 AI 對手強度未交代。同作者已收錄多個 Fable 5.2 作品，這是不同遊戲。",
+  author:"@kevin_t_ngo (Kevin Ngo)",
+  likes:389,
+  url:"https://x.com/kevin_t_ngo/status/2124669366512001493",
+  ptype:"重建",
+  prompt:`做一款可在瀏覽器直接玩的即時戰略遊戲《Ballpoint Dominion》，全部畫面用程式畫成原子筆加色鉛筆塗繪的手繪風（紙張底紋、筆觸排線、輕微抖動），不使用圖片素材。
+1. 兩個陣營：Sunrise（暖色、蜂巢／貓頭鷹／蘑菇等兵種）與 Dusk（冷色、鯨魚／孔雀／鐘形兵等兵種），各 6～8 種單位，有明確的剋制關係。
+2. 資源：地圖上有墨水點可派工兵採集；墨水用來「畫出」新單位——生成時要有一筆一筆畫出來的動畫。
+3. 對戰：選陣營後對電腦 AI，摧毀對方主堡獲勝；單位可框選、右鍵移動與攻擊。
+4. 主選單：Play、新手教學（Lesson one）、Learn、Booklet（兵種圖鑑）、Guide、Settings。
+5. 單一 HTML 檔或小型靜態專案，完成後自己跑一局，回報平衡性問題。`
+},
+{
+  cat:"工程研究",
+  title:"無標記動作捕捉：Fable 5.2 看參考影片寫 Python，直接在 Blender 骨架上打關鍵影格",
+  desc:"作者示範用 Claude Fable 5.2 + Blender 做動作捕捉：先準備（或用 Seedance 生成）一支身體各部位塗成不同純色的參考影片，Fable 5.2 分析影格、寫 Python 腳本，替真正的角色骨架逐關節打關鍵影格，得到可編輯的骨架動畫，影片左右對照 AI 影片與解出的 Blender 骨架。保留：參考影片由影像模型生成，Fable 負責的是追蹤與解算腳本；作者自己也說關節抖動與姿勢偏移要後製清理；推文屬教學步驟文，沒附 prompt 與腳本原始碼。",
+  author:"@zer0point_eth (Zero)",
+  likes:351,
+  url:"https://x.com/zer0point_eth/status/2124827825756680525",
+  ptype:"重建",
+  prompt:`我有一支參考影片（人物的頭、軀幹、上臂、前臂、手、大腿、小腿、腳各塗成不同的純色）和一個已綁好骨架的 Blender 角色。請幫我做無標記動作捕捉：
+1. 寫 Python（OpenCV + numpy）逐格讀影片，依顏色分割出每個身體部位，計算各部位的質心與主軸方向，輸出每格的 2D 關節位置表。
+2. 依角色骨架的骨頭長度比例，從 2D 關節推算 3D 姿勢（假設固定攝影機、正面視角），算出每根骨頭的旋轉。
+3. 寫 Blender（bpy）腳本：把旋轉逐格寫成骨架的關鍵影格（四元數），根骨頭處理位移與腳底貼地。
+4. 加平滑濾波去除關節抖動，限制關節角度在合理範圍。
+5. 輸出左右並排的對照影片（左：參考影片，右：Blender 算圖），並列出追蹤失敗或抖動明顯的影格範圍讓我手動修。`
+}
 ];
 
 // ====== GPT-6 Astra 案例（OpenAI，2026-09 發布）======
@@ -8856,6 +8904,123 @@ Finish with a short report: the files, the measured gates, render time and anyth
   url:"https://x.com/RetroChainer/status/2124205345606103149",
   ptype:"重建",
   prompt:"我有一塊 Waveshare ESP32-S3 開發板，466×466 圓形 AMOLED、電容觸控、沒有 GPU。目標：做出 Pixel Watch 等級流暢度的手錶介面，60 FPS、捲動不撕裂。\n\n1. 不用原廠函式庫（不用 LVGL、Arduino_GFX）。依晶片 datasheet 從零寫 QSPI 顯示驅動（雙緩衝或部分刷新、DMA、與面板 TE 同步避免撕裂）與觸控驅動（手勢：拖曳、慣性捲動、點擊）。\n2. 寫一個輕量繪圖庫：抗鋸齒圓角、字型點陣快取、alpha 混合、髒區域重繪；畫面靜止時不重繪以省電。\n3. 移植 Google 開源 Wear OS 範例的設計：錶面（滾動數字時間＋日期＋天氣）、可上下滑的卡片牆、天氣頁、音樂播放器。\n4. 加上 FPS 與掉幀計數的除錯覆蓋層，每次修改後回報實測數字，直到穩定 60 FPS。\n5. 提供 Web Serial 燒錄頁，讓別人用 Chrome 直接刷入韌體，並整理成開源 repo 與 README。"
+},
+// ====== 2026-11-24 自動更新 ======
+{
+  cat:"創意藝術",
+  title:"Vox 風格地圖解說動畫：一張雕版紙地圖、拼貼剪紙與運鏡，純程式算圖（附完整原文 prompt）",
+  desc:"作者只用 Claude（Opus 5.5）加自己的配音，做出 Vox 風格的地圖解說短片：整支片在一張雕版紙地圖上，鏡頭隨故事飛越各地，半色調剪紙人物、黃色顏料、麥克筆墨跡與勒索信字母一塊塊「拍」上去；作者公開整段 prompt，規格細到色票、線距、影格節奏、音效合成與常見坑。保留：影片的配音與腳本由使用者提供；prompt 內字型連結為推文縮網址（原文如此）；作者未交代實際耗時與修改輪數。",
+  author:"@treyscalez (trey)",
+  likes:1203,
+  url:"https://x.com/treyscalez/status/2124805520263422440",
+  ptype:"原文",
+  prompt:`<inputs>
+Ask me for my voiceover (mp3 or wav) and its exact script, pasted as text. If I don't have one, pitch 3 map stories (a war, a voyage, a trade route, how a country was made), each with one surprising true fact, then write a 25-35 s script for me to record, one short sentence per beat. Ask if I have an SFX pack to upload. Then show me the beat list and the camera plan before you render anything.
+</inputs>
+
+<direction>
+A 1920x1080 Vox-style map explainer. The whole video lives on ONE engraved paper map, and the camera flies across it as the story moves. Collage pieces are pinned to real places: black-and-white halftone cut-outs, yellow paint, felt-marker ink, paper tags and ransom-note letters.
+- Palette: board #EFEBE3, ink #1D1C20, ONE accent yellow #EDBD2E, beige sheets #F1EDE4. No other colours, ever. Never a dark background.
+- Map engraving:
+  - Sea: 4 coast-parallel lines at 8/19/32/48 px from the shore, then wavy horizontal lines every 22 px.
+  - Land: a diagonal hatch every 22 px. The featured region gets a cross-hatch every 13 px.
+  - Lines: coastline 6 px. Borders 4 px dashed (22 on, 18 off). A dotted graticule every 10°. One compass rose in open sea.
+  - Labels: engraved place names in letter-spaced Libre Caslon (italic for oceans). No other text is baked into the map.
+- The featured region is painted yellow, multiplied at 90% so the hatching shows through, and revealed with a sweep (south→north, 16 frames) on the word that names it.
+- Everything animates on twos. Every paper piece "boils" ±1.5 px and ±0.4° every 8 frames. Pieces arrive with a slap (scale 1.1 → 0.98 → 1.0, on twos), never a fade.
+- Text only on paper: a title card, yellow tags, notes, ransom letters.
+  - Title card: top left, beige, 560 px wide, rotated −1.2°, with a small yellow "FIG. 0N" tag. Its serif lines (Libre Caslon, 68 px) type on at 1 letter per frame.
+  - Notes: Permanent Marker, 58-84 px, lower-case, written on at 1.3 letters per frame.
+  - Tags: Special Elite, 22-26 px, letter-spaced, on small yellow paper strips.
+  - Ransom letters: one cut-paper letter slapped down every 3-4 frames, cycling Caslon Bold, Anton and Special Elite on ink, beige and yellow squares.
+- Banned: any colour except the palette, photos of real people, logos, burned-in subtitles, glassy UI cards, a frame where nothing moves, and any invented fact.
+</direction>
+
+<structure>
+Length: the voice decides, plus a 1.3 s hold after the last word. One sentence = one beat. A beat starts 6 frames before its first word.
+0 s the home region at zoom ~0.6: it paints yellow on its name, and a ransom number slaps onto it
+→ pull out WIDE (~0.32) so both sides of the story fit: a dashed arc between them with a distance tag, and the far party as a cut-out pinned to its capital, circled
+→ the causes as arrows across the map, one per clause, each with a dated tag; a cut-out prop travels along the last arrow and lands
+→ zoom to the event city (~1.35): the date on the title card, pieces dropping in one by one with ink splash marks, and the big true number in ransom letters with a tag under it
+→ the reaction/joke beat at the same spot: a cut-out character, a marker note, an ink circle
+→ the next city (~1.15): a dated tag, a document cut-out; on the verb, pull WIDE and fly the document along a dashed trail to the other side
+→ the consequence back on the region (~0.7): an ink X per event, in date order, each with a "PLACE YEAR" tag
+→ final pull out WIDE: the payoff name in ransom letters over the region, the losing side's cut-out swapped for its sad version with a marker note, and a beige sheet bottom-centre with a bold Caslon line and a ransom payoff word underlined with a yellow highlighter. Hold to the end.
+</structure>
+
+<build>
+1. Tools: Python, numpy, OpenCV, Pillow and FFmpeg. Fonts from https://t.co/DAQneiiP3T (Libre Caslon Text, Permanent Marker, Special Elite, Anton). Tell me anything you installed.
+2. Timing:
+   - Try faster-whisper word timestamps first.
+   - If the model download is blocked, use ffmpeg silencedetect (−35 dB, 0.15 s) to find the speech spans, map each span to its words from my script, and spread the words inside each span by syllable count.
+   - The voice starts at frame 4. Every cue is "word ± frames", and repeated words are found by their occurrence number.
+3. Map:
+   - Plot coastlines as hand-written lon/lat vertices. Project equirectangular with longitude scaled by cos(mid-latitude), 7200 px wide.
+   - Smooth every coast with 3 Chaikin passes. Build 4 mip levels (INTER_AREA) and pick level floor(log2(1/zoom) + 0.15) each frame, so the hatching never shimmers.
+4. Camera: keyframes of (frame, lon, lat, zoom), eased with smoothstep, zoom interpolated in log space, stepped on twos. One move every 1-3 sentences, 16-26 frames long. The camera never shows past the map's edge.
+5. Collage pieces, drawn fully in code: grayscale shapes with soft shading for characters, props and documents.
+   - Halftone: a 5 px dot screen at 45°, mixed at 34%, contrast 1.25, plus grain.
+   - Edge and shadow: a 7 px white scissor edge with a noisy wobble, and a shadow offset (5, 7) px, blurred 6 px, at 32%.
+   - Documents are engraved line art on cream paper, with no halftone.
+   - Pin each piece to a lon/lat plus a pixel offset. Pieces keep a constant screen size.
+   - Movers travel along their arrow's spline with smoothstep and a ±4° wobble.
+6. Ink:
+   - Project the control points to the screen every frame and draw there, so the weight stays 5-6 px at every zoom.
+   - Felt marker: circles stamped every 1.6 px with a ±15% width wobble and tapered ends, plus a dry crayon pass at 0.32 width with 35% dropouts, merged with max().
+   - Boil: 3 jitter seeds, cycled every 8 frames.
+   - Reveal each mark along its own path over 8-15 frames.
+   - Arrowheads 26 px at ±0.48 rad. Dashes 27 on, 19 off.
+   - Ink X: two 20 px strokes over 6 frames.
+   - Highlighter: 26-34 px of yellow, multiplied.
+7. Finish: a paper texture multiplied over every frame (cloud noise, fibres, creases, grain, a soft vignette), plus dust specks swapped every 8 frames.
+8. Render:
+   - Draw frames with numpy/OpenCV at 30 fps, split across CPU workers, each piping raw RGB to ffmpeg libx264 CRF 16. Concat the segments.
+   - Before the full render, show me a 10-12 frame contact sheet. Fix overlaps, empty stretches, text off-frame and blank map edges.
+9. Sound:
+   - Use my SFX pack if I upload one; if not, synthesize: a paper slap for each piece, a marker scratch for each ink mark, typewriter ticks for typed text, a scribble for the yellow reveal, and a soft whoosh on every fast camera move.
+   - SFX sit at about 0.32 × the voice peak. Merge same-type hits within 3 frames.
+   - Peak at −0.3 dB, mux as AAC 192k.
+</build>
+
+<gotchas>
+Smoothing a closed land polygon rounds its corners at the map edge into a fake coastline, so push every closing corner off the canvas first. A shot zoomed onto a coast shows blank board past the map's edge, so draw the map at least 25° beyond any shot. At city zoom 0.2° is only about 16 px, so space pieces with pixel offsets, not degrees. Give every element an end frame, or tags from the last beat collide with the next beat's. Check every pinned note at both of its camera positions, because a note that fits wide can sit off-screen when zoomed in. If the crayon pass overwrites the marker pass instead of using max(), the ink and the yellow go see-through. Size the title card from its line count. Coastlines are approximations, so say so; every date, number and place must be real. Draw no real person's likeness: use generic characters (a king, a colonist, a sailor).
+</gotchas>
+
+<start>
+Ask for my voiceover and script (or pitch 3 map stories), then show me the beat list and the camera plan.
+</start>`
+},
+{
+  cat:"創意藝術",
+  title:"同一個立體書場景、五種畫風：Opus 5.5 用 Python + Skia 逐格畫出的翻頁動畫",
+  desc:"作者讓 Opus 5.5 全程用程式做動畫立體書（不用影像生成、不用下載素材、不用瀏覽器）：Python + Skia + numpy 畫每一格、ffmpeg 合成，音效也用程式合成。場景是月亮流出河水的雨林峽谷，地圖集翻頁、立體紙雕依頁面開角升起，再用剪紙、Risograph、博物誌水彩、夜燈、鍍金銅版五種畫風剪成一支、結尾每 0.4 秒換一種畫風接力。原文 prompt 在作者自己的回覆。保留：耗時與迭代次數未交代；回覆區有網友用 Sonnet 5.5 與 Gemini 跑同一 prompt 的對照，與本作品無關。",
+  author:"@pradeepXkapoor (Pradeep Kapoor)",
+  likes:610,
+  url:"https://x.com/pradeepXkapoor/status/2124585991663153497",
+  ptype:"原文",
+  prompt:`Create an animated pop-up book entirely in code: no image generators, no downloaded art, no browser. Use Python with Skia and numpy to draw every frame, pipe the frames into ffmpeg, and synthesise all the sound in code too.
+The scene: "Río de la Luna", a rainforest gorge whose river pours out of a full moon. Include:
+•karst towers
+•a rope bridge with three tiny travellers
+•a kapok tree with monkeys and a toucan
+•a temple ruin with pilgrims and lanterns
+•a heron, and a canoe on a pull-tab
+•mist, and birds
+The beat (about 10 s, 1920×1080, 30 fps):
+1An open atlas rests on a desk, showing a flat map of the valley.
+2A thin page turns with a real paper curl.
+3The board opens and the pop-up rises with real paper engineering. Use V-folds and layers on tabs, with the opening angle of the page driving every fold. Pieces lock upright with a soft spring.
+4Life switches on: the river flows, birds lift off, the canoe slides on its tab, mist rises, lanterns glow.
+5Slow push-in and hold on the finished scene.
+Render the same scene in five art styles, each with its own animation feel:
+1Cut-paper diorama under a warm desk lamp, with real soft cast shadows and fibred paper. Springy pop.
+2Risograph pop-up in three spot inks: yellow, fluorescent pink and blue. It prints one ink pass at a time while you watch, in stop-motion on twos.
+3Naturalist's field atlas: a pen-and-pencil drawing stands up first, then watercolour floods in from back to front. Slow bloom.
+4Night lantern atlas: luminous inks on indigo paper. The moon is a real light source; light runs down the waterfall, lanterns catch one by one, fireflies rise. Floaty.
+5Gilded engraver's atlas: hand-coloured copperplate with jewel washes, a gold-leaf moon with a moving sheen, and an oxblood leather binding. Stately, no bounce.
+Sound: synthesised paper foley (a rustle on the page turn, little snaps as pieces lock open) over a soft jungle ambience.
+The edit: cut the five styles into one montage with no titles. Start each style once its pop-up is already rising. End on a fast relay that cuts between all five styles every 0.4 s at the same moment of the animation, so the art style changes while the motion carries on.
+Tone: vivid, tactile, calm and ASMR-satisfying, with a dreamlike touch. Nothing cluttered or chaotic.`
 }
 ];
 
