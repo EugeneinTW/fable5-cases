@@ -2184,6 +2184,24 @@ Procedure
 3. 寫 Blender（bpy）腳本：把旋轉逐格寫成骨架的關鍵影格（四元數），根骨頭處理位移與腳底貼地。
 4. 加平滑濾波去除關節抖動，限制關節角度在合理範圍。
 5. 輸出左右並排的對照影片（左：參考影片，右：Blender 算圖），並列出追蹤失敗或抖動明顯的影格範圍讓我手動修。`
+},
+// ====== 2026-11-25 自動更新 ======
+{
+  cat:"遊戲",
+  title:"一週燒掉 6,528 美元 Fable 5.2 token：在 Unreal Engine 5.9 從零做出多種族 MMO 風奇幻 RPG",
+  desc:"作者用 Claude Fable 5.2 一週內在新版 Unreal Engine 5.9 從零建出奇幻 RPG：五個種族（各有男女）、16 個含戰鬥的任務、AI 玩家、6 種坐騎（腳部 IK）與可飛行的滑翔翼，畫面有隊伍框、任務追蹤、小地圖與區域聊天。誠實保留：花費約 6,528 美元，同時開 5 個 Claude Ultra 訂閱加 1 個 ChatGPT 訂閱、在 24GB VRAM 的雲端主機上跑；美術與音效不是 Fable 做的，而是透過 Higgsfield MCP 產生（含 Tripo 上的 119 個 3D 模型與 1000 多張圖）。",
+  author:"@Stefan_3D_AI (Stefan 3D AI)",
+  likes:2666,
+  url:"https://x.com/Stefan_3D_AI/status/2125143321098264592",
+  ptype:"重建",
+  prompt:`你透過 MCP 操作 Unreal Engine 5.9，並可呼叫 Higgsfield MCP（圖像、音效）與 Tripo（3D 模型）產生素材。目標：從零做一款可玩的第三人稱奇幻 RPG，長時間自主推進，每完成一個里程碑就打包可執行版本給我驗收。
+1. 世界：一片含峽谷、瀑布、森林與城鎮的開放區域，配體積光與動態天空；小地圖與區域名稱提示。
+2. 角色：五個可選種族，各有男女版本；職業至少法師、騎士、遊俠、弓箭手，各有 4 個技能放在快捷列。
+3. 任務：16 個任務，包含對話、收集、驅趕／討伐怪物的戰鬥任務；畫面右側顯示任務追蹤。
+4. 世界活人感：AI 控制的「其他玩家」會在城鎮走動、組隊、在區域聊天頻道發言。
+5. 移動：6 種坐騎，腳部 IK 要貼合地形；可從高處展開滑翔翼飛行。
+6. 素材：模型用 Tripo 產生後在 UE 統一比例與材質，圖示與貼圖用 Higgsfield，音效與環境音也由 Higgsfield 生成；所有素材命名規則一致並記錄來源。
+7. 每個系統完成後自己跑一輪遊玩測試、截圖比對問題再修，最後輸出一支遊玩示範影片。`
 }
 ];
 
@@ -9021,6 +9039,37 @@ Render the same scene in five art styles, each with its own animation feel:
 Sound: synthesised paper foley (a rustle on the page turn, little snaps as pieces lock open) over a soft jungle ambience.
 The edit: cut the five styles into one montage with no titles. Start each style once its pop-up is already rising. End on a fast relay that cuts between all five styles every 0.4 s at the same moment of the animation, so the art style changes while the motion carries on.
 Tone: vivid, tactile, calm and ASMR-satisfying, with a dreamlike touch. Nothing cluttered or chaotic.`
+},
+// ====== 2026-11-25 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"一張售屋 DM 平面圖 → Blender 自己蓋起來的 3 房公寓娃娃屋，鏡頭一路走進客廳與廚房",
+  desc:"作者只給 Claude Opus 5.5 一張 90.73 m² 三房公寓的建案平面圖，想要一份家具配置草稿。Opus 依比例尺換算（每公尺 86 像素）描出所有牆線；第一輪自動判讀把門放到房間中央，於是改在 1 公尺網格上逐一重讀門的位置；沙發、床、廚具與衣櫃都依平面圖上的符號用程式建模；每塊牆與地磚都是 Blender 裡獨立物件，影片中公寓在 DM 上一塊塊長出來，鏡頭繞著娃娃屋轉、天花板蓋上後走進客廳再到廚房。738 格，單張 GPU 算圖 3 小時。作者把流程包成免費 skill「blueprint」（prompt 在其長文）。",
+  author:"@Nyxera0x (Nyxera)",
+  likes:1271,
+  url:"https://x.com/Nyxera0x/status/2125236477667758136",
+  ptype:"重建",
+  prompt:`附件是一張建案 DM 上的三房公寓平面圖（90.73 m²，有比例尺）。請用 Blender（Python 腳本）把它做成可配置家具的 3D 公寓，並輸出一支導覽影片。
+1. 先從比例尺量出「每公尺幾像素」，再沿平面圖的灰色牆體填色描出所有牆線，換算成公尺座標。
+2. 門窗位置在 1 公尺網格上逐一確認，不要讓門落在房間中央；有疑義的地方列出來。
+3. 依平面圖上的家具符號用程式建出沙發、床、餐桌、廚具、衛浴與衣櫃，尺寸照圖。
+4. 每塊牆與每塊地磚都是獨立物件，做一段「公寓從 DM 圖面上一塊塊長出來」的生長動畫。
+5. 鏡頭：先繞整個無天花板的娃娃屋一圈，天花板蓋上時降進室內，從客廳一路走到廚房。
+6. 柔和日光、寫實材質，輸出 1080p 影片，並附上量測與判讀過程的紀錄。`
+},
+{
+  cat:"創意藝術",
+  title:"叫 Opus 5.5 只用程式碼唱一首歌：它挑了《Daisy Bell》，ASCII 角色「阿克」自己試嗓開唱",
+  desc:"作者只下了很短的指令：自己挑一首歌唱出來，不准用任何外部資源、只能用程式碼。Opus 5.5 選了《Daisy Bell》，理由是 1961 年貝爾實驗室的 IBM 7094 就是用這首歌第一次讓電腦唱歌；成品是一支純程式合成的影片：0 個音訊素材、0 次 TTS，ASCII 大字標題、由符號組成的小角色「阿克（Clawd）」試嗓、開唱，並標注歌曲為 1892 年公有領域作品。作者形容節奏與畫面「異常詭異」。（Fable 5.2 也有同題案例，見 Fable 5 分頁。）",
+  author:"@RJasonHA (Fries)",
+  likes:827,
+  url:"https://x.com/RJasonHA/status/2124813049760772144",
+  ptype:"重建",
+  prompt:`挑選一首歌並演唱它。全程不許使用任何外部資源（音訊檔、取樣、TTS、外部函式庫素材都不行），只能用程式碼：
+1. 自己決定唱哪首歌，並說明為什麼選它（必須是公有領域）。
+2. 用程式合成歌聲：自己做母音共振峰合成與音高、節奏，讓歌詞聽得出來。
+3. 畫面也用程式碼產生：終端機風格的 ASCII 字標題，加上一個由符號組成、會隨歌聲動起來的小角色，先「試嗓」再正式開唱。
+4. 標示「純代碼合成 · 0 個音頻素材 · 0 次 TTS」與歌曲出處，最後輸出成一支影片。`
 }
 ];
 
