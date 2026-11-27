@@ -2202,6 +2202,37 @@ Procedure
 5. 移動：6 種坐騎，腳部 IK 要貼合地形；可從高處展開滑翔翼飛行。
 6. 素材：模型用 Tripo 產生後在 UE 統一比例與材質，圖示與貼圖用 Higgsfield，音效與環境音也由 Higgsfield 生成；所有素材命名規則一致並記錄來源。
 7. 每個系統完成後自己跑一輪遊玩測試、截圖比對問題再修，最後輸出一支遊玩示範影片。`
+},
+// ====== 2026-11-27 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"可飛行穿越的浮空島、瀑布與雲海：單一 HTML 檔、不到 100KB",
+  desc:"作者讓 Claude Fable 5.2 做出一個可以在瀏覽器裡飛行穿越的場景：懸浮在空中的島嶼、從島緣落下的瀑布、腳下一整片雲海，縮圖是夕陽逆光下的草叢與紅葉樹，遠處可見浮空岩與瀑布水霧。整個作品是一個不到 100KB 的 HTML 檔，推文附可直接遊玩的連結。保留：推文沒附 prompt，也沒交代做了幾輪、花多少時間；以下為依描述重建。",
+  author:"@prasenx (Prasenjit)",
+  likes:150,
+  url:"https://x.com/prasenx/status/2125637810011201981",
+  ptype:"重建",
+  prompt:"用 Three.js 做一個可以自由飛行穿越的浮空島世界，全部寫在單一 HTML 檔裡，檔案大小控制在 100KB 以內（不載入任何外部模型或貼圖，地形、植被、材質全部用程式生成）：\n1. 場景：多座大小不一的浮空島，島頂是草地與幾棵紅葉樹，島底是裸露岩層；其中幾座有瀑布從邊緣落進下方的雲海。\n2. 雲海：鋪滿整個下方視野的體積感雲層，會緩慢流動，飛進去時能見度下降。\n3. 光線：低角度夕陽、逆光的草葉透光、瀑布水霧被陽光打亮、帶一點泛光與大氣霧。\n4. 草：用 instancing 畫出大量草葉並隨風擺動，鏡頭貼近地面時要有前景草葉。\n5. 操作：滑鼠控制方向、WASD 飛行、Shift 加速，鏡頭轉向時帶一點傾斜。\n6. 效能：桌機瀏覽器維持 60fps，遠處島嶼用較低細節。"
+},
+{
+  cat:"遊戲",
+  title:"從零做遊戲主角「Adam」：130 根骨頭的人形角色，其中 51 根專門給襯衫",
+  desc:"作者正在做一款核災避難所題材的遊戲，用 Claude Fable 5.2 搭配 Blender、Unity 與 Tripo 從零建立人形主角 Adam（45 歲，公司在辦公室底下蓋了避難所，14 個人靠他）。目前完成 5 段動畫：站立、行走、停下、按按鈕、拉拉桿；130 根骨頭裡有 51 根只給襯衫用，讓布料像真的一樣摺動；臉與身體在 Tripo 分開生成，所以臉部保留了皺紋與鬍鬚細節。影片左邊是骨架、右邊是最終算圖。保留：模型本體由 Tripo 生成，Fable 5.2 負責的是綁骨、動畫與流程串接，推文沒細說分工；作者自己說還有 100 多段動畫沒做；未附 prompt。",
+  author:"@theparuchh (Paruchh)",
+  likes:160,
+  url:"https://x.com/theparuchh/status/2125649440199369030",
+  ptype:"重建",
+  prompt:"透過 Blender MCP 幫我的遊戲主角建立可用的人形角色，最後匯出到 Unity：\n1. 我會提供兩個 Tripo 生成的模型：臉部（高細節，保留皺紋與鬍鬚）與身體（襯衫、T 恤、工作褲、靴子）。把兩者接合成一個角色，接縫藏在領口內，統一比例與材質。\n2. 骨架：建立約 130 根骨頭的人形骨架，其中約 50 根專門給敞開的襯衫（前襟、下襬、袖口），讓布料在走動時自然摺動；其餘為身體、手指與臉部基本骨。\n3. 權重：自動權重後逐一檢查肩膀、手肘、膝蓋與襯衫，截圖比對並修正穿模。\n4. 動畫：先做 5 段可循環或可銜接的動作——站立待機、行走、停下、按按鈕、拉拉桿，30fps，根運動要乾淨。\n5. 輸出：每段動畫各出一支左右對照影片（左邊骨架、右邊最終算圖，場景是混凝土避難所的機房），並匯出 FBX 與 Unity 的 Humanoid 設定。\n6. 把還沒做的動畫列成清單（目標 100 段以上），依遊戲流程排優先順序。"
+},
+{
+  cat:"工程研究",
+  title:"花一天多設計一塊帶 NFC 線圈天線與 LED 點陣的卡片型 PCB：作者評為「初級硬體工程師水準」",
+  desc:"作者看到各家模型開始拿 PCB 設計當展示，自己用 Fable 5.2（xhigh）花一天多設計了一塊板子：附圖的 3D 渲染可見卡片外形、USB-C、大面積 LED 點陣、板載 NFC 線圈天線與 PCB 天線。他的評語是已有初級硬體工程師水準、能分擔一些工作，但需要人盯著，尤其是佈局階段。誠實保留（作者自述）：一開始 Fable 沒意識到 NFC 天線是線圈，封裝只畫了兩個點，提醒後才改對；對 DC-DC 這類需要特殊走線的電路缺乏直覺，先前試的案例結果「啼笑皆非」；每次下完指令常要思考半小時，光是線圈佈局調整就花了超過 3 小時；細節仍待打磨，推文沒說是否實際打樣。",
+  author:"@_HalfSweet (Pipe)",
+  likes:170,
+  url:"https://x.com/_HalfSweet/status/2125848470015848562",
+  ptype:"重建",
+  prompt:"在 Claude Code 裡用 KiCad（kicad-cli 與 Python 腳本）幫我設計一塊信用卡大小的 PCB，從原理圖做到可送製造的檔案：\n1. 功能：USB-C 供電與通訊、一顆帶無線功能的主控 MCU（板載 PCB 天線）、一片 LED 點陣（約 16×16，含驅動 IC）、一顆 NFC 晶片與板載線圈天線、一顆按鍵。\n2. 原理圖：先列出元件選型與理由（盡量選容易買到的料），畫完後跑 ERC 並修到無錯。\n3. NFC 天線：它是印在板上的多圈線圈，不是兩個焊點。先依 13.56 MHz 與晶片的建議電感值算出圈數、線寬、線距與外框尺寸，再配上匹配電容，算式寫給我看。\n4. 佈局：先給我看元件擺放的截圖並等我確認再佈線。天線區域下方不可鋪銅或走線；電源電路（特別是 DC-DC）要照資料手冊的建議佈局，迴路面積最小、回授走線遠離電感；去耦電容貼近電源腳；USB 差動對等長。\n5. 佈線後跑 DRC，輸出 3D 渲染圖、Gerber、鑽孔檔、BOM 與座標檔。\n6. 最後列出你不確定、需要我人工檢查的地方。"
 }
 ];
 
@@ -4608,6 +4639,17 @@ App 叫 lil doodles，功能是把使用者的照片變成手繪塗鴉。
 3. 操作：WASD 控制馬車前進與轉向，鏡頭跟在車後上方，車輪與馬腿的動畫要跟速度同步。
 4. 聲音：馬蹄、車輪、風聲與遠處的嚎叫（可用 ElevenLabs 生成音效），依距離做空間音效。
 5. 預留下一階段：之後會加入射擊樹林裡怪物的玩法，先把架構拆好。`
+},
+// ====== 2026-11-27 自動更新 ======
+{
+  cat:"工程研究",
+  title:"OpenAI 物理學家的量子重力提案：關鍵計算與證明和 GPT-6 Astra 來回數月、約 4 億 token",
+  desc:"轉述（原作者 Venkatesa Chandrasekaran，OpenAI 所屬的理論物理學家；本則為 AI 新聞帳號的速報，OpenAI 的 @tszzl 也有轉發論文）。他在 2026-11-25 發表 80 多頁的預印本〈An algebraic quantization of gravity from the null cone〉：在四維勞侖茲時空上提出不依賴背景的真空廣義相對論量子化，從光錐面解掉重力約束；論文宣稱重力子對生成與湮滅的振幅在非微擾下是有限的閉式結果、有限大小的因果鑽石對應有限維希爾伯特空間、能推出 Bekenstein–Hawking 熵並重現 Sen 的對數修正係數、低能極限回到愛因斯坦方程。作者說關鍵計算與證明是和 GPT-6 Astra 來回討論好幾個月得到的，約用掉 4 億 token。誠實保留：這是預印本，尚未經同行評審；作者是 OpenAI 員工；已有人（@marouane53，用 Astra 6.2 寫審稿報告、Fable 5.2 反駁）指出「有限維」這個核心主張的求跡論證並未被證明；沒有公開 prompt 或對話紀錄，以下只是重建這類協作的做法。",
+  author:"@kimmonismus (Chubby)",
+  likes:4204,
+  url:"https://x.com/kimmonismus/status/2125856219667566872",
+  ptype:"重建",
+  prompt:"你是我的理論物理研究夥伴。我在研究四維真空廣義相對論的非微擾量子化，想法是從一個有限區域的相交光錐（null cone）出發：\n1. 我會貼上目前的設定（一階形式的重力作用量、光錐面上的約束、我猜測的約化相空間）。請逐步檢查推導，每一步標明是「已嚴格證明／形式推導／猜測」。\n2. 幫我解出光錐面上的重力約束，寫出有限牛頓常數下的約化相空間與正則 Poisson 括號，並指出哪裡用了規範固定。\n3. 把括號提升為對易關係後，嘗試用正則對的高斯波函數建構希爾伯特空間表示，判斷可觀測量代數的 von Neumann 類型。\n4. 計算光錐上重力子對生成與湮滅的振幅：先不要對牛頓常數展開，直接做非微擾計算；再和先展開的結果比較，說明發散從哪裡來。\n5. 每個結論都給我一個可以獨立驗證的檢查（極限情形、量綱、和已知結果如 Bekenstein–Hawking 熵與 Sen 的對數修正比較）。\n6. 主動找反例與漏洞：哪個求和或求跡的收斂性還沒被證明？不要為了讓故事完整而略過。\n我們會來回很多輪，請維護一份「已確立結果／未解問題」清單，每輪結束更新。"
 }
 ];
 
@@ -6299,6 +6341,17 @@ state 帶入：使用者目前輸入的文字、工具清單與各自的參數�
   url:"https://x.com/NathanFlurry/status/2124173743048339924",
   ptype:"重建",
   prompt:"用 TypeSafe Jev（model jev-latest）替我們在 Slack／Discord 的 agent 做一個「要不要回應」的閘門，讓成員不必再 @ 它。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n1) 監聽頻道所有新訊息；state 放新訊息全文、發送者、最近 10 則對話（含 agent 自己的發言）、agent 的名字與職責說明（例如「負責部署、CI 與 on-call 問題」）。\n2) Noul「這則訊息是不是在對 agent 說話或要求它做事？」\n3) Noul「這則訊息是不是在回應 agent 上一則發言（追問、確認、糾正）？」\n4) Choice「訊息屬於哪類」：明確任務請求／問 agent 職責範圍內的問題／人與人之間的閒聊／公告或機器人通知／其他。\n5) 程式判定：第 2 或第 3 題為是且信心值 ≥ 0.7，或第 4 題為前兩類 → 交給大模型產生回覆；信心值落在 0.4–0.7 之間 → 只加一個 👀 表情，不出聲，被點了再回；其餘忽略。\n6) 記錄每則訊息的三題答案、信心值、延遲與成本，提供一週報表：觸發率、被成員用 @ 補叫的漏判次數、被抱怨多嘴的誤判次數，用來調題目措辭與門檻。"
+},
+// ====== 2026-11-27 自動更新 ======
+{
+  cat:"工程研究",
+  title:"和自己的多個 agent 開語音群組通話：用 Jev 當「導演」決定誰被點名、誰先回答",
+  desc:"作者正在開發名為 Focus 的 agent 開發環境（類似 Orca、T3 Code），其中一個功能是像 Google Meet 一樣和多個 bot 語音通話：bot 知道什麼時候該自己講話，還能「舉手」等前一個講完。技術上，單一 bot 的通話由兩個模型組成，Talker（GPT Realtime API）負責即時語音應答，複雜的事交給 Reasoner（Claude）；進到群組通話時再加上第三種 agent「Director」，作者用 TypeSafe 實作，負責依對話脈絡判斷哪些 agent 被點到名、該依什麼順序回答。附圖是 iPhone 介面：四個 bot 各佔一格，分別顯示發言中、工作中、舉手等狀態，下方是即時字幕。保留：仍在開發中、沒有公開 repo 或數據；作者說之後才會寫文章詳述；生成與推理由 GPT 與 Claude 負責，Jev 只做發言調度這一層。",
+  author:"@mormonnegro (Mormon Negro)",
+  likes:587,
+  url:"https://x.com/mormonnegro/status/2125814905655668896",
+  ptype:"重建",
+  prompt:"用 TypeSafe Jev（model jev-latest）做多 agent 語音群組通話的「導演」層。先執行 npx skills add typesafe-ai/skills --skill typesafe-ai 了解 API。\n\n情境：一通語音通話裡有一位使用者和 4 個 bot（各有名字與職責，例如客服、行銷、維運、財務）。每個 bot 由 Talker（即時語音模型）負責講話、Reasoner（大模型）負責複雜任務。使用者每講完一句（語音轉文字後），由 Jev 決定接下來誰講話。\n\n1) state 放：最近 10 句對話逐字稿（含發話者）、每個 bot 的名字、別名與職責一句話、每個 bot 目前狀態（閒置／講話中／工作中／舉手中）。\n2) 對每個 bot 各問一題 Noul：「這句話是否在要求這個 bot 回應（直接點名，或內容明顯屬於它的職責）？」\n3) 若有兩個以上為是，再問一題 Choice：「誰應該先回答？」選項是這幾個 bot 的名字；其餘的依信心值排序進入舉手佇列。\n4) 另問一題 Noul：「使用者是否還沒講完、只是停頓？」為是就先不派任何人發言。\n5) 再問一題 Score（1–5）：「這個要求需要多深的處理？」1–2 由 Talker 直接回答，3 以上交給 Reasoner，並把該 bot 狀態標成「工作中」。\n6) 程式判定：信心值低於 0.6 時不直接派人，改讓信心值最高的 bot 舉手並在畫面上顯示，由使用者點選或開口確認；沒有任何 bot 超過 0.4 就由預設的主持 bot 接話。\n7) 前一個 bot 講完時，從舉手佇列取下一個；若這段期間對話已經轉向，重新跑一次第 2 題再決定是否還需要它發言。\n8) 記錄每一輪的題目、答案、信心值、延遲與成本，並提供報表：搶話次數、被使用者糾正「不是問你」的次數，用來調整題目措辭與門檻。"
 }
 ];
 
@@ -9150,6 +9203,47 @@ Tone: vivid, tactile, calm and ASMR-satisfying, with a dreamlike touch. Nothing 
 3. 材質：木紋、皮革、布料、紙張都用 PBR 材質，避免全場同一種灰。
 4. 燈光：你自己判斷每種燈該放哪裡——窗外暖色日光當主光、檯燈當重點光、書架層板加間接燈帶，並說明這樣打的理由。
 5. 用 Cycles 出一張 1920×1080 的渲染，所有物件依類別放進不同 Collection 並命名清楚。`
+},
+// ====== 2026-11-27 自動更新 ======
+{
+  cat:"模擬視覺化",
+  title:"Karpathy：把真實美國做成《文明帝國》式地圖，31 個公開資料源、7 小時、4.5 萬行程式碼",
+  desc:"Karpathy 請 Claude 用美國的真實資料填滿一張《文明帝國》風格的遊戲地圖。Opus 5.5 自己下載並解析 31 個公開資料源（Census、BEA、BLS、EIA、NOAA、USGS、DoD、NPS、FAA、FEMA、CDC 等），把高程、土地覆蓋、GDP、就業、電廠、礦場、港口、機場、基地、國家公園、大學、貨運流量與災害全部對齊到 25 公里的六角格上，再翻成遊戲語言：金幣產出就是 GDP，城市的區域是當地真實的產業專長（聖荷西有 Campus、底特律是「汽車城」），奇觀依公開規則挑選（國家公園看遊客數、大學看研發經費）。另有 19 種透鏡、524 個都會區的城市檢視、9 位顧問，以及可把 3,100 多個郡任一欄位做成表格與散佈圖的 Explorer。用 Claude Code 桌面版、Opus 5.5 medium 並開啟 ultracode，約 7 小時、4.5 萬行，已部署並附原始碼，連預告片也是 Claude 做的。保留：Claude 自行略過了幾個州與領地；作者說「不太確定自己要拿它做什麼」，目前是可瀏覽的地圖而不是完整遊戲；推文未附 prompt 原文。",
+  author:"@karpathy (Andrej Karpathy)",
+  likes:24474,
+  url:"https://x.com/karpathy/status/2125779541952246039",
+  ptype:"重建",
+  prompt:"我想要一張《文明帝國》風格的六角格遊戲地圖，但內容全部用美國的真實公開資料填滿。請自己找資料、下載、解析並做成可部署的網頁：\n1. 資料：盡量多用官方公開來源（Census、BEA、BLS、EIA、NOAA、USGS、DoD、NPS、FAA、FEMA、CDC 等），涵蓋高程、土地覆蓋、GDP、就業與職業、電廠、礦場、港口、機場、軍事基地、國家公園、大學、貨運流量、災害紀錄。每個來源記下網址、年份與授權。\n2. 把所有資料對齊到同一張約 25 公里的六角格網上，處理座標系、缺值與行政區邊界對不上的問題。\n3. 翻譯成文明帝國的語言：地形與資源來自高程與土地覆蓋；金幣產出 = GDP；城市的區域對應當地真實的產業專長；市民組成對應真實勞動力結構；奇觀依公開、可重現的規則挑選（例如國家公園依遊客數、大學依研發經費），規則要寫出來。\n4. 介面：可縮放平移的地圖、多種透鏡（所得、學歷、信仰、災害等）、各都會區的城市檢視、幾位顧問面板，以及一個 Explorer：任選一個郡級欄位就產生表格與散佈圖，並和地圖連動。\n5. 在「?」說明頁列出所有資料來源、轉換規則與原始碼連結。\n6. 做不到或資料缺漏的州與領地要明確列出，不要默默略過。\n7. 最後部署上線，並用這張地圖做一支短預告片。"
+},
+{
+  cat:"文件簡報",
+  title:"3 分鐘解說影片：用 Opus 5.5 做的視覺化講解「從光錐量子化重力」的新論文",
+  desc:"作者做了一支 3 分鐘影片，解說 OpenAI 物理學家 Ven Chandrasekaran 剛發表的量子重力預印本（從光錐面量子化四維真空重力），片中的視覺化由 Opus 5.5 製作；縮圖是黑底白線的一大一小兩個光錐線框。把一篇 80 多頁的理論物理論文在發表隔天做成可看懂的動畫解說，是「論文 → 解說影片」的案例。保留：推文只說視覺化由 Opus 5.5 做，旁白腳本與剪輯是否也出自 Opus 沒交代；未附 prompt；論文本身仍是未經同行評審的預印本（論文是和 GPT-6 Astra 協作寫成，見 Astra 分頁）。",
+  author:"@AmirMakir (Amir Makir)",
+  likes:924,
+  url:"https://x.com/AmirMakir/status/2125882381185986754",
+  ptype:"重建",
+  prompt:"我要做一支 3 分鐘的解說影片，介紹這篇論文（附上 PDF）：〈An algebraic quantization of gravity from the null cone〉。請你負責所有視覺化，用程式產生動畫片段：\n1. 先讀完論文，寫一份給非物理背景觀眾的分鏡：為什麼重力和量子力學合不起來 → 這篇換了什麼入口（從有限區域的光錐面下手）→ 三個自我檢查（重力子振幅有限、黑洞熵、低能回到愛因斯坦方程）→ 目前的狀態（預印本、尚未評審）。\n2. 視覺風格：純黑背景、白色細線框、極簡，重點用單一強調色；1920×1080、30fps。\n3. 每個分鏡做一段動畫：例如兩個相交的光錐線框慢慢旋轉並圍出一個「因果鑽石」、求和項一項項加上去卻收斂、黑洞視界面積對應到狀態數。\n4. 用 Three.js 或 Python 逐格算圖後以 ffmpeg 輸出，每段各一個 mp4，檔名對應分鏡編號。\n5. 列出每段動畫簡化或省略了哪些物理細節，避免我在旁白裡講錯。"
+},
+{
+  cat:"創意藝術",
+  title:"老式手繪賽璐珞卡通風短片：全程式繪製的沾水筆線條與誇張人物（附完整原文 prompt）",
+  desc:"作者公開一份讓 Claude Opus 5.5 把任何故事做成「老卡通賽璐珞」風格直式短片的 prompt，不用任何圖像或影片生成器，全部以程式畫出：暖深褐色的沾水筆變寬線條、鎖定 4～5 色的平塗、大頭誇張的人物、短點短線的質感、兩階色調的硬邊光影，最後再套一層舊卡通的色偏、泛光與顆粒。縮圖是夕陽下舉著霰彈槍的格紋襯衫大漢。流程是 Python 寫 SVG、rsvg-convert 轉點陣、Pillow 與 numpy 合成、ffmpeg 編碼，並特別為低階電腦設計。這是同作者繼 Kurzgesagt 風與 Vox 地圖風之後的第三種風格，prompt 與成品都不同。保留：作者只說這種風格「快要在 YouTube 紅起來」，沒交代實際耗時與修改輪數；配音與音效包由使用者提供。",
+  author:"@treyscalez (trey)",
+  likes:819,
+  url:"https://x.com/treyscalez/status/2126041304421323256",
+  ptype:"原文",
+  prompt:"<inputs>\nAsk me for: the story (a true event, a legend, a \"what if\", or just a topic and you pitch me 5 story ideas), the length (default 60 to 90 seconds, or a 10 second test scene), and the voice (I upload my own voiceover, you write a script for me to record, or captions only with no voice). Then ask if I am uploading a sound effects pack and any reference frames. Everything else you decide from the story: the cast, the era, the sets, the palette. If I upload references, study them at full size and zoomed to pixel level before drawing anything.\n</inputs>\n\n<direction>\nTurn any story into an animated short that looks like an old hand-inked cartoon cel, drawn fully in code. No AI image or video generators, no stock art, no photos. Design a new original cast for every story. Never copy a character from my references or from any existing channel. Historical figures are fine as caricatures. Never draw a real living person.\n\nThe style is fixed. Only the story, cast, sets and palette change.\n\nLINE. Thin dip-pen ink, about 3 to 5 px at 1080 wide. Strokes swell with pressure and end in points. Ink is warm sepia-black (#170b08), never navy or pure digital black. The finest strokes go dark red (#4d140a) and slightly see-through. Outlines wobble a little. Never thick, even, sticker-style outlines.\n\nCOLOUR. Flat fills, no gradients on characters. Pick 4 or 5 colours per video from the story's world and lock them: one blue (cobalt or periwinkle), one warm skin tone used for the whole cast (hot pink, salmon or orange-red), one pale (cream or lilac), and one or two accents (gold, red, green). Skin gets one darker tone where something throws shade and one lighter tone where fat or bone catches light. Nothing else.\n\nCAST. Caricature, not anatomy. Give every character one silhouette and one feature you could recognise from across a room: a huge jaw, a long nose, a moustache, gold teeth, a hat, a hairstyle. Heads are big lumpy masses with small features crowded in the middle. Vary the build across the cast: one huge, one thin, one short. Leads get full detail. Extras get the same line with fewer marks. Age and weight are drawn as structure: jowls, a second chin, deep nose-to-jowl folds, stacked bags under the eyes, wrinkles that follow the skull. Eyes are small with a hooded lid, lilac whites and a thick lash line. Facial hair is solid black or pale with barbed edges.\n\nTEXTURE. Short ticks and dots, never long hatching. Rows of small dashes for fur, wool and knit. Tick marks and pores on skin, bristles for stubble. Patterned cloth gets real pattern: plaid, brocade scrolls, medallions, florals. Stone gets broken course lines and branching cracks. Wood gets grain ticks and plank seams.\n\nHANDS. Two separate hands, one lit and one in shade. Padded finger joints, crease ticks at the knuckles, a short dark nail that stops at the fingertip, knuckle bumps, and a ring where the character would wear one.\n\nSETS. Build each location from the story: throne room, street, farm, ship, courtroom, market, battlefield. Light is always two flat tones split by hard diagonal edges. At night, lit surfaces are pink or salmon and shadow is cobalt, under a pale moon with a soft halo. By day, the sky is pale blue, sunlit surfaces are warm and shadows are blue-violet. Interiors get one shaft of light from a window or door, falling as a warm patch on a cool room. Add one sparkle glint on any lamp, coin or blade. Behind a close-up, throw the set out of focus.\n\nPROPS. Every noun in the script gets a visual. Money, letters, weapons, food and animals are drawn in the same ink and flat colour, never left as words.\n\nEXPRESSIONS. Give each lead at least five heads: neutral, blink, anger, smug or joy, shock. Add grief or fear if the story needs them. Open mouths are fully drawn: lip rim, dark interior, tongue, both rows of teeth one by one, gums on a grin. When a mouth opens, the jaw really drops and the chin, jowls and beard go with it. Shock is big lilac discs with pinprick pupils. Anger is small pupils, brows driven down, flared nostrils.\n\nFINISH. Run every frame through an old-cartoon pass: soften the ink by about 1 px, then an unsharp pass (radius 5, 60 percent) so each stroke gets a faint pale rim. Add slow, slight mottling to flat fills. Blur the colour channels more than brightness and shift them 2 px off-register. Gentle bloom, warm tone, blacks lifted to deep brown, a light vignette, fine grain in brightness only. Fills stay smooth.\n</direction>\n\n<structure>\n1. Script. Open in the middle of the worst or strangest moment, in present tense, in one line. Then who this is, what they wanted, the turn, the twist, and one closing line that lands the point. Short sentences. About 3.5 words per second with almost no pauses, so 60 seconds is about 210 words. Check every fact in a true story and tell me anything you could not confirm.\n2. Title. \"He [did X] for [Y]\" or \"How [someone] [outcome]\". Give me three options.\n3. Shot list. Break the script into clauses. Every clause gets a shot with four things: who or what is on screen, an expression, a body action and a camera move. If a clause cannot be acted out, rewrite the clause.\n4. Shot rhythm. Cycle close-up, wide, prop insert, reaction. Never hold the same framing for two shots in a row. Put a second character reacting on screen in at least a quarter of the shots.\n5. Pace. The picture changes about every 2.3 seconds, something new starts about every second, and something moves in at least 95 percent of frames.\n6. Camera. Never still: push-ins, drifts, orbits around a set, punch-ins on reveals. No hard cuts. Move between locations with a zoom-whip or blur-whip of 4 to 6 frames.\n7. Acting. Pose changes snap in one frame and overshoot on a spring. Calm is slow breathing and a blink. Smug is chin up, head cocked, a silent chuckle. Shock is head back, body recoiling, hands flying off what they hold. Anger is a fist up, head forward, chest heaving. Grief is head down, shoulders dropping, slow. Faces change every 0.3 to 0.8 seconds while a character is on screen.\n8. Life in the background. Something always moves behind the action: smoke, embers, birds, water, flags, a crowd.\n9. Captions. Bold rounded yellow (#ffe21a) with a dark outline, lower middle of frame, 1 to 3 words, timed to the spoken words. Each chunk arrives dim for 3 frames, then goes full.\n</structure>\n\n<build>\n1. Python writes SVG, rsvg-convert rasterises it, Pillow and numpy composite the frames, ffmpeg encodes. 1080x1920, 30 fps.\n2. If there is a voiceover, time every word first (Whisper if it is available, otherwise ask me for the script and spread the words across the audio by length) and hang every shot, action and caption on those word times. With no voice, use about 1.1 seconds per caption chunk.\n3. Write one ink function that turns a point list into a filled, variable-width polygon: Catmull-Rom smoothing, pressure modulation, tapered ends, slight wobble. Draw every line with it. Never use SVG stroke.\n4. Write the reusable kit once, then build each story from it: ink, ticks, dash rows, fur, cracks, masonry, scrolls, medallions, fingers, teeth, eyes with a lid, and a jaw-drop warp.\n5. Jitter polygon edges so shapes look hand-cut. Use a fixed random seed, reseeded at the start of every body part, so each part redraws identically on every frame and only what you change moves.\n6. Build each lead as a jointed cut-out rig: body, each arm, collar or shoulders, one head per expression, hands, plus any extra pose the script needs. Each part sits on its own transparent layer with its own pivot, on a canvas padded left and right, rendered at 2x. Extras can be single drawings with a breathing bob.\n7. Build each set in depth layers (foreground, mid, back, sky) so the camera gets parallax when it moves.\n8. Per frame, pose the joints, multiply by the camera matrix, and draw each layer straight to the output size with one affine transform. Apply the finish to the whole composed frame, then burn the caption on after it so the text stays crisp.\n9. Encode one mp4 per shot with libx264 at CRF 17, put the whips inside the shot files, then join with the concat demuxer and stream copy. Add sound last with the video stream copied.\n10. Sound. If I upload my sound effects pack, use it. One effect per event (whoosh on a whip, sting on a shock, hit under an impact, chime on a reveal), each peak on its impact frame, about 8 per 10 seconds, all under the voice.\n</build>\n\n<gotchas>\nThick brush outlines make it look like sticker art. Normal face proportions read as generic cartoon, so exaggerate the head and shrink the features. Long flowing hatch strokes are wrong; use ticks, dots and dash rows. Two characters with the same silhouette will be confused, so change the build, hat or hair. A nail drawn past the fingertip turns a hand into a claw. A beard or moustache will cover a grin unless the smile is wide enough to clear it. Tight close-ups hide hands and raised arms, so pull wider whenever the body is acting. Clamp the camera so it never shows past the edge of a set. If the whole drawing shimmers between expressions, a part is not being reseeded. A puppet rig cannot turn a head or change a silhouette, so every pose that changes the outline needs its own drawn part. Do not reuse a cast or a set from one story in the next, or the videos will look mass produced. Keep captions clear of faces and hands. If I gave you references, compare your stills against them side by side at pixel level, give me an honest percentage for how close each is, and list what still gives it away. Do not round up.\n</gotchas>\n\n<start>\nAsk me the inputs. Then show me, in this order, and wait for my yes at each step: the script and three titles, the design sheet for the cast and sets with the locked palette, and the shot list with a contact sheet of one still per shot. Then render the video and tell me anything that came out weaker than planned.\n</start>"
+},
+{
+  cat:"創意藝術",
+  title:"一句話設計深色專案管理儀表板「Tessera」：斜線紋長條圖、髮絲邊框卡片與粉彩漸層橫幅",
+  desc:"作者只用一句描述，讓 Claude Opus 5.5 設計出一個深色模式的專案管理儀表板 Tessera：炭灰色表面、髮絲細邊框的卡片、帶斜線紋底的團隊績效長條圖、右側粉彩漸層的個人檔案橫幅、Inter 字體，以及藍、橘、綠三種狀態色；畫面含側欄導覽、工作項目統計、衝刺容量、近期活動與 AI 週摘要卡。保留：推文只有一張靜態截圖，看不出互動是否能用；作者標題寫「Preview」，沒說是在哪個介面產生的，也沒交代是否一次到位。",
+  author:"@yasirahmadnoori (Yasir)",
+  likes:529,
+  url:"https://x.com/yasirahmadnoori/status/2125637448176636321",
+  ptype:"原文",
+  prompt:"Design a dark-mode project management dashboard called Tessera featuring charcoal surfaces, hairline-bordered cards, hatched-pattern bar charts, a pastel gradient profile banner, crisp Inter typography, and vivid blue, orange, and green status accents."
 }
 ];
 
